@@ -14,11 +14,11 @@ public class Traducteur {
 		String line = null;
 		String[] temp = null;
 		
-		// saute les lignes commencant par un "c"
+		// saute les lignes commençant par un "c"
 		while ((line = reader.readLine()) != null && line.startsWith("c")) {
 		}
 		
-		// lignes commencant par "p": p edge nbNoeuds nbArretes 
+		// lignes commençant par "p": p edge nbNoeuds nbArrêtes 
 		if (line.startsWith("p")) {
 			nbNoeuds = Integer.parseInt(line.split("\\s")[2]);
 			connexions = new LinkedList[nbNoeuds];
@@ -27,8 +27,9 @@ public class Traducteur {
 		for (int i = 0; i < nbNoeuds; i++) {
 			connexions[i] = new LinkedList<Integer>();
 		}
-		// lignes commencant par "e": e noeud1 noeud2
-		// decalage des indices (1er indice 1 devient 0)
+		// lignes commençant par "e": e noeud1 noeud2
+		// décalage des indices (1er indice 1 devient 0)
+		// chaque arrête est présente une fois dans les données. Et deux fois dans notre tableau.
 		while ((line = reader.readLine()) != null) {
 			temp = line.split("\\s");
 			connexions[Integer.parseInt(temp[1]) - 1].add(Integer.parseInt(temp[2]) - 1);
