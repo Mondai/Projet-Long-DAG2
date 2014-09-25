@@ -5,16 +5,14 @@
 public class Modification {
 
 	// Noeud supprimé de la route
-	public int noeudSup;
+	public int noeudModifie;
 	// Noeud ajouté à la route
-	public int noeudAj;
-	public int couleurAdj; // couleur auquel le deuxième noeud va être changé
+	public int couleurPrecedente;
 	
-	public Modification(int noeudSup,int noeudAj) {
+	public Modification(int noeudModifie,int couleurPrecedente) {
 		
-		this.noeudSup = noeudSup;
-		this.noeudAj = noeudAj;
-		this.couleurAdj = couleurAdj;
+		this.noeudModifie = noeudModifie;
+		this.couleurPrecedente = couleurPrecedente;
 		
 	}
 
