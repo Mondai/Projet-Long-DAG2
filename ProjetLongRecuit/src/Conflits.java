@@ -10,11 +10,15 @@ public class Conflits implements IEnergie {
 		Coloriage coloriage = (Coloriage)	probleme;
 		double conflits = 0;
 		
-		for (int j = 1; j <= coloriage.graphe.nombreNoeuds; j++) {
-			conflits++;
+		for (int j = 1; j <= coloriage.graphe.nombreNoeuds; j++) { // parcours de tous les noeuds du graphe
+			int couleurNoeudActuel = coloriage.couleurs[j]; // couleur du noeud actuel
+			for (int noeudAdjacent : coloriage.graphe.connexions[j]) { // parcours des voisins du noeud
+				if (coloriage.couleurs[noeudAdjacent]==couleurNoeudActuel) conflits++; // incrementation de conflits si meme couleur
+		
+			}
 		}
 		
-		conflits /=2;
+		conflits /=2; // chaque conflit est compté deux fois
 		
 		return conflits;
 

@@ -1,7 +1,7 @@
 
 /*
  * Variante de l'algorithme de recuit
- * On procède par parlliers de températures ie on effectue un certain nombre (M) d'itérations
+ * On procède par palliers de températures ie on effectue un certain nombre (M) d'itérations
  * à la même température avant de la modifier 
  */
 
