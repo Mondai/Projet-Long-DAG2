@@ -1,3 +1,5 @@
+// classe implementant l'energie dans le probleme du coloriage
+
 import java.util.Iterator;
 
 
