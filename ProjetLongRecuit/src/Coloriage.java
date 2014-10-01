@@ -3,19 +3,19 @@ import java.util.LinkedList;
 import java.util.Random;
 
 /*
- * Problème du routage
- * Cette classe implémente la classe abstraite Probleme
+ * Problï¿½me du routage
+ * Cette classe implï¿½mente la classe abstraite Probleme
  */
 
 public class Coloriage extends Probleme {
 	
-	// Paramètres du problème
-	int[] couleurs; //Tableau des noeuds répertoriant leurs couleurs
-	int[] meilleuresCouleurs; // Tableau des noeuds répertoriant la meilleure répartition des couleurs trouvée jusqu'ici
+	// Paramï¿½tres du problï¿½me
+	int[] couleurs; //Tableau des noeuds rï¿½pertoriant leurs couleurs
+	int[] meilleuresCouleurs; // Tableau des noeuds rï¿½pertoriant la meilleure rï¿½partition des couleurs trouvï¿½e jusqu'ici
 	Graphe graphe;
 	int k; // nombre de couleurs pour le coloriage
 	
-	// Sauvegarde de la dernière modification effectuée
+	// Sauvegarde de la derniï¿½re modification effectuï¿½e
 	public Modification derniereModif;
 
 
@@ -33,12 +33,12 @@ public class Coloriage extends Probleme {
 	}
 	
 	
-	// Initialisation du problème: affectation de couleurs aléatoires
+	// Initialisation du problï¿½me: affectation de couleurs alï¿½atoires
 	public void initialiser(Random random){
 		
 		//Affectation des couleurs
-		for (int j = 1; j <= this.graphe.nombreNoeuds; j++) {
-			this.couleurs[j] = 1;
+		for (int j = 0; j < this.graphe.nombreNoeuds; j++) {
+			this.couleurs[j] = 0;
 		}
 		
 	}
@@ -48,7 +48,7 @@ public class Coloriage extends Probleme {
 	public void sauvegarderSolution(){
 		
 		//Affectation des couleurs
-		for (int j = 1; j <= this.graphe.nombreNoeuds; j++) {
+		for (int j = 0; j < this.graphe.nombreNoeuds; j++) {
 			this.meilleuresCouleurs[j] = this.couleurs[j];
 		}
 	}

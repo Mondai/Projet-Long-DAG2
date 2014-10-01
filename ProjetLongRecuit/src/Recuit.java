@@ -1,15 +1,15 @@
 
 /*
  * Variante de l'algorithme de recuit
- * On procède par palliers de températures ie on effectue un certain nombre (M) d'itérations
- * à la même température avant de la modifier 
+ * On procï¿½de par palliers de tempï¿½ratures ie on effectue un certain nombre (M) d'itï¿½rations
+ * ï¿½ la mï¿½me tempï¿½rature avant de la modifier 
  */
 
 public class Recuit {
 
-	// Paramètres de l'algorithme de recuit
+	// Paramï¿½tres de l'algorithme de recuit
 	int N; // nombre de palliers
-	int M; // nombre d'itérations à chaque pallier
+	int M; // nombre d'itï¿½rations ï¿½ chaque pallier
 	int W;
 	double T;
 	double k;
@@ -59,19 +59,22 @@ public class Recuit {
 		this.TFin = (-1/Math.log(this.probaFin));
 		double coefProba = Math.pow((this.TFin/this.TDeb),(1./(double)(this.N-1)));
 		
-		int compteurPallier = 0; // Compte le nombre d'itérations effectuées à un pallier de température
+		int compteurPallier = 0; // Compte le nombre d'itï¿½rations effectuï¿½es ï¿½ un pallier de tempï¿½rature
 		int compteurDeltaE = 0;
 		double probaAcceptation = 0.0;
 		
-		// Itérations
+		probleme.sauvegarderSolution();  // sauvegarder la premiÃ¨re solution
+		this.meilleureEnergie = probleme.calculerEnergie(); 
+		
+		// Itï¿½rations
 		for(int j=1 ; j<=this.N*this.M ; j++) {
-			// Mutation élémentaire
+			// Mutation ï¿½lï¿½mentaire
 			probleme.modifElem();
-			double nouvelleEnergie = probleme.calculerEnergie();
+			double nouvelleEnergie = probleme.calculerEnergie(); 
 			deltaE = nouvelleEnergie-this.energie;
 			
 			if (deltaE>=0){
-				// Mise à jour de k
+				// Mise ï¿½ jour de k
 				this.k = (this.W*this.k-this.tabDeltaE[compteurDeltaE]+deltaE)/((double)this.W) ;
 				this.tabDeltaE[compteurDeltaE] = deltaE;
 				compteurDeltaE = (compteurDeltaE + 1) % this.W;
@@ -81,7 +84,7 @@ public class Recuit {
 				
 			}	
 			
-			// Examen de l'effet de la modification effectuée
+			// Examen de l'effet de la modification effectuï¿½e
 			if (deltaE>0 && (Math.random() > probaAcceptation)) {
 				probleme.annulerModif();
 			}		
@@ -90,25 +93,28 @@ public class Recuit {
 				if(nouvelleEnergie < this.meilleureEnergie) {
 					this.meilleureEnergie=nouvelleEnergie;
 					probleme.sauvegarderSolution();
+					if(nouvelleEnergie == 0){   // return si energie = 0
+						return probleme;
+					}
 				} 
 			}
 			
 			compteurPallier++;			
 			
 			
-			// Mise à jour de T au bout de M itérations sur le même pallier
+			// Mise ï¿½ jour de T au bout de M itï¿½rations sur le mï¿½me pallier
 			if (compteurPallier==this.M) {
 			
-			// Mise à jour de la température
+			// Mise ï¿½ jour de la tempï¿½rature
 			this.T= this.T * coefProba;
 				
-			// Remise à zéro du compteur
+			// Remise ï¿½ zï¿½ro du compteur
 			compteurPallier = 0;
 			
 			}
 			
 			
-			// Impression de l'énergie courante (commenter ou décommenter)
+			// Impression de l'ï¿½nergie courante (commenter ou dï¿½commenter)
 				// System.out.println((double)((int)(this.energie*1000))/1000);
 			
 			energieMoy[j - 1] += this.energie;

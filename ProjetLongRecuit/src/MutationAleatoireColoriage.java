@@ -1,16 +1,16 @@
 import java.util.Iterator;
 import java.util.Set;
 
-// Implémentation de l'interface IMutation sous la forme d'une mutation aléatoire de coloriage
-// Première ébauche avec le noeud pris aléatoirement et la couleur aussi.
+// Implï¿½mentation de l'interface IMutation sous la forme d'une mutation alï¿½atoire de coloriage
+// Premiï¿½re ï¿½bauche avec le noeud pris alï¿½atoirement et la couleur aussi.
 public class MutationAleatoireColoriage implements IMutation {
 
-	// Exécution de la modification aléatoire élémentaire sur le routage
+	// Exï¿½cution de la modification alï¿½atoire ï¿½lï¿½mentaire sur le routage
 	public void faire(Probleme probleme) {
 		
 		Coloriage coloriage = (Coloriage) probleme; 
 		
-		// Détermination aléatoire d'une mutation élémentaire à effectuer.
+		// Dï¿½termination alï¿½atoire d'une mutation ï¿½lï¿½mentaire ï¿½ effectuer.
 			int noeudAleatoire = (int) (Math.random()*coloriage.graphe.nombreNoeuds);
 			int couleurNoeud = coloriage.couleurs[noeudAleatoire];
 			int couleurAleatoire = couleurNoeud;
@@ -20,16 +20,16 @@ public class MutationAleatoireColoriage implements IMutation {
 			}
 			
 			
-			Modification modif = new Modification(couleurNoeud, noeudAleatoire);
+			Modification modif = new Modification(noeudAleatoire, couleurNoeud);
 		
-		// Exécution de la mutation élémentaire			
+		// Exï¿½cution de la mutation ï¿½lï¿½mentaire			
 			coloriage.derniereModif = modif;
 			coloriage.couleurs[noeudAleatoire] = couleurAleatoire;
 			
 		}
 		
 
-	// Annulation de la dernière mutation élémentaire effectuée
+	// Annulation de la derniï¿½re mutation ï¿½lï¿½mentaire effectuï¿½e
 	public void defaire(Probleme probleme) {
 		
 		Coloriage coloriage = (Coloriage) probleme; 
