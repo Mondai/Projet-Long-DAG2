@@ -5,26 +5,27 @@ public class Test {
 
 	public static void main(String[] args) throws IOException {
 		
-		// initialisation des variables
-		
-		int N = 10; // nombre de palliers
-		int M = 1; // nombre d'it廨ations �chaque pallier
-		int k = 3; // nombre de couleurs pour le coloriage
-		String lien = "lien"; // On ne sait pas comment recuperer le fichier
 		Conflits energie = new Conflits();
 		MutationAleatoireColoriage mutation = new MutationAleatoireColoriage();
 		
-		// cr嶧tion des classes utiles
-		
+		/* test trivial: k=1, Tdeb=1000, Tfin=1, pas=1, N=10.
 		Graphe graphe = Traducteur.traduire("data/test_cycle5.col");
 		Coloriage coloriage = new Coloriage(energie, mutation, k ,graphe);
-		Recuit recuit = new Recuit(N,M);
+		coloriage.initialiser();
+		RecuitSimule recuit = new RecuitSimuleLineaire(1,1000,1,1,10);
+		recuit.lancer(coloriage);
+		*/
 		
-		// iteration du recuit
+		// test avec decroissance de T lineaire: k=7000, Tdeb=1000, Tfin=1, pas=1, N=100.
+		// Resultat super!! 
+		// nombre de couleurs theorique 25 donne 2 ou 3 conflits. 26 donne 0 conflit.
+		Graphe graphe = Traducteur.traduire("data/le450_25a.col");
+		Coloriage coloriage = new Coloriage(energie, mutation, 25 ,graphe);
+		coloriage.initialiser();
+		RecuitSimule recuit = new RecuitSimuleLineaire(7000,1000,1,1,100);
+		recuit.lancer(coloriage);
 		
-		recuit.iterer(coloriage);
-		
-		// affichage du r廥ultat
+		// affichage du r�sultat
 		
 		System.out.println("Nombre de conflits : "+recuit.meilleureEnergie);
 		for (int i = 0; i < graphe.nombreNoeuds; i++) {

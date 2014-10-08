@@ -34,7 +34,7 @@ public class Coloriage extends Probleme {
 	
 	
 	// Initialisation du probl�me: affectation de couleurs al�atoires
-	public void initialiser(Random random){
+	public void initialiser(){
 		
 		//Affectation des couleurs
 		for (int j = 0; j < this.graphe.nombreNoeuds; j++) {

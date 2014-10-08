@@ -11,7 +11,7 @@ public abstract class Probleme {
 	public IEnergie E;
 	public IMutation mutation;
 
-	public abstract void initialiser(Random random); // initialisation du problème: attribution de routes aléatoires	 
+	public abstract void initialiser();
 	public abstract void sauvegarderSolution(); // sauvegarde la solution actuelle dans une variable
 	
 	// Calcule et retourne l'énergie (ex: la latance)
