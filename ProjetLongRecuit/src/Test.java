@@ -17,21 +17,22 @@ public class Test {
 		*/
 		
 		// test avec decroissance de T lineaire: k=7000, Tdeb=1000, Tfin=1, pas=1, N=100.
-		// Resultat super!! 
-		// nombre de couleurs theorique 25 donne 2 ou 3 conflits. 26 donne 0 conflit.
+		// Pour le450_250a: nombre de couleurs theorique 25 donne 2 ou 3 conflits. 26 donne 0 conflit.
 		Graphe graphe = Traducteur.traduire("data/le450_25a.col");
 		Coloriage coloriage = new Coloriage(energie, mutation, 25 ,graphe);
 		coloriage.initialiser();
 		RecuitSimule recuit = new RecuitSimuleLineaire(7000,1000,1,1,100);
 		recuit.lancer(coloriage);
 		
+		// RecuitSimuleLineaire donne des résultats beaucoup moins satisfaisant avec les graphes le450_25c et d (32 couleurs -> 0 conflit)
+		
 		// affichage du résultat
 		
-		System.out.println("Nombre de conflits : "+recuit.meilleureEnergie);
 		for (int i = 0; i < graphe.nombreNoeuds; i++) {
 			System.out.println(i + " -> couleur "
 					+ coloriage.meilleuresCouleurs[i]);
 		}
+		System.out.println("Nombre de conflits : "+recuit.meilleureEnergie);
 	}
 
 }
