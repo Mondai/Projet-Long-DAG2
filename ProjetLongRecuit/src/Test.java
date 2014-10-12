@@ -21,7 +21,7 @@ public class Test {
 		Graphe graphe = Traducteur.traduire("data/le450_25a.col");
 		Coloriage coloriage = new Coloriage(energie, mutation, 25 ,graphe);
 		coloriage.initialiser();
-		RecuitSimule recuit = new RecuitSimuleLineaire(7000,1000,1,1,100);
+		RecuitSimule recuit = new RecuitSimuleExponentiel(17000,1000,0,0.90,10);
 		recuit.lancer(coloriage);
 		
 		// RecuitSimuleLineaire donne des résultats beaucoup moins satisfaisant avec les graphes le450_25c et d (32 couleurs -> 0 conflit)
