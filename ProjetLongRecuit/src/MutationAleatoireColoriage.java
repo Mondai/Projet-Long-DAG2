@@ -11,12 +11,12 @@ public class MutationAleatoireColoriage implements IMutation {
 		Coloriage coloriage = (Coloriage) probleme; 
 		
 		// D�termination al�atoire d'une mutation �l�mentaire � effectuer.
-			int noeudAleatoire = (int) (Math.random()*coloriage.graphe.nombreNoeuds);
+			int noeudAleatoire = (int) (coloriage.gen.nextDouble()*coloriage.graphe.nombreNoeuds);
 			int couleurNoeud = coloriage.couleurs[noeudAleatoire];
 			int couleurAleatoire = couleurNoeud;
 			
 			while (couleurAleatoire == couleurNoeud){
-				couleurAleatoire = (int) (Math.random()*coloriage.k);
+				couleurAleatoire = (int) (coloriage.gen.nextDouble()*coloriage.k);
 			}
 			
 			

@@ -28,7 +28,7 @@ public abstract class RecuitSimule implements IRecuit{
 			probleme.modifElem();	// faire une mutation
 			energieSuiv = probleme.calculerEnergie(); // calculer son énergie
 			proba = Math.exp(-(energieSuiv-energiePrec)/(this.k*this.T));
-			if( energieSuiv>energiePrec || proba<Math.random()){ 	// cas où la mutation est refusée
+			if( energieSuiv>energiePrec || proba < probleme.gen.nextDouble()){ 	// cas où la mutation est refusée
 				probleme.annulerModif();
 			}
 			else {

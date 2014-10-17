@@ -10,6 +10,8 @@ public abstract class Probleme {
 	
 	public IEnergie E;
 	public IMutation mutation;
+	int seed = new Random().nextInt();
+	Random gen = new Random(seed);
 
 	public abstract void initialiser();
 	public abstract void sauvegarderSolution(); // sauvegarde la solution actuelle dans une variable

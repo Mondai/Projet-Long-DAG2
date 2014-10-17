@@ -19,7 +19,7 @@ public class Coloriage extends Probleme {
 	public Modification derniereModif;
 
 
-	public Coloriage(IEnergie E, IMutation mutation, int k, Graphe graphe) {
+	public Coloriage(IEnergie E, IMutation mutation, int k, Graphe graphe, int seed) {
 		
 		this.derniereModif = null;
 		this.E = E;
@@ -28,8 +28,13 @@ public class Coloriage extends Probleme {
 		this.couleurs = new int[graphe.nombreNoeuds];
 		this.meilleuresCouleurs = new int[graphe.nombreNoeuds];
 		this.graphe = graphe;
+		this.seed = seed;
+		this.gen = new Random(seed);
 		
-		
+	}
+	
+	public Coloriage(IEnergie E, IMutation mutation, int k, Graphe graphe) {
+		this(E, mutation, k, graphe, new Random().nextInt()); 
 	}
 	
 	
