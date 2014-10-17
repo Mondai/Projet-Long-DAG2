@@ -18,10 +18,10 @@ public class Test {
 		
 		// test avec decroissance de T lineaire: k=7000, Tdeb=1000, Tfin=1, pas=1, N=100.
 		// Pour le450_250a: nombre de couleurs theorique 25 donne 2 ou 3 conflits. 26 donne 0 conflit.
-		Graphe graphe = Traducteur.traduire("data/le450_25a.col");
+		Graphe graphe = Traducteur.traduire("data/le450_25d.col");
 		Coloriage coloriage = new Coloriage(energie, mutation, 25 ,graphe);
 		coloriage.initialiser();
-		RecuitSimule recuit = new RecuitSimuleExponentiel(17000,1000,0,0.90,10);
+		RecuitSimule recuit = new RecuitSimuleExponentiel(10000,1000,0,0.99,10,100000);
 		recuit.lancer(coloriage);
 		
 		// RecuitSimuleLineaire donne des résultats beaucoup moins satisfaisant avec les graphes le450_25c et d (32 couleurs -> 0 conflit)
