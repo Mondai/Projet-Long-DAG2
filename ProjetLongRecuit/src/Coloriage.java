@@ -29,12 +29,12 @@ public class Coloriage extends Probleme {
 		this.meilleuresCouleurs = new int[graphe.nombreNoeuds];
 		this.graphe = graphe;
 		this.seed = seed;
-		this.gen = new Random(seed);
+		this.gen = new HighQualityRandom(seed);
 		
 	}
 	
 	public Coloriage(IEnergie E, IMutation mutation, int k, Graphe graphe) {
-		this(E, mutation, k, graphe, new Random().nextInt()); 
+		this(E, mutation, k, graphe, new HighQualityRandom().nextInt()); 
 	}
 	
 	
