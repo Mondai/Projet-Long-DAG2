@@ -9,6 +9,7 @@ public class RecuitSimuleExponentiel extends RecuitSimule{
 	int compteur; 	//compteur sur N
 	double facteur;
 	int nbPoints;
+	int nbPointsCourant;
 	
 	public RecuitSimuleExponentiel(double k, double Tdeb, double Tfin, double facteur, int N, int nbPoints){
 		this.k = k ;
@@ -19,6 +20,7 @@ public class RecuitSimuleExponentiel extends RecuitSimule{
 		this.compteur = 1;
 		this.facteur = facteur;//Multiplication de la température par facteur(inférieur à 1)
 		this.nbPoints = nbPoints;
+		this.nbPointsCourant = nbPoints;
 	}
 	
 	public void calculerK(){
@@ -26,11 +28,13 @@ public class RecuitSimuleExponentiel extends RecuitSimule{
 	}
 	
 	public void initT(){
-		// Ne fait rien, T = Tdeb
+		this.T = this.Tdeb ;
+		this.compteur = 1 ;
+		this.nbPointsCourant = this.nbPoints;
 	}
 	
 	public boolean incrT(){
-		this.nbPoints--;
+		this.nbPointsCourant--;
 		// exponentiel
 		if(this.compteur==N){
 			this.T = (this.T-this.Tfin)*this.facteur + this.Tfin;
@@ -40,7 +44,7 @@ public class RecuitSimuleExponentiel extends RecuitSimule{
 			this.compteur++;
 		}
 		// condition d'arrêt: T<Tfin ou T<0.
-		if( this.T<this.Tfin || this.nbPoints == 0){
+		if( this.T<this.Tfin || this.nbPointsCourant == 0){
 			return false;
 		}
 		else{

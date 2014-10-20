@@ -25,6 +25,8 @@ public abstract class RecuitSimule implements IRecuit{
 		
 		while(incrT() && meilleureEnergie!=0){
 			
+			calculerK();
+			
 			probleme.modifElem();	// faire une mutation
 			energieSuiv = probleme.calculerEnergie(); // calculer son énergie
 			proba = Math.exp(-(energieSuiv-energiePrec)/(this.k*this.T));
@@ -39,7 +41,6 @@ public abstract class RecuitSimule implements IRecuit{
 				energiePrec = energieSuiv;
 			}
 			
-			calculerK();
 		}
 		
 		return probleme;

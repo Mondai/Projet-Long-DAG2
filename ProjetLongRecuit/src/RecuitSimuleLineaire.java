@@ -24,7 +24,8 @@ public class RecuitSimuleLineaire extends RecuitSimule{
 	}
 	
 	public void initT(){
-		// Ne fait rien, T = Tdeb
+		this.T = this.Tdeb ;
+		this.compteur = 1;
 	}
 	
 	public boolean incrT(){
