@@ -14,6 +14,9 @@ public class Coloriage extends Probleme {
 	int[] meilleuresCouleurs; // Tableau des noeuds r�pertoriant la meilleure r�partition des couleurs trouv�e jusqu'ici
 	Graphe graphe;
 	int k; // nombre de couleurs pour le coloriage
+	int[] conflits; //Tableau contenant 0 si le noeud n'est pas en conflit et 1 sinon
+	int nombreNoeudsConflit;// Sauvegarde le nombre de noeuds ne conflit
+	
 	
 	// Sauvegarde de la derni�re modification effectu�e
 	public Modification derniereModif;
@@ -30,6 +33,8 @@ public class Coloriage extends Probleme {
 		this.graphe = graphe;
 		this.seed = seed;
 		this.gen = new HighQualityRandom(seed);
+		this.nombreNoeudsConflit = graphe.nombreNoeuds;
+		this.conflits = new int[graphe.nombreNoeuds];
 		
 	}
 	
@@ -41,11 +46,13 @@ public class Coloriage extends Probleme {
 	// Initialisation du probl�me: affectation de couleurs al�atoires
 	public void initialiser(){
 		
+this.nombreNoeudsConflit = graphe.nombreNoeuds;
+		
 		//Affectation des couleurs
 		for (int j = 0; j < this.graphe.nombreNoeuds; j++) {
 			this.couleurs[j] = 0;
+			this.conflits[j] = 1;
 		}
-		
 	}
 	
 

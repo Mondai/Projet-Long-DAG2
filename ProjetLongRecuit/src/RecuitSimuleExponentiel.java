@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 
 public class RecuitSimuleExponentiel extends RecuitSimule{
 	
@@ -11,7 +13,7 @@ public class RecuitSimuleExponentiel extends RecuitSimule{
 	int nbPoints;
 	int nbPointsCourant;
 	
-	public RecuitSimuleExponentiel(double k, double Tdeb, double Tfin, double facteur, int N, int nbPoints){
+	public RecuitSimuleExponentiel(double k, double Tdeb, double Tfin, double facteur, int N, int nbPoints,int echantillonage){
 		this.k = k ;
 		this.Tdeb = Tdeb ;
 		this.T = Tdeb ;
@@ -21,6 +23,8 @@ public class RecuitSimuleExponentiel extends RecuitSimule{
 		this.facteur = facteur;//Multiplication de la température par facteur(inférieur à 1)
 		this.nbPoints = nbPoints;
 		this.nbPointsCourant = nbPoints;
+		this.echantillonage=echantillonage;
+		this.listEnergie= new ListEnergie();
 	}
 	
 	public void calculerK(){
@@ -31,6 +35,7 @@ public class RecuitSimuleExponentiel extends RecuitSimule{
 		this.T = this.Tdeb ;
 		this.compteur = 1 ;
 		this.nbPointsCourant = this.nbPoints;
+		this.listEnergie.init();
 	}
 	
 	public boolean incrT(){

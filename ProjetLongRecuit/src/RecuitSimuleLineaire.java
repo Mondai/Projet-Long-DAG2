@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 
 public class RecuitSimuleLineaire extends RecuitSimule{
 	
@@ -9,7 +11,7 @@ public class RecuitSimuleLineaire extends RecuitSimule{
 	int N;			// nombre d'itération par palier.
 	int compteur; 	//compteur sur N
 	
-	public RecuitSimuleLineaire(double k, double Tdeb, double Tfin, double pas, int N){
+	public RecuitSimuleLineaire(double k, double Tdeb, double Tfin, double pas, int N,int echantillonage){
 		this.k = k ;
 		this.Tdeb = Tdeb ;
 		this.T = Tdeb ;
@@ -17,6 +19,8 @@ public class RecuitSimuleLineaire extends RecuitSimule{
 		this.pas = pas;
 		this.N = N;
 		this.compteur = 1;
+		this.echantillonage=echantillonage;
+		this.listEnergie= new ListEnergie();
 	}
 	
 	public void calculerK(){
@@ -26,6 +30,7 @@ public class RecuitSimuleLineaire extends RecuitSimule{
 	public void initT(){
 		this.T = this.Tdeb ;
 		this.compteur = 1;
+		this.listEnergie.init();
 	}
 	
 	public boolean incrT(){

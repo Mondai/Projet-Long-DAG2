@@ -8,6 +8,8 @@ public class TestScriptResultat {
 
 	public static void main(String[] args) throws IOException {
 		
+		int echantillonage = 200;
+		
 		ecrire("resultats avec environ 10^6 iterations pour chaque algo");
 		ecrire("(0) => RecuitSimuleLineaire(7000,1000,0.01,0.01,10)");
 		ecrire("(1) => RecuitSimuleExponentiel(7000,1000,0.0000001,0.99,10,1000000)");
@@ -17,10 +19,10 @@ public class TestScriptResultat {
 		Conflits energie = new Conflits();
 		MutationAleatoireColoriage mutation = new MutationAleatoireColoriage();
 		RecuitSimule[] recuits = new RecuitSimule[4]; 
-		recuits[0] = new RecuitSimuleLineaire(7000,1000,0.01,0.01,10);
-		recuits[1] = new RecuitSimuleExponentiel(7000,1000,0.0000001,0.99,10,1000000);
-		recuits[2] = new RecuitSimuleExponentielPalier(7000,1000,0.0000001,0.99,1,1414,1);
-		recuits[3] = new RecuitSimuleExponentielPalier(7000,1000,0.0000001,0.99,1414,1,-1);
+		recuits[0] = new RecuitSimuleLineaire(7000,1000,0.01,0.01,10,echantillonage);
+		recuits[1] = new RecuitSimuleExponentiel(7000,1000,0.0000001,0.99,10,1000000,echantillonage);
+		recuits[2] = new RecuitSimuleExponentielPalier(7000,1000,0.0000001,0.99,1,1414,1,echantillonage);
+		recuits[3] = new RecuitSimuleExponentielPalier(7000,1000,0.0000001,0.99,1414,1,-1,echantillonage);
 		String[] lettres = {"a","b","c","d"};
 		int[] kDeb = {25,25,29,29};
 		

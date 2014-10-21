@@ -8,6 +8,8 @@ public class Test {
 		Conflits energie = new Conflits();
 		MutationAleatoireColoriage mutation = new MutationAleatoireColoriage();
 		
+		int echantillonage=200;
+		
 		/* test trivial: k=1, Tdeb=1000, Tfin=1, pas=1, N=10.
 		Graphe graphe = Traducteur.traduire("data/test_cycle5.col");
 		Coloriage coloriage = new Coloriage(energie, mutation, k ,graphe);
@@ -21,7 +23,7 @@ public class Test {
 		Graphe graphe = Traducteur.traduire("data/le450_25a.col");
 		Coloriage coloriage = new Coloriage(energie, mutation, 25 ,graphe);
 		coloriage.initialiser();
-		RecuitSimule recuit = new RecuitSimuleExponentielPalier(7000,1000,0.0000001,0.99,447,1,-1);		// graphe d, min couleurs = 30
+		RecuitSimule recuit = new RecuitSimuleExponentielPalier(7000,1000,0.0000001,0.99,447,1,-1,echantillonage);		// graphe d, min couleurs = 30
 		// RecuitSimule recuit = new RecuitSimuleExponentielPalier(7000,1000,0.0000001,0.99,1,447,1);	// graphe d, min couleurs = 30
 		// RecuitSimule recuit = new RecuitSimuleExponentiel(7000,1000,0.0000001,0.99,10,1000000); 		// graphe d, min couleurs = 33
 		// RecuitSimule recuit = new RecuitSimuleLineaire(7000,1000,0.01,0.01,10);						// graphe d, min couleurs = 33 .

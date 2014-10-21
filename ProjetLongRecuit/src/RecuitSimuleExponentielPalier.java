@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 
 public class RecuitSimuleExponentielPalier extends RecuitSimule{
 	
@@ -12,7 +14,7 @@ public class RecuitSimuleExponentielPalier extends RecuitSimule{
 	double palierPas;
 	double palier;
 	
-	public RecuitSimuleExponentielPalier(double k, double Tdeb, double Tfin, double facteur, double palierMin, double palierMax, double palierPas){
+	public RecuitSimuleExponentielPalier(double k, double Tdeb, double Tfin, double facteur, double palierMin, double palierMax, double palierPas,int echantillonage){
 		this.k = k ;
 		this.Tdeb = Tdeb ;
 		this.T = Tdeb ;
@@ -23,6 +25,8 @@ public class RecuitSimuleExponentielPalier extends RecuitSimule{
 		this.palierMax = palierMax;
 		this.palier = palierMin;
 		this.palierPas = palierPas;
+		this.echantillonage=echantillonage;
+		this.listEnergie= new ListEnergie();
 	}
 	
 	public void calculerK(){
@@ -33,6 +37,7 @@ public class RecuitSimuleExponentielPalier extends RecuitSimule{
 		this.T = this.Tdeb ;
 		this.compteur = 1 ;
 		this.palier = this.palierMin;
+		this.listEnergie.init();
 	}
 	
 	public boolean incrT(){

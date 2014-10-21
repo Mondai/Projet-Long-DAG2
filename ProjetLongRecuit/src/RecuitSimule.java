@@ -1,3 +1,5 @@
+import java.util.List;
+
 
 public abstract class RecuitSimule implements IRecuit{
 	
@@ -5,14 +7,19 @@ public abstract class RecuitSimule implements IRecuit{
 	double T;
 	double k;
 	double meilleureEnergie;
+	IListEnergie listEnergie;
+	int echantillonage;
 	
 	// méthodes abstraites 
 	abstract void calculerK();	// recalculer k à chaque itération si besoin 
 	abstract void initT();		// initialisation de T
 	abstract boolean incrT();	// incrémentation de T à chaque itération, return false si condition d'arret atteinte 
 	
+	
 	public RecuitSimule(){		// constructeur
 	}
+	
+	
 	
 	public Probleme lancer(Probleme probleme){
 		
@@ -22,6 +29,7 @@ public abstract class RecuitSimule implements IRecuit{
 		double proba = 1;
 		
 		initT();
+		int z=this.echantillonage;
 		
 		while(incrT() && meilleureEnergie!=0){
 			
@@ -40,6 +48,17 @@ public abstract class RecuitSimule implements IRecuit{
 				}
 				energiePrec = energieSuiv;
 			}
+			
+			listEnergie.add(meilleureEnergie,this.echantillonage);
+			/*if (z == this.echantillonage) {
+				//listEnergie.add(energieSuiv);
+				listEnergie.add(meilleureEnergie);
+				z=1;
+			}
+			else {
+				z++;
+			}
+			*/
 			
 		}
 		
