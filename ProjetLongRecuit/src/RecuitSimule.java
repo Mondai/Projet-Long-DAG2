@@ -1,19 +1,16 @@
-import java.util.List;
-
 
 public abstract class RecuitSimule implements IRecuit{
 	
-	// paramètres
+	// paramï¿½tres
 	double T;
 	double k;
 	double meilleureEnergie;
 	IListEnergie listEnergie;
-	int echantillonage;
 	
-	// méthodes abstraites 
-	abstract void calculerK();	// recalculer k à chaque itération si besoin 
-	abstract void initT();		// initialisation de T
-	abstract boolean incrT();	// incrémentation de T à chaque itération, return false si condition d'arret atteinte 
+	// mï¿½thodes abstraites 
+	abstract void calculerK();	// recalculer k ï¿½ chaque itï¿½ration si besoin 
+	abstract void init();		// initialisation
+	abstract boolean incrT();	// incrï¿½mentation de T ï¿½ chaque itï¿½ration, return false si condition d'arret atteinte 
 	
 	
 	public RecuitSimule(){		// constructeur
@@ -23,43 +20,33 @@ public abstract class RecuitSimule implements IRecuit{
 	
 	public Probleme lancer(Probleme probleme){
 		
+		init();
+		
 		double energiePrec = probleme.calculerEnergie() ;
 		this.meilleureEnergie = energiePrec ;
 		double energieSuiv = 0 ;
 		double proba = 1;
-		
-		initT();
-		int z=this.echantillonage;
 		
 		while(incrT() && meilleureEnergie!=0){
 			
 			calculerK();
 			
 			probleme.modifElem();	// faire une mutation
-			energieSuiv = probleme.calculerEnergie(); // calculer son énergie
+			energieSuiv = probleme.calculerEnergie(); // calculer son ï¿½nergie
 			proba = Math.exp(-(energieSuiv-energiePrec)/(this.k*this.T));
-			if( energieSuiv>energiePrec || proba < probleme.gen.nextDouble()){ 	// cas où la mutation est refusée
+			if( energieSuiv>energiePrec || proba < probleme.gen.nextDouble()){ 	// cas oï¿½ la mutation est refusï¿½e
 				probleme.annulerModif();
 			}
 			else {
-				if( energieSuiv<this.meilleureEnergie ){					// cas où avec une meilleure énergie globale 
+				if( energieSuiv<this.meilleureEnergie ){					// cas oï¿½ avec une meilleure ï¿½nergie globale 
 					this.meilleureEnergie = energieSuiv;
 					probleme.sauvegarderSolution();
 				}
 				energiePrec = energieSuiv;
 			}
 			
-			listEnergie.add(meilleureEnergie,this.echantillonage);
-			/*if (z == this.echantillonage) {
-				//listEnergie.add(energieSuiv);
-				listEnergie.add(meilleureEnergie);
-				z=1;
-			}
-			else {
-				z++;
-			}
-			*/
-			
+			listEnergie.add(meilleureEnergie);
+
 		}
 		
 		return probleme;

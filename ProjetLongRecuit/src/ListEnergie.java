@@ -6,19 +6,17 @@ public class ListEnergie extends IListEnergie {
 
 	ArrayList<Double> list;
 	int z;
+	int echantillonage;
 	
 	
-	public ListEnergie() {
+	public ListEnergie(int echantillonage) {
 		this.list=new ArrayList<Double>();
 		this.z=1;
-	}
+		this.echantillonage = echantillonage ;
+	}	
 	
-	
-	
-	
-	
-	public void add(double energie, int echantillonage) {
-		if (this.z == echantillonage) {
+	public void add(double energie) {
+		if (this.z == this.echantillonage) {
 			this.list.add(energie);
 			this.z=1;
 		}

@@ -1,5 +1,4 @@
-import java.util.Iterator;
-import java.util.Set;
+
 
 // Impl�mentation de l'interface IMutation sous la forme d'une mutation al�atoire d'un noeud en conflit de coloriage
 // La couleur est choisie aleatoirement.

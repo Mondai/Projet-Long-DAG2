@@ -1,5 +1,4 @@
 
-import java.awt.List;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -9,8 +8,8 @@ import java.io.PrintWriter;
 
 public class SortieGraphique {
 
-	int nombrePalliers;   // Nombre de points à placer sur le plot
-	RecuitSimule recuit; // !!!!!!!! --> RecuitSimule pour l'instant car pas de méthode getlistEnergie dans IRecuit
+	int nombrePalliers;   // Nombre de points ï¿½ placer sur le plot
+	RecuitSimule recuit; // !!!!!!!! --> RecuitSimule pour l'instant car pas de mï¿½thode getlistEnergie dans IRecuit
 	int tailleEchantillon;
 	Coloriage coloriage;
 	int N; // Nombre de changemens par Pallier
@@ -52,7 +51,6 @@ public class SortieGraphique {
 				coloriage.initialiser();
 				//RecuitSimuleExponentiel recuit = new RecuitSimuleExponentiel(this.kb, this.Tdebut, this.Tfin, this.N, this.nombrePalliers,this.echantillonage);
 				
-				this.recuit = recuit;
 				this.recuit.lancer(coloriage);
 				/*
 				double[] U = recuit.gethistoriqueEnergie();

@@ -23,7 +23,8 @@ public class Test {
 		Graphe graphe = Traducteur.traduire("data/le450_25a.col");
 		Coloriage coloriage = new Coloriage(energie, mutation, 25 ,graphe);
 		coloriage.initialiser();
-		RecuitSimule recuit = new RecuitSimuleExponentielPalier(7000,1000,0.0000001,0.99,447,1,-1,echantillonage);		// graphe d, min couleurs = 30
+		ListEnergie listEnergie = new ListEnergie(echantillonage);
+		RecuitSimule recuit = new RecuitSimuleExponentielPalier(7000,1000,0.0000001,0.99,447,1,-1,listEnergie);		// graphe d, min couleurs = 30
 		// RecuitSimule recuit = new RecuitSimuleExponentielPalier(7000,1000,0.0000001,0.99,1,447,1);	// graphe d, min couleurs = 30
 		// RecuitSimule recuit = new RecuitSimuleExponentiel(7000,1000,0.0000001,0.99,10,1000000); 		// graphe d, min couleurs = 33
 		// RecuitSimule recuit = new RecuitSimuleLineaire(7000,1000,0.01,0.01,10);						// graphe d, min couleurs = 33 .
@@ -32,7 +33,7 @@ public class Test {
 		recuit.lancer(coloriage);
 		long endTime = System.nanoTime();
 		
-		// affichage du résultat
+		// affichage du rï¿½sultat
 		
 		for (int i = 0; i < graphe.nombreNoeuds; i++) {
 			System.out.println(i + " -> couleur "

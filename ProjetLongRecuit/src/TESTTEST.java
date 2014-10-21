@@ -14,7 +14,7 @@ public class TESTTEST {
 		double Tdebut=7000;
 		double Tfin = 1; // ne marche pas avec 0
 		//double facteur = 0.99;
-		int N = 10; // nombre itération par pallier de T
+		int N = 10; // nombre itï¿½ration par pallier de T
 		int kb=17000;
 		int nombrePalliers=1000;
 		int echantillonage=300;
@@ -26,7 +26,8 @@ public class TESTTEST {
 		Coloriage coloriage = new Coloriage(energie, mutation, 25 ,graphe);
 		//RecuitSimuleExponentiel recuit = new RecuitSimuleExponentiel(kb,Tdebut,Tfin,N,nombrePalliers,echantillonage);
 		
-		RecuitSimuleLineaire recuit = new RecuitSimuleLineaire(kb,Tdebut,Tfin,1,N,echantillonage);
+		ListEnergie listEnergie = new ListEnergie(echantillonage);
+		RecuitSimuleLineaire recuit = new RecuitSimuleLineaire(kb,Tdebut,Tfin,1,N,listEnergie);
 		
 			
 		// SortieGraphique(nombrePalliers,recuit,tailleEchantillon,coloriage,mutation,N,tdebut,tfin, kb)

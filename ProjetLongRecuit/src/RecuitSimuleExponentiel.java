@@ -1,37 +1,36 @@
-import java.util.ArrayList;
+
 
 
 public class RecuitSimuleExponentiel extends RecuitSimule{
 	
-	// décroissance de T entre Tdeb et Tfin avec un pas linéaire et reste N itérations sur chaque palier. k est constant. 
+	// dï¿½croissance de T entre Tdeb et Tfin avec un pas linï¿½aire et reste N itï¿½rations sur chaque palier. k est constant. 
 	
 	double Tdeb;
 	double Tfin;
-	int N;			// nombre d'itération par palier.
+	int N;			// nombre d'itï¿½ration par palier.
 	int compteur; 	//compteur sur N
 	double facteur;
 	int nbPoints;
 	int nbPointsCourant;
 	
-	public RecuitSimuleExponentiel(double k, double Tdeb, double Tfin, double facteur, int N, int nbPoints,int echantillonage){
+	public RecuitSimuleExponentiel(double k, double Tdeb, double Tfin, double facteur, int N, int nbPoints, IListEnergie listEnergie){
 		this.k = k ;
 		this.Tdeb = Tdeb ;
 		this.T = Tdeb ;
 		this.Tfin = Tfin ;		
 		this.N = N;
 		this.compteur = 1;
-		this.facteur = facteur;//Multiplication de la température par facteur(inférieur à 1)
+		this.facteur = facteur;//Multiplication de la tempï¿½rature par facteur(infï¿½rieur ï¿½ 1)
 		this.nbPoints = nbPoints;
 		this.nbPointsCourant = nbPoints;
-		this.echantillonage=echantillonage;
-		this.listEnergie= new ListEnergie();
+		this.listEnergie= listEnergie;
 	}
 	
 	public void calculerK(){
 		// Ne fait rien, k est constant
 	}
 	
-	public void initT(){
+	public void init(){
 		this.T = this.Tdeb ;
 		this.compteur = 1 ;
 		this.nbPointsCourant = this.nbPoints;
@@ -48,7 +47,7 @@ public class RecuitSimuleExponentiel extends RecuitSimule{
 		else{
 			this.compteur++;
 		}
-		// condition d'arrêt: T<Tfin ou T<0.
+		// condition d'arrï¿½t: T<Tfin ou T<0.
 		if( this.T<this.Tfin || this.nbPointsCourant == 0){
 			return false;
 		}

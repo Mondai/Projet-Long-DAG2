@@ -9,7 +9,7 @@ public abstract class IListEnergie {
 	}
 	
 	
-	public void add(double energie, int echantillonage) {
+	public void add(double energie) {
 	}
 	
 	
