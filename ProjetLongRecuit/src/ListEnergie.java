@@ -7,6 +7,7 @@ public class ListEnergie extends IListEnergie {
 	ArrayList<Double> list;
 	int z;
 	int echantillonage;
+	int taille; // nombre d'energies calculées jusqu'a maintenant
 	
 	
 	public ListEnergie(int echantillonage) {
@@ -32,6 +33,18 @@ public class ListEnergie extends IListEnergie {
 	public void init() {
 		this.z=1;
 		this.list= new ArrayList<Double>();
+	}
+	
+	public int getTaille() {
+		return this.taille;
+	}
+	
+	public void initTaille() {
+		this.taille = 0;
+	}
+	
+	public void augmenteTaille() {
+		this.taille ++;
 	}
 	
 	

@@ -14,9 +14,9 @@ public class TESTTEST {
 		double Tdebut=7000;
 		double Tfin = 1; // ne marche pas avec 0
 		//double facteur = 0.99;
-		int N = 10; // nombre it�ration par pallier de T
+		int N = 2; // nombre it�ration par pallier de T
 		int kb=17000;
-		int nombrePalliers=1000;
+		int nombrePalliers=100;
 		int echantillonage=300;
 		double pas =((double)(Tdebut-Tfin)/((double)nombrePalliers));
 		

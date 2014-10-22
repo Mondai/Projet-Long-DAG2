@@ -8,7 +8,7 @@ public abstract class RecuitSimule implements IRecuit{
 	IListEnergie listEnergie;
 	
 	// m�thodes abstraites 
-	abstract void calculerK();	// recalculer k � chaque it�ration si besoin 
+	abstract void calculerK(double energie);	// recalculer k � chaque it�ration si besoin 
 	abstract void init();		// initialisation
 	abstract boolean incrT();	// incr�mentation de T � chaque it�ration, return false si condition d'arret atteinte 
 	
@@ -23,16 +23,19 @@ public abstract class RecuitSimule implements IRecuit{
 		init();
 		
 		double energiePrec = probleme.calculerEnergie() ;
+		this.listEnergie.augmenteTaille(); // on incremente le nombre d'iterations
 		this.meilleureEnergie = energiePrec ;
 		double energieSuiv = 0 ;
 		double proba = 1;
 		
 		while(incrT() && meilleureEnergie!=0){
 			
-			calculerK();
+			this.listEnergie.add(energiePrec);
+			calculerK(energiePrec);
 			
 			probleme.modifElem();	// faire une mutation
 			energieSuiv = probleme.calculerEnergie(); // calculer son �nergie
+			this.listEnergie.augmenteTaille();// on incremente le nombre d'iterations
 			proba = Math.exp(-(energieSuiv-energiePrec)/(this.k*this.T));
 			if( energieSuiv>energiePrec || proba < probleme.gen.nextDouble()){ 	// cas o� la mutation est refus�e
 				probleme.annulerModif();
@@ -45,7 +48,8 @@ public abstract class RecuitSimule implements IRecuit{
 				energiePrec = energieSuiv;
 			}
 			
-			listEnergie.add(meilleureEnergie);
+			
+			
 
 		}
 		
