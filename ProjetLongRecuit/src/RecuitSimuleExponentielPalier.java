@@ -25,7 +25,7 @@ public class RecuitSimuleExponentielPalier extends RecuitSimule{
 		this.listEnergie= listEnergie;
 	}
 	
-	public void calculerK(double energie){
+	public void calculerK(){
 		// Ne fait rien, k est constant
 	}
 	

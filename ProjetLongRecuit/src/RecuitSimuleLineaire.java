@@ -19,7 +19,7 @@ public class RecuitSimuleLineaire extends RecuitSimule{
 		this.listEnergie= listEnergie;
 	}
 	
-	public void calculerK(double energie){
+	public void calculerK(){
 		// Ne fait rien, k est constant
 	}
 	
@@ -27,7 +27,7 @@ public class RecuitSimuleLineaire extends RecuitSimule{
 		this.T = this.Tdeb ;
 		this.compteur = 1;
 		this.listEnergie.init();
-		this.k = 1; //on initialise k à 1 (solution temporaire)
+		this.k = 1; //on initialise k ï¿½ 1 (solution temporaire)
 		this.listEnergie.initTaille();
 	}
 	

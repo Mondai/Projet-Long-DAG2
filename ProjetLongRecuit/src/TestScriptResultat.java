@@ -1,7 +1,6 @@
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 
 public class TestScriptResultat {
@@ -60,7 +59,7 @@ public class TestScriptResultat {
 		BufferedWriter bw = null;
 		 
 	      try {
-	         bw = new BufferedWriter(new FileWriter("RecapitulatifResultats10^6.txt", true));
+	         bw = new BufferedWriter(new FileWriter("TestScriptResultat/RecapitulatifResultats10^6.txt", true));
 	     bw.write(s);
 	     bw.newLine();
 	     bw.flush();

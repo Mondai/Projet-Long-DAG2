@@ -7,9 +7,9 @@ public class RecuitSimuleLineaireK extends RecuitSimuleLineaire {
 		super(k, Tdeb, Tfin, pas, N, listEnergie);
 	}
 	
-	public void calculerK(double energie){
+	public void calculerK(){
 		double taille = (double) this.listEnergie.getTaille();
-		this.k = (this.k*(taille-1)+energie)/taille;  // moyenne des energies
+		this.k = (this.k*(taille-1)+this.energiePrec)/taille;  // moyenne des energies
 	}
 	
 }
