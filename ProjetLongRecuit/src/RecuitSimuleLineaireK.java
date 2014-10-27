@@ -13,7 +13,7 @@ public class RecuitSimuleLineaireK extends RecuitSimuleLineaire {
 			this.k = (this.k*(taille-1)+this.energiePrec)/taille;  // moyenne des energies
 		}
 		else{
-			this.k = (this.k*(10) - this.listEnergie.getlistEnergieTotale().get(taille - 11)
+			this.k = (this.k*(10) - this.listEnergie.getlistEnergieTotale().get(0)
 						+ this.energiePrec) / 10;
 		}
 	}
