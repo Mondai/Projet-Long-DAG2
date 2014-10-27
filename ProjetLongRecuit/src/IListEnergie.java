@@ -5,6 +5,8 @@ public abstract class IListEnergie {
 
 	public abstract List<Double> getlistEnergie();
 	
+	public abstract List<Double> getlistEnergieTotale();
+	
 	public abstract void add(double energie);
 	
 	public abstract void init();

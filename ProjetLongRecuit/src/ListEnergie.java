@@ -5,18 +5,21 @@ import java.util.List;
 public class ListEnergie extends IListEnergie {
 
 	ArrayList<Double> list;
+	ArrayList<Double> listTotale;
 	int z;
 	int echantillonage;
 	int taille; // nombre d'energies calculées jusqu'a maintenant
 	
 	
 	public ListEnergie(int echantillonage) {
-		this.list=new ArrayList<Double>();
+		this.list = new ArrayList<Double>();
+		this.listTotale = new ArrayList<Double>();
 		this.z=1;
 		this.echantillonage = echantillonage ;
 	}	
 	
 	public void add(double energie) {
+		this.listTotale.add(energie);
 		if (this.z == this.echantillonage) {
 			this.list.add(energie);
 			this.z=1;
@@ -30,9 +33,14 @@ public class ListEnergie extends IListEnergie {
 		return this.list;
 	}
 	
+	public List<Double> getlistEnergieTotale() {
+		return this.listTotale;
+	}
+	
 	public void init() {
 		this.z=1;
 		this.list= new ArrayList<Double>();
+		this.listTotale= new ArrayList<Double>();
 	}
 	
 	public int getTaille() {
