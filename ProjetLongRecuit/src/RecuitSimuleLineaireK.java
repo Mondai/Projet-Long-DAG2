@@ -3,8 +3,16 @@
 
 public class RecuitSimuleLineaireK extends RecuitSimuleLineaire {
 
+	double kConstant;
+	
 	public RecuitSimuleLineaireK(double k, double Tdeb, double Tfin, double pas, int N, IListEnergie listEnergie) {
 		super(k, Tdeb, Tfin, pas, N, listEnergie);
+		this.kConstant = k;
+	}
+	
+	public void init(){
+		super.init();
+		this.k = this.kConstant;
 	}
 	
 	public void calculerK(){

@@ -26,9 +26,9 @@ public class Test {
 		ListEnergie listEnergie = new ListEnergie(echantillonage);
 		//RecuitSimule recuit = new RecuitSimuleExponentielPalier(7000,1000,0.0000001,0.99,447,1,-1,listEnergie);		// graphe d, min couleurs = 30
 		// RecuitSimule recuit = new RecuitSimuleExponentielPalier(7000,1000,0.0000001,0.99,1,447,1,listEnergie);	// graphe d, min couleurs = 30
-		// RecuitSimule recuit = new RecuitSimuleExponentiel(7000,1000,0.0000001,0.99,10,100000, listEnergie); 		// graphe d, min couleurs = 33
-		// RecuitSimule recuit = new RecuitSimuleLineaire(7000,1000,0.01,0.1,10, listEnergie);						// graphe d, min couleurs = 33 .
-		   RecuitSimule recuit = new RecuitSimuleLineaireK(7000,1000,0.01,0.1,10, listEnergie);
+		 RecuitSimule recuit = new RecuitSimuleExponentiel(1,1000,0.0000001,0.99,10,100000, listEnergie); 		// graphe d, min couleurs = 33
+		// RecuitSimule recuit = new RecuitSimuleLineaire(1,1000,0.01,0.1,10, listEnergie);						// graphe d, min couleurs = 33 .
+		// RecuitSimule recuit = new RecuitSimuleLineaireK(1,1000,0.01,0.1,10, listEnergie);
 		long startTime = System.nanoTime();
 		recuit.lancer(coloriage);
 		long endTime = System.nanoTime();

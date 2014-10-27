@@ -27,7 +27,6 @@ public class RecuitSimuleLineaire extends RecuitSimule{
 		this.T = this.Tdeb ;
 		this.compteur = 1;
 		this.listEnergie.init();
-		this.k = 1; //on initialise k � 1 (solution temporaire)
 		this.listEnergie.initTaille();
 	}
 	

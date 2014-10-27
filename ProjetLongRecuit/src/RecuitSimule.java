@@ -38,11 +38,11 @@ public abstract class RecuitSimule implements IRecuit{
 			energieSuiv = probleme.calculerEnergie(); // calculer son �nergie
 			this.listEnergie.augmenteTaille();// on incremente le nombre d'iterations
 			proba = Math.exp(-(energieSuiv-this.energiePrec)/(this.k*this.T));
-			if( energieSuiv>this.energiePrec || proba < probleme.gen.nextDouble()){ 	// cas o� la mutation est refus�e
-				probleme.annulerModif();
+			if( energieSuiv>this.energiePrec && (proba<probleme.gen.nextDouble())){ 	
+				probleme.annulerModif();	// cas o� la mutation est refus�e
 			}
 			else {
-				if( energieSuiv<this.meilleureEnergie ){					// cas o� avec une meilleure �nergie globale 
+				if( energieSuiv<this.meilleureEnergie ){	// cas o� avec une meilleure �nergie globale 
 					this.meilleureEnergie = energieSuiv;
 					probleme.sauvegarderSolution();
 				}
