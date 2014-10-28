@@ -26,4 +26,8 @@ public class RecuitSimuleLineaireK extends RecuitSimuleLineaire {
 		}
 	}
 	
+	public String toString(){
+		return "Recuit Simulé Linéaire avec k l'énergie moyenne";
+	}
+	
 }

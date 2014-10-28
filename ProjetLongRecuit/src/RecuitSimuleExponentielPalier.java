@@ -54,4 +54,8 @@ public class RecuitSimuleExponentielPalier extends RecuitSimule{
 			return true;
 		}
 	}
+	
+	public String toString(){
+		return "Recuit Simulé Exponentiel avec paliers exponentiels";
+	}
 }

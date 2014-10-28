@@ -42,15 +42,21 @@ public class Coloriage extends Probleme {
 	
 	
 	// Initialisation du probl�me: affectation de couleurs al�atoires
-	public void initialiser(){
+	public void initialiserSansSeed(){
 		
-this.nombreNoeudsConflit = graphe.nombreNoeuds;
+		this.nombreNoeudsConflit = graphe.nombreNoeuds;
 		
 		//Affectation des couleurs
 		for (int j = 0; j < this.graphe.nombreNoeuds; j++) {
 			this.couleurs[j] = 0;
 			this.conflits[j] = 1;
 		}
+	}
+	
+	public void initialiser(){
+		this.initialiserSansSeed();
+		this.seed++;
+		this.gen = new HighQualityRandom(this.seed);
 	}
 	
 

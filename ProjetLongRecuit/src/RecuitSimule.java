@@ -7,6 +7,7 @@ public abstract class RecuitSimule implements IRecuit{
 	double meilleureEnergie;
 	double energiePrec;
 	IListEnergie listEnergie;
+	int nbPoints; //nombre d'itérations au total
 	
 	// mï¿½thodes abstraites 
 	abstract void calculerK();	// recalculer k ï¿½ chaque itï¿½ration si besoin 
@@ -55,6 +56,10 @@ public abstract class RecuitSimule implements IRecuit{
 		}
 		
 		return probleme;
+	}
+	
+	public String toString(){
+		return "Recuit Simulé";
 	}
 	
 }

@@ -8,6 +8,7 @@ public class RecuitSimuleLineaire extends RecuitSimule{
 	int N;			// nombre d'itï¿½ration par palier.
 	int compteur; 	//compteur sur N
 	
+	
 	public RecuitSimuleLineaire(double k, double Tdeb, double Tfin, double pas, int N, IListEnergie listEnergie){
 		this.k = k ;
 		this.Tdeb = Tdeb ;
@@ -17,6 +18,7 @@ public class RecuitSimuleLineaire extends RecuitSimule{
 		this.N = N;
 		this.compteur = 1;
 		this.listEnergie= listEnergie;
+		this.nbPoints = (int) (N*(Tdeb-Tfin)/pas);
 	}
 	
 	public void calculerK(){
@@ -46,5 +48,9 @@ public class RecuitSimuleLineaire extends RecuitSimule{
 		else{
 			return true;
 		}
+	}
+	
+	public String toString(){
+		return "Recuit Simulé Linéaire";
 	}
 }

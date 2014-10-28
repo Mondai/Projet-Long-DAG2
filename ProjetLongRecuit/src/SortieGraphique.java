@@ -4,37 +4,35 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Iterator;
+import java.util.List;
 
 
 public class SortieGraphique {
 
-	int nombrePalliers;   // Nombre de points ï¿½ placer sur le plot
 	RecuitSimule recuit; // !!!!!!!! --> RecuitSimule pour l'instant car pas de mï¿½thode getlistEnergie dans IRecuit
 	int tailleEchantillon;
 	Coloriage coloriage;
-	int N; // Nombre de changemens par Pallier
-	int Tdebut;
-	int Tfin;
+	double Tdebut;
+	double Tfin;
 	double kb;
-	int echantillonage;
+	int echantillonnage;
 	
 
 
 
 
-	public SortieGraphique(int nombrePalliers, RecuitSimule recuit,
+	public SortieGraphique( RecuitSimule recuit,
 			int tailleEchantillon, Coloriage coloriage,
-			int N, int tdebut, int tfin, double kb,int echantillonage) {
+			double tdebut, double tfin, double kb,int echantillonnage) {
 		super();
-		this.nombrePalliers = nombrePalliers;
 		this.recuit = recuit;
 		this.tailleEchantillon = tailleEchantillon;
 		this.coloriage = coloriage;
-		this.N=N;
-		Tdebut = tdebut;
-		Tfin = tfin;
+		this.Tdebut = tdebut;
+		this.Tfin = tfin;
 		this.kb = kb;
-		this.echantillonage=echantillonage;
+		this.echantillonnage=echantillonnage;
 	}
 
 
@@ -44,7 +42,16 @@ public class SortieGraphique {
 		try {
 			File f = new File (""+nomTexte);
 			PrintWriter pw = new PrintWriter (new BufferedWriter (new FileWriter (f)));
-
+			
+			pw.println("Sortie Graphique : ");
+			pw.println("Taille Echantillon : " + this.tailleEchantillon);
+			pw.println("Echantillonnage : " + this.echantillonnage);
+			pw.println("Température de départ : " + this.Tdebut);
+			pw.println("Température de fin : " + this.Tfin);
+			pw.println("Constante k : " + this.kb);
+			pw.println("Nombre d'itération : " + this.recuit.nbPoints);
+			pw.println("Seed du coloriage : " + this.coloriage.seed);
+			pw.println(this.recuit.toString());
 
 			for (int i=0; i<tailleEchantillon ; i++) {
 				
@@ -64,8 +71,9 @@ public class SortieGraphique {
 				
 				*/
 				pw.print("u"+i+"=");
-				pw.print(recuit.listEnergie.getlistEnergie().toString());
-				System.out.println(recuit.listEnergie.getlistEnergie().size());
+				List<Double> list = recuit.listEnergie.getlistEnergie();
+				pw.print(list.toString());
+				System.out.println(list.get(list.size()-1));
 				pw.print(";");
 				pw.println("");
 			}
@@ -75,8 +83,9 @@ public class SortieGraphique {
 					pw.print("u"+k+"; ");
 				}
 				pw.println("];");
-				pw.println("vect="+this.echantillonage+"*(1:length(u0));");
-				pw.print("boxplot(u,vect);");
+				pw.println("vect="+this.echantillonnage+"*(1:length(u0));");
+				
+				//pw.print("boxplot(u,vect);");
 				
 				pw.close();
 			

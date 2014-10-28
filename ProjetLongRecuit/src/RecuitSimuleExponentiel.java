@@ -35,6 +35,7 @@ public class RecuitSimuleExponentiel extends RecuitSimule{
 		this.compteur = 1 ;
 		this.nbPointsCourant = this.nbPoints;
 		this.listEnergie.init();
+		this.listEnergie.initTaille();
 	}
 	
 	public boolean incrT(){
@@ -54,5 +55,9 @@ public class RecuitSimuleExponentiel extends RecuitSimule{
 		else{
 			return true;
 		}
+	}
+	
+	public String toString(){
+		return "Recuit Simulé Exponentiel";
 	}
 }

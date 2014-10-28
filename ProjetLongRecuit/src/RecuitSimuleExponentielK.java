@@ -26,4 +26,8 @@ public class RecuitSimuleExponentielK extends RecuitSimuleExponentiel {
 		}
 	}
 	
+	public String toString(){
+		return "Recuit Simulé Exponentiel avec k l'energie moyenne";
+	}
+	
 }
