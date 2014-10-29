@@ -18,7 +18,10 @@ public class RecuitSimuleLineaire extends RecuitSimule{
 		this.N = N;
 		this.compteur = 1;
 		this.listEnergie= listEnergie;
-		this.nbPoints = (int) (N*(Tdeb-Tfin)/pas);
+		this.nbPoints = (int) ((Tdeb-Tfin)/pas);  // Nombre de changement de pallier
+	}
+
+	public RecuitSimuleLineaire() { // Pour création et ensuite seulement paramétrisation
 	}
 	
 	public void calculerK(){

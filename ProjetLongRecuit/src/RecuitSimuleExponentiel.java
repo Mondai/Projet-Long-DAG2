@@ -10,7 +10,6 @@ public class RecuitSimuleExponentiel extends RecuitSimule{
 	int N;			// nombre d'itï¿½ration par palier.
 	int compteur; 	//compteur sur N
 	double facteur;
-	int nbPoints;
 	int nbPointsCourant;
 	
 	public RecuitSimuleExponentiel(double k, double Tdeb, double Tfin, double facteur, int N, int nbPoints, IListEnergie listEnergie){
@@ -26,6 +25,9 @@ public class RecuitSimuleExponentiel extends RecuitSimule{
 		this.listEnergie= listEnergie;
 	}
 	
+	public RecuitSimuleExponentiel() { // Pour création et ensuite seulement paramétrisation
+	}
+
 	public void calculerK(){
 		// Ne fait rien, k est constant
 	}

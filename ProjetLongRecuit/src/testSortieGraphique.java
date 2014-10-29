@@ -10,7 +10,7 @@ public class testSortieGraphique {
 		//double facteur = 0.99;
 		int nombreIterationsParPalliers = 1;
 		int kinit = 1000;
-		int nombrePointsRecuit=100000;
+		int nombrePointsRecuit=1000;
 		int echantillonnage=300;
 		int nombreEchantillons = 10;
 		
