@@ -11,7 +11,7 @@ u9=[2396.0, 756.0, 428.0, 355.0, 315.0, 208.0, 153.0, 124.0, 106.0, 90.0, 74.0, 
 u=[u0; u1; u2; u3; u4; u5; u6; u7; u8; u9; ];
 vect=300*(1:length(u0));
 
-
+figure;
 taille = length(u0);
 umean = zeros(taille,1);
 uincertitude = zeros(taille,1);
@@ -21,17 +21,19 @@ for i = 1:taille
   uincertitude(i) = std(u(:,i))/sqrt(10);
   uintervalleincertitude(i,1) = umean(i) + uincertitude(i)*1.96;
   uintervalleincertitude(i,2) = umean(i) - uincertitude(i)*1.96;
-endfor
+end;
 
 
-#plot(u,vect);
-#phase d'approche
+plot(u,vect);
+figure;
 subplot (2, 1, 1)
-plot(vect(1:5),umean(1:5,:), 'x',
+plot(vect(1:5),umean(1:5,:), 'x');
      vect(1:5),uintervalleincertitude(1:5,1),
-     vect(1:5),uintervalleincertitude(1:5,2));
-#phase de raffinage
-subplot (2, 1, 2)
-plot(vect(5:end),umean(5:end,:), 'x',
+     vect(1:5),uintervalleincertitude(1:5,2);
+     title('phase d approche')
+
+subplot (2, 1, 2);
+plot(vect(5:end),umean(5:end,:), 'x');
      vect(5:end),uintervalleincertitude(5:end,1),
-     vect(5:end),uintervalleincertitude(5:end,2));
+     vect(5:end),uintervalleincertitude(5:end,2);
+     title('phase de raffinage')
