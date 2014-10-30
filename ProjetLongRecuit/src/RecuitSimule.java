@@ -7,7 +7,7 @@ public abstract class RecuitSimule implements IRecuit{
 	double meilleureEnergie;
 	double energiePrec;
 	IListEnergie listEnergie;
-	int nbPoints; //nombre d'itérations au total
+	int nbPoints; //nombre d'itérations au total ( changement de palier ET itération sur palier )
 	
 	// mï¿½thodes abstraites 
 	abstract void calculerK();	// recalculer k ï¿½ chaque itï¿½ration si besoin 

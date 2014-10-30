@@ -18,7 +18,7 @@ public class RecuitSimuleLineaire extends RecuitSimule{
 		this.N = N;
 		this.compteur = 1;
 		this.listEnergie= listEnergie;
-		this.nbPoints = (int) ((Tdeb-Tfin)/pas);  // Nombre de changement de pallier
+		this.nbPoints = (int) (N*((Tdeb-Tfin)/pas));  // Nombre de changement de pallier
 	}
 
 	public RecuitSimuleLineaire() { // Pour création et ensuite seulement paramétrisation
@@ -36,13 +36,16 @@ public class RecuitSimuleLineaire extends RecuitSimule{
 	}
 	
 	public boolean incrT(){
+		
 		// linï¿½aire
 		if(this.compteur==N){
 			this.T = this.T - pas;
 			this.compteur = 1;
+			
 		}
 		else{
 			this.compteur++;
+			
 		}
 		// condition d'arrï¿½t: T<Tfin ou T<0.
 		if( this.T<this.Tfin || this.T<0){
