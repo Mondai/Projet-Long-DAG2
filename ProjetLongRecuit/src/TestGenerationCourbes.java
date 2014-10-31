@@ -12,14 +12,13 @@ public class TestGenerationCourbes {
 
 	public static void main(String[] args) throws IOException {
 
-		String nomFichier = "SortiesGraphiques/Courbes2";
+		String nomFichier = "SortiesGraphiques/Courbes6abcd";
 
 		// Parametres principaux
 
 		
 		double Tdebut=7000;
 		double Tfin = 0;
-		int kinit = 1000;
 
 		int echantillonnage=100;
 
@@ -29,7 +28,7 @@ public class TestGenerationCourbes {
 
 			// Nombre de points important car on veux comparer pour le meme nombre d'itérations
 
-		int nbPoints = 5000;  // nombre de points au total sur palier et changement palier
+		int nbPoints = 20000;  // nombre de points au total sur palier et changement palier
 		double pas = N*((Tdebut-Tfin+1)/nbPoints);
 		System.out.println(pas);
 		
@@ -39,16 +38,16 @@ public class TestGenerationCourbes {
 		// Liste des benchmarks
 		LinkedList<String> listBenchmarks = new LinkedList();
 		listBenchmarks.add("data/le450_25a.col");
-		//listBenchmarks.add("data/le450_25b.col");
+		listBenchmarks.add("data/le450_25b.col");
 		
-		//listBenchmarks.add("le450_25c.col");
-		//listBenchmarks.add("le450_25d.col");
+		listBenchmarks.add("data/le450_25c.col");
+		listBenchmarks.add("data/le450_25d.col");
 
 
 		// Liste des recuits
 		LinkedList<RecuitSimule> listRecuits = new LinkedList();
-		listRecuits.add(new RecuitSimuleExponentiel());
-		listRecuits.add(new RecuitSimuleLineaire());
+		listRecuits.add(new RecuitSimuleExponentielK());
+		//listRecuits.add(new RecuitSimuleLineaire());
 
 
 		// Liste des Mutations
@@ -58,7 +57,8 @@ public class TestGenerationCourbes {
 		// Liste des k
 		LinkedList<Integer> listK = new LinkedList();
 		listK.add(1);
-		listK.add(100);
+		//listK.add(100);
+		//listK.add(10000);
 
 
 
@@ -92,7 +92,6 @@ public class TestGenerationCourbes {
 					for (double k : listK) {
 						pw.println("			%Constante k : " + k);
 						pw.println("");
-						int y=0;
 						for (RecuitSimule recuit : listRecuits) {
 
 

@@ -10,6 +10,10 @@ public class RecuitSimuleExponentielK extends RecuitSimuleExponentiel {
 		this.kConstant = k;
 	}
 	
+	public RecuitSimuleExponentielK() {
+		// placeholder constructeur
+	}
+
 	public void init(){
 		super.init();
 		this.k = this.kConstant;
