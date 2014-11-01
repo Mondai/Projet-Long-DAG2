@@ -1,3 +1,4 @@
+package tests;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -5,6 +6,18 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.LinkedList;
 import java.util.List;
+
+import solver.Coloriage;
+import solver.Conflits;
+import solver.Graphe;
+import solver.IMutation;
+import solver.ListEnergie;
+import solver.MutationAleatoireColoriage;
+import solver.RecuitSimule;
+import solver.RecuitSimuleExponentiel;
+import solver.RecuitSimuleExponentielK;
+import solver.RecuitSimuleLineaire;
+import solver.Traducteur;
 
 
 public class TestGenerationCourbes {
@@ -148,9 +161,9 @@ public class TestGenerationCourbes {
 
 							pw.println("");
 							pw.println("");
-							pw.println("%Seed du coloriage : " + coloriage.seed);
+							pw.println("%Seed du coloriage : " + coloriage.getSeed());
 							pw.println("%"+recuit.toString());
-							pw.println("%Nombre d'itération : " + recuit.nbPoints);
+							pw.println("%Nombre d'itération : " + recuit.getNbPoints());
 							pw.println("");
 
 
@@ -165,7 +178,7 @@ public class TestGenerationCourbes {
 
 								// Ecriture des vecteurs résultats
 								pw.print("u"+i+"=");
-								List<Double> list = recuit.listEnergie.getlistEnergie();
+								List<Double> list = recuit.getListEnergie().getlistEnergie();
 								pw.print(list.toString());
 								System.out.println(list.get(list.size()-1));
 								pw.print(";");

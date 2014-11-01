@@ -1,3 +1,4 @@
+package solver;
 // classe implementant l'energie dans le probleme du coloriage
 
 
@@ -8,7 +9,7 @@ public class ConflitsMutationConflits implements IEnergie {
 		Coloriage coloriage = (Coloriage)	probleme;
 		double conflits = 0;
 		
-		for (int j = 0; j < coloriage.graphe.nombreNoeuds; j++) { // parcours de tous les noeuds du graphe
+		for (int j = 0; j < coloriage.graphe.getNombreNoeuds(); j++) { // parcours de tous les noeuds du graphe
 			int couleurNoeudActuel = coloriage.couleurs[j]; // couleur du noeud actuel
 			coloriage.conflits[j] = 0;// on initialise en supposat l'absence de conflit
 			for (int noeudAdjacent : coloriage.graphe.connexions[j]) { // parcours des voisins du noeud

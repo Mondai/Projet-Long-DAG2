@@ -1,11 +1,20 @@
+package solver;
 import java.util.LinkedList;
 
 public class Graphe {
 	LinkedList<Integer>[] connexions; // représente les connexions entre noeuds du graphe
-	int nombreNoeuds;
+	private int nombreNoeuds;
 
 	Graphe(int nbNoeuds, LinkedList<Integer>[] connexions) {
-		this.nombreNoeuds = nbNoeuds;
+		this.setNombreNoeuds(nbNoeuds);
 		this.connexions = connexions;
+	}
+
+	public int getNombreNoeuds() {
+		return nombreNoeuds;
+	}
+
+	public void setNombreNoeuds(int nombreNoeuds) {
+		this.nombreNoeuds = nombreNoeuds;
 	}
 }

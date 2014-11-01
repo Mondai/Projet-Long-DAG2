@@ -1,3 +1,4 @@
+package solver;
 /* Une modification est une mutation élémentaire de la situation du problème
  * Un noeud de la route de l'utilisateur est remplacé par un autre, ce qui revient
  * à supprimer 2 arêtes consécutives de sa route et en rajouter 2 autres 

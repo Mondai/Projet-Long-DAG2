@@ -1,3 +1,4 @@
+package solver;
 // Interface représentant le concept abstrait de l'Energie dans l'algorithme de recuit
 
 public interface IEnergie {

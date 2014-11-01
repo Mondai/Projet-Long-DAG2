@@ -1,4 +1,15 @@
+package tests;
 import java.io.IOException;
+
+import solver.Coloriage;
+import solver.Conflits;
+import solver.Graphe;
+import solver.ListEnergie;
+import solver.MutationAleatoireColoriage;
+import solver.RecuitSimuleExponentielK;
+import solver.RecuitSimuleLineaireK;
+import solver.SortieGraphique;
+import solver.Traducteur;
 
 
 public class testSortieGraphique {

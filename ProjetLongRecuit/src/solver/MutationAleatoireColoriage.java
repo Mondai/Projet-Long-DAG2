@@ -1,3 +1,4 @@
+package solver;
 
 // Impl�mentation de l'interface IMutation sous la forme d'une mutation al�atoire de coloriage
 // Premi�re �bauche avec le noeud pris al�atoirement et la couleur aussi.
@@ -9,7 +10,7 @@ public class MutationAleatoireColoriage implements IMutation {
 		Coloriage coloriage = (Coloriage) probleme; 
 		
 		// D�termination al�atoire d'une mutation �l�mentaire � effectuer.
-			int noeudAleatoire = (int) (coloriage.gen.nextDouble()*coloriage.graphe.nombreNoeuds);
+			int noeudAleatoire = (int) (coloriage.gen.nextDouble()*coloriage.graphe.getNombreNoeuds());
 			int couleurNoeud = coloriage.couleurs[noeudAleatoire];
 			int couleurAleatoire = couleurNoeud;
 			

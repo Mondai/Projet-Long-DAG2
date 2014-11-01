@@ -1,3 +1,4 @@
+package solver;
 /*
  * Classe abstraite représentant un problème générique soluble par recuit simulé
  * Pour résoudre un problème grâce au recuit il faut faire une classe fille qui implémente
@@ -8,8 +9,8 @@ public abstract class Probleme {
 	
 	public IEnergie E;
 	public IMutation mutation;
-	int seed = new HighQualityRandom().nextInt();
-	HighQualityRandom gen = new HighQualityRandom(seed);
+	private int seed = new HighQualityRandom().nextInt();
+	HighQualityRandom gen = new HighQualityRandom(getSeed());
 
 	public abstract void initialiser();
 	public abstract void sauvegarderSolution(); // sauvegarde la solution actuelle dans une variable
@@ -27,6 +28,12 @@ public abstract class Probleme {
 	// Annule la dernière mutation élémentaire effectuée
 	public void annulerModif(){
 		this.mutation.defaire(this);
+	}
+	public int getSeed() {
+		return seed;
+	}
+	public void setSeed(int seed) {
+		this.seed = seed;
 	}
 	
 }

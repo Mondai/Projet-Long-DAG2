@@ -1,4 +1,14 @@
+package tests;
 import java.io.IOException;
+
+import solver.Coloriage;
+import solver.Conflits;
+import solver.Graphe;
+import solver.ListEnergie;
+import solver.MutationAleatoireColoriage;
+import solver.RecuitSimule;
+import solver.RecuitSimuleExponentiel;
+import solver.Traducteur;
 
 
 public class Test {
@@ -36,11 +46,11 @@ public class Test {
 		
 		// affichage du r�sultat
 		
-		for (int i = 0; i < graphe.nombreNoeuds; i++) {
+		for (int i = 0; i < graphe.getNombreNoeuds(); i++) {
 			System.out.println(i + " -> couleur "
-					+ coloriage.meilleuresCouleurs[i]);
+					+ coloriage.getMeilleuresCouleurs()[i]);
 		}
-		System.out.println("Nombre de conflits : "+recuit.meilleureEnergie);
+		System.out.println("Nombre de conflits : "+recuit.getMeilleureEnergie());
 		System.out.println("duree = "+(endTime-startTime)/1000000000+" s");
 	}
 

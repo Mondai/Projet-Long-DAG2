@@ -1,3 +1,4 @@
+package solver;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -49,8 +50,8 @@ public class SortieGraphique {
 			pw.println("Température de départ : " + this.Tdebut);
 			pw.println("Température de fin : " + this.Tfin);
 			pw.println("Constante k : " + this.kb);
-			pw.println("Nombre d'itération : " + this.recuit.nbPoints);
-			pw.println("Seed du coloriage : " + this.coloriage.seed);
+			pw.println("Nombre d'itération : " + this.recuit.getNbPoints());
+			pw.println("Seed du coloriage : " + this.coloriage.getSeed());
 			pw.println(this.recuit.toString());
 
 			for (int i=0; i<tailleEchantillon ; i++) {
@@ -71,7 +72,7 @@ public class SortieGraphique {
 				
 				*/
 				pw.print("u"+i+"=");
-				List<Double> list = recuit.listEnergie.getlistEnergie();
+				List<Double> list = recuit.getListEnergie().getlistEnergie();
 				pw.print(list.toString());
 				System.out.println(list.get(list.size()-1));
 				pw.print(";");

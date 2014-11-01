@@ -1,3 +1,4 @@
+package solver;
 public class RecuitSimuleExponentielPalier extends RecuitSimule{
 	
 	// d�croissance de T entre Tdeb et Tfin avec un pas lin�aire et reste N it�rations sur chaque palier. k est constant. 
@@ -22,7 +23,7 @@ public class RecuitSimuleExponentielPalier extends RecuitSimule{
 		this.palierMax = palierMax;
 		this.palier = palierMin;
 		this.palierPas = palierPas;
-		this.listEnergie= listEnergie;
+		this.setListEnergie(listEnergie);
 	}
 	
 	public void calculerK(){
@@ -33,7 +34,7 @@ public class RecuitSimuleExponentielPalier extends RecuitSimule{
 		this.T = this.Tdeb ;
 		this.compteur = 1 ;
 		this.palier = this.palierMin;
-		this.listEnergie.init();
+		this.getListEnergie().init();
 	}
 	
 	public boolean incrT(){
