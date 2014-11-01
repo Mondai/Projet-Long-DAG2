@@ -12,42 +12,58 @@ public class TestGenerationCourbes {
 
 	public static void main(String[] args) throws IOException {
 
-		String nomFichier = "SortiesGraphiques/Courbes6abcd";
+		String nomFichier = "SortiesGraphiques/Courbes2";
 
 		// Parametres principaux
 
 		
 		double Tdebut=7000;
 		double Tfin = 0;
+		int kinit = 1000;
 
-		int echantillonnage=100;
+		int echantillonnage=200;
 
-		int tailleEchantillon = 10;
+		int tailleEchantillon = 2;
 		double facteur = 0.993;
-		int N=2;
+		int N=10;
 
 			// Nombre de points important car on veux comparer pour le meme nombre d'itérations
 
-		int nbPoints = 20000;  // nombre de points au total sur palier et changement palier
+		int nbPoints = 5000;  // nombre de points au total sur palier et changement palier
 		double pas = N*((Tdebut-Tfin+1)/nbPoints);
 		System.out.println(pas);
 		
 		
-
+		
+		// Initialisation de la matrice de couleurs
+		
+		String[][] matriceCouleurs = new String[17][7];
+		String[] couleursBasiques = {"k","b","c","r","g","m","y"};
+		String[] lineSpecBasiques = {"-","--",":","-.","o","+","*",".","x","s","d","^","v",">","<","p","h"};
+		
+		for (int q=0;q<17;q++) {
+			for (int s=0;s<7;s++) {
+				matriceCouleurs[q][s]=couleursBasiques[s].concat(lineSpecBasiques[q]);
+			}
+		}
+		int compteurCouleur1 = 0;
+		int compteurCouleur2 = 0;
+		
+		LinkedList legende = new LinkedList();
+		
 		//Initialisation des listes à itérer
 		// Liste des benchmarks
 		LinkedList<String> listBenchmarks = new LinkedList();
 		listBenchmarks.add("data/le450_25a.col");
-		listBenchmarks.add("data/le450_25b.col");
+		//listBenchmarks.add("data/le450_25b.col");
 		
-		listBenchmarks.add("data/le450_25c.col");
-		listBenchmarks.add("data/le450_25d.col");
+		//listBenchmarks.add("le450_25c.col");
+		//listBenchmarks.add("le450_25d.col");
 
 
 		// Liste des recuits
 		LinkedList<RecuitSimule> listRecuits = new LinkedList();
-		listRecuits.add(new RecuitSimuleExponentielK());
-		//listRecuits.add(new RecuitSimuleLineaire());
+		listRecuits.add(new RecuitSimuleExponentiel());
 
 
 		// Liste des Mutations
@@ -55,12 +71,12 @@ public class TestGenerationCourbes {
 		listMutations.add( new MutationAleatoireColoriage());
 
 		// Liste des k
-		LinkedList<Integer> listK = new LinkedList();
-		listK.add(1);
-		//listK.add(100);
-		//listK.add(10000);
-
-
+		LinkedList<Double> listK = new LinkedList();
+		listK.add(1.);
+		//listK.add(100.);
+		//listK.add(10000.);
+		//listK.add(0.01);
+		//listK.add(0.001);
 
 
 		// Création Fichier Texte
@@ -84,7 +100,7 @@ public class TestGenerationCourbes {
 				pw.println("%Benchmark :"+ benchmark);
 				pw.println("clear all;");
 				pw.println("figure;");
-				pw.println("title('"+benchmark+",  k ="+listK.toString()+"'");
+				pw.println("title('"+benchmark+",  k ="+listK.toString()+"');");
 				pw.println("xlabel('Nombre d iterations');");
 				pw.println("ylabel('Energie');");
 
@@ -92,6 +108,7 @@ public class TestGenerationCourbes {
 					for (double k : listK) {
 						pw.println("			%Constante k : " + k);
 						pw.println("");
+						int y=0;
 						for (RecuitSimule recuit : listRecuits) {
 
 
@@ -164,19 +181,43 @@ public class TestGenerationCourbes {
 									  pw.println("			end;");
 									  
 									  
-						pw.println("plot(vect(taille/2:taille),uintervalleincertitude(taille/2:taille,:));");
+						pw.println("plot(vect(taille/2:taille),uintervalleincertitude(taille/2:taille,:),'"+ matriceCouleurs[compteurCouleur2][compteurCouleur1]+"');");
 						pw.println("hold on;");
+						
+						legende.add("['"+recuit.toString()+", k="+k+" up']");
+						legende.add("['"+recuit.toString()+", k="+k+" down']");
+						
+						if (compteurCouleur1==17) {
+							compteurCouleur1=0;
+						} else { 
+							compteurCouleur1++;
+						}
+						
 						}
 						System.out.println("fin résultats affichage");
-
+						if (compteurCouleur2==7) {
+							compteurCouleur2=0;
+						} else { 
+							compteurCouleur2++;
+						}
+						
+						
+						
+						
 					}	
+					
 				}
 			}
-
+			int u = legende.toString().length();
+			
+			pw.print( "legend({" );
+			pw.print(""+legende.toString().subSequence(1, u-1));
+			System.out.println(legende.toString());
+			pw.print("});");
+			
+			//legend({'recuit1'});
 			pw.close();
 			System.out.println("fin ecriture");
-
-
 		} catch (IOException exception)
 		{
 			System.out.println ("Erreur lors de la lecture : " + exception.getMessage());
