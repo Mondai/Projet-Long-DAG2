@@ -24,6 +24,7 @@ public class ListEnergie extends IListEnergie {
 		if (this.z == this.echantillonage) {
 			this.list.add(energie);
 			this.z=1;
+			
 		}
 		else {
 			this.z++;

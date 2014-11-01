@@ -43,12 +43,14 @@ public class RecuitSimuleExponentiel extends RecuitSimule{
 	public boolean incrT(){
 		this.nbPointsCourant--;
 		// exponentiel
+	
 		if(this.compteur==N){
 			this.T = (this.T-this.Tfin)*this.facteur + this.Tfin;
 			this.compteur = 1;
 		}
 		else{
 			this.compteur++;
+			
 		}
 		// condition d'arr�t: T<Tfin ou T<0.
 		if( this.T<this.Tfin || this.nbPointsCourant == 0){

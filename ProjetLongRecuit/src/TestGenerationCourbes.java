@@ -23,7 +23,7 @@ public class TestGenerationCourbes {
 
 		int echantillonnage=200;
 
-		int tailleEchantillon = 2;
+		int tailleEchantillon = 10;
 		double facteur = 0.993;
 		int N=10;
 
@@ -38,7 +38,7 @@ public class TestGenerationCourbes {
 		// Initialisation de la matrice de couleurs
 		
 		String[][] matriceCouleurs = new String[17][7];
-		String[] couleursBasiques = {"k","b","c","r","g","m","y"};
+		String[] couleursBasiques = {"k","b","r","c","g","m","y"};
 		String[] lineSpecBasiques = {"-","--",":","-.","o","+","*",".","x","s","d","^","v",">","<","p","h"};
 		
 		for (int q=0;q<17;q++) {
@@ -46,10 +46,6 @@ public class TestGenerationCourbes {
 				matriceCouleurs[q][s]=couleursBasiques[s].concat(lineSpecBasiques[q]);
 			}
 		}
-		int compteurCouleur1 = 0;
-		int compteurCouleur2 = 0;
-		
-		LinkedList legende = new LinkedList();
 		
 		//Initialisation des listes à itérer
 		// Liste des benchmarks
@@ -63,8 +59,8 @@ public class TestGenerationCourbes {
 
 		// Liste des recuits
 		LinkedList<RecuitSimule> listRecuits = new LinkedList();
-		listRecuits.add(new RecuitSimuleExponentiel());
-
+		listRecuits.add(new RecuitSimuleLineaire());
+		//listRecuits.add(new RecuitSimuleLineaire());
 
 		// Liste des Mutations
 		LinkedList<IMutation> listMutations = new LinkedList();
@@ -77,6 +73,7 @@ public class TestGenerationCourbes {
 		//listK.add(10000.);
 		//listK.add(0.01);
 		//listK.add(0.001);
+		listK.add(0.000001);
 
 
 		// Création Fichier Texte
@@ -93,6 +90,19 @@ public class TestGenerationCourbes {
 			// Itérations
 
 			for (String benchmark : listBenchmarks) {
+				
+				
+				
+				
+				// Réinitialisation Matice Couleurs
+				
+				int compteurCouleur1 = 0;
+				int compteurCouleur2 = 0;
+				
+				LinkedList legende = new LinkedList();
+				
+				
+				
 				Graphe graphe = Traducteur.traduire(""+benchmark);
 				pw.println();
 				pw.println();
@@ -100,18 +110,17 @@ public class TestGenerationCourbes {
 				pw.println("%Benchmark :"+ benchmark);
 				pw.println("clear all;");
 				pw.println("figure;");
-				pw.println("title('"+benchmark+",  k ="+listK.toString()+"');");
-				pw.println("xlabel('Nombre d iterations');");
-				pw.println("ylabel('Energie');");
+				
 
 				for (IMutation mutation : listMutations) {
-					for (double k : listK) {
-						pw.println("			%Constante k : " + k);
+					
+					for (RecuitSimule recuit : listRecuits) {
+						
 						pw.println("");
-						int y=0;
-						for (RecuitSimule recuit : listRecuits) {
-
-
+						
+						
+							for (double k : listK) {
+								pw.println("			%Constante k : " + k);
 
 							// Initialisation du Problème
 							Conflits energie = new Conflits();
@@ -187,15 +196,17 @@ public class TestGenerationCourbes {
 						legende.add("['"+recuit.toString()+", k="+k+" up']");
 						legende.add("['"+recuit.toString()+", k="+k+" down']");
 						
-						if (compteurCouleur1==17) {
+						if (compteurCouleur1==7) {
 							compteurCouleur1=0;
 						} else { 
 							compteurCouleur1++;
 						}
 						
+						System.out.println(compteurCouleur1);
+						System.out.println(compteurCouleur2);
 						}
 						System.out.println("fin résultats affichage");
-						if (compteurCouleur2==7) {
+						if (compteurCouleur2==17) {
 							compteurCouleur2=0;
 						} else { 
 							compteurCouleur2++;
@@ -207,13 +218,19 @@ public class TestGenerationCourbes {
 					}	
 					
 				}
+				pw.println("title('"+benchmark+"')");
+				pw.println("xlabel('Nombre d iterations');");
+				pw.println("ylabel('Energie');");
+				
+				int u = legende.toString().length();
+				
+				pw.print( "legend({" );
+				pw.print(""+legende.toString().subSequence(1, u-1));
+				System.out.println(legende.toString());
+				pw.print("});");
+				
 			}
-			int u = legende.toString().length();
 			
-			pw.print( "legend({" );
-			pw.print(""+legende.toString().subSequence(1, u-1));
-			System.out.println(legende.toString());
-			pw.print("});");
 			
 			//legend({'recuit1'});
 			pw.close();
