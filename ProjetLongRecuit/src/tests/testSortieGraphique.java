@@ -20,14 +20,14 @@ public class testSortieGraphique {
 		//double facteur = 0.99;
 		int nombreIterationsParPalliers = 1;
 		int kinit = 1000;
-		int nombrePointsRecuit=10000;
+		int nombrePointsRecuit=100000;
 		int echantillonnage=300;
 		int nombreEchantillons = 10;
 		
 		Conflits energie = new Conflits();
 		MutationAleatoireColoriage mutation = new MutationAleatoireColoriage();
-		Graphe graphe = Traducteur.traduire("data/le450_25a.col");
-		Coloriage coloriage = new Coloriage(energie, mutation, 25 ,graphe);
+		Graphe graphe = Traducteur.traduire("data/le450_15b.col");
+		Coloriage coloriage = new Coloriage(energie, mutation, 15 ,graphe);
 		
 		ListEnergie listEnergie = new ListEnergie(echantillonnage);
 		RecuitSimuleExponentielK recuit = new RecuitSimuleExponentielK(kinit,Tdebut,Tfin,0.80,nombreIterationsParPalliers,nombrePointsRecuit, listEnergie);
