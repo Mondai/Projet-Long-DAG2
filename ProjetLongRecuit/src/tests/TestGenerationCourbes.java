@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -17,6 +18,7 @@ import solver.RecuitSimule;
 import solver.RecuitSimuleExponentiel;
 import solver.RecuitSimuleExponentielK;
 import solver.RecuitSimuleLineaire;
+import solver.RecuitSimuleLineaireK;
 import solver.Traducteur;
 
 
@@ -36,13 +38,13 @@ public class TestGenerationCourbes {
 
 		int echantillonnage=200;
 
-		int tailleEchantillon = 10;
+		int tailleEchantillon = 40;
 		double facteur = 0.993;
 		int N=10;
 
 			// Nombre de points important car on veux comparer pour le meme nombre d'itérations
 
-		int nbPoints = 5000;  // nombre de points au total sur palier et changement palier
+		int nbPoints = 100000;  // nombre de points au total sur palier et changement palier
 		double pas = N*((Tdebut-Tfin+1)/nbPoints);
 		System.out.println(pas);
 		
@@ -65,29 +67,29 @@ public class TestGenerationCourbes {
 		LinkedList<String> listBenchmarks = new LinkedList();
 		listBenchmarks.add("data/le450_25a.col");
 		//listBenchmarks.add("data/le450_25b.col");
-		
 		//listBenchmarks.add("le450_25c.col");
 		//listBenchmarks.add("le450_25d.col");
 
 
 		// Liste des recuits
 		LinkedList<RecuitSimule> listRecuits = new LinkedList();
+		listRecuits.add(new RecuitSimuleLineaireK());
 		listRecuits.add(new RecuitSimuleLineaire());
-		//listRecuits.add(new RecuitSimuleLineaire());
-
+		
+		
 		// Liste des Mutations
 		LinkedList<IMutation> listMutations = new LinkedList();
 		listMutations.add( new MutationAleatoireColoriage());
 
 		// Liste des k
 		LinkedList<Double> listK = new LinkedList();
-		listK.add(1.);
+		listK.add(0.001);
 		//listK.add(100.);
 		//listK.add(10000.);
 		//listK.add(0.01);
 		//listK.add(0.001);
-		listK.add(0.000001);
-
+		listK.add(0.0000001);
+		
 
 		// Création Fichier Texte
 
@@ -132,7 +134,14 @@ public class TestGenerationCourbes {
 						pw.println("");
 						
 						
-							for (double k : listK) {
+						
+						
+						//	for (double k : listK) {  // Disjonction de cas K ou pas K
+						Iterator it = listK.iterator();
+						Boolean bool = true;
+						
+						while (it.hasNext() && bool) {
+						double k=(double) it.next();
 								pw.println("			%Constante k : " + k);
 
 							// Initialisation du Problème
@@ -149,11 +158,13 @@ public class TestGenerationCourbes {
 							else if (recuit.toString() == "Recuit Simulé Linéaire") {
 								recuit = new RecuitSimuleLineaire( k, Tdebut, Tfin, pas, N, listEnergie);
 							}
-							else if (recuit.toString() == "Recuit Simulé Exponentiel avec k l'energie moyenne") {
+							else if (recuit.toString() == "Recuit Simulé Exponentiel avec k l energie moyenne") {
 								recuit = new RecuitSimuleExponentielK( k, Tdebut, Tfin, facteur, N, nbPoints,listEnergie);
+								bool = false;
 							}
-							else if (recuit.toString() == "Recuit Simulé Linéaire avec k l'énergie moyenne") {
-								recuit = new RecuitSimuleLineaire( k, Tdebut, Tfin, pas, N, listEnergie);
+							else if (recuit.toString() == "Recuit Simulé Linéaire avec k l énergie moyenne") {
+								recuit = new RecuitSimuleLineaireK( k, Tdebut, Tfin, pas, N, listEnergie);
+								bool = false;
 							}
 
 
@@ -203,7 +214,7 @@ public class TestGenerationCourbes {
 									  pw.println("			end;");
 									  
 									  
-						pw.println("plot(vect(taille/2:taille),uintervalleincertitude(taille/2:taille,:),'"+ matriceCouleurs[compteurCouleur2][compteurCouleur1]+"');");
+						pw.println("plot(vect,uintervalleincertitude,'"+ matriceCouleurs[compteurCouleur2][compteurCouleur1]+"');");
 						pw.println("hold on;");
 						
 						legende.add("['"+recuit.toString()+", k="+k+" up']");
@@ -218,6 +229,8 @@ public class TestGenerationCourbes {
 						System.out.println(compteurCouleur1);
 						System.out.println(compteurCouleur2);
 						}
+							
+							
 						System.out.println("fin résultats affichage");
 						if (compteurCouleur2==17) {
 							compteurCouleur2=0;

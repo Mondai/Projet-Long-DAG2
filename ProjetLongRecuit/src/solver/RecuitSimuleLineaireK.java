@@ -11,6 +11,9 @@ public class RecuitSimuleLineaireK extends RecuitSimuleLineaire {
 		this.kConstant = k;
 	}
 	
+	public RecuitSimuleLineaireK() { // Pour création et ensuite seulement paramétrisation
+	}
+	
 	public void init(){
 		super.init();
 		this.k = this.kConstant;
@@ -28,7 +31,7 @@ public class RecuitSimuleLineaireK extends RecuitSimuleLineaire {
 	}
 	
 	public String toString(){
-		return "Recuit Simulé Linéaire avec k l'énergie moyenne";
+		return "Recuit Simulé Linéaire avec k l énergie moyenne";
 	}
 	
 }
