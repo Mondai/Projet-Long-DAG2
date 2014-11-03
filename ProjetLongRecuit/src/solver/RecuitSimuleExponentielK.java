@@ -36,9 +36,9 @@ public class RecuitSimuleExponentielK extends RecuitSimuleExponentiel {
 			//this.k = (this.k*(taille-1)+ list.get(tailleL-1))/taille;
 		}
 		else{
-			this.k = (this.k*10- this.getListEnergie().getlistEnergieTotale().get(0)
+			this.k = (this.k*10 + list.get(1) - list.get(0)
 						+ Math.abs(list.get(tailleL-1) - list.get(tailleL-2))) / 10;
-			//this.k = (this.k*10- this.getListEnergie().getlistEnergieTotale().get(0)
+			//this.k = (this.k*10 - list.get(0)
 			//		+ list.get(tailleL-1)) / 10;
 		}
 	}
