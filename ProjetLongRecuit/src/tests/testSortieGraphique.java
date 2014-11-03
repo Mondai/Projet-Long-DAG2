@@ -8,7 +8,6 @@ import solver.ListEnergie;
 import solver.MutationAleatoireColoriage;
 import solver.RecuitSimuleExponentielK;
 import solver.RecuitSimuleLineaireK;
-import solver.SortieGraphique;
 import solver.Traducteur;
 
 
@@ -16,7 +15,7 @@ public class testSortieGraphique {
 
 	public static void main(String[] args) throws IOException {
 		
-		double Tdebut=7000;
+		double Tdebut=3000;
 		double Tfin = 0;
 		//double facteur = 0.99;
 		int nombreIterationsParPalliers = 1;

@@ -1,4 +1,4 @@
-package solver;
+package tests;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -7,6 +7,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Iterator;
 import java.util.List;
+
+import solver.Coloriage;
+import solver.RecuitSimule;
 
 
 public class SortieGraphique {
