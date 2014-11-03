@@ -1,4 +1,6 @@
 package solver;
+
+import java.util.List;
 // Sous-classe de RecuitSimuleLineaire implementant un k variable
 
 
@@ -21,12 +23,21 @@ public class RecuitSimuleLineaireK extends RecuitSimuleLineaire {
 	
 	public void calculerK(){
 		int taille = this.getListEnergie().getTaille();
-		if (taille <= 10){
-			this.k = (this.k*(taille-1)+this.energiePrec)/taille;  // moyenne des energies
+		List<Double> list = this.getListEnergie().getlistEnergieTotale();
+		int tailleL = list.size();
+		
+		if (taille == 1){
+			this.k = this.energiePrec;
+		}
+		else if (taille <= 10){
+			this.k = (this.k*(taille-1)+ Math.abs(list.get(tailleL-1) - list.get(tailleL-2)))/taille;  // moyenne des différences des energies
+			//this.k = (this.k*(taille-1)+ list.get(tailleL-1))/taille;
 		}
 		else{
-			this.k = (this.k*(10) - this.getListEnergie().getlistEnergieTotale().get(0)
-						+ this.energiePrec) / 10;
+			this.k = (this.k*10 - Math.abs(list.get(1) - list.get(0))
+						+ Math.abs(list.get(tailleL-1) - list.get(tailleL-2))) / 10;
+			//this.k = (this.k*10 - list.get(0)
+			//		+ list.get(tailleL-1)) / 10;
 		}
 	}
 	

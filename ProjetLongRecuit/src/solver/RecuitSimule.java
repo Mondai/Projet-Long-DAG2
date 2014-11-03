@@ -33,7 +33,8 @@ public abstract class RecuitSimule implements IRecuit{
 		
 		while(incrT() && this.getMeilleureEnergie()!=0){
 			
-			this.getListEnergie().add(this.getMeilleureEnergie());  // choix arbitraire entre meilleure énergie et énergie actuelle
+			// this.getListEnergie().add(this.getMeilleureEnergie());  // choix arbitraire entre meilleure énergie et énergie actuelle
+			this.listEnergie.add(this.energiePrec);		// choix de l'énergie actuelle pour le calcul éventuel de k
 			calculerK();
 			
 			probleme.modifElem();	// faire une mutation
