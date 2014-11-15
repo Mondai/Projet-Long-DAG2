@@ -5,7 +5,7 @@ package solver;
  * les différentes méthodes abstraites utilisées par l'algorithme
  */
 
-public abstract class Probleme {
+public abstract class Probleme extends Particule{
 	
 	public IEnergie E;
 	public IMutation mutation;

@@ -1,31 +1,32 @@
 package solver;
 
-
 /*
- * Problï¿½me du routage
- * Cette classe implï¿½mente la classe abstraite Probleme
- */
+Classe qui contient son propre seed et generateur random
+Les couleurs actuelles de l'etat, les meilleurs couleurs et le graphe
+le nombre de couleurs, de conflits et de noeuds en conflit
+Contient une sauvegarde de la dernière modification, propre à chaque état
+*/
 
-public class Coloriage extends Probleme {
+public class GrapheColorie extends Etat{
 	
-	// Paramï¿½tres du problï¿½me
-	int[] couleurs; //Tableau des noeuds rï¿½pertoriant leurs couleurs
-	private int[] meilleuresCouleurs; // Tableau des noeuds rï¿½pertoriant la meilleure rï¿½partition des couleurs trouvï¿½e jusqu'ici
+	private int seed = new HighQualityRandom().nextInt();
+	HighQualityRandom gen = new HighQualityRandom(getSeed());
+	
+	int[] couleurs; //Tableau des noeuds reertoriant leurs couleurs
+	private int[] meilleuresCouleurs; // Tableau des noeuds repertoriant la meilleure repartition des couleurs trouvee jusqu'ici
 	Graphe graphe;
+	
 	int k; // nombre de couleurs pour le coloriage
 	int[] conflits; //Tableau contenant 0 si le noeud n'est pas en conflit et 1 sinon
-	int nombreNoeudsConflit;// Sauvegarde le nombre de noeuds ne conflit
+	int nombreNoeudsConflit;// Sauvegarde le nombre de noeuds en conflit
 	
-	
-	// Sauvegarde de la derniï¿½re modification effectuï¿½e
+	// Sauvegarde de la derniere modification effectuee
 	public Modification derniereModif;
-
-
-	public Coloriage(IEnergie E, IMutation mutation, int k, Graphe graphe, int seed) {
+	
+	public GrapheColorie(EnergiePotentielle E, int k, Graphe graphe, int seed) {
 		
 		this.derniereModif = null;
 		this.E = E;
-		this.mutation = mutation;
 		this.k = k; 
 		this.couleurs = new int[graphe.getNombreNoeuds()];
 		this.setMeilleuresCouleurs(new int[graphe.getNombreNoeuds()]);
@@ -37,18 +38,15 @@ public class Coloriage extends Probleme {
 		
 	}
 	
-	public Coloriage(IEnergie E, IMutation mutation, int k, Graphe graphe) {
-		this(E, mutation, k, graphe, new HighQualityRandom().nextInt()); 
+	public GrapheColorie(EnergiePotentielle E, int k, Graphe graphe) {
+		this(E, k, graphe, new HighQualityRandom().nextInt()); 
 	}
 	
-	
-	// Initialisation du problï¿½me: affectation de couleurs alï¿½atoires
+	// Initialisation de l'etat: affectation de couleurs aleatoires
 	public void initialiserSansSeed(){
 		
 		this.nombreNoeudsConflit = graphe.getNombreNoeuds();
 		
-		//A changer en une initialisation des divers états pour etre
-		// compatible avec le nouveau diagramme de classes
 		//Affectation des couleurs
 		for (int j = 0; j < this.graphe.getNombreNoeuds(); j++) {
 			this.couleurs[j] = 0;
@@ -79,5 +77,13 @@ public class Coloriage extends Probleme {
 	public void setMeilleuresCouleurs(int[] meilleuresCouleurs) {
 		this.meilleuresCouleurs = meilleuresCouleurs;
 	}
+	
+	public int getSeed() {
+		return seed;
+	}
+	public void setSeed(int seed) {
+		this.seed = seed;
+	}
+	
 
 }
