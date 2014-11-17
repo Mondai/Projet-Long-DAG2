@@ -13,10 +13,18 @@ public class MutationConflitsAleatoire implements IMutation {
 		// D�termination al�atoire d'une mutation � effectuer parmi les noeuds en conflit.
 			int compteur = (int) (coloriage.gen.nextDouble()*coloriage.nombreNoeudsConflit);//nombre aleatoire entre 0 et le nombre de noeuds en conflit
 			int noeudConflitAleatoire = 0;
-			for (int j = 0; j < coloriage.graphe.getNombreNoeuds(); j++) { // a chaque noeud en conflit, on decremente le compteur pour obtenir 0 ce qui done une loi uniforme sur les noeuds en conflit
+			int j = 0;
+			boolean condition = true;
+			while(j<coloriage.graphe.getNombreNoeuds() && condition) { // a chaque noeud en conflit, on decremente le compteur pour obtenir 0 ce qui done une loi uniforme sur les noeuds en conflit
 				if (coloriage.conflits[j] == 1) {
-					if (compteur == 0) noeudConflitAleatoire=j; else compteur --;
+					if (compteur == 0)
+					{ 
+						noeudConflitAleatoire=j;
+						condition = false;
+					} 
+					else { compteur--;}
 				}
+				j++;
 			}
 			
 			int couleurNoeud = coloriage.couleurs[noeudConflitAleatoire];

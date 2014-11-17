@@ -14,7 +14,7 @@ public class Coloriage extends Probleme {
 	Graphe graphe;
 	int k; // nombre de couleurs pour le coloriage
 	int[] conflits; //Tableau contenant 0 si le noeud n'est pas en conflit et 1 sinon
-	int nombreNoeudsConflit;// Sauvegarde le nombre de noeuds ne conflit
+	int nombreNoeudsConflit;// Sauvegarde le nombre de noeuds en conflit
 	
 	
 	// Sauvegarde de la derni�re modification effectu�e

@@ -39,8 +39,8 @@ public class RecuitSimuleLineaire extends RecuitSimule{
 	public boolean incrT(){
 		
 		// lin�aire
-		if(this.compteur==N){
-			this.T = this.T - pas;
+		if(this.compteur==this.N){
+			this.T = this.T - this.pas;
 			this.compteur = 1;
 			
 		}
