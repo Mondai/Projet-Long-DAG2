@@ -1,5 +1,8 @@
 package solver;
 
+import solverCommun.EnergiePotentielle;
+import solverCommun.Etat;
+
 /*
 Classe qui contient son propre seed et generateur random
 Les couleurs actuelles de l'etat, les meilleurs couleurs et le graphe

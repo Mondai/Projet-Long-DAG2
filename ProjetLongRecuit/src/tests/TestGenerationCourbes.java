@@ -11,7 +11,6 @@ import java.util.List;
 import solver.Coloriage;
 import solver.Conflits;
 import solver.Graphe;
-import solver.IMutation;
 import solver.ListEnergie;
 import solver.MutationAleatoireColoriage;
 import solver.RecuitSimule;
@@ -20,6 +19,7 @@ import solver.RecuitSimuleExponentielK;
 import solver.RecuitSimuleLineaire;
 import solver.RecuitSimuleLineaireK;
 import solver.Traducteur;
+import solverCommun.IMutation;
 
 
 public class TestGenerationCourbes {

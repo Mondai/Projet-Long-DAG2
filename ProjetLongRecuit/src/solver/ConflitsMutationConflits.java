@@ -1,4 +1,7 @@
 package solver;
+
+import solverCommun.IEnergie;
+import solverCommun.Probleme;
 // classe implementant l'energie dans le probleme du coloriage
 
 

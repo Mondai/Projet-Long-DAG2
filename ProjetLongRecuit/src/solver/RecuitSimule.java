@@ -1,5 +1,8 @@
 package solver;
 
+import solverCommun.IRecuit;
+import solverCommun.Probleme;
+
 public abstract class RecuitSimule implements IRecuit{
 	
 	// param�tres

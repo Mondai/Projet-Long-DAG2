@@ -1,5 +1,9 @@
 package solver;
 
+import solverCommun.IEnergie;
+import solverCommun.IMutation;
+import solverCommun.Probleme;
+
 
 /*
  * Probl�me du routage

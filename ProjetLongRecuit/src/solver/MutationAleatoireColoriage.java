@@ -1,5 +1,8 @@
 package solver;
 
+import solverCommun.IMutation;
+import solverCommun.Probleme;
+
 // Impl�mentation de l'interface IMutation sous la forme d'une mutation al�atoire de coloriage
 // Premi�re �bauche avec le noeud pris al�atoirement et la couleur aussi.
 public class MutationAleatoireColoriage implements IMutation {

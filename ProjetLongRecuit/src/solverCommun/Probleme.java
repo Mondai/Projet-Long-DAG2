@@ -1,4 +1,6 @@
-package solver;
+package solverCommun;
+
+import solver.HighQualityRandom;
 /*
  * Classe abstraite représentant un problème générique soluble par recuit simulé
  * Pour résoudre un problème grâce au recuit il faut faire une classe fille qui implémente
@@ -10,7 +12,7 @@ public abstract class Probleme extends Particule{
 	public IEnergie E;
 	public IMutation mutation;
 	private int seed = new HighQualityRandom().nextInt();
-	HighQualityRandom gen = new HighQualityRandom(getSeed());
+	public HighQualityRandom gen = new HighQualityRandom(getSeed());
 
 	public abstract void initialiser();
 	public abstract void sauvegarderSolution(); // sauvegarde la solution actuelle dans une variable

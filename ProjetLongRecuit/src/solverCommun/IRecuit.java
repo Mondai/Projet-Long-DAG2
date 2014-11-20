@@ -1,4 +1,4 @@
-package solver;
+package solverCommun;
 
 public interface IRecuit {
 	
