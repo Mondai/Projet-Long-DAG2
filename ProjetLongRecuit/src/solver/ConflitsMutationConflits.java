@@ -10,7 +10,8 @@ public class ConflitsMutationConflits implements IEnergie {
 	public double calculer(Probleme probleme) {
 		
 		Coloriage coloriage = (Coloriage)	probleme;
-		double conflits = 0;
+		int conflits = 0;
+		int conflitsNoeuds = 0;  // nombre de noeuds en conflits != nombre de conflits (car un noeud peut avoir plusieurs conflits)
 		
 		for (int j = 0; j < coloriage.graphe.getNombreNoeuds(); j++) { // parcours de tous les noeuds du graphe
 			int couleurNoeudActuel = coloriage.couleurs[j]; // couleur du noeud actuel
@@ -20,11 +21,11 @@ public class ConflitsMutationConflits implements IEnergie {
 					conflits++; // incrementation de conflits si meme couleur
 					coloriage.conflits[j] = 1;// s'il y a un conflit on met 1 dans le tableau de conflits
 				}
-		
 			}
+			if(coloriage.conflits[j]==1){ conflitsNoeuds++;}
 		}
 		
-		coloriage.nombreNoeudsConflit = (int) conflits; // sauvegarde le nombre de noeuds en conflit
+		coloriage.nombreNoeudsConflit = conflitsNoeuds; // sauvegarde le nombre de noeuds en conflit
 		conflits /=2; // chaque conflit est compt� deux fois
 		
 		return conflits;
