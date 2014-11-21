@@ -1,22 +1,28 @@
 package tests;
 import java.io.IOException;
 
-import solver.Coloriage;
+import solver.EnergieCinetiqueVide;
+import solver.GrapheColorie;
+import solver.GrapheColorieParticule;
 import solver.Conflits;
 import solver.Graphe;
 import solver.ListEnergie;
 import solver.MutationAleatoireColoriage;
+import solver.MutationConflitsAleatoire;
 import solver.RecuitSimule;
 import solver.RecuitSimuleExponentiel;
 import solver.Traducteur;
+import solverCommun.Etat;
 
 
 public class Test {
 
 	public static void main(String[] args) throws IOException {
 		
-		Conflits energie = new Conflits();
-		MutationAleatoireColoriage mutation = new MutationAleatoireColoriage();
+		Conflits Ep = new Conflits();
+		EnergieCinetiqueVide Ec = new EnergieCinetiqueVide();
+		//MutationAleatoireColoriage mutation = new MutationAleatoireColoriage();
+		MutationConflitsAleatoire mutation = new MutationConflitsAleatoire();
 		
 		int echantillonage=200;
 		
@@ -30,13 +36,15 @@ public class Test {
 		
 		// test avec decroissance de T lineaire: k=7000, Tdeb=1000, Tfin=1, pas=1, N=100.
 		// Pour le450_250a: nombre de couleurs theorique 25 donne 2 ou 3 conflits. 26 donne 0 conflit.
-		Graphe graphe = Traducteur.traduire("data/le450_25c.col");
-		Coloriage coloriage = new Coloriage(energie, mutation, 25 ,graphe);
+		Graphe graphe = Traducteur.traduire("data/le450_25a.col");
+		//GrapheColorieParticule coloriage = new GrapheColorieParticule(Ep, mutation, Ec, 25 , 1, graphe);
+		GrapheColorieParticule coloriage = new GrapheColorieParticule(Ep, mutation, Ec, 25 , 1, graphe);
 		coloriage.initialiser();
 		ListEnergie listEnergie = new ListEnergie(echantillonage);
 		// RecuitSimule recuit = new RecuitSimuleExponentielPalier(1,0.01,0,0.99,447,1,-1,listEnergie);		
 		// RecuitSimule recuit = new RecuitSimuleExponentielPalier(1,0.01,0,0.99,1,447,1,listEnergie);	
-		 RecuitSimule recuit = new RecuitSimuleExponentiel(1,10000,0,0.99,10,1000000, listEnergie); // a->0, c->22
+		RecuitSimule recuit = new RecuitSimuleExponentiel(1,1000,0,0.90,10,200000, listEnergie);
+		// RecuitSimule recuit = new RecuitSimuleExponentiel(1,10000,0,0.99,10,1000000, listEnergie); // a->0, c->22
 		// RecuitSimule recuit = new RecuitSimuleExponentielK(1,10000,0,0.99,10,1000000, listEnergie);  // a->0, c->26
 		// RecuitSimule recuit = new RecuitSimuleLineaire(1,1000,0.01,0.1,10, listEnergie);						
 		// RecuitSimule recuit = new RecuitSimuleLineaireK(1,1000,0.01,0.1,10, listEnergie);
@@ -44,11 +52,14 @@ public class Test {
 		recuit.lancer(coloriage);
 		long endTime = System.nanoTime();
 		
-		// affichage du r�sultat
+		// affichage du resultat
 		
-		for (int i = 0; i < graphe.getNombreNoeuds(); i++) {
-			System.out.println(i + " -> couleur "
-					+ coloriage.getMeilleuresCouleurs()[i]);
+		for (Etat etat : coloriage.getEtats()){
+			GrapheColorie g = (GrapheColorie) etat;
+			for (int i = 0; i < graphe.getNombreNoeuds(); i++) {
+				System.out.println(i + " -> couleur "
+						+ g.getMeilleuresCouleurs()[i]);
+			}
 		}
 		System.out.println("Nombre de conflits : "+recuit.getMeilleureEnergie());
 		System.out.println("duree = "+(endTime-startTime)/1000000000+" s");

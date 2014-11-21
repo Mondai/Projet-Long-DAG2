@@ -86,7 +86,11 @@ public class GrapheColorie extends Etat{
 				this.conflitsConnexions[noeud][j] = 0;
 				this.conflitsConnexions[j][noeud] = 0;
 				this.nombreConflitsAretes--;
-				if(!enConflit(j)) this.listeNoeudsConflit.remove(j); 
+				if(!enConflit(j)) {
+					this.listeNoeudsConflit.remove(j); 
+					// System.out.println("removed");
+					// Fonctions debug
+				}
 			}
 		}
 		for (int j : graphe.connexions[noeud]){

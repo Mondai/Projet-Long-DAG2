@@ -24,8 +24,12 @@ public class MutationConflitsAleatoire implements IMutation {
 					// en comptant noeud = 0 existant
 					if (compteur < 0){
 						noeudConflitAleatoire = noeud;
+						break;
 					}
 					compteur--;
+					//System.out.println("compteur : " + compteur);
+					//System.out.println("noeud : " + noeud);
+					// Fonctions debug
 				}
 				
 				int couleurNoeud = coloriage.couleurs[noeudConflitAleatoire];

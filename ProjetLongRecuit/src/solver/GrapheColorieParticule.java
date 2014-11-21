@@ -1,6 +1,7 @@
 package solver;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import solverCommun.EnergieCinetique;
 import solverCommun.EnergiePotentielle;
@@ -8,12 +9,12 @@ import solverCommun.Etat;
 import solverCommun.IMutation;
 import solverCommun.Probleme;
 
-public class GraphColorieParticule extends Probleme {
+public class GrapheColorieParticule extends Probleme {
 	int k;
 	int replique;
 	Graphe graphe;
 	
-	public GraphColorieParticule(EnergiePotentielle Ep, IMutation mutation, EnergieCinetique Ec, int k, int replique, Graphe graphe, int seed) {
+	public GrapheColorieParticule(EnergiePotentielle Ep, IMutation mutation, EnergieCinetique Ec, int k, int replique, Graphe graphe, int seed) {
 		
 		this.Ec = Ec;
 		this.k = k; 
@@ -31,7 +32,7 @@ public class GraphColorieParticule extends Probleme {
 		
 	}
 	
-	public GraphColorieParticule(EnergiePotentielle Ep, IMutation mutation, EnergieCinetique Ec, int k, int replique, Graphe graphe) {
+	public GrapheColorieParticule(EnergiePotentielle Ep, IMutation mutation, EnergieCinetique Ec, int k, int replique, Graphe graphe) {
 		this(Ep, mutation, Ec, k, replique, graphe, new HighQualityRandom().nextInt()); 
 	}
 	
@@ -42,7 +43,9 @@ public class GraphColorieParticule extends Probleme {
 		this.etats = new ArrayList<Etat>();
 		
 		for (int i = 0; i < this.replique; i++){
-			this.etats.add( new GrapheColorie(Ep, k, graphe, this.gen.nextInt()));
+			GrapheColorie etat =  new GrapheColorie(Ep, k, graphe, this.gen.nextInt());
+			etat.initialiser();
+			this.etats.add(etat);
 		}
 		
 	}
@@ -59,6 +62,10 @@ public class GraphColorieParticule extends Probleme {
 			( (GrapheColorie) grapheColorie).sauvegarderSolution();
 		}
 		
+	}
+	
+	public List<Etat> getEtats(){
+		return this.etats;
 	}
 
 
