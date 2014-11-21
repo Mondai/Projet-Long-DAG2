@@ -43,7 +43,7 @@ public class Test {
 		ListEnergie listEnergie = new ListEnergie(echantillonage);
 		// RecuitSimule recuit = new RecuitSimuleExponentielPalier(1,0.01,0,0.99,447,1,-1,listEnergie);		
 		// RecuitSimule recuit = new RecuitSimuleExponentielPalier(1,0.01,0,0.99,1,447,1,listEnergie);	
-		RecuitSimule recuit = new RecuitSimuleExponentiel(1,1000,0,0.90,10,200000, listEnergie);
+		RecuitSimule recuit = new RecuitSimuleExponentiel(10000,1000,0,0.99,1,20000, listEnergie);
 		// RecuitSimule recuit = new RecuitSimuleExponentiel(1,10000,0,0.99,10,1000000, listEnergie); // a->0, c->22
 		// RecuitSimule recuit = new RecuitSimuleExponentielK(1,10000,0,0.99,10,1000000, listEnergie);  // a->0, c->26
 		// RecuitSimule recuit = new RecuitSimuleLineaire(1,1000,0.01,0.1,10, listEnergie);						
@@ -60,8 +60,11 @@ public class Test {
 				System.out.println(i + " -> couleur "
 						+ g.getMeilleuresCouleurs()[i]);
 			}
+			System.out.println("Energie de l'état : " + g.Ep.calculer(g));
+			System.out.println("Nombre de noeuds en conflits : " + g.nombreNoeudsEnConflit());
+			System.out.println("Nombre d'arêtes en conflits : " + g.nombreConflitsAretes);
 		}
-		System.out.println("Nombre de conflits : "+recuit.getMeilleureEnergie());
+		//System.out.println("Nombre de conflits : "+recuit.getMeilleureEnergie());
 		System.out.println("duree = "+(endTime-startTime)/1000000000+" s");
 	}
 

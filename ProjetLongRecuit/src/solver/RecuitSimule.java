@@ -40,7 +40,7 @@ public abstract class RecuitSimule implements IRecuit{
 			this.listEnergie.add(this.energiePrec);		// choix de l'énergie actuelle pour le calcul éventuel de k
 			calculerK();
 			
-			probleme.calculerEnergie(); // pour mettre a jour coloriage.nombreNoeudsConflit
+			//probleme.calculerEnergie(); // pour mettre a jour coloriage.nombreNoeudsConflit
 			probleme.modifElem();	// faire une mutation
 			
 			energieSuiv = probleme.calculerEnergie(); // calculer son ï¿½nergie

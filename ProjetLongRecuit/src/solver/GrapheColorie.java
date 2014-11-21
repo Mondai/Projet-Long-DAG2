@@ -23,8 +23,8 @@ public class GrapheColorie extends Etat{
 	
 	int k; // nombre de couleurs pour le coloriage
 	int[][] conflitsConnexions; //Tableau contenant 1 si les noeuds de l'arete sont en conflit et 0 sinon
-	HashSet<Integer> listeNoeudsConflit;// liste des noeuds en conflit
-	int nombreConflitsAretes;
+	public int[] noeudsConflit;// tableau avec 1 si noeud en conflit et 0 sinon
+	public int nombreConflitsAretes;
 	
 	// Sauvegarde de la derniere modification effectuee
 	public Modification derniereModif;
@@ -42,7 +42,7 @@ public class GrapheColorie extends Etat{
 		this.setSeed(seed);
 		this.gen = new HighQualityRandom(seed);
 		
-		this.listeNoeudsConflit = new HashSet<Integer>(); // pas sur si vraiment nécessaire
+		this.noeudsConflit = new int[graphe.getNombreNoeuds()]; // pas sur si vraiment nécessaire
 		this.conflitsConnexions = new int[graphe.getNombreNoeuds()][graphe.getNombreNoeuds()];
 		this.nombreConflitsAretes = 0;
 	}
@@ -54,14 +54,17 @@ public class GrapheColorie extends Etat{
 	// Initialisation de l'etat: affectation de couleurs aleatoires
 	public void initialiserSansSeed(){
 		
-		this.listeNoeudsConflit.clear();
+		/* Non nécessaire tant que toutes les couleurs après sont initialisées à 0
+		for (int i : this.noeudsConflit){
+			this.noeudsConflit[i] = 0;
+		}*/
 		
 		//Affectation des couleurs
 		for (int j = 0; j < this.graphe.getNombreNoeuds(); j++) {
 			// mettre à jour tous les conflits initiaux 
 			// et rajouter tous les noeuds à la liste des noeuds en conflit			
 			this.couleurs[j] = 0;
-			this.listeNoeudsConflit.add(j);
+			this.noeudsConflit[j] = 1;
 			for (int i = 0; i < this.graphe.getNombreNoeuds(); i++){
 				this.conflitsConnexions[j][i] = 0;
 			}
@@ -87,19 +90,22 @@ public class GrapheColorie extends Etat{
 				this.conflitsConnexions[j][noeud] = 0;
 				this.nombreConflitsAretes--;
 				if(!enConflit(j)) {
-					this.listeNoeudsConflit.remove(j); 
-					// System.out.println("removed");
+					this.noeudsConflit[j] = 0;
+					//System.out.println("removed");
 					// Fonctions debug
 				}
 			}
-		}
-		for (int j : graphe.connexions[noeud]){
-			if (this.couleurs[j] == this.couleurs[noeud]){
+			else if (this.couleurs[j] == this.couleurs[noeud]){
 				this.conflitsConnexions[noeud][j] = 1;
 				this.conflitsConnexions[j][noeud] = 1;
 				this.nombreConflitsAretes++;
-				this.listeNoeudsConflit.add(j); 
+				this.noeudsConflit[j] = 1;
+				//System.out.println("added");
 			}
+		}
+		if (!enConflit(noeud)){
+			this.noeudsConflit[noeud] = 0;
+			//System.out.println("removed");
 		}
 	}
 	
@@ -112,6 +118,15 @@ public class GrapheColorie extends Etat{
 		}
 		if (l > 0) return true;
 		else return false;
+	}
+	
+	//debug purposes
+	public int nombreNoeudsEnConflit(){
+		int k = 0;
+		for (int i : this.noeudsConflit){
+			if (i == 1) k++;
+		}
+		return k;
 	}
 
 	// Sauvegarde du coloriage actuel dans une variable

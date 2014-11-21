@@ -16,10 +16,25 @@ public class MutationConflitsAleatoire implements IMutation {
 			GrapheColorie coloriage = (GrapheColorie) etat; 
 			
 			// Determination aleatoire d'une mutation a effectuer parmi les noeuds en conflit.
+				int noeudsEnConflits = coloriage.nombreNoeudsEnConflit();
 				
-				int compteur = (int) (coloriage.gen.nextDouble()*coloriage.listeNoeudsConflit.size());
+				int compteur = (int) (coloriage.gen.nextDouble()*noeudsEnConflits);
 				int noeudConflitAleatoire = 0;
+				boolean condition = true;
+				int j = 0;
 				
+				
+				while (condition && j < coloriage.graphe.getNombreNoeuds()){
+					if (coloriage.noeudsConflit[j] == 1){
+						if (compteur == 0){
+							noeudConflitAleatoire = j;
+							condition = false;
+						}
+						else compteur--;
+					}
+					j++;
+				}
+				/*
 				for (int noeud: coloriage.listeNoeudsConflit){
 					// en comptant noeud = 0 existant
 					if (compteur < 0){
@@ -30,7 +45,7 @@ public class MutationConflitsAleatoire implements IMutation {
 					//System.out.println("compteur : " + compteur);
 					//System.out.println("noeud : " + noeud);
 					// Fonctions debug
-				}
+				}*/
 				
 				int couleurNoeud = coloriage.couleurs[noeudConflitAleatoire];
 				int couleurAleatoire = couleurNoeud;
@@ -43,12 +58,12 @@ public class MutationConflitsAleatoire implements IMutation {
 			
 			// Execution de la mutation elementaire			
 				coloriage.derniereModif = modif;
-				coloriage.couleurs[noeudConflitAleatoire] = couleurAleatoire;	
+				coloriage.couleurs[noeudConflitAleatoire] = couleurAleatoire;
+				//System.out.println("noeud : " + noeudConflitAleatoire + " et " + noeudsEnConflits + " restants.");
 				coloriage.updateLocal(noeudConflitAleatoire, couleurNoeud);
+				System.out.println("noeud : " + noeudConflitAleatoire + " et " + noeudsEnConflits + " restants.");
 		}
 		
-
-			
 	}
 		
 
@@ -57,13 +72,17 @@ public class MutationConflitsAleatoire implements IMutation {
 		
 		for (Etat etat : probleme.etats){
 			GrapheColorie coloriage = (GrapheColorie) etat; 
+			int noeudsEnConflits = coloriage.nombreNoeudsEnConflit();
 			
 			Modification modif = coloriage.derniereModif;
 			int couleurAStocker = modif.couleurPrecedente;
 			modif = new Modification(modif.noeudModifie, coloriage.couleurs[modif.noeudModifie]);
 			int prevColor = coloriage.couleurs[modif.noeudModifie];
 			coloriage.couleurs[modif.noeudModifie] = couleurAStocker;	
+			//System.out.println("defaire");
+			//System.out.println("noeud : " + modif.noeudModifie + " et " + noeudsEnConflits + " restants.");
 			coloriage.updateLocal(modif.noeudModifie, prevColor);
+			//System.out.println("noeud : " + modif.noeudModifie + " et " + noeudsEnConflits + " restants.");
 		}
 		
 	}
@@ -74,17 +93,36 @@ public class MutationConflitsAleatoire implements IMutation {
 		GrapheColorie coloriage = (GrapheColorie) etat; 
 		
 		// Determination aleatoire d'une mutation a effectuer parmi les noeuds en conflit.
-			
-		int compteur = (int) (coloriage.gen.nextDouble()*coloriage.listeNoeudsConflit.size());
-		int noeudConflitAleatoire = 0;
+		int noeudsEnConflits = coloriage.nombreNoeudsEnConflit();
 		
+		int compteur = (int) (coloriage.gen.nextDouble()*noeudsEnConflits);
+		int noeudConflitAleatoire = 0;
+		boolean condition = true;
+		int j = 0;
+		
+		
+		while (condition && j < coloriage.graphe.getNombreNoeuds()){
+			if (coloriage.noeudsConflit[j] == 1){
+				if (compteur == 0){
+					noeudConflitAleatoire = j;
+					condition = false;
+				}
+				else compteur--;
+			}
+			j++;
+		}
+		/*
 		for (int noeud: coloriage.listeNoeudsConflit){
 			// en comptant noeud = 0 existant
 			if (compteur < 0){
 				noeudConflitAleatoire = noeud;
+				break;
 			}
 			compteur--;
-		}
+			//System.out.println("compteur : " + compteur);
+			//System.out.println("noeud : " + noeud);
+			// Fonctions debug
+		}*/
 		
 		int couleurNoeud = coloriage.couleurs[noeudConflitAleatoire];
 		int couleurAleatoire = couleurNoeud;
@@ -95,9 +133,9 @@ public class MutationConflitsAleatoire implements IMutation {
 		
 		Modification modif = new Modification(noeudConflitAleatoire, couleurNoeud);
 	
-		// Execution de la mutation elementaire			
+	// Execution de la mutation elementaire			
 		coloriage.derniereModif = modif;
-		coloriage.couleurs[noeudConflitAleatoire] = couleurAleatoire;	
+		coloriage.couleurs[noeudConflitAleatoire] = couleurAleatoire;
 		coloriage.updateLocal(noeudConflitAleatoire, couleurNoeud);
 		
 	}

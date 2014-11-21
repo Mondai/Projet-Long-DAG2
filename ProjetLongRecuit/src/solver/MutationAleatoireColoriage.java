@@ -10,6 +10,7 @@ public class MutationAleatoireColoriage implements IMutation {
 
 	// Execution de la modification aleatoire elementaire
 	public void faire(Probleme probleme) {
+		//long startTime = System.nanoTime();
 		
 		for (Etat etat : probleme.etats){
 			GrapheColorie coloriage = (GrapheColorie) etat; 
@@ -32,6 +33,9 @@ public class MutationAleatoireColoriage implements IMutation {
 				coloriage.updateLocal(noeudAleatoire, couleurNoeud);
 		}
 		
+		//long endTime = System.nanoTime();
+		
+		//System.out.println("duree = "+(endTime-startTime)/1000+" micros");
 
 			
 	}
