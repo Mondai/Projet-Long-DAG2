@@ -1,6 +1,6 @@
 package solverCommun;
 
-public abstract class EnergieCinetique implements IEnergie {
+public abstract class EnergieCinetique{
 
 	abstract public double calculer(Probleme probleme);
 

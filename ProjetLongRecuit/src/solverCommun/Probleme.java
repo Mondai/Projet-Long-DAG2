@@ -9,7 +9,6 @@ import solver.HighQualityRandom;
 
 public abstract class Probleme extends Particule{
 	
-	public IEnergie E;
 	public IMutation mutation;
 	private int seed = new HighQualityRandom().nextInt();
 	public HighQualityRandom gen = new HighQualityRandom(getSeed());
@@ -17,9 +16,18 @@ public abstract class Probleme extends Particule{
 	public abstract void initialiser();
 	public abstract void sauvegarderSolution(); // sauvegarde la solution actuelle dans une variable
 	
-	// Calcule et retourne l'énergie (ex: la latance)
+	// Calcule et retourne l'énergie (ex: la latence)
 	public double calculerEnergie(){
-		return this.E.calculer(this);
+		return ( this.Ec.calculer(this) + calculerEnergiePotentielle() );
+	}
+	
+	//calcule l'énergie potentielle de chaque etat et les somme
+	public double calculerEnergiePotentielle(){
+		double energieCinetique = 0;
+		for (Etat etat : this.etats){
+			energieCinetique += etat.Ep.calculer(etat);
+		}
+		return energieCinetique;
 	}
 	
 	// Effectue une mutation élémentaire du problème
@@ -31,6 +39,15 @@ public abstract class Probleme extends Particule{
 	public void annulerModif(){
 		this.mutation.defaire(this);
 	}
+	
+	public void modifElemEtat(Etat etat){
+		this.mutation.faire(this, etat);
+	}
+	
+	public void annulerModifEtat(Etat etat){
+		this.mutation.defaire(this, etat);
+	}
+	
 	public int getSeed() {
 		return seed;
 	}

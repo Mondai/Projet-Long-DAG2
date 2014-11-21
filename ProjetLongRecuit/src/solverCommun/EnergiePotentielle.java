@@ -1,7 +1,7 @@
 package solverCommun;
 
-public abstract class EnergiePotentielle implements IEnergie {
+public abstract class EnergiePotentielle{
 
-	abstract public double calculer(Probleme probleme);
+	abstract public double calculer(Etat etat);
 
 }

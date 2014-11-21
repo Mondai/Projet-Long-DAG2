@@ -1,15 +1,16 @@
 package solver;
 
-import solverCommun.IEnergie;
-import solverCommun.Probleme;
+import solverCommun.EnergiePotentielle;
+import solverCommun.Etat;
 // classe implementant l'energie dans le probleme du coloriage
+import solverCommun.Probleme;
 
 
-public class Conflits implements IEnergie {
+public class Conflits extends EnergiePotentielle {
 
-	public double calculer(Probleme probleme) {
+	public double calculer(Etat etat) {
 		
-		Coloriage coloriage = (Coloriage)	probleme;
+		GrapheColorie coloriage = (GrapheColorie)	etat;
 		double conflits = 0;
 		
 		for (int j = 0; j < coloriage.graphe.getNombreNoeuds(); j++) { // parcours de tous les noeuds du graphe
@@ -20,7 +21,7 @@ public class Conflits implements IEnergie {
 			}
 		}
 		
-		conflits /=2; // chaque conflit est compt� deux fois
+		conflits /=2; // chaque conflit est compte deux fois
 		
 		return conflits;
 
