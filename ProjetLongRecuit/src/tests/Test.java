@@ -11,6 +11,7 @@ import solver.MutationAleatoireColoriage;
 import solver.MutationConflitsAleatoire;
 import solver.RecuitSimule;
 import solver.RecuitSimuleExponentiel;
+import solver.RecuitSimuleExponentielK;
 import solver.Traducteur;
 import solverCommun.Etat;
 
@@ -43,9 +44,9 @@ public class Test {
 		ListEnergie listEnergie = new ListEnergie(echantillonage);
 		// RecuitSimule recuit = new RecuitSimuleExponentielPalier(1,0.01,0,0.99,447,1,-1,listEnergie);		
 		// RecuitSimule recuit = new RecuitSimuleExponentielPalier(1,0.01,0,0.99,1,447,1,listEnergie);	
-		RecuitSimule recuit = new RecuitSimuleExponentiel(10,1000,0,0.99,10,20000, listEnergie);
+		RecuitSimule recuit = new RecuitSimuleExponentielK(1,1000,0,0.99,10,20000, listEnergie);
 		// RecuitSimule recuit = new RecuitSimuleExponentiel(1,10000,0,0.99,10,1000000, listEnergie); // a->0, c->22
-		// RecuitSimule recuit = new RecuitSimuleExponentielK(1,10000,0,0.99,10,1000000, listEnergie);  // a->0, c->26
+		//RecuitSimule recuit = new RecuitSimuleExponentielK(1,10000,0,0.99,10,1000000, listEnergie);  // a->0, c->26
 		// RecuitSimule recuit = new RecuitSimuleLineaire(1,1000,0.01,0.1,10, listEnergie);						
 		// RecuitSimule recuit = new RecuitSimuleLineaireK(1,1000,0.01,0.1,10, listEnergie);
 		long startTime = System.nanoTime();

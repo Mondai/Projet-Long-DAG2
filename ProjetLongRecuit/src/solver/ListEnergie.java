@@ -21,7 +21,7 @@ public class ListEnergie extends IListEnergie {
 	
 	public void add(double energie) {
 		this.listTotale.add(energie);
-		if (this.listTotale.size() > 10) this.listTotale.remove(0);
+		if (this.listTotale.size() > 11) this.listTotale.remove(0);
 		if (this.z == this.echantillonage) {
 			this.list.add(energie);
 			this.z=1;
