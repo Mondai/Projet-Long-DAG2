@@ -53,8 +53,8 @@ public class RecuitSimuleExponentiel extends RecuitSimule{
 			this.compteur++;
 			
 		}
-		// condition d'arr�t: T<Tfin ou T<0.
-		if( this.T<this.Tfin || this.nbPointsCourant == 0){
+		// condition d'arret: T<Tfin ou T<0.
+		if( this.T < this.Tfin || this.nbPointsCourant == 0){
 			return false;
 		}
 		else{
