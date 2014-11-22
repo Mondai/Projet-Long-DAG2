@@ -10,7 +10,7 @@ public class RecuitSimuleLineaire extends RecuitSimule{
 	int compteur; 	//compteur sur N
 	
 	
-	public RecuitSimuleLineaire(double k, double Tdeb, double Tfin, double pas, int N, IListEnergie listEnergie){
+	public RecuitSimuleLineaire(double k, double Tdeb, double Tfin, double pas, int N, IListEnergie listEnergie,  IListEnergie listProba){
 		this.k = k ;
 		this.Tdeb = Tdeb ;
 		this.T = Tdeb ;
@@ -19,6 +19,7 @@ public class RecuitSimuleLineaire extends RecuitSimule{
 		this.N = N;
 		this.compteur = 1;
 		this.setListEnergie(listEnergie);
+		this.setListProba(listProba);
 		this.setNbPoints((int) (N*((Tdeb-Tfin)/pas)));  // Nombre de changement de pallier
 	}
 
@@ -34,6 +35,8 @@ public class RecuitSimuleLineaire extends RecuitSimule{
 		this.compteur = 1;
 		this.getListEnergie().init();
 		this.getListEnergie().initTaille();
+		this.getListProba().init();
+		this.getListProba().initTaille();
 	}
 	
 	public boolean incrT(){

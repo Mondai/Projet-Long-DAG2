@@ -47,6 +47,7 @@ public abstract class RecuitSimule implements IRecuit{
 			energieSuiv = probleme.calculerEnergie(); // calculer son �nergie
 			this.getListEnergie().augmenteTaille();// on incremente le nombre d'iterations
 			proba = Math.exp(-(energieSuiv-this.energiePrec)/(this.k*this.T));
+			this.listProba.add(proba);
 			
 			if( energieSuiv > this.energiePrec && (proba < probleme.gen.nextDouble())){ 	
 				probleme.annulerModif();	// cas o� la mutation est refus�e
@@ -85,6 +86,14 @@ public abstract class RecuitSimule implements IRecuit{
 	}
 	public void setListEnergie(IListEnergie listEnergie) {
 		this.listEnergie = listEnergie;
+	}
+	
+	public IListEnergie getListProba() {
+		return listProba;
+	}
+	
+	public void setListProba(IListEnergie listProbas) {
+		this.listProba = listProbas;
 	}
 	
 }

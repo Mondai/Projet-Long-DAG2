@@ -8,9 +8,10 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import solver.Coloriage;
 import solver.Conflits;
+import solver.EnergieCinetiqueVide;
 import solver.Graphe;
+import solver.GrapheColorieParticule;
 import solver.ListEnergie;
 import solver.MutationAleatoireColoriage;
 import solver.RecuitSimule;
@@ -28,23 +29,25 @@ public class TestGenerationCourbes {
 	public static void main(String[] args) throws IOException {
 
 		String nomFichier = "SortiesGraphiques/Courbes2";
+		String nomFichierProbas = "SortiesGraphiques/Courbes2Probas";
 
 		// Parametres principaux
 
 		
 		double Tdebut=7000;
-		double Tfin = 0;
+		double Tfin = 2;  // Très important !!!
 		int kinit = 1000;
 
 		int echantillonnage=200;
 
-		int tailleEchantillon = 40;
-		double facteur = 0.993;
+		int tailleEchantillon = 2;
+		double facteur = 0.99;
 		int N=10;
+		int tailleFenetre = 100;
 
 			// Nombre de points important car on veux comparer pour le meme nombre d'itérations
 
-		int nbPoints = 100000;  // nombre de points au total sur palier et changement palier
+		int nbPoints = 20000;  // nombre de points au total sur palier et changement palier
 		double pas = N*((Tdebut-Tfin+1)/nbPoints);
 		System.out.println(pas);
 		
@@ -73,8 +76,8 @@ public class TestGenerationCourbes {
 
 		// Liste des recuits
 		LinkedList<RecuitSimule> listRecuits = new LinkedList();
-		listRecuits.add(new RecuitSimuleLineaireK());
-		listRecuits.add(new RecuitSimuleLineaire());
+		listRecuits.add(new RecuitSimuleExponentielK());
+		//listRecuits.add(new RecuitSimuleLineaire());
 		
 		
 		// Liste des Mutations
@@ -88,19 +91,28 @@ public class TestGenerationCourbes {
 		//listK.add(10000.);
 		//listK.add(0.01);
 		//listK.add(0.001);
-		listK.add(0.0000001);
+		//listK.add(0.0000001);
 		
 
 		// Création Fichier Texte
 
 		try {
 			File f = new File (""+nomFichier);
+			File fProbas = new File (""+nomFichierProbas);
 			PrintWriter pw = new PrintWriter (new BufferedWriter (new FileWriter (f)));
+			PrintWriter pw2 = new PrintWriter (new BufferedWriter (new FileWriter (fProbas)));
+			
 			pw.println("%Sortie Graphique : ");
 			pw.println("%Taille Echantillon : " + tailleEchantillon);
 			pw.println("%Echantillonnage : " + echantillonnage);
 			pw.println("%Température de départ : " + Tdebut);
 			pw.println("%Température de fin : " + Tfin);
+			
+			pw2.println("%Sortie Graphique : ");
+			pw2.println("%Taille Echantillon : " + tailleEchantillon);
+			pw2.println("%Echantillonnage : " + echantillonnage);
+			pw2.println("%Température de départ : " + Tdebut);
+			pw2.println("%Température de fin : " + Tfin);
 
 			// Itérations
 
@@ -115,6 +127,7 @@ public class TestGenerationCourbes {
 				int compteurCouleur2 = 0;
 				
 				LinkedList legende = new LinkedList();
+				LinkedList legende2 = new LinkedList();
 				
 				
 				
@@ -126,12 +139,20 @@ public class TestGenerationCourbes {
 				pw.println("clear all;");
 				pw.println("figure;");
 				
+				pw2.println();
+				pw2.println();
+				pw2.println("%---------------------------------------------------------------------");
+				pw2.println("%Benchmark :"+ benchmark);
+				pw2.println("clear all;");
+				pw2.println("figure;");
+				
 
 				for (IMutation mutation : listMutations) {
 					
 					for (RecuitSimule recuit : listRecuits) {
 						
 						pw.println("");
+						pw2.println("");
 						
 						
 						
@@ -143,27 +164,29 @@ public class TestGenerationCourbes {
 						while (it.hasNext() && bool) {
 						double k=(double) it.next();
 								pw.println("			%Constante k : " + k);
+								pw2.println("			%Constante k : " + k);
 
 							// Initialisation du Problème
-							Conflits energie = new Conflits();
-							ListEnergie listEnergie = new ListEnergie(echantillonnage); 
-							Coloriage coloriage = new Coloriage(energie, mutation, 25 ,graphe);
-
+							Conflits Ep = new Conflits();
+							EnergieCinetiqueVide Ec = new EnergieCinetiqueVide();
+							ListEnergie listEnergie = new ListEnergie(echantillonnage,tailleFenetre); 
+							ListEnergie listProba = new ListEnergie(echantillonnage,1); // taille de la fenetre non utile ici
+							GrapheColorieParticule coloriage = new GrapheColorieParticule(Ep, mutation, Ec, 25 , 1, graphe);
+							
 							// Paramétrisation du recuit demandé
-
-
+						
 							if (recuit.toString() == "Recuit Simulé Exponentiel") {
-								recuit = new RecuitSimuleExponentiel( k, Tdebut, Tfin, facteur, N, nbPoints,listEnergie);
+								recuit = new RecuitSimuleExponentiel( k, Tdebut, Tfin, facteur, N, nbPoints,listEnergie,listProba);
 							}
 							else if (recuit.toString() == "Recuit Simulé Linéaire") {
-								recuit = new RecuitSimuleLineaire( k, Tdebut, Tfin, pas, N, listEnergie);
+								recuit = new RecuitSimuleLineaire( k, Tdebut, Tfin, pas, N, listEnergie,listProba);
 							}
 							else if (recuit.toString() == "Recuit Simulé Exponentiel avec k l energie moyenne") {
-								recuit = new RecuitSimuleExponentielK( k, Tdebut, Tfin, facteur, N, nbPoints,listEnergie);
+								recuit = new RecuitSimuleExponentielK( k, Tdebut, Tfin, facteur, N, nbPoints,listEnergie,listProba);
 								bool = false;
 							}
 							else if (recuit.toString() == "Recuit Simulé Linéaire avec k l énergie moyenne") {
-								recuit = new RecuitSimuleLineaireK( k, Tdebut, Tfin, pas, N, listEnergie);
+								recuit = new RecuitSimuleLineaireK( k, Tdebut, Tfin, pas, N, listEnergie,listProba);
 								bool = false;
 							}
 
@@ -176,6 +199,13 @@ public class TestGenerationCourbes {
 							pw.println("%"+recuit.toString());
 							pw.println("%Nombre d'itération : " + recuit.getNbPoints());
 							pw.println("");
+							
+							pw2.println("");
+							pw2.println("");
+							pw2.println("%Seed du coloriage : " + coloriage.getSeed());
+							pw2.println("%"+recuit.toString());
+							pw2.println("%Nombre d'itération : " + recuit.getNbPoints());
+							pw2.println("");
 
 
 
@@ -194,11 +224,20 @@ public class TestGenerationCourbes {
 								System.out.println(list.get(list.size()-1));
 								pw.print(";");
 								pw.println("");
+								
+								pw2.print("u"+i+"=");
+								List<Double> list2 = recuit.getListProba().getlistEnergie();
+								pw2.print(list2.toString());
+								System.out.println(list2.get(list.size()-1));
+								pw2.print(";");
+								pw2.println("");
 							}
 
 							pw.print("u=[");
+							pw2.print("u=[");
 							for (int j=0; j< tailleEchantillon;j++) {
 								pw.print("u"+j+"; ");
+								pw2.print("u"+j+"; ");
 							}
 							pw.println("];");
 							pw.println("vect="+echantillonnage+"*(1:length(u0));");
@@ -219,6 +258,35 @@ public class TestGenerationCourbes {
 						
 						legende.add("['"+recuit.toString()+", k="+k+" up']");
 						legende.add("['"+recuit.toString()+", k="+k+" down']");
+						
+						
+						pw2.println("];");
+						pw2.println("vect="+echantillonnage+"*(1:length(u0));");
+						pw2.println("taille = length(u0);");
+						pw2.println("umean=zeros(taille,1);");
+						pw2.println("uintervalleincertitude = zeros(taille,2);");
+						pw2.println("for i = 1:taille;");
+								  pw2.println("			umean(i) = mean(u(:,i));");
+								  pw2.println("			nombredeVecteurs=length(u(:,1));");
+								  pw2.println( "			uincertitude(i) = std(u(:,i))/sqrt(nombredeVecteurs);");
+								  pw2.println("			uintervalleincertitude(i,1) = umean(i) + uincertitude(i)*1.96;");
+								  pw2.println("			uintervalleincertitude(i,2) = umean(i) - uincertitude(i)*1.96;");
+								  pw2.println("			end;");
+								  
+								  
+					pw2.println("plot(vect,uintervalleincertitude,'"+ matriceCouleurs[compteurCouleur2][compteurCouleur1]+"');");
+					pw2.println("hold on;");
+					
+					legende2.add("[' proba "+recuit.toString()+", k="+k+" up']");
+					legende2.add("[' proba "+recuit.toString()+", k="+k+" down']");
+						
+						
+						
+						
+						
+						
+						
+						
 						
 						if (compteurCouleur1==7) {
 							compteurCouleur1=0;
@@ -244,6 +312,7 @@ public class TestGenerationCourbes {
 					}	
 					
 				}
+				// Energie potentielle
 				pw.println("title('"+benchmark+"')");
 				pw.println("xlabel('Nombre d iterations');");
 				pw.println("ylabel('Energie');");
@@ -255,11 +324,24 @@ public class TestGenerationCourbes {
 				System.out.println(legende.toString());
 				pw.print("});");
 				
+				// probas
+				pw2.println("title('"+benchmark+"')");
+				pw2.println("xlabel('Nombre d iterations');");
+				pw2.println("ylabel('Energie');");
+				
+				int u2 = legende.toString().length();
+				
+				pw2.print( "legend({" );
+				pw2.print(""+legende.toString().subSequence(1, u-1));
+				System.out.println(legende.toString());
+				pw2.print("});");
+				
 			}
 			
 			
 			//legend({'recuit1'});
 			pw.close();
+			pw2.close();
 			System.out.println("fin ecriture");
 		} catch (IOException exception)
 		{

@@ -12,7 +12,7 @@ public class RecuitSimuleExponentielPalier extends RecuitSimule{
 	double palierPas;
 	double palier;
 	
-	public RecuitSimuleExponentielPalier(double k, double Tdeb, double Tfin, double facteur, double palierMin, double palierMax, double palierPas,IListEnergie listEnergie){
+	public RecuitSimuleExponentielPalier(double k, double Tdeb, double Tfin, double facteur, double palierMin, double palierMax, double palierPas,IListEnergie listEnergie, IListEnergie listProba){
 		this.k = k ;
 		this.Tdeb = Tdeb ;
 		this.T = Tdeb ;
@@ -24,6 +24,7 @@ public class RecuitSimuleExponentielPalier extends RecuitSimule{
 		this.palier = palierMin;
 		this.palierPas = palierPas;
 		this.setListEnergie(listEnergie);
+		this.setListProba(listProba);
 	}
 	
 	public void calculerK(){
@@ -35,6 +36,8 @@ public class RecuitSimuleExponentielPalier extends RecuitSimule{
 		this.compteur = 1 ;
 		this.palier = this.palierMin;
 		this.getListEnergie().init();
+		this.getListProba().init();
+		
 	}
 	
 	public boolean incrT(){

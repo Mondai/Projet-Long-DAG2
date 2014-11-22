@@ -9,8 +9,8 @@ public class RecuitSimuleExponentielK extends RecuitSimuleExponentiel {
 
 	double kConstant;
 	
-	public RecuitSimuleExponentielK(double k, double Tdeb, double Tfin, double facteur, int N, int nbPoints, IListEnergie listEnergie) {
-		super(k, Tdeb, Tfin, facteur, N, nbPoints, listEnergie);
+	public RecuitSimuleExponentielK(double k, double Tdeb, double Tfin, double facteur, int N, int nbPoints, IListEnergie listEnergie, IListEnergie listProbas) {
+		super(k, Tdeb, Tfin, facteur, N, nbPoints, listEnergie, listProbas);
 		this.kConstant = k;
 	}
 	
