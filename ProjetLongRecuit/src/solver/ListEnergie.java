@@ -10,18 +10,20 @@ public class ListEnergie extends IListEnergie {
 	int z;
 	int echantillonage;
 	int taille; // nombre d'energies calculées jusqu'a maintenant
+	int fenetreK;
 	
 	
-	public ListEnergie(int echantillonage) {
+	public ListEnergie(int echantillonage, int fenetreK) {
 		this.list = new ArrayList<Double>();
 		this.listTotale = new ArrayList<Double>();
 		this.z=1;
 		this.echantillonage = echantillonage ;
+		this.fenetreK = fenetreK;
 	}	
 	
 	public void add(double energie) {
 		this.listTotale.add(energie);
-		if (this.listTotale.size() > 11) this.listTotale.remove(0);
+		if (this.listTotale.size() > (this.fenetreK + 1) ) this.listTotale.remove(0);
 		if (this.z == this.echantillonage) {
 			this.list.add(energie);
 			this.z=1;
@@ -56,6 +58,11 @@ public class ListEnergie extends IListEnergie {
 	
 	public void augmenteTaille() {
 		this.taille ++;
+	}
+
+	@Override
+	public int getFenetreK() {
+		return this.fenetreK;		
 	}
 	
 	

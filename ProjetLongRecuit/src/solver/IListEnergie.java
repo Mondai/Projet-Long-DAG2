@@ -18,6 +18,8 @@ public abstract class IListEnergie {
 	
 	public abstract void initTaille();
 	
+	public abstract int getFenetreK();
+	
 }
 
 

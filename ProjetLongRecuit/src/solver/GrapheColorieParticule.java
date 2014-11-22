@@ -51,9 +51,9 @@ public class GrapheColorieParticule extends Probleme {
 	}
 	
 	public void initialiser(){
-		this.initialiserSansSeed();
-		this.setSeed(this.getSeed() + 1);
+		this.setSeed(this.getSeed() + 100);
 		this.gen = new HighQualityRandom(this.getSeed());
+		this.initialiserSansSeed();
 	}
 
 	@Override

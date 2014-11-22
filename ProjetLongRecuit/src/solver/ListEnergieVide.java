@@ -46,6 +46,12 @@ public class ListEnergieVide extends IListEnergie{
 		
 	}
 
+	@Override
+	public int getFenetreK() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 	
 	
 }

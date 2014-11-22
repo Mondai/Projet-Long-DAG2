@@ -27,23 +27,24 @@ public class RecuitSimuleExponentielK extends RecuitSimuleExponentiel {
 		int taille = this.getListEnergie().getTaille();
 		List<Double> list = this.getListEnergie().getlistEnergieTotale();
 		int tailleL = list.size();
+		int fenetreK = this.getListEnergie().getFenetreK();
 		//System.out.println(list);
 		
 		if (taille == 1){
 			this.k = 1;
 			//this.k = this.energiePrec;
 		}
-		else if (taille <= 10){
+		else if (taille <= fenetreK ){
 			this.k = (this.k*(taille-1)+ Math.abs(list.get(tailleL-1) - list.get(tailleL-2)))/taille;  // moyenne des différences des energies
 
 		}
 		else{
 			// marche parce que listEnergie garde les 11 dernieres energies, et utilisent 10 differences d'energies
-			this.k = (this.k*10 - Math.abs(list.get(1) - list.get(0))
-						+ Math.abs(list.get(tailleL-1) - list.get(tailleL-2))) / 10;
+			this.k = (this.k*fenetreK - Math.abs(list.get(1) - list.get(0))
+						+ Math.abs(list.get(tailleL-1) - list.get(tailleL-2))) / fenetreK;
 
 		}
-		//System.out.println("k : " + this.k);
+		System.out.println("k : " + this.k);
 	}
 	
 	public String toString(){
