@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20110701" xmlns:xmi="http://www.omg.org/spec/XMI/20110701" xmlns:uml="http://www.eclipse.org/uml2/4.0.0/UML" xmi:id="_p6UfMFvMEeSCofYjmKU4fA" name="model">
+  <packagedElement xmi:type="uml:Interface" xmi:id="_qp0pgFvMEeSCofYjmKU4fA" name="IMutation">
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_0x-lQFvMEeSCofYjmKU4fA" name="faire"/>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_7-Hb0FvMEeSCofYjmKU4fA" name="defaire"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Interface" xmi:id="_FPIUMFvNEeSCofYjmKU4fA" name="IEnergie">
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_JUkfkFvNEeSCofYjmKU4fA" name="calculer"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Interface" xmi:id="_FahE0FvNEeSCofYjmKU4fA" name="IRecuit">
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_HuaaEFvNEeSCofYjmKU4fA" name="lancer"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_OOQLUFvNEeSCofYjmKU4fA" name="Probleme"/>
+  <packagedElement xmi:type="uml:Class" xmi:id="_QxtmkFvNEeSCofYjmKU4fA" name="Particule">
+    <generalization xmi:type="uml:Generalization" xmi:id="_njzeUFvNEeSCofYjmKU4fA" general="_OOQLUFvNEeSCofYjmKU4fA"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_XDqs0FvNEeSCofYjmKU4fA" name="Etat"/>
+  <packagedElement xmi:type="uml:Class" xmi:id="_Y_YLkFvNEeSCofYjmKU4fA" name="EnergieKinetique">
+    <generalization xmi:type="uml:Generalization" xmi:id="_kFlD8FvNEeSCofYjmKU4fA" general="_FPIUMFvNEeSCofYjmKU4fA"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_c8xOMFvNEeSCofYjmKU4fA" name="EnergiePotentiel">
+    <generalization xmi:type="uml:Generalization" xmi:id="_jkyEAFvNEeSCofYjmKU4fA" general="_FPIUMFvNEeSCofYjmKU4fA"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_o0H2s1vNEeSCofYjmKU4fA" name="particule_etat_1" memberEnd="_o0H2tFvNEeSCofYjmKU4fA _o0H2sFvNEeSCofYjmKU4fA" navigableOwnedEnd="_o0H2sFvNEeSCofYjmKU4fA">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_o0H2tFvNEeSCofYjmKU4fA" name="particule" type="_QxtmkFvNEeSCofYjmKU4fA" association="_o0H2s1vNEeSCofYjmKU4fA">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_o0H2tVvNEeSCofYjmKU4fA" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_o0H2tlvNEeSCofYjmKU4fA" value="1"/>
+    </ownedEnd>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_o0H2sFvNEeSCofYjmKU4fA" name="etat" type="_XDqs0FvNEeSCofYjmKU4fA" association="_o0H2s1vNEeSCofYjmKU4fA">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_o0H2sVvNEeSCofYjmKU4fA" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_o0H2slvNEeSCofYjmKU4fA" value="*"/>
+    </ownedEnd>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_1a5z81xwEeSl5NCSf9pOuA" name="particule_iMutation_1" memberEnd="_1a5z9FxwEeSl5NCSf9pOuA _1a5z8FxwEeSl5NCSf9pOuA" navigableOwnedEnd="_1a5z8FxwEeSl5NCSf9pOuA">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_1a5z9FxwEeSl5NCSf9pOuA" name="particule" type="_QxtmkFvNEeSCofYjmKU4fA" association="_1a5z81xwEeSl5NCSf9pOuA">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_1a5z9VxwEeSl5NCSf9pOuA" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_1a5z9lxwEeSl5NCSf9pOuA" value="1"/>
+    </ownedEnd>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_1a5z8FxwEeSl5NCSf9pOuA" name="iMutation" type="_qp0pgFvMEeSCofYjmKU4fA" association="_1a5z81xwEeSl5NCSf9pOuA">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_1a5z8VxwEeSl5NCSf9pOuA" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_1a5z8lxwEeSl5NCSf9pOuA" value="1"/>
+    </ownedEnd>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_8ZOQ8FxwEeSl5NCSf9pOuA" name="iMutation_etat_1" memberEnd="_8ZOQ9FxwEeSl5NCSf9pOuA _8ZOQ8VxwEeSl5NCSf9pOuA" navigableOwnedEnd="_8ZOQ8VxwEeSl5NCSf9pOuA">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_8ZOQ8VxwEeSl5NCSf9pOuA" name="etat" type="_XDqs0FvNEeSCofYjmKU4fA" association="_8ZOQ8FxwEeSl5NCSf9pOuA">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_8ZOQ8lxwEeSl5NCSf9pOuA" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_8ZOQ81xwEeSl5NCSf9pOuA" value="*"/>
+    </ownedEnd>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_8ZOQ9FxwEeSl5NCSf9pOuA" name="iMutation" type="_qp0pgFvMEeSCofYjmKU4fA" association="_8ZOQ8FxwEeSl5NCSf9pOuA">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_8ZOQ9VxwEeSl5NCSf9pOuA" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_8ZOQ9lxwEeSl5NCSf9pOuA" value="1"/>
+    </ownedEnd>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_PWBSI1xxEeSl5NCSf9pOuA" name="particule_energieKinetique_1" memberEnd="_PWBSJFxxEeSl5NCSf9pOuA _PWBSIFxxEeSl5NCSf9pOuA" navigableOwnedEnd="_PWBSIFxxEeSl5NCSf9pOuA">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_PWBSJFxxEeSl5NCSf9pOuA" name="particule" type="_QxtmkFvNEeSCofYjmKU4fA" association="_PWBSI1xxEeSl5NCSf9pOuA">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_PWBSJVxxEeSl5NCSf9pOuA" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_PWBSJlxxEeSl5NCSf9pOuA" value="1"/>
+    </ownedEnd>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_PWBSIFxxEeSl5NCSf9pOuA" name="energieKinetique" type="_Y_YLkFvNEeSCofYjmKU4fA" association="_PWBSI1xxEeSl5NCSf9pOuA">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_PWBSIVxxEeSl5NCSf9pOuA" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_PWBSIlxxEeSl5NCSf9pOuA" value="1"/>
+    </ownedEnd>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_ST28QFxxEeSl5NCSf9pOuA" name="etat_energiePotentiel_1" memberEnd="_ST28QVxxEeSl5NCSf9pOuA _STtLQFxxEeSl5NCSf9pOuA" navigableOwnedEnd="_STtLQFxxEeSl5NCSf9pOuA">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_ST28QVxxEeSl5NCSf9pOuA" name="etat" type="_XDqs0FvNEeSCofYjmKU4fA" association="_ST28QFxxEeSl5NCSf9pOuA">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_ST28QlxxEeSl5NCSf9pOuA" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_ST28Q1xxEeSl5NCSf9pOuA" value="1"/>
+    </ownedEnd>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_STtLQFxxEeSl5NCSf9pOuA" name="energiePotentiel" type="_c8xOMFvNEeSCofYjmKU4fA" association="_ST28QFxxEeSl5NCSf9pOuA">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_STtLQVxxEeSl5NCSf9pOuA" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_STtLQlxxEeSl5NCSf9pOuA" value="1"/>
+    </ownedEnd>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_vtZCEFxxEeSl5NCSf9pOuA" name="RecuitQuantique" isAbstract="true">
+    <generalization xmi:type="uml:Generalization" xmi:id="_LUrHIFxyEeSl5NCSf9pOuA" general="_FahE0FvNEeSCofYjmKU4fA"/>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_zI1OMFxxEeSl5NCSf9pOuA" name="calculer">
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_DkERkFxyEeSl5NCSf9pOuA" name="particule" type="_QxtmkFvNEeSCofYjmKU4fA"/>
+    </ownedOperation>
+  </packagedElement>
+</uml:Model>

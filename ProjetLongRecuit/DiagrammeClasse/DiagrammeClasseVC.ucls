@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.1.7" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
+  associations="true" dependencies="false" nesting-relationships="true">  
+  <class id="1" language="java" name="solver.Modification" project="ProjetLongRecuit" 
+    file="/ProjetLongRecuit/src/solver/Modification.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="117" width="134" x="2215" y="508"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" name="solver.HighQualityRandom" project="ProjetLongRecuit" 
+    file="/ProjetLongRecuit/src/solver/HighQualityRandom.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="225" width="147" x="2389" y="508"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="solver.RecuitSimuleLineaireK" project="ProjetLongRecuit" 
+    file="/ProjetLongRecuit/src/solver/RecuitSimuleLineaireK.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="171" width="407" x="1552" y="845"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="4" language="java" name="solver.GrapheColorieParticule" project="ProjetLongRecuit" 
+    file="/ProjetLongRecuit/src/solver/GrapheColorieParticule.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="207" width="437" x="1789" y="-9"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="5" language="java" name="solver.RecuitSimuleExponentiel" project="ProjetLongRecuit" 
+    file="/ProjetLongRecuit/src/solver/RecuitSimuleExponentiel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="279" width="431" x="266" y="508"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="6" language="java" name="solver.RecuitSimuleExponentielPalier" project="ProjetLongRecuit" 
+    file="/ProjetLongRecuit/src/solver/RecuitSimuleExponentielPalier.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="297" width="534" x="737" y="508"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="7" language="java" name="solver.IListEnergie" project="ProjetLongRecuit" 
+    file="/ProjetLongRecuit/src/solver/IListEnergie.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="225" width="201" x="1311" y="508"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="8" language="java" name="solver.RecuitSimule" project="ProjetLongRecuit" 
+    file="/ProjetLongRecuit/src/solver/RecuitSimule.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="405" width="182" x="1311" y="-9"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="9" language="java" name="solver.MutationConflitsAleatoire" project="ProjetLongRecuit" 
+    file="/ProjetLongRecuit/src/solver/MutationConflitsAleatoire.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="153" width="167" x="278" y="-9"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="10" language="java" name="solver.RecuitSimuleLineaire" project="ProjetLongRecuit" 
+    file="/ProjetLongRecuit/src/solver/RecuitSimuleLineaire.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="261" width="400" x="1552" y="508"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="11" language="java" name="solver.Graphe" project="ProjetLongRecuit" 
+    file="/ProjetLongRecuit/src/solver/Graphe.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="153" width="183" x="1992" y="508"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="12" language="java" name="solver.ListEnergieVide" project="ProjetLongRecuit" 
+    file="/ProjetLongRecuit/src/solver/ListEnergieVide.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="225" width="191" x="1090" y="845"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="13" language="java" name="solver.Traducteur" project="ProjetLongRecuit" 
+    file="/ProjetLongRecuit/src/solver/Traducteur.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="99" width="138" x="498" y="-9"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="14" language="java" name="solver.ListEnergie" project="ProjetLongRecuit" 
+    file="/ProjetLongRecuit/src/solver/ListEnergie.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="333" width="191" x="1321" y="845"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="15" language="java" name="solver.MutationAleatoireColoriage" project="ProjetLongRecuit" 
+    file="/ProjetLongRecuit/src/solver/MutationAleatoireColoriage.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="153" width="178" x="690" y="-9"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="16" language="java" name="solver.EnergieCinetiqueVide" project="ProjetLongRecuit" 
+    file="/ProjetLongRecuit/src/solver/EnergieCinetiqueVide.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="99" width="151" x="923" y="-9"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="17" language="java" name="solver.Conflits" project="ProjetLongRecuit" 
+    file="/ProjetLongRecuit/src/solver/Conflits.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="99" width="125" x="1130" y="-9"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="18" language="java" name="solver.GrapheColorie" project="ProjetLongRecuit" 
+    file="/ProjetLongRecuit/src/solver/GrapheColorie.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="477" width="254" x="2266" y="-9"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="19" language="java" name="solver.RecuitSimuleExponentielK" project="ProjetLongRecuit" 
+    file="/ProjetLongRecuit/src/solver/RecuitSimuleExponentielK.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="171" width="438" x="266" y="845"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <generalization id="20">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="10"/>  
+  </generalization>  
+  <generalization id="21">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="7"/>  
+  </generalization>  
+  <association id="22">    
+    <end type="SOURCE" refId="18" navigable="false">      
+      <attribute id="23" name="gen"/>      
+      <multiplicity id="24" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="25">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="8"/>  
+  </generalization>  
+  <association id="26">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="27" name="graphe"/>      
+      <multiplicity id="28" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="29">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="8"/>  
+  </generalization>  
+  <association id="30">    
+    <end type="SOURCE" refId="18" navigable="false">      
+      <attribute id="31" name="graphe"/>      
+      <multiplicity id="32" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="33">    
+    <bendpoint x="1486" y="450"/>    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="34" name="listProba"/>      
+      <multiplicity id="35" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="7" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="36">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="8"/>  
+  </generalization>  
+  <association id="37">    
+    <bendpoint x="1316" y="453"/>    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="38" name="listEnergie"/>      
+      <multiplicity id="39" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="7" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="40">    
+    <end type="SOURCE" refId="18" navigable="false">      
+      <attribute id="41" name="derniereModif"/>      
+      <multiplicity id="42" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="43">    
+    <end type="SOURCE" refId="19"/>    
+    <end type="TARGET" refId="5"/>  
+  </generalization>  
+  <generalization id="44">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="7"/>  
+  </generalization>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    sort-features="false" accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>
