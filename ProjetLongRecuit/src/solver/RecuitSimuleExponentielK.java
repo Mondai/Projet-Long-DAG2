@@ -35,7 +35,7 @@ public class RecuitSimuleExponentielK extends RecuitSimuleExponentiel {
 			//this.k = this.energiePrec;
 		}
 		else if (taille <= fenetreK ){
-			this.k = (this.k*(taille-1)+ Math.abs(list.get(tailleL-1) - list.get(tailleL-2)))/taille;  // moyenne des différences des energies
+			this.k = (this.k*(tailleL-1)+ Math.abs(list.get(tailleL-1) - list.get(tailleL-2)))/taille;  // moyenne des différences des energies
 
 		}
 		else{

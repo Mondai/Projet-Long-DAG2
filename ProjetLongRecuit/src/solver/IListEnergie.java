@@ -10,6 +10,8 @@ public abstract class IListEnergie {
 	
 	public abstract void add(double energie);
 	
+	public abstract void addTotal(double energieCourante);
+	
 	public abstract void init();
 	
 	public abstract int getTaille();

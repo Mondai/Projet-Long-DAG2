@@ -22,8 +22,6 @@ public class ListEnergie extends IListEnergie {
 	}	
 	
 	public void add(double energie) {
-		this.listTotale.add(energie);
-		if (this.listTotale.size() > (this.fenetreK + 1) ) this.listTotale.remove(0);
 		if (this.z == this.echantillonage) {
 			this.list.add(energie);
 			this.z=1;
@@ -32,6 +30,11 @@ public class ListEnergie extends IListEnergie {
 		else {
 			this.z++;
 		}
+	}
+	
+	public void addTotal(double energieCourante) {
+		this.listTotale.add(energieCourante);
+		if (this.listTotale.size() > (this.fenetreK + 1) ) this.listTotale.remove(0);
 	}
 	
 	public List<Double> getlistEnergie() {

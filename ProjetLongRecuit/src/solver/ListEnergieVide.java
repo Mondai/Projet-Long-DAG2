@@ -52,6 +52,12 @@ public class ListEnergieVide extends IListEnergie{
 		return 0;
 	}
 
+	@Override
+	public void addTotal(double energieCourante) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 	
 }

@@ -39,13 +39,17 @@ public abstract class RecuitSimule implements IRecuit{
 			
 			// this.getListEnergie().add(this.getMeilleureEnergie());  // choix arbitraire entre meilleure énergie et énergie actuelle
 			this.listEnergie.add(this.energiePrec);		// choix de l'énergie actuelle pour le calcul éventuel de k
-			calculerK();
 			
 			//probleme.calculerEnergie(); // pour mettre a jour coloriage.nombreNoeudsConflit
 			probleme.modifElem();	// faire une mutation
 			
 			energieSuiv = probleme.calculerEnergie(); // calculer son ï¿½nergie
+			this.listEnergie.addTotal(this.energiePrec);
+			//System.out.println("energie courante : " + energieSuiv);
+			calculerK();
+			
 			this.getListEnergie().augmenteTaille();// on incremente le nombre d'iterations
+			
 			proba = Math.exp(-(energieSuiv-this.energiePrec)/(this.k*this.T));
 			this.listProba.add(proba);
 			
