@@ -60,7 +60,7 @@ public abstract class RecuitSimule implements IRecuit{
 				this.energiePrec = energieSuiv;
 			}
 			
-			System.out.println(proba);
+			//System.out.println(proba);
 		}
 		
 		return probleme;

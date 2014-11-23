@@ -54,26 +54,33 @@ public class GrapheColorie extends Etat{
 	// Initialisation de l'etat: affectation de couleurs aleatoires
 	public void initialiserSansSeed(){
 		
-		/* Non nécessaire tant que toutes les couleurs après sont initialisées à 0
-		for (int i : this.noeudsConflit){
-			this.noeudsConflit[i] = 0;
-		}*/
-		
-		//Affectation des couleurs
-		for (int j = 0; j < this.graphe.getNombreNoeuds(); j++) {
-			// mettre à jour tous les conflits initiaux 
-			// et rajouter tous les noeuds à la liste des noeuds en conflit			
-			this.couleurs[j] = 0;
-			this.getNoeudsConflit()[j] = 1;
-			for (int i = 0; i < this.graphe.getNombreNoeuds(); i++){
-				this.conflitsConnexions[j][i] = 0;
-			}
-			for (int i : graphe.connexions[j]){
-				this.conflitsConnexions[j][i] = 1;
-			}
-
+		// Affectation des couleurs
+		// mettre à jour tous les conflits initiaux 
+		// et rajouter tous les noeuds à la liste des noeuds en conflit
+		for (int j = 0; j < this.graphe.getNombreNoeuds(); j++) {			
+			this.couleurs[j]=(int)(this.gen.nextDouble()*this.k);  // affectation couleurs aleatoires
 		}
-		this.setNombreConflitsAretes((int) (new Conflits().calculer(this)));
+		
+		for (int j = 0; j < this.graphe.getNombreNoeuds(); j++) {
+			for (int i : graphe.connexions[j]){
+				if(this.couleurs[i]==this.couleurs[j]){
+					this.conflitsConnexions[j][i] = 1;
+					this.getNoeudsConflit()[j]=1;
+				}
+			}
+		}
+		//calcul du nombre initial de conflits
+		int conflits = 0;
+		
+		for (int j = 0; j < this.graphe.getNombreNoeuds(); j++) { // parcours de tous les noeuds du graphe
+			int couleurNoeudActuel = this.couleurs[j]; // couleur du noeud actuel
+			for (int noeudAdjacent : this.graphe.connexions[j]) { // parcours des voisins du noeud
+				if (this.couleurs[noeudAdjacent] == couleurNoeudActuel) conflits++; // incrementation de conflits si meme couleur
+		
+			}
+		}
+		
+		this.setNombreConflitsAretes(conflits/2); // chaque conflit est compte deux fois
 	}
 	
 	public void initialiser(){

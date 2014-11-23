@@ -23,11 +23,11 @@ public abstract class Probleme extends Particule{
 	
 	//calcule l'énergie potentielle de chaque etat et les somme
 	public double calculerEnergiePotentielle(){
-		double energieCinetique = 0;
+		double energiePotentiel = 0;
 		for (Etat etat : this.etats){
-			energieCinetique += etat.Ep.calculer(etat);
+			energiePotentiel += etat.Ep.calculer(etat);
 		}
-		return energieCinetique;
+		return energiePotentiel;
 	}
 	
 	// Effectue une mutation élémentaire du problème

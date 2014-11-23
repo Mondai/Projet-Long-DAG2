@@ -61,7 +61,7 @@ public class MutationConflitsAleatoire implements IMutation {
 				coloriage.couleurs[noeudConflitAleatoire] = couleurAleatoire;
 				//System.out.println("noeud : " + noeudConflitAleatoire + " et " + noeudsEnConflits + " restants.");
 				coloriage.updateLocal(noeudConflitAleatoire, couleurNoeud);
-				System.out.println("noeud : " + noeudConflitAleatoire + " et " + noeudsEnConflits + " restants.");
+				//System.out.println("noeud : " + noeudConflitAleatoire + " et " + noeudsEnConflits + " restants.");
 		}
 		
 	}
