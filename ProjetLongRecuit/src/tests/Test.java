@@ -25,7 +25,7 @@ public class Test {
 		//MutationAleatoireColoriage mutation = new MutationAleatoireColoriage();
 		MutationConflitsAleatoire mutation = new MutationConflitsAleatoire();
 		
-		int echantillonage=200;
+		int echantillonnage=200;
 		
 		/* test trivial: k=1, Tdeb=1000, Tfin=1, pas=1, N=10.
 		Graphe graphe = Traducteur.traduire("data/test_cycle5.col");
@@ -37,15 +37,15 @@ public class Test {
 		
 		// test avec decroissance de T lineaire: k=7000, Tdeb=1000, Tfin=1, pas=1, N=100.
 		// Pour le450_250a: nombre de couleurs theorique 25 donne 2 ou 3 conflits. 26 donne 0 conflit.
-		Graphe graphe = Traducteur.traduire("data/le450_25c.col");
+		Graphe graphe = Traducteur.traduire("data/le450_25b.col");
 		//GrapheColorieParticule coloriage = new GrapheColorieParticule(Ep, mutation, Ec, 25 , 1, graphe);
 		GrapheColorieParticule coloriage = new GrapheColorieParticule(Ep, mutation, Ec, 25 , 1, graphe);
 		coloriage.initialiser();
-		ListEnergie listEnergie = new ListEnergie(echantillonage, 1000);
-		ListEnergie listProba = new ListEnergie(echantillonage, 1);
+		ListEnergie listEnergie = new ListEnergie(echantillonnage, 1000);
+		ListEnergie listProba = new ListEnergie(echantillonnage, 1);
 		// RecuitSimule recuit = new RecuitSimuleExponentielPalier(1,0.01,0,0.99,447,1,-1,listEnergie);		
 		// RecuitSimule recuit = new RecuitSimuleExponentielPalier(1,0.01,0,0.99,1,447,1,listEnergie);	
-		RecuitSimule recuit = new RecuitSimuleExponentielK(1,1000,2,0.99,10,60000, listEnergie, listProba);
+		RecuitSimule recuit = new RecuitSimuleExponentielK(1,1000,2,0.99,10,20000, listEnergie, listProba);
 		// RecuitSimule recuit = new RecuitSimuleExponentiel(1,10000,0,0.99,10,1000000, listEnergie); // a->0, c->22
 		//RecuitSimule recuit = new RecuitSimuleExponentielK(1,10000,0,0.99,10,1000000, listEnergie);  // a->0, c->26
 		// RecuitSimule recuit = new RecuitSimuleLineaire(1,1000,0.01,0.1,10, listEnergie);						

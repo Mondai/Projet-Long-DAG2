@@ -1,11 +1,13 @@
 package tests;
 import java.io.IOException;
 
-import solver.Coloriage;
 import solver.Conflits;
+import solver.EnergieCinetiqueVide;
 import solver.Graphe;
+import solver.GrapheColorieParticule;
 import solver.ListEnergie;
 import solver.MutationAleatoireColoriage;
+import solver.RecuitSimule;
 import solver.RecuitSimuleExponentielK;
 import solver.RecuitSimuleLineaireK;
 import solver.Traducteur;
@@ -24,14 +26,17 @@ public class testSortieGraphique {
 		int echantillonnage=300;
 		int nombreEchantillons = 10;
 		
-		Conflits energie = new Conflits();
+		Conflits Ep = new Conflits();
+		EnergieCinetiqueVide Ec = new EnergieCinetiqueVide();
 		MutationAleatoireColoriage mutation = new MutationAleatoireColoriage();
 		Graphe graphe = Traducteur.traduire("data/le450_15b.col");
-		Coloriage coloriage = new Coloriage(energie, mutation, 15 ,graphe);
+		GrapheColorieParticule coloriage = new GrapheColorieParticule(Ep, mutation, Ec, 25 , 1, graphe);
+		//Coloriage coloriage = new Coloriage(energie, mutation, 15 ,graphe);
 		
-		ListEnergie listEnergie = new ListEnergie(echantillonnage);
-		RecuitSimuleExponentielK recuit = new RecuitSimuleExponentielK(kinit,Tdebut,Tfin,0.80,nombreIterationsParPalliers,nombrePointsRecuit, listEnergie);
-		RecuitSimuleLineaireK recuitLin = new RecuitSimuleLineaireK(kinit,Tdebut,Tfin,1,nombreIterationsParPalliers, listEnergie);	
+		ListEnergie listEnergie = new ListEnergie(echantillonnage, 1000);
+		ListEnergie listProba = new ListEnergie(echantillonnage, 1);
+		RecuitSimuleExponentielK recuit = new RecuitSimuleExponentielK(kinit,Tdebut,Tfin,0.99,nombreIterationsParPalliers,nombrePointsRecuit, listEnergie, listProba);
+		RecuitSimuleLineaireK recuitLin = new RecuitSimuleLineaireK(kinit,Tdebut,Tfin,1,nombreIterationsParPalliers, listEnergie, listProba);	
 		
 		SortieGraphique albert = new SortieGraphique(recuit,nombreEchantillons,coloriage,Tdebut,Tfin,kinit, echantillonnage);
 		albert.SortieTexte("SortiesGraphiques/test5");

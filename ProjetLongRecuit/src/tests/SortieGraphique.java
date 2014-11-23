@@ -8,7 +8,7 @@ import java.io.PrintWriter;
 import java.util.Iterator;
 import java.util.List;
 
-import solver.Coloriage;
+import solver.GrapheColorieParticule;
 import solver.RecuitSimule;
 
 
@@ -16,7 +16,7 @@ public class SortieGraphique {
 
 	RecuitSimule recuit; // !!!!!!!! --> RecuitSimule pour l'instant car pas de m�thode getlistEnergie dans IRecuit
 	int tailleEchantillon;
-	Coloriage coloriage;
+	GrapheColorieParticule coloriage;
 	double Tdebut;
 	double Tfin;
 	double kb;
@@ -27,7 +27,7 @@ public class SortieGraphique {
 
 
 	public SortieGraphique( RecuitSimule recuit,
-			int tailleEchantillon, Coloriage coloriage,
+			int tailleEchantillon, GrapheColorieParticule coloriage,
 			double tdebut, double tfin, double kb,int echantillonnage) {
 		super();
 		this.recuit = recuit;
