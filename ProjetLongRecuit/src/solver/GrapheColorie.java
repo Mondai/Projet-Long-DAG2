@@ -42,9 +42,9 @@ public class GrapheColorie extends Etat{
 		this.setSeed(seed);
 		this.gen = new HighQualityRandom(seed);
 		
-		this.setNoeudsConflit(new int[graphe.getNombreNoeuds()]); // pas sur si vraiment nécessaire
+		this.setNoeudsConflit(new int[graphe.getNombreNoeuds()]);
 		this.conflitsConnexions = new int[graphe.getNombreNoeuds()][graphe.getNombreNoeuds()];
-		this.setNombreConflitsAretes(0);
+		this.nombreConflitsAretes = 0;
 	}
 	
 	public GrapheColorie(EnergiePotentielle Ep, int k, Graphe graphe) {
@@ -61,26 +61,19 @@ public class GrapheColorie extends Etat{
 			this.couleurs[j]=(int)(this.gen.nextDouble()*this.k);  // affectation couleurs aleatoires
 		}
 		
-		for (int j = 0; j < this.graphe.getNombreNoeuds(); j++) {
-			for (int i : graphe.connexions[j]){
-				if(this.couleurs[i]==this.couleurs[j]){
-					this.conflitsConnexions[j][i] = 1;
-					this.getNoeudsConflit()[j]=1;
+		//calcul du nombre initial de conflits
+		int conflits = 0;
+		for (int noeudActuel = 0; noeudActuel < this.graphe.getNombreNoeuds(); noeudActuel++) {
+			for (int noeudAdjacent : graphe.connexions[noeudActuel]){
+				if(this.couleurs[noeudAdjacent]==this.couleurs[noeudActuel]){
+					this.conflitsConnexions[noeudActuel][noeudAdjacent] = 1;
+					this.noeudsConflit[noeudActuel]=1;
+					conflits++;
 				}
 			}
 		}
-		//calcul du nombre initial de conflits
-		int conflits = 0;
 		
-		for (int j = 0; j < this.graphe.getNombreNoeuds(); j++) { // parcours de tous les noeuds du graphe
-			int couleurNoeudActuel = this.couleurs[j]; // couleur du noeud actuel
-			for (int noeudAdjacent : this.graphe.connexions[j]) { // parcours des voisins du noeud
-				if (this.couleurs[noeudAdjacent] == couleurNoeudActuel) conflits++; // incrementation de conflits si meme couleur
-		
-			}
-		}
-		
-		this.setNombreConflitsAretes(conflits/2); // chaque conflit est compte deux fois
+		this.nombreConflitsAretes = (conflits/2); // chaque conflit est compte deux fois
 	}
 	
 	public void initialiser(){
@@ -95,9 +88,9 @@ public class GrapheColorie extends Etat{
 			if (this.couleurs[j] == prevColor){
 				this.conflitsConnexions[noeud][j] = 0;
 				this.conflitsConnexions[j][noeud] = 0;
-				this.setNombreConflitsAretes(this.getNombreConflitsAretes() - 1);
+				this.nombreConflitsAretes = (this.getNombreConflitsAretes() - 1);
 				if(!enConflit(j)) {
-					this.getNoeudsConflit()[j] = 0;
+					this.noeudsConflit[j] = 0;
 					//System.out.println("removed");
 					// Fonctions debug
 				}
@@ -105,13 +98,13 @@ public class GrapheColorie extends Etat{
 			else if (this.couleurs[j] == this.couleurs[noeud]){
 				this.conflitsConnexions[noeud][j] = 1;
 				this.conflitsConnexions[j][noeud] = 1;
-				this.setNombreConflitsAretes(this.getNombreConflitsAretes() + 1);
-				this.getNoeudsConflit()[j] = 1;
+				this.nombreConflitsAretes = (this.getNombreConflitsAretes() + 1);
+				this.noeudsConflit[j] = 1;
 				//System.out.println("added");
 			}
 		}
 		if (!enConflit(noeud)){
-			this.getNoeudsConflit()[noeud] = 0;
+			this.noeudsConflit[noeud] = 0;
 			//System.out.println("removed");
 		}
 	}
