@@ -40,11 +40,11 @@ public abstract class Probleme extends Particule{
 		this.mutation.defaire(this);
 	}
 	
-	public void modifElemEtat(Etat etat){
+	public void modifElem(Etat etat){
 		this.mutation.faire(this, etat);
 	}
 	
-	public void annulerModifEtat(Etat etat){
+	public void annulerModif(Etat etat){
 		this.mutation.defaire(this, etat);
 	}
 	
