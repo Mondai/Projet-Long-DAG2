@@ -26,11 +26,12 @@ public static void main(String[] args) throws IOException {
 	int nbNoeuds = 250;
 	int nbCouleurs = 28;
 	double k = 1;
-	int M = 4 * nbNoeuds * nbCouleurs;
+	int M = 4 * nbCouleurs ;// * nbNoeuds * nbCouleurs;
 	double T0 = 0.35;
 	double maxSteps = Math.pow(10,5);
+	int seed = 1;
 		
-	GrapheColorieParticule coloriage = new GrapheColorieParticule(Ep, mutation, Ec, nbCouleurs, 1, graphe);
+	GrapheColorieParticule coloriage = new GrapheColorieParticule(Ep, mutation, Ec, nbCouleurs, 1, graphe, seed);
 	coloriage.initialiser();
 	ListEnergieVide vide = new ListEnergieVide();
 	RecuitSimule recuit = new RecuitSimuleLineaire(k,T0,0,T0/maxSteps,M,vide,vide);						

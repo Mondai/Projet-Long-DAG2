@@ -110,20 +110,22 @@ public class GrapheColorie extends Etat{
 	}
 	
 	public boolean enConflit(int noeud){
-		int l = 0;
+		
+		boolean res = false;
+		
 		for (int j : graphe.connexions[noeud]){
 			if (this.couleurs[noeud] == this.couleurs[j]){
-				l++;
+				res = true;
+				break;
 			}
 		}
-		if (l > 0) return true;
-		else return false;
+		return res;
 	}
 	
 	//debug purposes
 	public int nombreNoeudsEnConflit(){
 		int k = 0;
-		for (int i : this.getNoeudsConflit()){
+		for (int i : this.noeudsConflit){
 			if (i == 1) k++;
 		}
 		return k;
@@ -134,7 +136,7 @@ public class GrapheColorie extends Etat{
 		
 		//Affectation des couleurs
 		for (int j = 0; j < this.graphe.getNombreNoeuds(); j++) {
-			this.getMeilleuresCouleurs()[j] = this.couleurs[j];
+			this.meilleuresCouleurs[j] = this.couleurs[j];
 		}
 	}
 

@@ -8,7 +8,7 @@ public abstract class RecuitSimule implements IRecuit{
 	// paramï¿½tres
 	double T;
 	double k;
-	private double meilleureEnergie;
+	protected double meilleureEnergie;
 	double energiePrec;
 	private IListEnergie listEnergie;
 	public IListEnergie listProba;
@@ -30,14 +30,14 @@ public abstract class RecuitSimule implements IRecuit{
 		init();
 		
 		this.energiePrec = probleme.calculerEnergie() ;
-		this.getListEnergie().augmenteTaille(); // on incremente le nombre d'iterations
-		this.setMeilleureEnergie(this.energiePrec) ;
+		this.listEnergie.augmenteTaille(); // on incremente le nombre d'iterations
+		this.meilleureEnergie = this.energiePrec ;
 		double energieSuiv = 0 ;
 		double proba = 1;
 		
-		while(incrT() && this.getMeilleureEnergie()!=0){
+		while(incrT() && this.meilleureEnergie!=0){
 			
-			//this.getListEnergie().add(this.getMeilleureEnergie());  // choix arbitraire entre meilleure énergie et énergie actuelle
+			//this.listEnergie.add(this.meilleureEnergie);  // choix arbitraire entre meilleure énergie et énergie actuelle
 			this.listEnergie.add(this.energiePrec);		// choix de l'énergie actuelle pour le calcul éventuel de k
 			
 			//probleme.calculerEnergie(); // pour mettre a jour coloriage.nombreNoeudsConflit
@@ -48,7 +48,7 @@ public abstract class RecuitSimule implements IRecuit{
 			//System.out.println("energie courante : " + energieSuiv);
 			calculerK();
 			
-			this.getListEnergie().augmenteTaille();// on incremente le nombre d'iterations
+			this.listEnergie.augmenteTaille();// on incremente le nombre d'iterations
 			
 			proba = Math.exp(-(energieSuiv-this.energiePrec)/(this.k*this.T));
 			System.out.println(proba);
@@ -70,13 +70,16 @@ public abstract class RecuitSimule implements IRecuit{
 				probleme.annulerModif();	// cas oï¿½ la mutation est refusï¿½e
 			}
 			else {
-				if( energieSuiv < this.getMeilleureEnergie() ){	// cas oï¿½ avec une meilleure ï¿½nergie globale 
-					this.setMeilleureEnergie(energieSuiv);
+				if( energieSuiv < this.meilleureEnergie ){	// cas oï¿½ avec une meilleure ï¿½nergie globale 
+					this.meilleureEnergie = energieSuiv;
 					probleme.sauvegarderSolution();
+					//TEST
+					//System.out.println("Meilleure energie: "+this.meilleureEnergie);
+					//TEST
 				}
 				this.energiePrec = energieSuiv;
 			}
-			
+			//TEST
 			//System.out.println(proba);
 		}
 		
