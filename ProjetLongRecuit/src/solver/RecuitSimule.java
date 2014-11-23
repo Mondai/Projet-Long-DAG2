@@ -37,7 +37,7 @@ public abstract class RecuitSimule implements IRecuit{
 		
 		while(incrT() && this.getMeilleureEnergie()!=0){
 			
-			// this.getListEnergie().add(this.getMeilleureEnergie());  // choix arbitraire entre meilleure énergie et énergie actuelle
+			//this.getListEnergie().add(this.getMeilleureEnergie());  // choix arbitraire entre meilleure énergie et énergie actuelle
 			this.listEnergie.add(this.energiePrec);		// choix de l'énergie actuelle pour le calcul éventuel de k
 			
 			//probleme.calculerEnergie(); // pour mettre a jour coloriage.nombreNoeudsConflit
@@ -51,7 +51,20 @@ public abstract class RecuitSimule implements IRecuit{
 			this.getListEnergie().augmenteTaille();// on incremente le nombre d'iterations
 			
 			proba = Math.exp(-(energieSuiv-this.energiePrec)/(this.k*this.T));
+			System.out.println(proba);
+			
+			if (proba>1 ) {
+				if (this.listProba.getlistEnergie().size() >0 ) {
+				System.out.println(listProba.getlistEnergie().size());
+				int taille = listProba.getlistEnergie().size();
+				this.listProba.add(listProba.getlistEnergie().get(taille));
+				} else {
+					this.listProba.add(1);
+				}
+			} else {
 			this.listProba.add(proba);
+			}
+			
 			
 			if( energieSuiv > this.energiePrec && (proba < probleme.gen.nextDouble())){ 	
 				probleme.annulerModif();	// cas oï¿½ la mutation est refusï¿½e

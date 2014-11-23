@@ -40,14 +40,14 @@ public class TestGenerationCourbes {
 
 		int echantillonnage=200;
 
-		int tailleEchantillon = 2;
+		int tailleEchantillon = 50;
 		double facteur = 0.99;
 		int N=10;
 		int tailleFenetre = 100;
 
 			// Nombre de points important car on veux comparer pour le meme nombre d'itérations
 
-		int nbPoints = 20000;  // nombre de points au total sur palier et changement palier
+		int nbPoints = 50000;  // nombre de points au total sur palier et changement palier
 		double pas = N*((Tdebut-Tfin+1)/nbPoints);
 		System.out.println(pas);
 		
@@ -77,7 +77,7 @@ public class TestGenerationCourbes {
 		// Liste des recuits
 		LinkedList<RecuitSimule> listRecuits = new LinkedList();
 		listRecuits.add(new RecuitSimuleExponentielK());
-		//listRecuits.add(new RecuitSimuleLineaire());
+		listRecuits.add(new RecuitSimuleExponentiel());
 		
 		
 		// Liste des Mutations
@@ -86,11 +86,11 @@ public class TestGenerationCourbes {
 
 		// Liste des k
 		LinkedList<Double> listK = new LinkedList();
-		listK.add(0.001);
+		listK.add(1.);
 		//listK.add(100.);
 		//listK.add(10000.);
 		//listK.add(0.01);
-		//listK.add(0.001);
+		listK.add(0.001);
 		//listK.add(0.0000001);
 		
 
@@ -327,7 +327,7 @@ public class TestGenerationCourbes {
 				// probas
 				pw2.println("title('"+benchmark+"')");
 				pw2.println("xlabel('Nombre d iterations');");
-				pw2.println("ylabel('Energie');");
+				pw2.println("ylabel('Proba');");
 				
 				int u2 = legende.toString().length();
 				
