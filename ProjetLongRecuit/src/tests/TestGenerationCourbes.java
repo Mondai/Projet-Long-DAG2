@@ -35,12 +35,12 @@ public class TestGenerationCourbes {
 
 		
 		double Tdebut=7000;
-		double Tfin = 2;  // Très important !!!
+		double Tfin = 1.5;  // Très important !!!
 		int kinit = 1000;
 
 		int echantillonnage=200;
 
-		int tailleEchantillon = 50;
+		int tailleEchantillon = 20;
 		double facteur = 0.99;
 		int N=10;
 		int tailleFenetre = 100;
@@ -170,7 +170,7 @@ public class TestGenerationCourbes {
 							Conflits Ep = new Conflits();
 							EnergieCinetiqueVide Ec = new EnergieCinetiqueVide();
 							ListEnergie listEnergie = new ListEnergie(echantillonnage,tailleFenetre); 
-							ListEnergie listProba = new ListEnergie(echantillonnage,1); // taille de la fenetre non utile ici
+							ListEnergie listProba = new ListEnergie(echantillonnage,tailleFenetre); // taille de la fenetre non utile ici
 							GrapheColorieParticule coloriage = new GrapheColorieParticule(Ep, mutation, Ec, 25 , 1, graphe);
 							
 							// Paramétrisation du recuit demandé

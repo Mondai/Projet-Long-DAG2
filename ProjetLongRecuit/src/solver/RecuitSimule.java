@@ -1,5 +1,7 @@
 package solver;
 
+import java.util.List;
+
 import solverCommun.IRecuit;
 import solverCommun.Probleme;
 
@@ -8,6 +10,7 @@ public abstract class RecuitSimule implements IRecuit{
 	// paramï¿½tres
 	double T;
 	double k;
+	double probaMoyenne; //même principe que le k, afin de lisser la courbe des probas
 	protected double meilleureEnergie;
 	double energiePrec;
 	private IListEnergie listEnergie;
@@ -16,6 +19,7 @@ public abstract class RecuitSimule implements IRecuit{
 	
 	// mï¿½thodes abstraites 
 	abstract void calculerK();	// recalculer k ï¿½ chaque itï¿½ration si besoin 
+	
 	abstract void init();		// initialisation
 	abstract boolean incrT();	// incrï¿½mentation de T ï¿½ chaque itï¿½ration, return false si condition d'arret atteinte 
 	
@@ -53,17 +57,11 @@ public abstract class RecuitSimule implements IRecuit{
 			proba = Math.exp(-(energieSuiv-this.energiePrec)/(this.k*this.T));
 			System.out.println(proba);
 			
-			if (proba>1 ) {
-				if (this.listProba.getlistEnergie().size() >0 ) {
-				System.out.println(listProba.getlistEnergie().size());
-				int taille = listProba.getlistEnergie().size();
-				this.listProba.add(listProba.getlistEnergie().get(taille));
-				} else {
-					this.listProba.add(1);
-				}
-			} else {
-			this.listProba.add(proba);
-			}
+			// Ajustement de la liste de taille tailleFenetre générant une moyenne glissante de probas
+			this.listProba.addTotal(proba);
+			calculerProbaMoyenne(proba);
+			this.listProba.add(this.probaMoyenne);
+			
 			
 			
 			if( energieSuiv > this.energiePrec && (proba < probleme.gen.nextDouble())){ 	
@@ -115,5 +113,27 @@ public abstract class RecuitSimule implements IRecuit{
 	public void setListProba(IListEnergie listProbas) {
 		this.listProba = listProbas;
 	}
+	
+	public void calculerProbaMoyenne(double proba){
+		int taille = this.getListProba().getTaille();
+		List<Double> list = this.getListProba().getlistEnergieTotale();
+		int tailleL = list.size();
+		int fenetreK = this.getListProba().getFenetreK();
+		//System.out.println(list);
+		if (proba>1) {
+			proba = 1;
+		} else {}
+		
+		if (taille == 1){
+			this.probaMoyenne = proba;
+		} else if (taille <= fenetreK ){
+			this.probaMoyenne = (this.probaMoyenne*(tailleL-1)+ proba) /tailleL;  // moyenne des probas
+		} else{
+			// Moyenne des probas
+			this.probaMoyenne = (this.probaMoyenne*fenetreK - list.get(0) + proba )/ fenetreK;
+		}
+		System.out.println("Proba Moyenne : " + this.probaMoyenne);
+	}
+	
 	
 }

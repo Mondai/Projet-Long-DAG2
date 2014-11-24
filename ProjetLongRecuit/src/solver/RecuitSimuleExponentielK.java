@@ -47,6 +47,14 @@ public class RecuitSimuleExponentielK extends RecuitSimuleExponentiel {
 		System.out.println("k : " + this.k);
 	}
 	
+	
+	
+	
+	
+	
+	
+	
+	
 	public String toString(){
 		return "Recuit Simulé Exponentiel avec k l energie moyenne";
 	}

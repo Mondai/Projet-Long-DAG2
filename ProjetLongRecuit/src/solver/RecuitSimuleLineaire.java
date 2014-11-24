@@ -1,4 +1,7 @@
 package solver;
+
+import java.util.List;
+
 public class RecuitSimuleLineaire extends RecuitSimule{
 	
 	// d�croissance de T entre Tdeb et Tfin avec un pas lin�aire et reste N it�rations sur chaque palier. k est constant. 
@@ -29,6 +32,9 @@ public class RecuitSimuleLineaire extends RecuitSimule{
 	public void calculerK(){
 		// Ne fait rien, k est constant
 	}
+	
+	
+	
 	
 	public void init(){
 		this.T = this.Tdeb ;

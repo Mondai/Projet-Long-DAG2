@@ -1,5 +1,7 @@
 package solver;
 
+import java.util.List;
+
 
 
 public class RecuitSimuleExponentiel extends RecuitSimule{
@@ -33,6 +35,10 @@ public class RecuitSimuleExponentiel extends RecuitSimule{
 	public void calculerK(){
 		// Ne fait rien, k est constant
 	}
+	
+	
+
+	
 	
 	public void init(){
 		this.T = this.Tdeb ;
