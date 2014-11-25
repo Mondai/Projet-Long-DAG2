@@ -14,6 +14,7 @@ import solver.Graphe;
 import solver.GrapheColorieParticule;
 import solver.ListEnergie;
 import solver.MutationAleatoireColoriage;
+import solver.MutationConflitsAleatoire;
 import solver.RecuitSimule;
 import solver.RecuitSimuleExponentiel;
 import solver.RecuitSimuleExponentielK;
@@ -32,23 +33,23 @@ public class TestGenerationCourbes {
 		String nomFichierProbas = "SortiesGraphiques/Courbes2Probas";
 
 		// Parametres principaux
-
+		int nbCouleurs = 28;
 		
-		double Tdebut=7000;
-		double Tfin = 1.5;  // Très important !!!
-		int kinit = 1000;
+		double Tdebut=0.35;
+		double Tfin = 0;  // Très important !!!
+		int kinit = 1;
 
 		int echantillonnage=200;
 
 		int tailleEchantillon = 20;
 		double facteur = 0.99;
-		int N=10;
+		int N = 4;
 		int tailleFenetre = 100;
 
 			// Nombre de points important car on veux comparer pour le meme nombre d'itérations
 
-		int nbPoints = 50000;  // nombre de points au total sur palier et changement palier
-		double pas = N*((Tdebut-Tfin+1)/nbPoints);
+		int nbPoints = 400000;  // nombre de points au total sur palier et changement palier
+		double pas = N*((Tdebut-Tfin)/nbPoints);
 		System.out.println(pas);
 		
 		
@@ -68,7 +69,7 @@ public class TestGenerationCourbes {
 		//Initialisation des listes à itérer
 		// Liste des benchmarks
 		LinkedList<String> listBenchmarks = new LinkedList();
-		listBenchmarks.add("data/le450_25a.col");
+		listBenchmarks.add("data/dsjc250.5.col");
 		//listBenchmarks.add("data/le450_25b.col");
 		//listBenchmarks.add("le450_25c.col");
 		//listBenchmarks.add("le450_25d.col");
@@ -76,13 +77,14 @@ public class TestGenerationCourbes {
 
 		// Liste des recuits
 		LinkedList<RecuitSimule> listRecuits = new LinkedList();
-		listRecuits.add(new RecuitSimuleExponentielK());
-		listRecuits.add(new RecuitSimuleExponentiel());
+		listRecuits.add(new RecuitSimuleLineaire());
+		//listRecuits.add(new RecuitSimuleExponentielK());
+		//listRecuits.add(new RecuitSimuleExponentiel());
 		
 		
 		// Liste des Mutations
 		LinkedList<IMutation> listMutations = new LinkedList();
-		listMutations.add( new MutationAleatoireColoriage());
+		listMutations.add( new MutationConflitsAleatoire());
 
 		// Liste des k
 		LinkedList<Double> listK = new LinkedList();
@@ -90,7 +92,7 @@ public class TestGenerationCourbes {
 		//listK.add(100.);
 		//listK.add(10000.);
 		//listK.add(0.01);
-		listK.add(0.001);
+		//listK.add(0.001);
 		//listK.add(0.0000001);
 		
 
@@ -171,7 +173,7 @@ public class TestGenerationCourbes {
 							EnergieCinetiqueVide Ec = new EnergieCinetiqueVide();
 							ListEnergie listEnergie = new ListEnergie(echantillonnage,tailleFenetre); 
 							ListEnergie listProba = new ListEnergie(echantillonnage,tailleFenetre); // taille de la fenetre non utile ici
-							GrapheColorieParticule coloriage = new GrapheColorieParticule(Ep, mutation, Ec, 25 , 1, graphe);
+							GrapheColorieParticule coloriage = new GrapheColorieParticule(Ep, mutation, Ec, nbCouleurs , 1, graphe); 
 							
 							// Paramétrisation du recuit demandé
 						
@@ -215,7 +217,6 @@ public class TestGenerationCourbes {
 								// Lancement du programme
 								coloriage.initialiser();
 								recuit.lancer(coloriage,listEnergie,listProba);
-
 
 								// Ecriture des vecteurs résultats
 								pw.print("u"+i+"=");

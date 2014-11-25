@@ -7,8 +7,6 @@ import solver.Conflits;
 import solver.EnergieCinetiqueVide;
 import solver.Graphe;
 import solver.GrapheColorieParticule;
-import solver.ListEnergieVide;
-import solver.MutationAleatoireColoriage;
 import solver.MutationConflitsAleatoire;
 import solver.RecuitSimule;
 import solver.RecuitSimuleLineaire;
@@ -22,7 +20,6 @@ public static void main(String[] args) throws IOException {
 	EnergieCinetiqueVide Ec = new EnergieCinetiqueVide();	
 	
 	MutationConflitsAleatoire mutation = new MutationConflitsAleatoire();
-	//MutationAleatoireColoriage mutation = new MutationAleatoireColoriage();
 	
 	Graphe graphe = Traducteur.traduire("data/dsjc250.5.col");
 	int nbNoeuds = 250;
@@ -31,12 +28,11 @@ public static void main(String[] args) throws IOException {
 	int M = 4;//* nbNoeuds * nbCouleurs;
 	double T0 = 0.35;
 	double maxSteps = Math.pow(10,5);
-	int seed = 1;
+	int seed = 7;
 		
 	GrapheColorieParticule coloriage = new GrapheColorieParticule(Ep, mutation, Ec, nbCouleurs, 1, graphe, seed);
 	coloriage.initialiser();
-	ListEnergieVide vide = new ListEnergieVide();
-	RecuitSimule recuit = new RecuitSimuleLineaire(k,T0,0,T0/maxSteps,M,vide,vide);						
+	RecuitSimule recuit = new RecuitSimuleLineaire(k,T0,0,T0/maxSteps,M);						
 
     ThreadMXBean temp = ManagementFactory.getThreadMXBean( );  // recuperer temps cpu
 	long startTime = System.nanoTime();
@@ -47,6 +43,6 @@ public static void main(String[] args) throws IOException {
 	
 	System.out.println("seed = "+seed +".  Nombre de conflits : "+recuit.getMeilleureEnergie()+", Duree = "+(endTime-startTime)/1000000000+" s"+", Duree CPU = "+(endCpu-startCpu)/1000000000+" s");
 
-}
+	}
 
 }
