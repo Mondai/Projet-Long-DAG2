@@ -13,8 +13,6 @@ public abstract class RecuitSimule implements IRecuit{
 	double probaMoyenne; //même principe que le k, afin de lisser la courbe des probas
 	protected double meilleureEnergie;
 	double energiePrec;
-	private IListEnergie listEnergie;
-	public IListEnergie listProba;
 	private int nbPoints; //nombre d'itérations au total ( changement de palier ET itération sur palier )
 	
 	// mï¿½thodes abstraites 
@@ -45,8 +43,6 @@ public abstract class RecuitSimule implements IRecuit{
 			energieSuiv = probleme.calculerEnergie(); // calculer son ï¿½nergie
 			calculerK();
 			
-			System.out.println(energieSuiv);
-			
 			proba = Math.exp(-(energieSuiv-this.energiePrec)/(this.k*this.T));
 	
 			if( energieSuiv > this.energiePrec && (proba < probleme.gen.nextDouble())){ 	
@@ -64,39 +60,41 @@ public abstract class RecuitSimule implements IRecuit{
 		return probleme;
 	}
 	
-	/*
-	public Probleme lancer(Probleme probleme, ListEnergie listEnergie){
+	
+	public Probleme lancer(Probleme probleme, ListEnergie listEnergie, ListEnergie listProba){
 		
 		init();
 		
 		this.energiePrec = probleme.calculerEnergie() ;
-		this.listEnergie.augmenteTaille(); // on incremente le nombre d'iterations
+		listEnergie.augmenteTaille(); // on incremente le nombre d'iterations
 		this.meilleureEnergie = this.energiePrec ;
 		double energieSuiv = 0 ;
 		double proba = 1;
 		
 		while(incrT() && this.meilleureEnergie!=0){
 			
-			this.listEnergie.add(this.meilleureEnergie);  // choix arbitraire entre meilleure énergie et énergie actuelle
+			listEnergie.add(this.meilleureEnergie);  // choix arbitraire entre meilleure énergie et énergie actuelle
 			//this.listEnergie.add(this.energiePrec);		// choix de l'énergie actuelle pour le calcul éventuel de k
 			
 			//probleme.calculerEnergie(); // pour mettre a jour coloriage.nombreNoeudsConflit
 			probleme.modifElem();	// faire une mutation
 			
 			energieSuiv = probleme.calculerEnergie(); // calculer son ï¿½nergie
-			this.listEnergie.addTotal(this.energiePrec);
+			listEnergie.addTotal(this.energiePrec);
 			//System.out.println("energie courante : " + energieSuiv);
 			calculerK();
 			
-			this.listEnergie.augmenteTaille();// on incremente le nombre d'iterations
+			listEnergie.augmenteTaille();// on incremente le nombre d'iterations
 			
 			proba = Math.exp(-(energieSuiv-this.energiePrec)/(this.k*this.T));
 			System.out.println(proba);
 			
 			// Ajustement de la liste de taille tailleFenetre générant une moyenne glissante de probas
-			this.listProba.addTotal(proba);
-			calculerProbaMoyenne(proba);
-			this.listProba.add(this.probaMoyenne);
+			listProba.addTotal(proba);
+			calculerProbaMoyenne(proba, listProba);
+			listProba.add(this.probaMoyenne);
+			
+			System.out.println(energieSuiv);
 			
 			
 			
@@ -118,7 +116,7 @@ public abstract class RecuitSimule implements IRecuit{
 		}
 		
 		return probleme;
-	}*/
+	}
 	
 	public String toString(){
 		return "Recuit Simulé";
@@ -135,26 +133,12 @@ public abstract class RecuitSimule implements IRecuit{
 	public void setNbPoints(int nbPoints) {
 		this.nbPoints = nbPoints;
 	}
-	public IListEnergie getListEnergie() {
-		return listEnergie;
-	}
-	public void setListEnergie(IListEnergie listEnergie) {
-		this.listEnergie = listEnergie;
-	}
 	
-	public IListEnergie getListProba() {
-		return listProba;
-	}
-	
-	public void setListProba(IListEnergie listProbas) {
-		this.listProba = listProbas;
-	}
-	
-	public void calculerProbaMoyenne(double proba){
-		int taille = this.getListProba().getTaille();
-		List<Double> list = this.getListProba().getlistEnergieTotale();
+	public void calculerProbaMoyenne(double proba, ListEnergie listProba){
+		int taille = listProba.getTaille();
+		List<Double> list = listProba.getlistEnergieTotale();
 		int tailleL = list.size();
-		int fenetreK = this.getListProba().getFenetreK();
+		int fenetreK = listProba.getFenetreK();
 		//System.out.println(list);
 		if (proba>1) {
 			proba = 1;

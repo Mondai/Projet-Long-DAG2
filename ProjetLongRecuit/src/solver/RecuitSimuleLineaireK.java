@@ -8,8 +8,8 @@ public class RecuitSimuleLineaireK extends RecuitSimuleLineaire {
 
 	double kConstant;
 	
-	public RecuitSimuleLineaireK(double k, double Tdeb, double Tfin, double pas, int N, IListEnergie listEnergie,  IListEnergie listProbas) {
-		super(k, Tdeb, Tfin, pas, N, listEnergie, listProbas);
+	public RecuitSimuleLineaireK(double k, double Tdeb, double Tfin, double pas, int N) {
+		super(k, Tdeb, Tfin, pas, N);
 		this.kConstant = k;
 	}
 	
@@ -22,6 +22,7 @@ public class RecuitSimuleLineaireK extends RecuitSimuleLineaire {
 	}
 	
 	public void calculerK(){
+		/*
 		int taille = this.getListEnergie().getTaille();
 		List<Double> list = this.getListEnergie().getlistEnergieTotale();
 		int tailleL = list.size();
@@ -39,6 +40,8 @@ public class RecuitSimuleLineaireK extends RecuitSimuleLineaire {
 			//this.k = (this.k*10 - list.get(0)
 			//		+ list.get(tailleL-1)) / 10;
 		}
+		*/
+		this.k = 1;
 	}
 	
 	public String toString(){

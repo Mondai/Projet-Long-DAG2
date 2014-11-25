@@ -9,8 +9,8 @@ public class RecuitSimuleExponentielK extends RecuitSimuleExponentiel {
 
 	double kConstant;
 	
-	public RecuitSimuleExponentielK(double k, double Tdeb, double Tfin, double facteur, int N, int nbPoints, IListEnergie listEnergie, IListEnergie listProbas) {
-		super(k, Tdeb, Tfin, facteur, N, nbPoints, listEnergie, listProbas);
+	public RecuitSimuleExponentielK(double k, double Tdeb, double Tfin, double facteur, int N, int nbPoints) {
+		super(k, Tdeb, Tfin, facteur, N, nbPoints);
 		this.kConstant = k;
 	}
 	
@@ -24,6 +24,7 @@ public class RecuitSimuleExponentielK extends RecuitSimuleExponentiel {
 	}
 	
 	public void calculerK(){
+		/*
 		int taille = this.getListEnergie().getTaille();
 		List<Double> list = this.getListEnergie().getlistEnergieTotale();
 		int tailleL = list.size();
@@ -44,7 +45,8 @@ public class RecuitSimuleExponentielK extends RecuitSimuleExponentiel {
 						+ Math.abs(list.get(tailleL-1) - list.get(tailleL-2))) / fenetreK;
 
 		}
-		System.out.println("k : " + this.k);
+		System.out.println("k : " + this.k);*/
+		this.k = 1;
 	}
 	
 	

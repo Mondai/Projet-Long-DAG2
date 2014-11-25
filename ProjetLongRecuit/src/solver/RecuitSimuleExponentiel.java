@@ -15,7 +15,7 @@ public class RecuitSimuleExponentiel extends RecuitSimule{
 	double facteur;
 	int nbPointsCourant;
 	
-	public RecuitSimuleExponentiel(double k, double Tdeb, double Tfin, double facteur, int N, int nbPoints, IListEnergie listEnergie, IListEnergie listProba){
+	public RecuitSimuleExponentiel(double k, double Tdeb, double Tfin, double facteur, int N, int nbPoints){
 		this.k = k ;
 		this.Tdeb = Tdeb ;
 		this.T = Tdeb ;
@@ -25,8 +25,6 @@ public class RecuitSimuleExponentiel extends RecuitSimule{
 		this.facteur = facteur;//Multiplication de la tempï¿½rature par facteur(infï¿½rieur ï¿½ 1)
 		this.setNbPoints(nbPoints);
 		this.nbPointsCourant = nbPoints;
-		this.setListEnergie(listEnergie);
-		this.setListProba(listProba);
 	}
 	
 	public RecuitSimuleExponentiel() { // Pour création et ensuite seulement paramétrisation
@@ -44,10 +42,6 @@ public class RecuitSimuleExponentiel extends RecuitSimule{
 		this.T = this.Tdeb ;
 		this.compteur = 1 ;
 		this.nbPointsCourant = this.getNbPoints();
-		this.getListEnergie().init();
-		this.getListEnergie().initTaille();
-		this.getListProba().init();
-		this.getListProba().initTaille();
 	}
 	
 	public boolean incrT(){
