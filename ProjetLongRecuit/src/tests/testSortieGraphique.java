@@ -35,10 +35,10 @@ public class testSortieGraphique {
 		
 		ListEnergie listEnergie = new ListEnergie(echantillonnage, 1000);
 		ListEnergie listProba = new ListEnergie(echantillonnage, 1);
-		RecuitSimuleExponentielK recuit = new RecuitSimuleExponentielK(kinit,Tdebut,Tfin,0.99,nombreIterationsParPalliers,nombrePointsRecuit, listEnergie, listProba);
-		RecuitSimuleLineaireK recuitLin = new RecuitSimuleLineaireK(kinit,Tdebut,Tfin,1,nombreIterationsParPalliers, listEnergie, listProba);	
+		RecuitSimuleExponentielK recuit = new RecuitSimuleExponentielK(kinit,Tdebut,Tfin,0.99,nombreIterationsParPalliers,nombrePointsRecuit);
+		RecuitSimuleLineaireK recuitLin = new RecuitSimuleLineaireK(kinit,Tdebut,Tfin,1,nombreIterationsParPalliers);	
 		
-		SortieGraphique albert = new SortieGraphique(recuit,nombreEchantillons,coloriage,Tdebut,Tfin,kinit, echantillonnage);
+		SortieGraphique albert = new SortieGraphique(recuit,nombreEchantillons,coloriage,Tdebut,Tfin,kinit, echantillonnage, listEnergie, listProba);
 		albert.SortieTexte("SortiesGraphiques/test5");
 	
 		

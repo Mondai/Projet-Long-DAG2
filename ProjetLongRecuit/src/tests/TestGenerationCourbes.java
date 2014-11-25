@@ -176,17 +176,17 @@ public class TestGenerationCourbes {
 							// Paramétrisation du recuit demandé
 						
 							if (recuit.toString() == "Recuit Simulé Exponentiel") {
-								recuit = new RecuitSimuleExponentiel( k, Tdebut, Tfin, facteur, N, nbPoints,listEnergie,listProba);
+								recuit = new RecuitSimuleExponentiel( k, Tdebut, Tfin, facteur, N, nbPoints);
 							}
 							else if (recuit.toString() == "Recuit Simulé Linéaire") {
-								recuit = new RecuitSimuleLineaire( k, Tdebut, Tfin, pas, N, listEnergie,listProba);
+								recuit = new RecuitSimuleLineaire( k, Tdebut, Tfin, pas, N);
 							}
 							else if (recuit.toString() == "Recuit Simulé Exponentiel avec k l energie moyenne") {
-								recuit = new RecuitSimuleExponentielK( k, Tdebut, Tfin, facteur, N, nbPoints,listEnergie,listProba);
+								recuit = new RecuitSimuleExponentielK( k, Tdebut, Tfin, facteur, N, nbPoints);
 								bool = false;
 							}
 							else if (recuit.toString() == "Recuit Simulé Linéaire avec k l énergie moyenne") {
-								recuit = new RecuitSimuleLineaireK( k, Tdebut, Tfin, pas, N, listEnergie,listProba);
+								recuit = new RecuitSimuleLineaireK( k, Tdebut, Tfin, pas, N);
 								bool = false;
 							}
 
@@ -214,19 +214,19 @@ public class TestGenerationCourbes {
 							for (int i=0; i<tailleEchantillon ; i++) {
 								// Lancement du programme
 								coloriage.initialiser();
-								recuit.lancer(coloriage);
+								recuit.lancer(coloriage,listEnergie,listProba);
 
 
 								// Ecriture des vecteurs résultats
 								pw.print("u"+i+"=");
-								List<Double> list = recuit.getListEnergie().getlistEnergie();
+								List<Double> list = listEnergie.getlistEnergie();
 								pw.print(list.toString());
 								System.out.println(list.get(list.size()-1));
 								pw.print(";");
 								pw.println("");
 								
 								pw2.print("u"+i+"=");
-								List<Double> list2 = recuit.getListProba().getlistEnergie();
+								List<Double> list2 = listProba.getlistEnergie();
 								pw2.print(list2.toString());
 								System.out.println(list2.get(list.size()-1));
 								pw2.print(";");

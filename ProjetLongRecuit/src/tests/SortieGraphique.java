@@ -9,6 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import solver.GrapheColorieParticule;
+import solver.ListEnergie;
 import solver.RecuitSimule;
 
 
@@ -21,6 +22,8 @@ public class SortieGraphique {
 	double Tfin;
 	double kb;
 	int echantillonnage;
+	ListEnergie listEnergie;
+	ListEnergie listProba;
 	
 
 
@@ -28,7 +31,8 @@ public class SortieGraphique {
 
 	public SortieGraphique( RecuitSimule recuit,
 			int tailleEchantillon, GrapheColorieParticule coloriage,
-			double tdebut, double tfin, double kb,int echantillonnage) {
+			double tdebut, double tfin, double kb,int echantillonnage,
+			ListEnergie listEnergie, ListEnergie listProba) {
 		super();
 		this.recuit = recuit;
 		this.tailleEchantillon = tailleEchantillon;
@@ -37,6 +41,8 @@ public class SortieGraphique {
 		this.Tfin = tfin;
 		this.kb = kb;
 		this.echantillonnage=echantillonnage;
+		this.listEnergie = listEnergie;
+		this.listProba = listProba;
 	}
 
 
@@ -75,7 +81,7 @@ public class SortieGraphique {
 				
 				*/
 				pw.print("u"+i+"=");
-				List<Double> list = recuit.getListEnergie().getlistEnergie();
+				List<Double> list = this.listEnergie.getlistEnergie();
 				pw.print(list.toString());
 				System.out.println(list.get(list.size()-1));
 				pw.print(";");
