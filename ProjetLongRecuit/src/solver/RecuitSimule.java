@@ -34,6 +34,40 @@ public abstract class RecuitSimule implements IRecuit{
 		init();
 		
 		this.energiePrec = probleme.calculerEnergie() ;
+		this.meilleureEnergie = this.energiePrec ;
+		double energieSuiv = 0 ;
+		double proba = 1;
+		
+		while(incrT() && this.meilleureEnergie!=0){
+			
+			probleme.modifElem();	// faire une mutation
+			
+			energieSuiv = probleme.calculerEnergie(); // calculer son ï¿½nergie
+			calculerK();
+			
+			proba = Math.exp(-(energieSuiv-this.energiePrec)/(this.k*this.T));
+	
+			if( energieSuiv > this.energiePrec && (proba < probleme.gen.nextDouble())){ 	
+				probleme.annulerModif();	// cas oï¿½ la mutation est refusï¿½e
+			}
+			else {
+				if( energieSuiv < this.meilleureEnergie ){	// cas oï¿½ avec une meilleure ï¿½nergie globale 
+					this.meilleureEnergie = energieSuiv;
+					probleme.sauvegarderSolution();
+				}
+				this.energiePrec = energieSuiv;
+			}
+		}
+		
+		return probleme;
+	}
+	
+	/*
+	public Probleme lancer(Probleme probleme, ListEnergie listEnergie){
+		
+		init();
+		
+		this.energiePrec = probleme.calculerEnergie() ;
 		this.listEnergie.augmenteTaille(); // on incremente le nombre d'iterations
 		this.meilleureEnergie = this.energiePrec ;
 		double energieSuiv = 0 ;
@@ -41,8 +75,8 @@ public abstract class RecuitSimule implements IRecuit{
 		
 		while(incrT() && this.meilleureEnergie!=0){
 			
-			//this.listEnergie.add(this.meilleureEnergie);  // choix arbitraire entre meilleure énergie et énergie actuelle
-			this.listEnergie.add(this.energiePrec);		// choix de l'énergie actuelle pour le calcul éventuel de k
+			this.listEnergie.add(this.meilleureEnergie);  // choix arbitraire entre meilleure énergie et énergie actuelle
+			//this.listEnergie.add(this.energiePrec);		// choix de l'énergie actuelle pour le calcul éventuel de k
 			
 			//probleme.calculerEnergie(); // pour mettre a jour coloriage.nombreNoeudsConflit
 			probleme.modifElem();	// faire une mutation
@@ -82,7 +116,7 @@ public abstract class RecuitSimule implements IRecuit{
 		}
 		
 		return probleme;
-	}
+	}*/
 	
 	public String toString(){
 		return "Recuit Simulé";

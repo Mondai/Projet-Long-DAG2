@@ -26,7 +26,7 @@ public static void main(String[] args) throws IOException {
 	int nbNoeuds = 250;
 	int nbCouleurs = 28;
 	double k = 1;
-	int M = 4 * nbCouleurs ;// * nbNoeuds * nbCouleurs;
+	int M = 4; //* nbCouleurs ;// * nbNoeuds * nbCouleurs;
 	double T0 = 0.35;
 	double maxSteps = Math.pow(10,5);
 	int seed = 1;
