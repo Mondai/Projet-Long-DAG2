@@ -45,6 +45,8 @@ public abstract class RecuitSimule implements IRecuit{
 			energieSuiv = probleme.calculerEnergie(); // calculer son �nergie
 			calculerK();
 			
+			System.out.println(energieSuiv);
+			
 			proba = Math.exp(-(energieSuiv-this.energiePrec)/(this.k*this.T));
 	
 			if( energieSuiv > this.energiePrec && (proba < probleme.gen.nextDouble())){ 	
