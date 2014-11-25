@@ -1,5 +1,7 @@
 package tests;
 import java.io.IOException;
+import java.lang.management.ManagementFactory;
+import java.lang.management.ThreadMXBean;
 
 import solver.Conflits;
 import solver.EnergieCinetiqueVide;
@@ -26,7 +28,7 @@ public static void main(String[] args) throws IOException {
 	int nbNoeuds = 250;
 	int nbCouleurs = 28;
 	double k = 1;
-	int M = 4; //* nbCouleurs ;// * nbNoeuds * nbCouleurs;
+	int M = 4;//* nbNoeuds * nbCouleurs;
 	double T0 = 0.35;
 	double maxSteps = Math.pow(10,5);
 	int seed = 1;
@@ -35,12 +37,16 @@ public static void main(String[] args) throws IOException {
 	coloriage.initialiser();
 	ListEnergieVide vide = new ListEnergieVide();
 	RecuitSimule recuit = new RecuitSimuleLineaire(k,T0,0,T0/maxSteps,M,vide,vide);						
-		
+
+    ThreadMXBean temp = ManagementFactory.getThreadMXBean( );  // recuperer temps cpu
 	long startTime = System.nanoTime();
+	long startCpu = temp.getCurrentThreadCpuTime();	
 	recuit.lancer(coloriage);
+	long endCpu = temp.getCurrentThreadCpuTime();
 	long endTime = System.nanoTime();
 	
-	System.out.println("Nombre de conflits : "+recuit.getMeilleureEnergie()+", Duree = "+(endTime-startTime)/1000000000+" s");
-	}
-	
+	System.out.println("seed = "+seed +".  Nombre de conflits : "+recuit.getMeilleureEnergie()+", Duree = "+(endTime-startTime)/1000000000+" s"+", Duree CPU = "+(endCpu-startCpu)/1000000000+" s");
+
+}
+
 }
