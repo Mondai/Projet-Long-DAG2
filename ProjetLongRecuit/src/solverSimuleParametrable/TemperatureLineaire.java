@@ -4,18 +4,19 @@ public class TemperatureLineaire extends Temperature {
 
 	double pasLineaire;															// ce sera la modif lineaire
 	
-	public TemperatureLineaire(int tdebut, int tfinal, int nbIteration) {
+	public TemperatureLineaire(double tdebut, double tfinal, int nbIteration) {
 		super(tdebut,tfinal,nbIteration); 										// on utilise le constructeur de Temperautre
 		this.pasLineaire = (this.Tfinal-this.Tdebut)/this.nbIteration ; 		//calcul de la modif lineaire
 }
-  public boolean modifierT() {													//modif de T
-	  if (this.t < this.Tfinal) 
-	  { return false;  }
-	  else 
-	  { this.t=this.t+this.pasLineaire;											// le pas linearie est negatif :)
-	  return true;		  
-	  }
-  }
+
+	public boolean modifierT() { // modif de T
+		if (this.t < this.Tfinal) {
+			return false;
+		} else {
+			this.t += this.pasLineaire; // le pas linearie est negatif :)
+			return true;
+		}
+	}
 }
 
 
