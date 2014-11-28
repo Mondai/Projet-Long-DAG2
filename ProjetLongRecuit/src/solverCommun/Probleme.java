@@ -21,7 +21,7 @@ public abstract class Probleme extends Particule{
 		return ( this.Ec.calculer(this) + calculerEnergiePotentielle() );
 	}
 	
-	//calcule l'énergie potentielle de chaque etat et les somme
+	// Calcule l'énergie potentielle de chaque etat et les somme
 	public double calculerEnergiePotentielle(){
 		double energiePotentiel = 0;
 		for (Etat etat : this.etats){
@@ -30,24 +30,21 @@ public abstract class Probleme extends Particule{
 		return energiePotentiel;
 	}
 	
+	// Calcule deltaE à partir de la mutation proposée (sans effectuer la mutation)
+	public double calculerDeltaE(Etat etat, MutationElementaire mutation){
+		return etat.Ep.calculerDeltaE(etat, mutation);
+	}
+	
 	// Effectue une mutation élémentaire du problème
-	public void modifElem(){
-		this.mutation.faire(this);
+	public void modifElem(Etat etat, MutationElementaire mutation){
+		this.mutation.faire(this, etat, mutation);
 	}
 	
-	// Annule la dernière mutation élémentaire effectuée
-	public void annulerModif(){
-		this.mutation.defaire(this);
+	// renvoie une mutation elementaire possible
+	public MutationElementaire getMutationElementaire(Etat etat){
+		return this.mutation.getMutationElementaire(this,etat);
 	}
-	
-	public void modifElem(Etat etat){
-		this.mutation.faire(this, etat);
-	}
-	
-	public void annulerModif(Etat etat){
-		this.mutation.defaire(this, etat);
-	}
-	
+
 	public int getSeed() {
 		return seed;
 	}

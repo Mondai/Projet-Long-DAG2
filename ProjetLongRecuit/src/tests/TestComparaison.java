@@ -50,6 +50,8 @@ public static void main(String[] args) throws IOException {
 	System.out.println("seed = "+seed +".  Nombre de conflits : "+recuit.getMeilleureEnergie()+", Duree = "+(endTime-startTime)/1000000000+" s"+", Duree CPU = "+(endCpu-startCpu)/1000000000+" s");
 	
 	//RecuitSimuleParametrable
+	coloriage.initialiser();
+	
 	ConstanteKConstant Kparam = new ConstanteKConstant(k);
 	TemperatureLineairePalier Tparam = new TemperatureLineairePalier(T0,0,maxSteps,M);
 	RecuitSimuleParametrable recuitParam = new RecuitSimuleParametrable(Tparam,Kparam);						
@@ -61,7 +63,7 @@ public static void main(String[] args) throws IOException {
 	long endCpu1 = temp1.getCurrentThreadCpuTime();
 	long endTime1 = System.nanoTime();
 	
-	System.out.println("seed = "+seed +".  Nombre de conflits : "+recuit.getMeilleureEnergie()+", Duree = "+(endTime1-startTime1)/1000000000+" s"+", Duree CPU = "+(endCpu1-startCpu1)/1000000000+" s");
+	System.out.println("seed = "+seed +".  Nombre de conflits : "+recuitParam.meilleureEnergie+", Duree = "+(endTime1-startTime1)/1000000000+" s"+", Duree CPU = "+(endCpu1-startCpu1)/1000000000+" s");
 	
 	
 	}

@@ -2,7 +2,9 @@ package solver;
 
 import java.util.List;
 
+import solverCommun.Etat;
 import solverCommun.IRecuit;
+import solverCommun.MutationElementaire;
 import solverCommun.Probleme;
 
 public abstract class RecuitSimule implements IRecuit{
@@ -31,32 +33,33 @@ public abstract class RecuitSimule implements IRecuit{
 		
 		init();
 		
+		Etat etat = probleme.etats.get(0);
 		this.energiePrec = probleme.calculerEnergie() ;
 		this.meilleureEnergie = this.energiePrec ;
-		double energieSuiv = 0 ;
 		double proba = 1;
 		
 		while(incrT() && this.meilleureEnergie!=0){
 			
-			probleme.modifElem();	// faire une mutation
+			MutationElementaire mutation = probleme.getMutationElementaire(etat);	// trouver une mutation possible
 			
-			energieSuiv = probleme.calculerEnergie(); // calculer son ï¿½nergie
+			double deltaE = probleme.calculerDeltaE(etat, mutation);	// calculer deltaE si la mutation etait acceptee
+			
 			calculerK();
 			
-			proba = Math.exp(-(energieSuiv-this.energiePrec)/(this.k*this.T));
-	
-			if( energieSuiv > this.energiePrec && (proba < probleme.gen.nextDouble())){ 	
-				probleme.annulerModif();	// cas oï¿½ la mutation est refusï¿½e
-			}
-			else {
-				if( energieSuiv < this.meilleureEnergie ){	// cas oï¿½ avec une meilleure ï¿½nergie globale 
-					this.meilleureEnergie = energieSuiv;
-					probleme.sauvegarderSolution();
+			if( deltaE <= 0){
+				probleme.modifElem(etat, mutation);				// faire la mutation
+				this.energiePrec += deltaE;						// mettre a jour l'energie
+				if( this.energiePrec < this.meilleureEnergie ){	// mettre a jour la meilleur energie
+					this.meilleureEnergie = this.energiePrec;
 				}
-				this.energiePrec = energieSuiv;
+			} else {
+				proba = Math.exp(-deltaE / (this.k * this.T));	// calcul de la proba
+				if (proba >= probleme.gen.nextDouble()) {
+					probleme.modifElem(etat, mutation);  		// accepter la mutation 
+					this.energiePrec += deltaE;					// mettre a jour l'energie
+				}
 			}
 		}
-		
 		return probleme;
 	}
 	
@@ -65,10 +68,10 @@ public abstract class RecuitSimule implements IRecuit{
 		
 		init();
 		
+		Etat etat = probleme.etats.get(0);
 		this.energiePrec = probleme.calculerEnergie() ;
 		listEnergie.augmenteTaille(); // on incremente le nombre d'iterations
 		this.meilleureEnergie = this.energiePrec ;
-		double energieSuiv = 0 ;
 		double proba = 1;
 		
 		while(incrT() && this.meilleureEnergie!=0){
@@ -77,44 +80,36 @@ public abstract class RecuitSimule implements IRecuit{
 			//this.listEnergie.add(this.energiePrec);		// choix de l'énergie actuelle pour le calcul éventuel de k
 			
 			//probleme.calculerEnergie(); // pour mettre a jour coloriage.nombreNoeudsConflit
-			probleme.modifElem();	// faire une mutation
+			MutationElementaire mutation = probleme.getMutationElementaire(etat);	// trouver une mutation possible
 			
-			energieSuiv = probleme.calculerEnergie(); // calculer son ï¿½nergie
-			listEnergie.addTotal(this.energiePrec);
+			double deltaE = probleme.calculerDeltaE(etat, mutation);	// calculer deltaE si la mutation etait acceptee
+			listEnergie.addTotal(this.energiePrec+deltaE);
 			//System.out.println("energie courante : " + energieSuiv);
 			calculerK();
 			
 			listEnergie.augmenteTaille();// on incremente le nombre d'iterations
 			
-			proba = Math.exp(-(energieSuiv-this.energiePrec)/(this.k*this.T));
-			System.out.println(proba);
+			proba = Math.exp(-deltaE/(this.k*this.T));
 			
 			// Ajustement de la liste de taille tailleFenetre générant une moyenne glissante de probas
 			listProba.addTotal(proba);
 			calculerProbaMoyenne(proba, listProba);
 			listProba.add(this.probaMoyenne);
-			
-			System.out.println(energieSuiv);
-			
-			
-			
-			if( energieSuiv > this.energiePrec && (proba < probleme.gen.nextDouble())){ 	
-				probleme.annulerModif();	// cas oï¿½ la mutation est refusï¿½e
-			}
-			else {
-				if( energieSuiv < this.meilleureEnergie ){	// cas oï¿½ avec une meilleure ï¿½nergie globale 
-					this.meilleureEnergie = energieSuiv;
-					probleme.sauvegarderSolution();
-					//TEST
-					//System.out.println("Meilleure energie: "+this.meilleureEnergie);
-					//TEST
+
+			if( deltaE <= 0){
+				probleme.modifElem(etat, mutation);				// faire la mutation
+				this.energiePrec += deltaE;						// mettre a jour l'energie
+				if( this.energiePrec < this.meilleureEnergie ){	// mettre a jour la meilleur energie
+					this.meilleureEnergie = this.energiePrec;
 				}
-				this.energiePrec = energieSuiv;
+			} else {
+				proba = Math.exp(-deltaE / (this.k * this.T));	// calcul de la proba
+				if (proba >= probleme.gen.nextDouble()) {
+					probleme.modifElem(etat, mutation);  		// accepter la mutation 
+					this.energiePrec += deltaE;					// mettre a jour l'energie
+				}
 			}
-			//TEST
-			//System.out.println(proba);
 		}
-		
 		return probleme;
 	}
 	

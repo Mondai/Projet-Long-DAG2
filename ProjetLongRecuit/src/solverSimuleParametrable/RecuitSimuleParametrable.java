@@ -2,6 +2,8 @@ package solverSimuleParametrable;
 
 
 
+import solverCommun.Etat;
+import solverCommun.MutationElementaire;
 import solverCommun.Probleme;
 
 
@@ -9,9 +11,9 @@ public class RecuitSimuleParametrable extends RecuitSimuleP { 				// pas touche 
 																		// creer vos propres Temperature, ConstanteK et trucs pour les graphes
 	public Temperature T;
 	public ConstanteK K;
-	public double bestEnergy;											// en soit, nos energies pourraient etre des Int, mais bon 
-	public double previousEnergy;										// probleme nous renvoie des doubles
-	public double actualEnergy ; 
+	public double meilleureEnergie;									// en soit, nos energies pourraient etre des Int, mais bon 
+	public double energiePrec;										// probleme nous renvoie des doubles
+
 	
 	public int nbMaxIteration; 							// nombre maximale d'iteration si la solution n'est pas trouvee, redondance avec t.nbIteration
 
@@ -25,38 +27,36 @@ public class RecuitSimuleParametrable extends RecuitSimuleP { 				// pas touche 
 
 	public Probleme lancer(Probleme probleme) {
 
+		// TODO methode init()
 		// init();
-
-		this.previousEnergy = probleme.calculerEnergie(); 							
-		this.bestEnergy = this.previousEnergy;
-		double deltaEnergy ; 									// une varaible utile dans la bouble, modifiee a chaque bouble 
-		// double proba;
-		while (T.modifierT() && this.bestEnergy != 0) {
+		
+		Etat etat = probleme.etats.get(0);
+		this.energiePrec = probleme.calculerEnergie() ;
+		this.meilleureEnergie = this.energiePrec ;
+		double proba = 1;
+		
+		while(T.modifierT() && this.meilleureEnergie!=0){
 			
-			probleme.modifElem();								 // faire une mutation
-			actualEnergy = probleme.calculerEnergie(); 			// calculer sa nouvelle energie
-			deltaEnergy = this.actualEnergy-this.previousEnergy;
+			MutationElementaire mutation = probleme.getMutationElementaire(etat);	// trouver une mutation possible
 			
-			// proba = Math.exp(-deltaEnergy / (this.K.k * this.T.t));
-			// c'est l'expression de la proba
-			this.K.calculerK(deltaEnergy); 	// on reactualise K pour essayer d'avoir un deltaE/K mieux ... mais cela a t il vraiment une influence ?
+			double deltaE = probleme.calculerDeltaE(etat, mutation);	// calculer deltaE si la mutation etait acceptee
 			
-			if (deltaEnergy>0) 									//  ATTENTION GROSSE CONDITION : si l'energie n'est pas meilleure	
-				{ 						
-					if ((Math.exp(-deltaEnergy/ (this.K.k * this.T.t)))< probleme.gen.nextDouble()) 			
-						{ probleme.annulerModif(); } 						// cas ou la mutation est refusee
-			} 
-			else 	{											// dans ce cas, on garde la modif, car energie meilleure ou proba acceptee
-				if (this.actualEnergy < this.bestEnergy) 		 //  si on vient de trouver une energie meilleure que la best
-					{ probleme.sauvegarderSolution(); 			// on sauvegarde la configuration et l'energie minale
-					this.bestEnergy=this.actualEnergy;}			
-				this.previousEnergy = this.actualEnergy;		// puis comme y a eu une modif, on change la previousEnergy
+			K.calculerK(deltaE);
+			
+			if( deltaE <= 0){
+				probleme.modifElem(etat, mutation);				// faire la mutation
+				this.energiePrec += deltaE;						// mettre a jour l'energie
+				if( this.energiePrec < this.meilleureEnergie ){	// mettre a jour la meilleur energie
+					this.meilleureEnergie = this.energiePrec;
+				}
+			} else {
+				proba = Math.exp(-deltaE / (this.K.k * this.T.t));	// calcul de la proba
+				if (proba >= probleme.gen.nextDouble()) {
+					probleme.modifElem(etat, mutation);  		// accepter la mutation 
+					this.energiePrec += deltaE;					// mettre a jour l'energie
+				}
 			}
-			
-			// System.out.println(proba);       				// si besoin de debug
 		}
-
 		return probleme;
 	}
-
 }
