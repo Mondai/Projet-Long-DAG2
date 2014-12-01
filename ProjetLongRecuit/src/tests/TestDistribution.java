@@ -40,20 +40,24 @@ public class TestDistribution {
 		double facteur = 0.991;
 		int N = 4;
 		int tailleFenetre = 100;
-		int nbPoints = 300000;  // nombre de points au total sur palier et changement palier
-		double pas = N*((Tdebut-Tfin)/nbPoints);
-		String benchmark = "data/le450_15b.col";
+	 
+		
+		String benchmark = "data/le450_15c.col";
 		IMutation mutation = new MutationConflitsAleatoire();
 		double k=1.5;
+		
+	
+		// Parametres distribution
+		int nbPointsHistogramme = 20;
+		int tailleEchantillon = 100;
+		int echantillonage= 1;
+	
+		int nbPoints = 300000; // nombre de points au total sur palier et changement palier
+		double pas = N*((Tdebut-Tfin)/nbPoints);
 		
 		// Recuit
 		RecuitSimule recuit = new RecuitSimuleLineaire(k, Tdebut, Tfin, pas, N);
 		
-		// Parametres distribution
-		int nbPointsHistogramme = 50;
-		int tailleEchantillon = 1000;
-		int echantillonnage=1;
-
 
 		// Création Fichier Texte
 
@@ -63,7 +67,7 @@ public class TestDistribution {
 			PrintWriter pw = new PrintWriter (new BufferedWriter (new FileWriter (f)));
 			pw.println("%Sortie Graphique : ");
 			pw.println("%Taille Echantillon : " + tailleEchantillon);
-			pw.println("%Echantillonnage : " + echantillonnage);
+			pw.println("%Echantillonnage : " + echantillonage);
 			pw.println("%Température de départ : " + Tdebut);
 			pw.println("%Température de fin : " + Tfin);
 			
@@ -99,14 +103,15 @@ public class TestDistribution {
 							for (int i=0; i<tailleEchantillon ; i++) {
 								// Lancement du programme
 								coloriage.initialiser();
-								ListEnergie listEnergie = new ListEnergie(echantillonnage,tailleFenetre); 
-								ListEnergie listProba = new ListEnergie(echantillonnage,tailleFenetre); // taille de la fenetre non utile ici
+								ListEnergie listEnergie = new ListEnergie(echantillonage,tailleFenetre); 
+								ListEnergie listProba = new ListEnergie(echantillonage,tailleFenetre); // taille de la fenetre non utile ici
 								recuit.lancer(coloriage,listEnergie,listProba);
 
 								// Ecriture des vecteurs résultats
 						
+								//pw.println(listEnergie.getlistEnergie().toString());   Vérification de l'atteinte de 0
 								pw.println("v"+i+"="+listEnergie.getTaille()+";");
-
+								System.out.println("fin de la "+i+" itération");
 								}
 							pw.print("v=[");
 							for (int j=0; j< tailleEchantillon;j++) {
@@ -117,7 +122,7 @@ public class TestDistribution {
 							//pw.println("v=v./length(v);");
 							pw.println("pas=(max(v)-min(v))/"+nbPointsHistogramme);
 							pw.println("vect=(min(v):pas:max(v))");
-							pw.println("hist("+N+"*v,"+N+"*vect);");
+							pw.println("hist("+echantillonage+"*v,"+echantillonage+"*vect);");
 									  
 									  
 
@@ -131,8 +136,8 @@ public class TestDistribution {
 					
 				
 				pw.println("title('"+benchmark+"')");
-				pw.println("xlabel('effectif');");
-				pw.println("ylabel('nombre d iteration');");
+				pw.println("xlabel('nombre d iteration');");
+				pw.println("ylabel('effectif');");
 				
 				
 				

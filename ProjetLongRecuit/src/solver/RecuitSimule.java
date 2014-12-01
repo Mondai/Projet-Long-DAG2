@@ -110,6 +110,11 @@ public abstract class RecuitSimule implements IRecuit{
 				}
 			}
 		}
+		// Vérification de l'atteinte d'énergie nulle à la fin
+		listEnergie.z=listEnergie.echantillonage;
+		listEnergie.add(this.meilleureEnergie);
+		
+		
 		return probleme;
 	}
 	
