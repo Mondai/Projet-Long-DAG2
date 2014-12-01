@@ -147,7 +147,7 @@ public abstract class RecuitSimule implements IRecuit{
 			// Moyenne des probas
 			this.probaMoyenne = (this.probaMoyenne*fenetreK - list.get(0) + proba )/ fenetreK;
 		}
-		System.out.println("Proba Moyenne : " + this.probaMoyenne);
+		//System.out.println("Proba Moyenne : " + this.probaMoyenne);
 	}
 	
 	

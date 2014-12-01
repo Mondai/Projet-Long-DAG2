@@ -171,8 +171,6 @@ public class TestGenerationCourbes {
 							// Initialisation du Problème
 							Conflits Ep = new Conflits();
 							EnergieCinetiqueVide Ec = new EnergieCinetiqueVide();
-							ListEnergie listEnergie = new ListEnergie(echantillonnage,tailleFenetre); 
-							ListEnergie listProba = new ListEnergie(echantillonnage,tailleFenetre); // taille de la fenetre non utile ici
 							GrapheColorieParticule coloriage = new GrapheColorieParticule(Ep, mutation, Ec, nbCouleurs , 1, graphe); 
 							
 							// Paramétrisation du recuit demandé
@@ -214,6 +212,12 @@ public class TestGenerationCourbes {
 							// Itération de ce recuit un nombre TailleEchantillon de fois
 
 							for (int i=0; i<tailleEchantillon ; i++) {
+								
+								// Réinitialisation des listes
+								ListEnergie listEnergie = new ListEnergie(echantillonnage,tailleFenetre); 
+								ListEnergie listProba = new ListEnergie(echantillonnage,tailleFenetre); // taille de la fenetre non utile ici
+								
+								
 								// Lancement du programme
 								coloriage.initialiser();
 								recuit.lancer(coloriage,listEnergie,listProba);
