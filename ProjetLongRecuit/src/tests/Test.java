@@ -38,7 +38,7 @@ public class Test {
 		
 		// test avec decroissance de T lineaire: k=7000, Tdeb=1000, Tfin=1, pas=1, N=100.
 		// Pour le450_250a: nombre de couleurs theorique 25 donne 2 ou 3 conflits. 26 donne 0 conflit.
-		Graphe graphe = Traducteur.traduire("data/le450_25a.col");
+		Graphe graphe = Traducteur.traduire("data/le450_25c.col");
 		//GrapheColorieParticule coloriage = new GrapheColorieParticule(Ep, mutation, Ec, 25 , 1, graphe);
 		GrapheColorieParticule coloriage = new GrapheColorieParticule(Ep, mutation, Ec, 25 , 1, graphe);
 		coloriage.initialiser();
@@ -47,14 +47,15 @@ public class Test {
 		//ListEnergieVide vide = new ListEnergieVide();
 		// RecuitSimule recuit = new RecuitSimuleExponentielPalier(1,0.01,0,0.99,447,1,-1,listEnergie);		
 		// RecuitSimule recuit = new RecuitSimuleExponentielPalier(1,0.01,0,0.99,1,447,1,listEnergie);	
-		RecuitSimule recuit = new RecuitSimuleExponentiel(1,1000,0.1,0.99,100,200000);
+		RecuitSimule recuit = new RecuitSimuleExponentiel(1,1000,0.1,0.99,100,2000000);
 		// RecuitSimule recuit = new RecuitSimuleExponentiel(1,10000,0,0.99,10,1000000, listEnergie); // a->0, c->22
 		//RecuitSimule recuit = new RecuitSimuleExponentielK(1,10000,0,0.99,10,1000000, listEnergie);  // a->0, c->26
 		// RecuitSimule recuit = new RecuitSimuleLineaire(1,1000,0.01,0.1,10, listEnergie);						
 		// RecuitSimule recuit = new RecuitSimuleLineaireK(1,1000,0.01,0.1,10, listEnergie);
 		long startTime = System.nanoTime();
 		recuit.lancer(coloriage);
-		recuit.lancer(coloriage, listEnergie, listProba);
+		recuit.lancer(coloriage);
+		//recuit.lancer(coloriage, listEnergie, listProba);
 		long endTime = System.nanoTime();
 		
 		// affichage du resultat
