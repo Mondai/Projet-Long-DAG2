@@ -33,26 +33,29 @@ public class TestDistribution {
 		
 
 		// Parametres principaux
-		int nbCouleurs = 25;
+		int nbCouleurs = 28;
 		double Tdebut=0.35;
 		double Tfin = 0.0001;  // Très important !!!
 		int kinit = 1;
 		double facteur = 0.991;
-		int N = 4;
 		int tailleFenetre = 100;
 	 
+		int nbNoeuds = 250;
 		
-		String benchmark = "data/le450_15c.col";
+		int N = 4*nbNoeuds*nbCouleurs;
+		System.out.println(N);
+		
+		String benchmark = "data/dsjc250.5.col";
 		IMutation mutation = new MutationConflitsAleatoire();
-		double k=1.5;
+		double k=1;
 		
 	
 		// Parametres distribution
-		int nbPointsHistogramme = 20;
-		int tailleEchantillon = 100;
-		int echantillonage= 1;
+		int nbPointsHistogramme = 10;
+		int tailleEchantillon = 80;
+		int echantillonage= 10000;
 	
-		int nbPoints = 300000; // nombre de points au total sur palier et changement palier
+		int nbPoints = 3000000*N; // nombre de points au total sur palier et changement palier
 		double pas = N*((Tdebut-Tfin)/nbPoints);
 		
 		// Recuit

@@ -18,6 +18,7 @@ import solver.MutationConflitsAleatoire;
 import solver.RecuitSimule;
 import solver.RecuitSimuleExponentiel;
 import solver.RecuitSimuleExponentielK;
+import solver.RecuitSimuleExponentielLundy;
 import solver.RecuitSimuleLineaire;
 import solver.RecuitSimuleLineaireK;
 import solver.Traducteur;
@@ -36,19 +37,22 @@ public class TestGenerationCourbes {
 		int nbCouleurs = 28;
 		
 		double Tdebut=0.35;
-		double Tfin = 0;  // Très important !!!
+		double Tfin = 0.0001;  // Très important !!!
 		int kinit = 1;
 
-		int echantillonnage=200;
+		int echantillonnage=2000;
 
-		int tailleEchantillon = 20;
+		int tailleEchantillon = 60;
 		double facteur = 0.99;
 		int N = 4;
 		int tailleFenetre = 100;
+		
+		// Lundy
+		double coef = 8;
 
 			// Nombre de points important car on veux comparer pour le meme nombre d'itérations
 
-		int nbPoints = 400000;  // nombre de points au total sur palier et changement palier
+		int nbPoints = 300000;  // nombre de points au total sur palier et changement palier
 		double pas = N*((Tdebut-Tfin)/nbPoints);
 		System.out.println(pas);
 		
@@ -78,8 +82,8 @@ public class TestGenerationCourbes {
 		// Liste des recuits
 		LinkedList<RecuitSimule> listRecuits = new LinkedList();
 		listRecuits.add(new RecuitSimuleLineaire());
-		//listRecuits.add(new RecuitSimuleExponentielK());
-		//listRecuits.add(new RecuitSimuleExponentiel());
+		listRecuits.add(new RecuitSimuleExponentiel());
+		listRecuits.add(new RecuitSimuleExponentielLundy());
 		
 		
 		// Liste des Mutations
@@ -189,6 +193,10 @@ public class TestGenerationCourbes {
 								recuit = new RecuitSimuleLineaireK( k, Tdebut, Tfin, pas, N);
 								bool = false;
 							}
+							else if (recuit.toString() == "Recuit Simulé Exponentiel Lundy") {
+								recuit = new RecuitSimuleExponentielLundy(  k, Tdebut, Tfin, facteur, N, nbPoints,coef);
+								bool = false;
+							}
 
 
 							// Présentation Texte résultats
@@ -233,7 +241,7 @@ public class TestGenerationCourbes {
 								pw2.print("u"+i+"=");
 								List<Double> list2 = listProba.getlistEnergie();
 								pw2.print(list2.toString());
-								System.out.println(list2.get(list.size()-1));
+								//System.out.println(list2.get(list.size()-1));
 								pw2.print(";");
 								pw2.println("");
 							}

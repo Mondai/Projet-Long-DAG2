@@ -31,6 +31,7 @@ public abstract class RecuitSimule implements IRecuit{
 	
 	public Probleme lancer(Probleme probleme){
 		
+		
 		init();
 		
 		Etat etat = probleme.etats.get(0);
@@ -67,6 +68,8 @@ public abstract class RecuitSimule implements IRecuit{
 	public Probleme lancer(Probleme probleme, ListEnergie listEnergie, ListEnergie listProba){
 		
 		init();
+		double var = 0;
+	
 		
 		Etat etat = probleme.etats.get(0);
 		this.energiePrec = probleme.calculerEnergie() ;
@@ -91,10 +94,16 @@ public abstract class RecuitSimule implements IRecuit{
 			
 			proba = Math.exp(-deltaE/(this.k*this.T));
 			
+			if (proba>1|| proba==1) {
+				proba=1;
+			} else {
+				var=proba;
+			}
+			
 			// Ajustement de la liste de taille tailleFenetre générant une moyenne glissante de probas
 			listProba.addTotal(proba);
-			calculerProbaMoyenne(proba, listProba);
-			listProba.add(this.probaMoyenne);
+			//calculerProbaMoyenne(proba, listProba);
+			listProba.add(var);
 
 			if( deltaE <= 0){
 				probleme.modifElem(etat, mutation);				// faire la mutation
