@@ -19,22 +19,11 @@ public class Conflits extends EnergiePotentielle {
 
 	public double calculerDeltaE(Etat etat, MutationElementaire mutation) {
 		
-		int deltaE = 0;
 		MutationElementaireNoeud m = (MutationElementaireNoeud) mutation;
 		GrapheColorie coloriage = (GrapheColorie)	etat;
-		
-		if(coloriage.couleurs[m.noeud]==m.couleur){
-			return 0;		// pas de changement
-		} else {
-			for (int i : coloriage.graphe.connexions[m.noeud]) {
-				if (coloriage.couleurs[i] == coloriage.couleurs[m.noeud]) {
-					deltaE--; // si la couleur du voisin == ancienne couleur du noeud
-				} else if (coloriage.couleurs[i] == m.couleur) {
-					deltaE++; // si la couleur du voisin == nouvelle couleur du noeud
-				}
-			}
-			return deltaE;
-		}
+
+		// Propriete: DelatE = F[v][couleurSuiv] - F[v][couleurPrec]
+		return coloriage.F[m.noeud][m.couleur] - coloriage.F[m.noeud][coloriage.couleurs[m.noeud]];
 	}
 
 }

@@ -24,7 +24,7 @@ public class MutationConflitsAleatoire implements IMutation {
 		int j = 0;
 		
 		while (condition && j < coloriage.graphe.getNombreNoeuds()){
-			if (coloriage.getNoeudsConflit()[j] == 1){
+			if (coloriage.getNoeudsConflit()[j]){
 				if (compteur == 0){
 					noeud = j;
 					condition = false;

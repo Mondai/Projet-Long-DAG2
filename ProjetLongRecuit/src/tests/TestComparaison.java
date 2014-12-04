@@ -29,7 +29,7 @@ public static void main(String[] args) throws IOException {
 	int nbNoeuds = 250;
 	int nbCouleurs = 28;
 	double k = 1;
-	int M = 4;//* nbNoeuds * nbCouleurs;
+	int M = 4 * nbNoeuds * nbCouleurs;
 	double T0 = 0.35;
 	int maxSteps = (int) Math.pow(10,5);
 	int seed = 2;
@@ -49,7 +49,7 @@ public static void main(String[] args) throws IOException {
 	long endTime = System.nanoTime();
 	
 	System.out.println("seed = "+seed +".  Nombre de conflits : "+recuit.getMeilleureEnergie()+", Duree = "+(endTime-startTime)/1000000000+" s"+", Duree CPU = "+(endCpu-startCpu)/1000000000+" s");
-
+	/*
 	// Nouveau RecuitSimuleParametrable
 	TemperatureLineairePalier Tparam = new TemperatureLineairePalier(T0,0,maxSteps,M);
 	ConstanteKConstant Kparam = new ConstanteKConstant(k);
@@ -67,7 +67,7 @@ public static void main(String[] args) throws IOException {
 
 	System.out.println("seed = " + seed + ".  Nombre de conflits : "+ recuitParam.meilleureEnergie + ", Duree = "
 			+ (endTime1 - startTime1) / 1000000000 + " s" + ", Duree CPU = "+ (endCpu1 - startCpu1) / 1000000000 + " s");
-
+	*/
 }
 
 }

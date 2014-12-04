@@ -64,7 +64,7 @@ public class Test {
 			for (int i = 0; i < graphe.getNombreNoeuds(); i++) {
 				System.out.println(i + " -> couleur "
 						+ g.getMeilleuresCouleurs()[i]);
-				if (g.getNoeudsConflit()[i] == 1) System.out.println("Dessus En conflit");
+				if (g.getNoeudsConflit()[i]) System.out.println("Dessus En conflit");
 			}
 			System.out.println("Energie de l'état : " + g.Ep.calculer(g));
 			System.out.println("Nombre de noeuds en conflits : " + g.nombreNoeudsEnConflit());

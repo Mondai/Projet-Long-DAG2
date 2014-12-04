@@ -22,9 +22,14 @@ public class GrapheColorie extends Etat{
 	Graphe graphe;
 	
 	int k; // nombre de couleurs pour le coloriage
-	int[][] conflitsConnexions; //Tableau contenant 1 si les noeuds de l'arete sont en conflit et 0 sinon
-	private int[] noeudsConflit;// tableau avec 1 si noeud en conflit et 0 sinon
+	boolean[][] conflitsConnexions; //Tableau contenant True si les noeuds de l'arete sont en conflit et False sinon
+	private boolean[] noeudsConflit;// tableau avec True si noeud en conflit et False sinon
 	private int nombreConflitsAretes;
+	
+	// F[Noeuds][Couleurs] inspire de l'algo Tabucol. Permet de calculer rapidement le DelatE d'une mutation
+	// F[v][c] = nombre de voisins de v ayant pour couleur c.
+	// Propriete: DelatE = F[v][cSuiv] - F[v][cPrec]
+	int[][] F; 
 	
 	// Sauvegarde de la derniere modification effectuee
 	public Modification derniereModif;
@@ -36,15 +41,17 @@ public class GrapheColorie extends Etat{
 		
 		this.k = k; 
 		this.couleurs = new int[graphe.getNombreNoeuds()];
-		this.setMeilleuresCouleurs(new int[graphe.getNombreNoeuds()]);
+		this.meilleuresCouleurs = new int[graphe.getNombreNoeuds()];
 		this.graphe = graphe;
 		
-		this.setSeed(seed);
+		this.seed = seed;
 		this.gen = new HighQualityRandom(seed);
 		
-		this.setNoeudsConflit(new int[graphe.getNombreNoeuds()]);
-		this.conflitsConnexions = new int[graphe.getNombreNoeuds()][graphe.getNombreNoeuds()];
+		this.noeudsConflit = new boolean[graphe.getNombreNoeuds()];
+		this.conflitsConnexions = new boolean[graphe.getNombreNoeuds()][graphe.getNombreNoeuds()];
 		this.nombreConflitsAretes = 0;
+		
+		this.F = new int[graphe.getNombreNoeuds()][this.k];
 	}
 	
 	public GrapheColorie(EnergiePotentielle Ep, int k, Graphe graphe) {
@@ -66,10 +73,11 @@ public class GrapheColorie extends Etat{
 		for (int noeudActuel = 0; noeudActuel < this.graphe.getNombreNoeuds(); noeudActuel++) {
 			for (int noeudAdjacent : graphe.connexions[noeudActuel]){
 				if(this.couleurs[noeudAdjacent]==this.couleurs[noeudActuel]){
-					this.conflitsConnexions[noeudActuel][noeudAdjacent] = 1;
-					this.noeudsConflit[noeudActuel]=1;
+					this.conflitsConnexions[noeudActuel][noeudAdjacent] = true;
+					this.noeudsConflit[noeudActuel] = true;
 					conflits++;
 				}
+				this.F[noeudActuel][this.couleurs[noeudAdjacent]] ++ ; // initialisation F. F(v,c)= nb de voisins de v a la couleur c.
 			}
 		}
 		
@@ -85,26 +93,30 @@ public class GrapheColorie extends Etat{
 	public void updateLocal(int noeud, int prevColor){
 		
 		for (int j : graphe.connexions[noeud]){
+			// mise a jour F
+			this.F[j][this.couleurs[noeud]] ++;
+			this.F[j][prevColor] --;
+			
+			// mise a jour conflits
 			if (this.couleurs[j] == prevColor){
-				this.conflitsConnexions[noeud][j] = 0;
-				this.conflitsConnexions[j][noeud] = 0;
-				this.nombreConflitsAretes = (this.getNombreConflitsAretes() - 1);
+				this.conflitsConnexions[noeud][j] = false;
+				this.conflitsConnexions[j][noeud] = false;
+				this.nombreConflitsAretes --;
 				if(!enConflit(j)) {
-					this.noeudsConflit[j] = 0;
+					this.noeudsConflit[j] = false;
 					//System.out.println("removed");
-					// Fonctions debug
 				}
 			}
 			else if (this.couleurs[j] == this.couleurs[noeud]){
-				this.conflitsConnexions[noeud][j] = 1;
-				this.conflitsConnexions[j][noeud] = 1;
-				this.nombreConflitsAretes = (this.getNombreConflitsAretes() + 1);
-				this.noeudsConflit[j] = 1;
+				this.conflitsConnexions[noeud][j] = true;
+				this.conflitsConnexions[j][noeud] = true;
+				this.nombreConflitsAretes ++;
+				this.noeudsConflit[j] = true;
 				//System.out.println("added");
 			}
 		}
 		if (!enConflit(noeud)){
-			this.noeudsConflit[noeud] = 0;
+			this.noeudsConflit[noeud] = false;
 			//System.out.println("removed");
 		}
 	}
@@ -121,15 +133,6 @@ public class GrapheColorie extends Etat{
 		}
 		return res;
 	}
-	
-	//debug purposes
-	public int nombreNoeudsEnConflit(){
-		int k = 0;
-		for (int i : this.noeudsConflit){
-			if (i == 1) k++;
-		}
-		return k;
-	}
 
 	// Sauvegarde du coloriage actuel dans une variable
 	public void sauvegarderSolution(){
@@ -138,6 +141,15 @@ public class GrapheColorie extends Etat{
 		for (int j = 0; j < this.graphe.getNombreNoeuds(); j++) {
 			this.meilleuresCouleurs[j] = this.couleurs[j];
 		}
+	}
+	
+	// retourne le nombre de noeuds en conflit
+	public int nombreNoeudsEnConflit() {
+		int res = 0;
+		for(boolean i : this.noeudsConflit){
+			if(i) res ++;
+		}
+		return res;
 	}
 
 	public int[] getMeilleuresCouleurs() {
@@ -155,12 +167,8 @@ public class GrapheColorie extends Etat{
 		this.seed = seed;
 	}
 
-	public int[] getNoeudsConflit() {
+	public boolean[] getNoeudsConflit() {
 		return noeudsConflit;
-	}
-
-	public void setNoeudsConflit(int[] noeudsConflit) {
-		this.noeudsConflit = noeudsConflit;
 	}
 
 	public int getNombreConflitsAretes() {
@@ -170,6 +178,5 @@ public class GrapheColorie extends Etat{
 	public void setNombreConflitsAretes(int nombreConflitsAretes) {
 		this.nombreConflitsAretes = nombreConflitsAretes;
 	}
-	
 
 }
