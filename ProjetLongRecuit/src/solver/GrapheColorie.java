@@ -1,7 +1,5 @@
 package solver;
 
-import java.util.HashSet;
-
 import solverCommun.EnergiePotentielle;
 import solverCommun.Etat;
 

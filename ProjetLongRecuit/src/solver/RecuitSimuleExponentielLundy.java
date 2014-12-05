@@ -1,7 +1,5 @@
 package solver;
 
-import java.util.List;
-
 
 
 public class RecuitSimuleExponentielLundy extends RecuitSimule{

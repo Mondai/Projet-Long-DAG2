@@ -1,8 +1,5 @@
 package solver;
 
-import java.util.List;
-// Sous-classe de RecuitSimuleLineaire implementant un k variable
-
 
 public class RecuitSimuleLineaireK extends RecuitSimuleLineaire {
 

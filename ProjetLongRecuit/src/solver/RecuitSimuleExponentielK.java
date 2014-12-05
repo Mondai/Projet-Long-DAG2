@@ -1,7 +1,5 @@
 package solver;
 
-import java.util.List;
-
 // Sous-classe de RecuitSimuleExponentiel implementant un k variable
 
 
