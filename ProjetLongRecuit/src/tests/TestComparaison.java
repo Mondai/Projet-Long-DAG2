@@ -7,6 +7,7 @@ import solver.Conflits;
 import solver.EnergieCinetiqueVide;
 import solver.Graphe;
 import solver.GrapheColorieParticule;
+import solver.ListEnergie;
 import solver.MutationConflitsAleatoire;
 import solver.RecuitSimule;
 import solver.RecuitSimuleLineaire;
@@ -20,7 +21,7 @@ public class TestComparaison {
 	
 public static void main(String[] args) throws IOException {
 		
-	int[] seeds = {1,2,3,4,5,6,7,8,9,10,100,1000,10000,100000,1000000};
+	int[] seeds = {4,5,6,7}; //,8,9,10,100,1000,10000,100000,1000000};
 	
 	for(int i=0; i<seeds.length;i++){
 	
@@ -29,11 +30,11 @@ public static void main(String[] args) throws IOException {
 	
 	MutationConflitsAleatoire mutation = new MutationConflitsAleatoire();
 	
-	Graphe graphe = Traducteur.traduire("data/le450_15c.col");
+	Graphe graphe = Traducteur.traduire("data/dsjc250.5.col");
 	int nbNoeuds = 450;
-	int nbCouleurs = 15;
+	int nbCouleurs = 28;
 	double k = 1;
-	int M = 4 * nbNoeuds * nbCouleurs;
+	int M =  (nbNoeuds * nbCouleurs)/100;
 	double T0 = 0.6;
 	int maxSteps = (int) Math.pow(10,6);
 	int seed = seeds[i];
@@ -48,7 +49,17 @@ public static void main(String[] args) throws IOException {
     ThreadMXBean temp = ManagementFactory.getThreadMXBean( );  // recuperer temps cpu
 	long startTime = System.nanoTime();
 	long startCpu = temp.getCurrentThreadCpuTime();	
-	recuit.lancer(coloriage);
+	//recuit.lancer(coloriage);
+	
+	
+	// Avec une proba limite
+	int echantillonnage=1000;
+	int tailleFenetre=20;
+	ListEnergie listEnergie = new ListEnergie(echantillonnage,tailleFenetre); 
+	ListEnergie listProba = new ListEnergie(echantillonnage,tailleFenetre); // taille de la fenetre non utile ici
+	recuit.lancer(coloriage,listEnergie,listProba,Math.pow(10, -3));
+	
+	
 	long endCpu = temp.getCurrentThreadCpuTime();
 	long endTime = System.nanoTime();
 	
