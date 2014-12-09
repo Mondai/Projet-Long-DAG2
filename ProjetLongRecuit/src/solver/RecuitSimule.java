@@ -52,7 +52,7 @@ public abstract class RecuitSimule implements IRecuit{
 				this.energiePrec += deltaE;						// mettre a jour l'energie
 				if( this.energiePrec < this.meilleureEnergie ){	// mettre a jour la meilleur energie
 					this.meilleureEnergie = this.energiePrec;
-					System.out.println("meilleure energie : " + this.meilleureEnergie); // TEST
+					//System.out.println("meilleure energie : " + this.meilleureEnergie); // TEST
 				}
 			} else {
 				proba = Math.exp(-deltaE / (this.k * this.T));	// calcul de la proba

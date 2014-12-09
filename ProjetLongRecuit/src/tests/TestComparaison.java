@@ -29,15 +29,26 @@ public static void main(String[] args) throws IOException {
 	
 	MutationConflitsAleatoire mutation = new MutationConflitsAleatoire();
 	
-	Graphe graphe = Traducteur.traduire("data/le450_15c.col");
-	int nbNoeuds = 450;
-	int nbCouleurs = 15;
+	/*
+	Graphe graphe = Traducteur.traduire("data/dsjc250.5.col");
+	int nbNoeuds = 250;
+	int nbCouleurs = 28;
 	double k = 1;
 	int M = 4 * nbNoeuds * nbCouleurs;
-	double T0 = 0.6;
-	int maxSteps = (int) Math.pow(10,6);
+	double T0 = 0.35;
+	int maxSteps = (int) Math.pow(10,5);
 	int seed = seeds[i];
-		
+	*/
+	
+	Graphe graphe = Traducteur.traduire("data/DSJC500.1.col");
+	int nbNoeuds = 500;
+	int nbCouleurs = 12;
+	double k = 1;
+	int M = 4 * nbNoeuds * nbCouleurs;
+	double T0 = 0.45;
+	int maxSteps = (int) Math.pow(10,7);
+	int seed = seeds[i];
+	
 	GrapheColorieParticule coloriage = new GrapheColorieParticule(Ep, mutation, Ec, nbCouleurs, 1, graphe, seed);
 	
 	// Ancien RecuitSimule
@@ -53,8 +64,8 @@ public static void main(String[] args) throws IOException {
 	long endTime = System.nanoTime();
 	
 	System.out.println("seed = "+seed +".  Nombre de conflits : "+recuit.getMeilleureEnergie()+", Duree = "+(endTime-startTime)/1000000000+" s"+", Duree CPU = "+(endCpu-startCpu)/1000000000+" s");
-	
 	}
+	
 	/*
 	// Nouveau RecuitSimuleParametrable
 	TemperatureLineairePalier Tparam = new TemperatureLineairePalier(T0,0,maxSteps,M);
