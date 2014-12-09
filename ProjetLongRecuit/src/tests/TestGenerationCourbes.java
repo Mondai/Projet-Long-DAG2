@@ -40,12 +40,12 @@ public class TestGenerationCourbes {
 		double Tfin = 0.0001;  // Très important !!!
 		int kinit = 1;
 
-		int echantillonnage=2000;
+		int echantillonnage=1000;
 
-		int tailleEchantillon = 60;
+		int tailleEchantillon = 10;
 		double facteur = 0.99;
 		int N = 4;
-		int tailleFenetre = 100;
+		int tailleFenetre = 1000;
 		
 		// Lundy
 		double coef = 8;
@@ -82,8 +82,8 @@ public class TestGenerationCourbes {
 		// Liste des recuits
 		LinkedList<RecuitSimule> listRecuits = new LinkedList();
 		listRecuits.add(new RecuitSimuleLineaire());
-		listRecuits.add(new RecuitSimuleExponentiel());
-		listRecuits.add(new RecuitSimuleExponentielLundy());
+		//listRecuits.add(new RecuitSimuleExponentiel());
+		//listRecuits.add(new RecuitSimuleExponentielLundy());
 		
 		
 		// Liste des Mutations
@@ -228,7 +228,7 @@ public class TestGenerationCourbes {
 								
 								// Lancement du programme
 								coloriage.initialiser();
-								recuit.lancer(coloriage,listEnergie,listProba);
+								recuit.lancer(coloriage,listEnergie,listProba,Math.pow(10, -7));
 
 								// Ecriture des vecteurs résultats
 								pw.print("u"+i+"=");

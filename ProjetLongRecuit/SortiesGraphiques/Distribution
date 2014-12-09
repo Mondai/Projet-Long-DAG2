@@ -1,0 +1,30 @@
+%Sortie Graphique : 
+%Taille Echantillon : 4
+%Echantillonnage : 10000
+%Température de départ : 0.35
+%Température de fin : 1.0E-4
+
+
+%---------------------------------------------------------------------
+%Benchmark :data/le450_15c.col
+clear all;
+figure;
+
+
+
+%Seed du coloriage : -2009870067
+%Recuit Simulé Linéaire
+%Nombre d'itération : 12000000
+
+v0=12000004;
+v1=12000004;
+v2=12000004;
+v3=12000004;
+v=[v0; v1; v2; v3; ];
+pas=(max(v)-min(v))/4
+vect=(min(v):pas:max(v))
+hist(10000*v,10000*vect);
+hold on;
+title('data/le450_15c.col')
+xlabel('nombre d iteration');
+ylabel('effectif');
