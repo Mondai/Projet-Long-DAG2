@@ -44,7 +44,7 @@ public abstract class RecuitSimule implements IRecuit{
 			
 			MutationElementaire mutation = probleme.getMutationElementaire(etat);	// trouver une mutation possible
 			
-			double deltaE = probleme.calculerDeltaE(etat, mutation);	// calculer deltaE si la mutation etait acceptee
+			double deltaE = probleme.calculerDeltaEp(etat, mutation);	// calculer deltaE si la mutation etait acceptee
 			
 			calculerK();
 			
@@ -89,7 +89,7 @@ public abstract class RecuitSimule implements IRecuit{
 			//probleme.calculerEnergie(); // pour mettre a jour coloriage.nombreNoeudsConflit
 			MutationElementaire mutation = probleme.getMutationElementaire(etat);	// trouver une mutation possible
 			
-			double deltaE = probleme.calculerDeltaE(etat, mutation);	// calculer deltaE si la mutation etait acceptee
+			double deltaE = probleme.calculerDeltaEp(etat, mutation);	// calculer deltaE si la mutation etait acceptee
 			listEnergie.addTotal(this.energiePrec+deltaE);
 			//System.out.println("energie courante : " + energieSuiv);
 			calculerK();
@@ -154,7 +154,7 @@ public Probleme lancer(Probleme probleme, ListEnergie listEnergie, ListEnergie l
 			
 			MutationElementaire mutation = probleme.getMutationElementaire(etat);	// trouver une mutation possible
 			
-			double deltaE = probleme.calculerDeltaE(etat, mutation);	// calculer deltaE si la mutation etait acceptee
+			double deltaE = probleme.calculerDeltaEp(etat, mutation);	// calculer deltaE si la mutation etait acceptee
 			listEnergie.addTotal(this.energiePrec+deltaE);
 			
 			calculerK();

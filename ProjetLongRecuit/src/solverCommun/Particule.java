@@ -1,11 +1,11 @@
 package solverCommun;
 
-import java.util.List;
+import java.util.LinkedList;
 
 public abstract class Particule {
 	
 	public EnergieCinetique Ec;
 	public IMutation mutation;
-	public List<Etat> etats;
+	public LinkedList<Etat> etats;
 
 }

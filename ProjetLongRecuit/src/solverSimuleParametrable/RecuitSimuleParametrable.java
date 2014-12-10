@@ -39,7 +39,7 @@ public class RecuitSimuleParametrable extends RecuitSimuleP { 				// pas touche 
 			
 			MutationElementaire mutation = probleme.getMutationElementaire(etat);	// trouver une mutation possible
 			
-			double deltaE = probleme.calculerDeltaE(etat, mutation);	// calculer deltaE si la mutation etait acceptee
+			double deltaE = probleme.calculerDeltaEp(etat, mutation);	// calculer deltaE si la mutation etait acceptee
 			
 			K.calculerK(deltaE);
 			

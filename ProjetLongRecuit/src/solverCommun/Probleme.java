@@ -1,5 +1,7 @@
 package solverCommun;
 
+import java.util.Collections;
+
 import solver.HighQualityRandom;
 /*
  * Classe abstraite représentant un problème générique soluble par recuit simulé
@@ -31,7 +33,7 @@ public abstract class Probleme extends Particule{
 	}
 	
 	// Calcule deltaE à partir de la mutation proposée (sans effectuer la mutation)
-	public double calculerDeltaE(Etat etat, MutationElementaire mutation){
+	public double calculerDeltaEp(Etat etat, MutationElementaire mutation){
 		return etat.Ep.calculerDeltaE(etat, mutation);
 	}
 	
@@ -53,7 +55,7 @@ public abstract class Probleme extends Particule{
 	}
 	
 	public void shuffleEtats() {
-		// TODO Auto-generated method stub
+		Collections.shuffle(etats, gen);
 		
 	}
 	

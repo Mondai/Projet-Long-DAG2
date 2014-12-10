@@ -1,7 +1,6 @@
 package solver;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedList;
 
 import solverCommun.EnergieCinetique;
 import solverCommun.EnergiePotentielle;
@@ -25,7 +24,7 @@ public class GrapheColorieParticule extends Probleme {
 		this.setSeed(seed);
 		this.gen = new HighQualityRandom(seed);
 		
-		this.etats = new ArrayList<Etat>();
+		this.etats = new LinkedList<Etat>();
 		for (int i = 0; i < this.replique; i++){
 			this.etats.add( new GrapheColorie(Ep, k, graphe, this.gen.nextInt()));
 		}
@@ -40,7 +39,7 @@ public class GrapheColorieParticule extends Probleme {
 	public void initialiserSansSeed(){
 		EnergiePotentielle Ep = this.etats.get(0).Ep;
 		
-		this.etats = new ArrayList<Etat>();
+		this.etats = new LinkedList<Etat>();
 		
 		for (int i = 0; i < this.replique; i++){
 			GrapheColorie etat =  new GrapheColorie(Ep, k, graphe, this.gen.nextInt());
@@ -64,7 +63,7 @@ public class GrapheColorieParticule extends Probleme {
 		
 	}
 	
-	public List<Etat> getEtats(){
+	public LinkedList<Etat> getEtats(){
 		return this.etats;
 	}
 
