@@ -40,7 +40,7 @@ public class TestGenerationCourbes {
 		double Tfin = 0.0001;  // Très important !!!
 		int kinit = 1;
 
-		int echantillonnage=1000;
+		int echantillonnage=100;
 
 		int tailleEchantillon = 10;
 		double facteur = 0.99;
@@ -73,7 +73,7 @@ public class TestGenerationCourbes {
 		//Initialisation des listes à itérer
 		// Liste des benchmarks
 		LinkedList<String> listBenchmarks = new LinkedList();
-		listBenchmarks.add("data/dsjc250.5.col");
+		listBenchmarks.add("data/le450_25a.col");
 		//listBenchmarks.add("data/le450_25b.col");
 		//listBenchmarks.add("le450_25c.col");
 		//listBenchmarks.add("le450_25d.col");

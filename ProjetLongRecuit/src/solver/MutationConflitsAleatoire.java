@@ -19,11 +19,13 @@ public class MutationConflitsAleatoire implements IMutation {
 		int noeudsEnConflits = coloriage.nombreNoeudsEnConflit();
 		
 		int compteur = (int) (coloriage.gen.nextDouble()*noeudsEnConflits);
+		//System.out.println("compteur "+compteur);
+		//System.out.println("noeuds en conflit "+noeudsEnConflits);
 		int noeud = 0;
 		boolean condition = true;
 		int j = 0;
 		
-		while (condition && j < coloriage.graphe.getNombreNoeuds()){
+		/*while (condition && j < coloriage.graphe.getNombreNoeuds()){
 			if (coloriage.getNoeudsConflit()[j]){
 				if (compteur == 0){
 					noeud = j;
@@ -32,7 +34,8 @@ public class MutationConflitsAleatoire implements IMutation {
 				else compteur--;
 			}
 			j++;
-		}
+		}*/
+		noeud=coloriage.getNoeudsConflitList().get(compteur);
 		int couleurPrec = coloriage.couleurs[noeud];
 		int couleurSuiv = couleurPrec;
 		

@@ -53,6 +53,7 @@ public abstract class RecuitSimule implements IRecuit{
 				this.energiePrec += deltaE;						// mettre a jour l'energie
 				if( this.energiePrec < this.meilleureEnergie ){	// mettre a jour la meilleur energie
 					this.meilleureEnergie = this.energiePrec;
+					probleme.sauvegarderSolution();
 
 					//System.out.println("meilleure energie : " + this.meilleureEnergie); // TEST
 
@@ -114,7 +115,9 @@ public abstract class RecuitSimule implements IRecuit{
 				this.energiePrec += deltaE;						// mettre a jour l'energie
 				if( this.energiePrec < this.meilleureEnergie ){	// mettre a jour la meilleur energie
 					this.meilleureEnergie = this.energiePrec;
+					probleme.sauvegarderSolution();
 				}
+				
 			} else {
 				proba = Math.exp(-deltaE / (this.k * this.T));	// calcul de la proba
 				if (proba >= probleme.gen.nextDouble()) {
@@ -158,7 +161,7 @@ public Probleme lancer(Probleme probleme, ListEnergie listEnergie, ListEnergie l
 			listEnergie.addTotal(this.energiePrec+deltaE);
 			
 			calculerK();
-			
+			//System.out.println(energiePrec);
 			listEnergie.augmenteTaille();// on incremente le nombre d'iterations
 			
 			proba = Math.exp(-deltaE/(this.k*this.T));
