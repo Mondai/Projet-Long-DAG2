@@ -52,4 +52,9 @@ public abstract class Probleme extends Particule{
 		this.seed = seed;
 	}
 	
+	public void shuffleEtats() {
+		// TODO Auto-generated method stub
+		
+	}
+	
 }

@@ -20,7 +20,7 @@ public class GrapheColorie extends Etat{
 	Graphe graphe;
 	
 	int k; // nombre de couleurs pour le coloriage
-	boolean[][] conflitsConnexions; //Tableau contenant True si les noeuds de l'arete sont en conflit et False sinon
+	boolean[][] conflitsConnexions; //Tableau contenant True si les noeuds de l'arete sont en conflit et False sinon (peut être non nécessaire de stocker les spins)
 	private boolean[] noeudsConflit;// tableau avec True si noeud en conflit et False sinon
 	private int nombreConflitsAretes;
 	
