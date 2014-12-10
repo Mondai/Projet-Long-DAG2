@@ -78,7 +78,7 @@ public class GrapheColorie extends Etat{
 					this.conflitsConnexions[noeudActuel][noeudAdjacent] = true;
 					
 					//this.noeudsConflit[noeudActuel] = true;
-					this.noeudsConflitList.add(noeudActuel);
+					if (! this.noeudsConflitList.contains(noeudActuel)) this.noeudsConflitList.add(noeudActuel);
 					conflits++;
 				}
 				this.F[noeudActuel][this.couleurs[noeudAdjacent]] ++ ; // initialisation F. F(v,c)= nb de voisins de v a la couleur c.

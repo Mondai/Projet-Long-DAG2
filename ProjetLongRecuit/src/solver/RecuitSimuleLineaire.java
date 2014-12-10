@@ -51,7 +51,7 @@ public class RecuitSimuleLineaire extends RecuitSimule{
 		}
 		// condition d'arr�t: T<Tfin ou T<0.
 		if( this.T<this.Tfin || this.T<0 || this.probaMoyenne<this.probaMoyenneLimite){
-			System.out.println("probaMoyenne "+ this.probaMoyenne);
+			//System.out.println("probaMoyenne "+ this.probaMoyenne);
 			return false;
 		}
 		else{

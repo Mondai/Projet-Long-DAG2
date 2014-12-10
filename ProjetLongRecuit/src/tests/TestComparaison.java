@@ -6,6 +6,7 @@ import java.lang.management.ThreadMXBean;
 import solver.Conflits;
 import solver.EnergieCinetiqueVide;
 import solver.Graphe;
+import solver.GrapheColorie;
 import solver.GrapheColorieParticule;
 import solver.ListEnergie;
 import solver.MutationConflitsAleatoire;
@@ -21,7 +22,7 @@ public class TestComparaison {
 	
 public static void main(String[] args) throws IOException {
 		
-	int[] seeds = {4,5,6,7}; //,8,9,10,100,1000,10000,100000,1000000};
+	int[] seeds = {2,3,4,5,6,7,8,9,10,100,1000,10000,100000,1000000};
 	
 	for(int i=0; i<seeds.length;i++){
 	
@@ -49,21 +50,21 @@ public static void main(String[] args) throws IOException {
     ThreadMXBean temp = ManagementFactory.getThreadMXBean( );  // recuperer temps cpu
 	long startTime = System.nanoTime();
 	long startCpu = temp.getCurrentThreadCpuTime();	
-	//recuit.lancer(coloriage);
+	recuit.lancer(coloriage);
 	
 	
 	// Avec une proba limite
-	int echantillonnage=1000;
+	/*int echantillonnage=1000;
 	int tailleFenetre=20;
 	ListEnergie listEnergie = new ListEnergie(echantillonnage,tailleFenetre); 
 	ListEnergie listProba = new ListEnergie(echantillonnage,tailleFenetre); // taille de la fenetre non utile ici
-	recuit.lancer(coloriage,listEnergie,listProba,0);
+	recuit.lancer(coloriage,listEnergie,listProba,0);*/
 	
 	long endCpu = temp.getCurrentThreadCpuTime();
 	long endTime = System.nanoTime();
 	
 	System.out.println("seed = "+seed +".  Nombre de conflits : "+recuit.getMeilleureEnergie()+", Duree = "+(endTime-startTime)/1000000000+" s"+", Duree CPU = "+(endCpu-startCpu)/1000000000+" s");
-	
+
 	/*
 	// Nouveau RecuitSimuleParametrable
 	TemperatureLineairePalier Tparam = new TemperatureLineairePalier(T0,0,maxSteps,M);
