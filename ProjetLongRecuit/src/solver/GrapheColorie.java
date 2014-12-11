@@ -78,7 +78,7 @@ public class GrapheColorie extends Etat{
 					this.conflitsConnexions[noeudActuel][noeudAdjacent] = true;
 					
 					//this.noeudsConflit[noeudActuel] = true;
-					if (! this.noeudsConflitList.contains(noeudActuel)) this.noeudsConflitList.add(noeudActuel);
+					if (!this.noeudsConflitList.contains(noeudActuel)) this.noeudsConflitList.add(noeudActuel);
 					conflits++;
 				}
 				this.F[noeudActuel][this.couleurs[noeudAdjacent]] ++ ; // initialisation F. F(v,c)= nb de voisins de v a la couleur c.
@@ -123,7 +123,7 @@ public class GrapheColorie extends Etat{
 		}
 		if (!enConflit(noeud)){
 			//this.noeudsConflit[noeud] = false;
-			if ( this.noeudsConflitList.contains(noeud)) {this.noeudsConflitList.removeFirstOccurrence(noeud);}
+			this.noeudsConflitList.removeFirstOccurrence(noeud);
 			//System.out.println("removed");
 		}
 	}

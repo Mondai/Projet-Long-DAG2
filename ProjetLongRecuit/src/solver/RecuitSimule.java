@@ -56,7 +56,6 @@ public abstract class RecuitSimule implements IRecuit{
 					probleme.sauvegarderSolution();
 
 					//System.out.println("meilleure energie : " + this.meilleureEnergie); // TEST
-
 				}
 			} else {
 				proba = Math.exp(-deltaE / (this.k * this.T));	// calcul de la proba
