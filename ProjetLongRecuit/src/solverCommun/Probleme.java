@@ -1,5 +1,6 @@
 package solverCommun;
 
+import java.util.Arrays;
 import java.util.Collections;
 
 import solver.HighQualityRandom;
@@ -55,7 +56,7 @@ public abstract class Probleme extends Particule{
 	}
 	
 	public void shuffleEtats() {
-		Collections.shuffle(etats, gen);
+		Collections.shuffle(Arrays.asList(etats), gen);
 		
 	}
 	

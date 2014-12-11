@@ -35,7 +35,7 @@ public abstract class RecuitSimule implements IRecuit{
 		this.probaMoyenne=1;
 		init();
 		
-		Etat etat = probleme.etats.get(0);
+		Etat etat = probleme.etats[0];
 		this.energiePrec = probleme.calculerEnergie() ;
 		this.meilleureEnergie = this.energiePrec ;
 		double proba = 1;
@@ -74,7 +74,7 @@ public abstract class RecuitSimule implements IRecuit{
 		double var = 0;
 		this.probaMoyenne=1;
 		
-		Etat etat = probleme.etats.get(0);
+		Etat etat = probleme.etats[0];
 		this.energiePrec = probleme.calculerEnergie() ;
 		listEnergie.augmenteTaille(); // on incremente le nombre d'iterations
 		this.meilleureEnergie = this.energiePrec ;
@@ -141,7 +141,7 @@ public Probleme lancer(Probleme probleme, ListEnergie listEnergie, ListEnergie l
 		init();
 		this.probaMoyenneLimite=probaMoyenneLimite;
 		double var = 0;
-		Etat etat = probleme.etats.get(0);
+		Etat etat = probleme.etats[0];
 		this.energiePrec = probleme.calculerEnergie() ;
 		listEnergie.augmenteTaille(); // on incremente le nombre d'iterations
 		this.meilleureEnergie = this.energiePrec ;

@@ -6,6 +6,6 @@ public abstract class Particule {
 	
 	public EnergieCinetique Ec;
 	public IMutation mutation;
-	public LinkedList<Etat> etats;
+	public Etat[] etats;
 
 }

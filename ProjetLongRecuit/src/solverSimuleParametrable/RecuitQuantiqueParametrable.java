@@ -16,16 +16,14 @@ public class RecuitQuantiqueParametrable extends RecuitSimuleP { 				// pas touc
 	public double temperature;
 	
 	public int nbMaxIteration; 							// nombre maximale d'iteration si la solution n'est pas trouvee, redondance avec t.nbIteration
-	public int nombreRepliques;
 	public int palier;
 	// abstract void init(); 								// initialisation // mais de quoi ?
 
-	public RecuitQuantiqueParametrable(Temperature G, ConstanteK K, int nombreRepliques, int palier, double temperature) {
+	public RecuitQuantiqueParametrable(Temperature G, ConstanteK K, int palier, double temperature) {
 		this.G=G;												// contructeur : on lui donne la facon de calculer l'energie, K et tout le blabla
 		this.K=K;												// en creant une classe dedie et reutilisable qui extends temperature
 		this.nbMaxIteration=this.G.nbIteration;						// ainsi on combine le tout facilement
-		this.nombreRepliques = nombreRepliques;				//en quantique, la température est constante et le Gamma est variable, d'où le fait que Gamma soit une "température"
-		this.palier = palier;
+		this.palier = palier;										//en quantique, la température est constante et le Gamma est variable, d'où le fait que Gamma soit une "température"
 	}
 
 	public Probleme lancer(Probleme probleme) {
@@ -35,14 +33,17 @@ public class RecuitQuantiqueParametrable extends RecuitSimuleP { 				// pas touc
 		
 		/*toujours a implementer :
 		 * Gamma variable et initialisation du gamma (peut être changer les classes Temperature à un nom plus neutre)
-		 * Implementation d'une liste circulaire d'états // ou plutot d'un traitement circulaire au niveau de Ec
+		 * Implementation d'une liste circulaire d'états // ou plutot d'un traitement circulaire au niveau de Ec (sélection de next et previous faite ---)
 		 * Implementation d'un shuffle des etats //fait
 		 * methodes de calcul de Ec
 		 * Implementation des classes couleurs
 		 * Enlever les variables de spin???		
 		*/
+		int nombreRepliques = probleme.etats.length;
 		
-		Etat etat = probleme.etats.get(0);
+		Etat etat = probleme.etats[0];
+		Etat previous = probleme.etats[nombreRepliques-1];
+		Etat next = probleme.etats[1];
 		this.energiePrec = probleme.calculerEnergie() ;
 		this.meilleureEnergie = this.energiePrec ;
 		double proba = 1;
@@ -51,12 +52,27 @@ public class RecuitQuantiqueParametrable extends RecuitSimuleP { 				// pas touc
 			probleme.shuffleEtats();
 			
 			for (int i = 0; i < nombreRepliques; i++){
-				etat = probleme.etats.get(i);
+				etat = probleme.etats[i];
+				
+				if(i == 0){
+					previous = probleme.etats[nombreRepliques-1];
+				}
+				else{
+					previous = probleme.etats[i-1];
+				}
+				
+				if (i == nombreRepliques - 1){
+					next = probleme.etats[0];
+				}
+				else{
+					next = probleme.etats[i+1];
+				}
 				
 				for (int j = 0; j < palier; j++){
 					MutationElementaire mutation = probleme.getMutationElementaire(etat);	// trouver une mutation possible
-					double deltaE = probleme.calculerDeltaEp(etat, mutation);	// calculer deltaE si la mutation etait acceptee
+					double deltaEp = probleme.calculerDeltaEp(etat, mutation);	// calculer deltaE si la mutation etait acceptee
 					
+					double deltaE = deltaEp;
 					K.calculerK(deltaE);
 					
 					if( deltaE <= 0){

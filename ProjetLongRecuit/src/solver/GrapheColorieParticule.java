@@ -24,9 +24,9 @@ public class GrapheColorieParticule extends Probleme {
 		this.setSeed(seed);
 		this.gen = new HighQualityRandom(seed);
 		
-		this.etats = new LinkedList<Etat>();
+		this.etats = new Etat[replique];
 		for (int i = 0; i < this.replique; i++){
-			this.etats.add( new GrapheColorie(Ep, k, graphe, this.gen.nextInt()));
+			this.etats[i] = new GrapheColorie(Ep, k, graphe, this.gen.nextInt());
 		}
 		
 	}
@@ -37,14 +37,14 @@ public class GrapheColorieParticule extends Probleme {
 	
 	// Initialisation de l'etat: affectation de couleurs aleatoires
 	public void initialiserSansSeed(){
-		EnergiePotentielle Ep = this.etats.get(0).Ep;
+		EnergiePotentielle Ep = this.etats[0].Ep;
 		
-		this.etats = new LinkedList<Etat>();
+		this.etats = new Etat[replique];
 		
 		for (int i = 0; i < this.replique; i++){
 			GrapheColorie etat =  new GrapheColorie(Ep, k, graphe, this.gen.nextInt());
 			etat.initialiser();
-			this.etats.add(etat);
+			this.etats[i] = etat;
 		}
 		
 	}
@@ -63,7 +63,7 @@ public class GrapheColorieParticule extends Probleme {
 		
 	}
 	
-	public LinkedList<Etat> getEtats(){
+	public Etat[] getEtats(){
 		return this.etats;
 	}
 

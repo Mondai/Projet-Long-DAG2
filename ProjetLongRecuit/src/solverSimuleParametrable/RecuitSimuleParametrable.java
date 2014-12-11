@@ -30,7 +30,7 @@ public class RecuitSimuleParametrable extends RecuitSimuleP { 				// pas touche 
 		// TODO methode init()
 		// init();
 		
-		Etat etat = probleme.etats.get(0);
+		Etat etat = probleme.etats[0];
 		this.energiePrec = probleme.calculerEnergie() ;
 		this.meilleureEnergie = this.energiePrec ;
 		double proba = 1;
