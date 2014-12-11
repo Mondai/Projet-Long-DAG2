@@ -32,7 +32,8 @@ public class RecuitQuantiqueParametrable extends ProblemeQuantique {
 	}
 
 	public void initialiser(boolean choix) {
-		/* initialiser les energies pour la particule ( soit random, soit utiliser un resultat precedent, ie  )
+		/* initialiser les etats puis les energies pour la particule ( soit random, 
+		 * soit utiliser une particuleQuantique precedente, soit etc  )
 		 * a coder selon le choix
 		 */
 
@@ -51,17 +52,17 @@ public class RecuitQuantiqueParametrable extends ProblemeQuantique {
 			for ( int numeroRepliqueModifiee = 1; (numeroRepliqueModifiee<=this.nbReplique); numeroRepliqueModifiee++) {
 
 
-				// A CODER : trouver une mutation possible sur numeroRepliqueModifiee
+				this.mutation.trouverMutation(this.particuleQuantique, numeroRepliqueModifiee);
 
-				deltaEc = this.particuleQuantique.energieTotale.calculerDeltaE(this.particuleQuantique, numeroRepliqueModifiee,  mutation);	// calculer deltaE si la mutation etait acceptee
-				deltaEp = this.particuleQuantique.energieTotale.calculerDeltaE(this.particuleQuantique, numeroRepliqueModifiee,  mutation);	// calculer deltaE si la mutation etait acceptee
+				deltaEc = this.particuleQuantique.energieTotale.calculerDeltaE(this.particuleQuantique, numeroRepliqueModifiee,  this.mutation);	// calculer deltaE si la mutation etait acceptee
+				deltaEp = this.particuleQuantique.energieTotale.calculerDeltaE(this.particuleQuantique, numeroRepliqueModifiee,  this.mutation);	// calculer deltaE si la mutation etait acceptee
 				deltaE = deltaEp+deltaEc ;
 				K.calculerK(deltaE);
 				proba = Math.exp(-deltaE / (this.K.k * this.T.t));	// calcul de la proba
 				
 
-				if( deltaE <= 0 || proba>= Math.random()){  			// ah les trucs random high quality a rajouter
-					// A CODER, effectuer la mutation dans la representation de l'etat 				
+				if( deltaE <= 0 || proba>= Math.random()){  			// les trucs random high quality a rajouter
+					this.mutation.effectuerMutation(this.particuleQuantique, numeroRepliqueModifiee);				
 					this.particuleQuantique.representationsEtat[numeroRepliqueModifiee].actualEp += deltaEp;
 					this.particuleQuantique.actualEc += deltaEc;
 					
@@ -80,7 +81,7 @@ public class RecuitQuantiqueParametrable extends ProblemeQuantique {
 	 *  modifierT change la temperature et renvoie un bool qui indique si on arrive a la temperature finale
 	 *  on verifie aussi que la solution n'est pas trouvee (ie il y a une Ep a 0), a ecrire
 	 * 
-	 * mutation pas encore codee pour quantique
+	 * mutation enfin codee, mais j'utilise juste un Math.random()
 	 * 
 	 */
 

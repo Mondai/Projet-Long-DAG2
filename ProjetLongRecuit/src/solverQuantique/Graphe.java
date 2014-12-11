@@ -3,7 +3,7 @@ package solverQuantique;
 import java.io.IOException;
 import java.util.LinkedList;
 
-public class Graphe extends RepresentationGraphique {
+public class Graphe extends DataProblem {
 	
 	private int nombreNoeuds;
 	protected LinkedList<Integer>[] connexions; // représente les connexions
