@@ -38,23 +38,14 @@ public class RecuitSimuleLineaire extends RecuitSimule{
 	}
 	
 	public boolean incrT(){
-		
-		// lin�aire
-		if(this.compteur==this.N){
-			this.T = this.T - this.pas;
-			this.compteur = 1;
-			
-		}
-		else{
-			this.compteur++;
-			
-		}
-		// condition d'arr�t: T<Tfin ou T<0.
-		if( this.T<this.Tfin || this.T<0 || this.probaMoyenne<this.probaMoyenneLimite){
-			//System.out.println("probaMoyenne "+ this.probaMoyenne);
+		if (this.T < this.Tfin || this.T<0 || this.probaMoyenne<this.probaMoyenneLimite) {
 			return false;
-		}
-		else{
+		} else if(this.compteur == this.N) {
+			this.T -= this.pas;
+			this.compteur = 1;
+			return true;
+		}else{
+			this.compteur++;
 			return true;
 		}
 	}

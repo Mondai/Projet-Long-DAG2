@@ -10,7 +10,7 @@ public class TemperatureLineairePalier extends Temperature {
 		super(tdebut, tfinal, nbIteration);
 		this.pasLineaire = (this.Tfinal-this.Tdebut)/this.nbIteration ;
 		this.palier = palier;
-		this.compteurPalier = 0;
+		this.compteurPalier = 1;
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -19,7 +19,7 @@ public class TemperatureLineairePalier extends Temperature {
 			return false;
 		} else if(this.compteurPalier == palier) {
 			this.t += this.pasLineaire; 	// le pas linearie est negatif :)
-			this.compteurPalier = 0;
+			this.compteurPalier = 1;
 			return true;
 		}else{
 			this.compteurPalier++;

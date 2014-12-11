@@ -22,7 +22,7 @@ public class TestComparaison {
 	
 public static void main(String[] args) throws IOException {
 		
-	int[] seeds = {257,2570,25700,1,2,3,4,5,6,7,8,9,10,100,1000,10000,100000,1000000};
+	int[] seeds = {1,2,3,4,5,6,7,8,9,10,100,1000,10000,100000,1000000};
 	
 	for(int i=0; i<seeds.length;i++){
 	
@@ -31,23 +31,23 @@ public static void main(String[] args) throws IOException {
 	
 	MutationConflitsAleatoire mutation = new MutationConflitsAleatoire();
 	
-	/*Graphe graphe = Traducteur.traduire("data/le450_15c.col");
+	Graphe graphe = Traducteur.traduire("data/le450_15c.col");
 	int nbNoeuds = 450;
 	int nbCouleurs = 15;
 	double k = 1;
-	int M = 4 * nbNoeuds * nbCouleurs;
+	int M = 4 ;//* nbCouleurs;// * nbNoeuds * nbCouleurs;
 	double T0 = 0.6;
 	int maxSteps = (int) Math.pow(10,6);
-	int seed = seeds[i];*/
+	int seed = seeds[i];
 	
-	Graphe graphe = Traducteur.traduire("data/dsjc250.5.col");
+	/*Graphe graphe = Traducteur.traduire("data/dsjc250.5.col");
 	int nbNoeuds = 250;
 	int nbCouleurs = 28;
 	double k = 1;
 	int M = 4 ;//* nbNoeuds * nbCouleurs;
 	double T0 = 0.35;
 	int maxSteps = (int) Math.pow(10,5);
-	int seed = seeds[i];
+	int seed = seeds[i];*/
 	
 	GrapheColorieParticule coloriage = new GrapheColorieParticule(Ep, mutation, Ec, nbCouleurs, 1, graphe, seed);
 	
@@ -62,8 +62,8 @@ public static void main(String[] args) throws IOException {
 	recuit.lancer(coloriage);
 	
 	
-	// Avec une proba limite
-	/*int echantillonnage=1000;
+	/*// Avec une proba limite
+	int echantillonnage=1000;
 	int tailleFenetre=20;
 	ListEnergie listEnergie = new ListEnergie(echantillonnage,tailleFenetre); 
 	ListEnergie listProba = new ListEnergie(echantillonnage,tailleFenetre); // taille de la fenetre non utile ici
@@ -74,10 +74,11 @@ public static void main(String[] args) throws IOException {
 	
 	System.out.println("seed = "+seed +".  Nombre de conflits : "+recuit.getMeilleureEnergie()+", Duree = "+(endTime-startTime)/1000000000+" s"+", Duree CPU = "+(endCpu-startCpu)/1000000000+" s");
 	//System.out.println(((GrapheColorie)coloriage.etats.get(0)).getNoeudsConflitList());
-	/*
+
 	// Nouveau RecuitSimuleParametrable
 	TemperatureLineairePalier Tparam = new TemperatureLineairePalier(T0,0,maxSteps,M);
 	ConstanteKConstant Kparam = new ConstanteKConstant(k);
+	coloriage = new GrapheColorieParticule(Ep, mutation, Ec, nbCouleurs, 1, graphe, seed);
 	coloriage.initialiser();
 	RecuitSimuleParametrable recuitParam = new RecuitSimuleParametrable(Tparam,Kparam);
 	//
@@ -92,8 +93,7 @@ public static void main(String[] args) throws IOException {
 
 	System.out.println("seed = " + seed + ".  Nombre de conflits : "+ recuitParam.meilleureEnergie + ", Duree = "
 			+ (endTime1 - startTime1) / 1000000000 + " s" + ", Duree CPU = "+ (endCpu1 - startCpu1) / 1000000000 + " s");
-	*/
-
+	
 	}
 }
 
