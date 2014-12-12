@@ -152,6 +152,14 @@ public class GrapheColorie extends Etat{
 		}
 		return res;
 	}
+	
+	public int spinConflit(int noeud, int noeud2){
+		
+		if (couleurs[noeud] == couleurs[noeud2]){
+			return -1;
+		}
+		return 1;
+	}
 
 	// Sauvegarde du coloriage actuel dans une variable
 	public void sauvegarderSolution(){
@@ -172,6 +180,14 @@ public class GrapheColorie extends Etat{
 		}*/
 		//return res;
 		return this.noeudsConflitList.size();
+	}
+	
+	public int[] getCouleurs() {
+		return couleurs;
+	}
+	
+	public HashSet<Integer>[] getClassesCouleurs() {
+		return colorClasses;
 	}
 
 	public int[] getMeilleuresCouleurs() {

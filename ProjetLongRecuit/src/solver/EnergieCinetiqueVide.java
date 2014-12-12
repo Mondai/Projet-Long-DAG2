@@ -13,7 +13,8 @@ public class EnergieCinetiqueVide extends EnergieCinetique {
 	}
 
 	@Override
-	public double calculerDeltaE(Etat etat, MutationElementaire mutation) {
+	public double calculerDeltaE(Etat etat, Etat prev, Etat next,
+			MutationElementaire mutation) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
