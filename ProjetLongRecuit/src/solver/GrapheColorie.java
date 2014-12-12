@@ -1,5 +1,6 @@
 package solver;
 
+import java.util.HashSet;
 import java.util.LinkedList;
 
 import solverCommun.EnergiePotentielle;
@@ -22,10 +23,11 @@ public class GrapheColorie extends Etat{
 	Graphe graphe;
 	
 	int k; // nombre de couleurs pour le coloriage
-	boolean[][] conflitsConnexions; //Tableau contenant True si les noeuds de l'arete sont en conflit et False sinon (peut être non nécessaire de stocker les spins)
+	//boolean[][] conflitsConnexions; //Tableau contenant True si les noeuds de l'arete sont en conflit et False sinon (peut être non nécessaire de stocker les spins)
 	//private boolean[] noeudsConflit;// tableau avec True si noeud en conflit et False sinon
 	private LinkedList<Integer> noeudsConflitList;
 	private int nombreConflitsAretes;
+	private HashSet<Integer>[] colorClasses;
 	
 	// F[Noeuds][Couleurs] inspire de l'algo Tabucol. Permet de calculer rapidement le DelatE d'une mutation
 	// F[v][c] = nombre de voisins de v ayant pour couleur c.
@@ -50,10 +52,16 @@ public class GrapheColorie extends Etat{
 		
 		//this.noeudsConflit = new boolean[graphe.getNombreNoeuds()];
 		this.noeudsConflitList= new LinkedList<Integer>();
-		this.conflitsConnexions = new boolean[graphe.getNombreNoeuds()][graphe.getNombreNoeuds()];
+		//this.conflitsConnexions = new boolean[graphe.getNombreNoeuds()][graphe.getNombreNoeuds()];
 		this.nombreConflitsAretes = 0;
 		
 		this.F = new int[graphe.getNombreNoeuds()][this.k];
+		
+		this.colorClasses = new HashSet[k];
+		
+		for (int i = 0; i < k; i++){
+			this.colorClasses[i] = new HashSet(); //besoin d'essayer avec initialCapacity != 16, du style getNombreNoeuds
+		}
 	}
 	
 	public GrapheColorie(EnergiePotentielle Ep, int k, Graphe graphe) {
@@ -68,6 +76,7 @@ public class GrapheColorie extends Etat{
 		// et rajouter tous les noeuds à la liste des noeuds en conflit
 		for (int j = 0; j < this.graphe.getNombreNoeuds(); j++) {			
 			this.couleurs[j]=(int)(this.gen.nextDouble()*this.k);  // affectation couleurs aleatoires
+			this.colorClasses[this.couleurs[j]].add(j); //partie qui initialise les classes couleurs
 		}
 		
 		//calcul du nombre initial de conflits
@@ -75,7 +84,7 @@ public class GrapheColorie extends Etat{
 		for (int noeudActuel = 0; noeudActuel < this.graphe.getNombreNoeuds(); noeudActuel++) {
 			for (int noeudAdjacent : graphe.connexions[noeudActuel]){
 				if(this.couleurs[noeudAdjacent]==this.couleurs[noeudActuel]){
-					this.conflitsConnexions[noeudActuel][noeudAdjacent] = true;
+					//this.conflitsConnexions[noeudActuel][noeudAdjacent] = true;
 					
 					//this.noeudsConflit[noeudActuel] = true;
 					if (!this.noeudsConflitList.contains(noeudActuel)) this.noeudsConflitList.add(noeudActuel);
@@ -95,6 +104,9 @@ public class GrapheColorie extends Etat{
 	}
 	
 	public void updateLocal(int noeud, int prevColor){
+		// met à jour l'appartenance du noeud en question par rapport aux classes de couleur
+		this.colorClasses[prevColor].remove(noeud);
+		this.colorClasses[this.couleurs[noeud]].add(noeud);
 		
 		for (int j : graphe.connexions[noeud]){
 			// mise a jour F
@@ -103,8 +115,8 @@ public class GrapheColorie extends Etat{
 			
 			// mise a jour conflits
 			if (this.couleurs[j] == prevColor){
-				this.conflitsConnexions[noeud][j] = false;
-				this.conflitsConnexions[j][noeud] = false;
+				//this.conflitsConnexions[noeud][j] = false;
+				//this.conflitsConnexions[j][noeud] = false;
 				this.nombreConflitsAretes --;
 				if(!enConflit(j)) {
 					//this.noeudsConflit[j] = false;
@@ -113,8 +125,8 @@ public class GrapheColorie extends Etat{
 				}
 			}
 			else if (this.couleurs[j] == this.couleurs[noeud]){
-				this.conflitsConnexions[noeud][j] = true;
-				this.conflitsConnexions[j][noeud] = true;
+				//this.conflitsConnexions[noeud][j] = true;
+				//this.conflitsConnexions[j][noeud] = true;
 				this.nombreConflitsAretes ++;
 				//this.noeudsConflit[j] = true;
 				if (! this.noeudsConflitList.contains(j)) this.noeudsConflitList.add(j);
@@ -176,10 +188,6 @@ public class GrapheColorie extends Etat{
 	public void setSeed(int seed) {
 		this.seed = seed;
 	}
-
-	//public boolean[] getNoeudsConflit() {
-		//return noeudsConflit;
-	//}
 	
 	public LinkedList<Integer> getNoeudsConflitList() {
 		return noeudsConflitList;

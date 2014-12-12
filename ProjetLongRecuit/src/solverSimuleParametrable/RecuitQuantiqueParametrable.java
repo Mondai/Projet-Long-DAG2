@@ -9,7 +9,7 @@ import solverCommun.Probleme;
 
 public class RecuitQuantiqueParametrable extends RecuitSimuleP { 				// pas touche à cette classe !!!
 																		// creer vos propres Temperature, ConstanteK et trucs pour les graphes
-	public Temperature G;
+	public Temperature Gamma;
 	public ConstanteK K;
 	public double meilleureEnergie;									// en soit, nos energies pourraient etre des Int, mais bon 
 	public double energiePrec;										// probleme nous renvoie des doubles
@@ -19,11 +19,12 @@ public class RecuitQuantiqueParametrable extends RecuitSimuleP { 				// pas touc
 	public int palier;
 	// abstract void init(); 								// initialisation // mais de quoi ?
 
-	public RecuitQuantiqueParametrable(Temperature G, ConstanteK K, int palier, double temperature) {
-		this.G=G;												// contructeur : on lui donne la facon de calculer l'energie, K et tout le blabla
+	public RecuitQuantiqueParametrable(Temperature Gamma, ConstanteK K, int palier, double temperature) {
+		this.Gamma=Gamma;												// contructeur : on lui donne la facon de calculer l'energie, K et tout le blabla
 		this.K=K;												// en creant une classe dedie et reutilisable qui extends temperature
-		this.nbMaxIteration=this.G.nbIteration;						// ainsi on combine le tout facilement
-		this.palier = palier;										//en quantique, la température est constante et le Gamma est variable, d'où le fait que Gamma soit une "température"
+		this.nbMaxIteration=this.Gamma.nbIteration;						// ainsi on combine le tout facilement
+		this.palier = palier;		
+		this.temperature = temperature;						//en quantique, la température est constante et le Gamma est variable, d'où le fait que Gamma soit une "température"
 	}
 
 	public Probleme lancer(Probleme probleme) {
@@ -32,7 +33,7 @@ public class RecuitQuantiqueParametrable extends RecuitSimuleP { 				// pas touc
 		// init();
 		
 		/*toujours a implementer :
-		 * Gamma variable et initialisation du gamma (peut être changer les classes Temperature à un nom plus neutre)
+		 * Gamma variable et initialisation du gamma (peut-être changer les classes Temperature à un nom plus neutre) //fait
 		 * Implementation d'une liste circulaire d'états // ou plutot d'un traitement circulaire au niveau de Ec (sélection de next et previous faite ---)
 		 * Implementation d'un shuffle des etats //fait
 		 * methodes de calcul de Ec
@@ -48,7 +49,7 @@ public class RecuitQuantiqueParametrable extends RecuitSimuleP { 				// pas touc
 		this.meilleureEnergie = this.energiePrec ;
 		double proba = 1;
 		
-		while(G.modifierT() && this.meilleureEnergie!=0){
+		while(Gamma.modifierT() && this.meilleureEnergie!=0){
 			probleme.shuffleEtats();
 			
 			for (int i = 0; i < nombreRepliques; i++){
