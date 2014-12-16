@@ -11,11 +11,51 @@ import solverCommun.Probleme;
 public class ConflitsCinetiques extends EnergieCinetique {
 
 	public double calculer(Probleme probleme) {
-		// pas implémenté encore
+		// implémentation à bien tester!!
 		
 		GrapheColorieParticule coloriageParticule = (GrapheColorieParticule)	probleme;
+		int E = 0;
 		
-		return coloriageParticule.calculerEnergie();
+		//calcul des différences spins entre un état et son prochain
+		for (int p = 0; p < coloriageParticule.replique-1 ; p++){
+			GrapheColorie etat = (GrapheColorie) probleme.etats[p];
+			GrapheColorie etatNext = (GrapheColorie) probleme.etats[p+1];
+			for (int i = 0; i < etat.getCouleurs().length; i++){
+				for (int j : etat.graphe.connexions[i]){
+					int spin1 = 1;
+					int spin2 = 1;
+					if (etat.getCouleurs()[i] != etat.getCouleurs()[j]){
+						spin1 = -1;
+					}
+					if (etatNext.getCouleurs()[i] != etatNext.getCouleurs()[j]){
+						spin2 = -1;
+					}
+					E += spin1*spin2;
+				}
+			}
+		}
+		
+		
+		//circularité avec le début de la liste
+		GrapheColorie etat = (GrapheColorie) probleme.etats[coloriageParticule.replique-1];
+		GrapheColorie etatNext = (GrapheColorie) probleme.etats[0];
+		for (int i = 0; i < etat.getCouleurs().length; i++){
+			for (int j : etat.graphe.connexions[i]){
+				int spin1 = 1;
+				int spin2 = 1;
+				if (etat.getCouleurs()[i] != etat.getCouleurs()[j]){
+					spin1 = -1;
+				}
+				if (etatNext.getCouleurs()[i] != etatNext.getCouleurs()[j]){
+					spin2 = -1;
+				}
+				E += spin1*spin2;
+			}
+		}
+		
+		E /= 2; // Tous les spins sont comptés deux fois dans les calculs
+		
+		return E;
 
 	}
 

@@ -45,8 +45,14 @@ public class RecuitQuantiqueParametrable extends RecuitSimuleP { 				// pas touc
 		Etat etat = probleme.etats[0];
 		Etat previous = probleme.etats[nombreRepliques-1];
 		Etat next = probleme.etats[1];
-		this.energiePrec = probleme.calculerEnergie() ;
-		this.meilleureEnergie = this.energiePrec ;
+		for (int i = 0; i < nombreRepliques; i++){
+			this.energiePrec = probleme.etats[i].Ep.calculer(probleme.etats[i]) ;
+			if (this.energiePrec < this.meilleureEnergie){
+				this.meilleureEnergie = this.energiePrec ;
+			}
+
+		}
+
 		double proba = 1;
 		
 		while(Gamma.modifierT() && this.meilleureEnergie!=0){
@@ -71,14 +77,18 @@ public class RecuitQuantiqueParametrable extends RecuitSimuleP { 				// pas touc
 				
 				for (int j = 0; j < palier; j++){
 					MutationElementaire mutation = probleme.getMutationElementaire(etat);	// trouver une mutation possible
-					double deltaEp = probleme.calculerDeltaEp(etat, mutation);	// calculer deltaE si la mutation etait acceptee
+					double deltaEp = probleme.calculerDeltaEp(etat, mutation);	// calculer deltaEp si la mutation etait acceptee
+					double deltaEc = probleme.calculerDeltaEc(etat, previous, next, mutation);  // calculer deltaIEc si la mutation etait acceptee
+					//puis multiplier deltaIEc par JGamme
+					deltaEc *= -temperature/2*Math.log(Math.tanh(Gamma.t/nombreRepliques/temperature));
 					
-					double deltaE = deltaEp;
+					//différences du hamiltonien total
+					double deltaE = deltaEp/nombreRepliques + deltaEc;
 					K.calculerK(deltaE);
 					
-					if( deltaE <= 0){
+					if( deltaE <= 0 || deltaEp <= 0){
 						probleme.modifElem(etat, mutation);				// faire la mutation
-						this.energiePrec += deltaE;						// mettre a jour l'energie
+						this.energiePrec += deltaEp;						// mettre a jour l'energie
 						if( this.energiePrec < this.meilleureEnergie ){	// mettre a jour la meilleur energie
 							this.meilleureEnergie = this.energiePrec;
 						}

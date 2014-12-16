@@ -33,9 +33,14 @@ public abstract class Probleme extends Particule{
 		return energiePotentiel;
 	}
 	
-	// Calcule deltaE à partir de la mutation proposée (sans effectuer la mutation)
+	// Calcule deltaEp à partir de la mutation proposée (sans effectuer la mutation)
 	public double calculerDeltaEp(Etat etat, MutationElementaire mutation){
 		return etat.Ep.calculerDeltaE(etat, mutation);
+	}
+	
+	// Calcule deltaEc à partir de la mutation proposée (sans effectuer la mutation)
+	public double calculerDeltaEc(Etat etat, Etat previous, Etat next, MutationElementaire mutation){
+		return this.Ec.calculerDeltaE(etat, previous, next, mutation);
 	}
 	
 	// Effectue une mutation élémentaire du problème
