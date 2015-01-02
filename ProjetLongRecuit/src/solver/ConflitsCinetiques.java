@@ -72,6 +72,8 @@ public class ConflitsCinetiques extends EnergieCinetique {
 		HashSet<Integer> Valpha = coloriage.getClassesCouleurs()[coloriage.getCouleurs()[m.noeud]];
 		HashSet<Integer> Vbeta = coloriage.getClassesCouleurs()[m.couleur];
 		
+		Valpha.remove(m.noeud);	// le calcul suivant requiert d'exclure v de Valpha TEST
+		
 		for (int u : Valpha){
 			deltaE += 2*(coloriageNext.spinConflit(u, v) + coloriagePrev.spinConflit(u, v));
 		}
