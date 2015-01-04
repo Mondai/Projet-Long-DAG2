@@ -35,7 +35,12 @@ public class MutationConflitsAleatoire implements IMutation {
 			}
 			j++;
 		}*/
-		noeud=coloriage.getNoeudsConflitList().get(compteur);
+		try {
+			noeud=coloriage.getNoeudsConflitList().get(compteur);
+		}
+		catch (IndexOutOfBoundsException e){
+			System.out.println(e);
+		}
 		int couleurPrec = coloriage.couleurs[noeud];
 		int couleurSuiv = couleurPrec;
 		

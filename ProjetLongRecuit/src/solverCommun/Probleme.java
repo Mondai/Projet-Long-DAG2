@@ -62,7 +62,6 @@ public abstract class Probleme extends Particule{
 	
 	public void shuffleEtats() {
 		Collections.shuffle(Arrays.asList(etats), gen);
-		
 	}
 	
 }

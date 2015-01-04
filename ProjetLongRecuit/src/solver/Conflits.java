@@ -6,7 +6,7 @@ import solverCommun.MutationElementaire;
 
 
 public class Conflits extends EnergiePotentielle {
-
+	
 	public double calculer(Etat etat) {
 		
 		GrapheColorie coloriage = (GrapheColorie)	etat;
