@@ -43,7 +43,7 @@ public class TestQuantique {
 		
 		// test avec decroissance de T lineaire: k=7000, Tdeb=1000, Tfin=1, pas=1, N=100.
 		// Pour le450_250a: nombre de couleurs theorique 25 donne 2 ou 3 conflits. 26 donne 0 conflit.
-		Graphe graphe = Traducteur.traduire("data/test_cycle5.col");
+		Graphe graphe = Traducteur.traduire("data/le450_25a.col");
 		//GrapheColorieParticule coloriage = new GrapheColorieParticule(Ep, mutation, Ec, 25 , 1, graphe);
 		//GrapheColorieParticule coloriage = new GrapheColorieParticule(Ep, mutation, Ec, 28 , 5, graphe);
 		//coloriage.initialiser();
@@ -59,11 +59,11 @@ public class TestQuantique {
 		// RecuitSimule recuit = new RecuitSimuleLineaire(1,1000,0.01,0.1,10, listEnergie);						
 		// RecuitSimule recuit = new RecuitSimuleLineaireK(1,1000,0.01,0.1,10, listEnergie);
 		int M = 4 ;
-		double T0 = 0.6;
-		int maxSteps = (int) Math.pow(10,4); //(int) Math.pow(10,6)
+		double T0 = 10;
+		int maxSteps = (int) Math.pow(10,6); //(int) Math.pow(10,6)
 		int k = 1;
-		int nbCouleurs = 3;
-		GrapheColorieParticule coloriage = new GrapheColorieParticule(Ep, mutation, Ec, nbCouleurs , 2, graphe);
+		int nbCouleurs = 25;
+		GrapheColorieParticule coloriage = new GrapheColorieParticule(Ep, mutation, Ec, nbCouleurs , 5, graphe);
 		coloriage.initialiser();
 		TemperatureLineairePalier Tparam = new TemperatureLineairePalier(T0,0,maxSteps,M);
 		ConstanteKConstant Kparam = new ConstanteKConstant(k);
@@ -77,15 +77,19 @@ public class TestQuantique {
 		
 		// affichage du resultat
 		
-		
+		int etati = 1;
 		for (Etat etat : coloriage.getEtats()){
+			System.out.println("Etat numéro : " + etati);
+			etati ++;
 			GrapheColorie g = (GrapheColorie) etat;
-			for (int i = 0; i < graphe.getNombreNoeuds(); i++) {
-				System.out.println(i + " -> couleur "
+			/*for (int i = 0; i < graphe.getNombreNoeuds(); i++) {
+				/*System.out.println(i + " -> couleur "
 						+ g.getMeilleuresCouleurs()[i]);
+				System.out.println(i + " -> couleur "
+						+ g.getCouleurs()[i]);
 				if (g.getNoeudsConflitList().contains(i)) System.out.println("Dessus En conflit");
-			}
-			System.out.println("Energie de l'état : " + g.Ep.calculer(g));
+			}*/
+			System.out.println("Energie Potentielle de l'état : " + g.Ep.calculer(g));
 			System.out.println("Nombre de noeuds en conflits : " + g.nombreNoeudsEnConflit());
 			System.out.println("Nombre d'arêtes en conflits : " + g.getNombreConflitsAretes());
 		}
