@@ -63,21 +63,11 @@ public class TestQuantique {
 		double k = 1;
 		int M = 4 * nbNoeuds * nbCouleurs;
 		double G0 = 0.75;
-<<<<<<< HEAD
 		int P = 10;
 		double T = 0.35/P;
-=======
-		double T = 0.35;
->>>>>>> branch 'master' of https://github.com/Mondai/Projet-Long-DAG2.git
 		int maxSteps = (int) Math.pow(10,4);
-<<<<<<< HEAD
 		int seed = 1;
 		GrapheColorieParticule coloriage = new GrapheColorieParticule(Ep, mutation, Ec, nbCouleurs , P, graphe, seed);
-=======
-		int seed = 25; //3
-		
-		GrapheColorieParticule coloriage = new GrapheColorieParticule(Ep, mutation, Ec, nbCouleurs , 10, graphe, seed);
->>>>>>> branch 'master' of https://github.com/Mondai/Projet-Long-DAG2.git
 		coloriage.initialiser();
 		TemperatureLineaire Tparam = new TemperatureLineaire(G0,0,maxSteps);
 		ConstanteKConstant Kparam = new ConstanteKConstant(k);
