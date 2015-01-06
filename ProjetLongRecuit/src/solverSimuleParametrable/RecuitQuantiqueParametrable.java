@@ -56,11 +56,12 @@ public class RecuitQuantiqueParametrable extends RecuitSimuleP { 				// pas touc
 		
 		while(Gamma.modifierT() && this.meilleureEnergie!=0){
 			
-			probleme.shuffleEtats();
+			// probleme.shuffleEtats(); // TEST: ne pas melanger -> A FAIRE
 			double Jr = -this.temperature/2*Math.log(Math.tanh(this.Gamma.t/nombreRepliques/this.temperature));
 			
 			for (int i = 0; i < nombreRepliques; i++){
 				etat = probleme.etats[i];
+				// System.out.println("replique : "+etat +" , "+i+" -----------" ); //TEST
 				
 				if(i == 0){
 					previous = probleme.etats[nombreRepliques-1];
@@ -76,7 +77,7 @@ public class RecuitQuantiqueParametrable extends RecuitSimuleP { 				// pas touc
 					next = probleme.etats[i+1];
 				}
 				
-				for (int j = 0; j < palier; j++){
+				for (int j = 0; j < this.palier; j++){
 					MutationElementaire mutation = probleme.getMutationElementaire(etat);	// trouver une mutation possible
 					double deltaEp = probleme.calculerDeltaEp(etat, mutation);	// calculer deltaEp si la mutation etait acceptee
 					double deltaEc = probleme.calculerDeltaEc(etat, previous, next, mutation);  // calculer deltaIEc si la mutation etait acceptee
@@ -90,7 +91,7 @@ public class RecuitQuantiqueParametrable extends RecuitSimuleP { 				// pas touc
 					// System.out.println(deltaEp +" " + deltaEc +" " +deltaE); //TEST
 					
 					if( deltaE <= 0 || deltaEp <= 0){
-						System.out.println("acceptee"); //TEST
+						// System.out.println("acceptee"); //TEST
 						probleme.modifElem(etat, mutation);				// faire la mutation
 						double EpActuelle = etat.Ep.calculer(etat);		// energie potentielle temporelle
 						if( EpActuelle < this.meilleureEnergie ){		// mettre a jour la meilleur energie

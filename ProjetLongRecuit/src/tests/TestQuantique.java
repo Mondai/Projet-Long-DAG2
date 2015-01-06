@@ -63,11 +63,12 @@ public class TestQuantique {
 		int nbCouleurs = 28;
 		double k = 1;
 		int M = 4 * nbNoeuds * nbCouleurs;
-		double G0 =  0.75;
-		double T = 0.35;
+		double G0 = 0.75;
+		int P = 10;
+		double T = 0.35/P;
 		int maxSteps = (int) Math.pow(10,4);
-		int seed = 3;
-		GrapheColorieParticule coloriage = new GrapheColorieParticule(Ep, mutation, Ec, nbCouleurs , 10, graphe, seed);
+		int seed = 1;
+		GrapheColorieParticule coloriage = new GrapheColorieParticule(Ep, mutation, Ec, nbCouleurs , P, graphe, seed);
 		coloriage.initialiser();
 		TemperatureLineaire Tparam = new TemperatureLineaire(G0,0,maxSteps);
 		ConstanteKConstant Kparam = new ConstanteKConstant(k);
