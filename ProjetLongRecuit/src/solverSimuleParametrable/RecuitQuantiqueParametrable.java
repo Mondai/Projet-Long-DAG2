@@ -35,8 +35,8 @@ public class RecuitQuantiqueParametrable extends RecuitSimuleP { 				// pas touc
 		 * Gamma variable et initialisation du gamma (peut-être changer les classes Temperature à un nom plus neutre) //fait
 		 * Implementation d'une liste circulaire d'états // ou plutot d'un traitement circulaire au niveau de Ec (sélection de next et previous faite ---)
 		 * Implementation d'un shuffle des etats //fait
-		 * methodes de calcul de Ec
-		 * Implementation des classes couleurs
+		 * methodes de calcul de Ec //fait
+		 * Implementation des classes couleurs //fait
 		 * Enlever les variables de spin???		
 		*/
 		int nombreRepliques = probleme.etats.length;
@@ -58,10 +58,12 @@ public class RecuitQuantiqueParametrable extends RecuitSimuleP { 				// pas touc
 			
 			// probleme.shuffleEtats(); // TEST: ne pas melanger -> A FAIRE
 			double Jr = -this.temperature/2*Math.log(Math.tanh(this.Gamma.t/nombreRepliques/this.temperature));
+			//System.out.println("Energie cinétique : " + Jr); //TEST
 			
 			for (int i = 0; i < nombreRepliques; i++){
 				etat = probleme.etats[i];
-				// System.out.println("replique : "+etat +" , "+i+" -----------" ); //TEST
+				
+				//System.out.println("Debut " + i + " : etat "+etat.toString());		//TEST	
 				
 				if(i == 0){
 					previous = probleme.etats[nombreRepliques-1];
@@ -81,16 +83,19 @@ public class RecuitQuantiqueParametrable extends RecuitSimuleP { 				// pas touc
 					MutationElementaire mutation = probleme.getMutationElementaire(etat);	// trouver une mutation possible
 					double deltaEp = probleme.calculerDeltaEp(etat, mutation);	// calculer deltaEp si la mutation etait acceptee
 					double deltaEc = probleme.calculerDeltaEc(etat, previous, next, mutation);  // calculer deltaIEc si la mutation etait acceptee
-					//puis multiplier deltaIEc par JGamme
+					//puis multiplier deltaIEc par JGamma
 					deltaEc *= Jr;
 					
 					//différences du hamiltonien total
-					double deltaE = deltaEp/nombreRepliques - deltaEc;
+					double deltaE = deltaEp - deltaEc/nombreRepliques/nombreRepliques;
 					K.calculerK(deltaE);
+				
+					if (this.meilleureEnergie == 0) break;
 					
-					// System.out.println(deltaEp +" " + deltaEc +" " +deltaE); //TEST
+					System.out.println(deltaEp +" " + deltaEc +" " +deltaE); //TEST
 					
 					if( deltaE <= 0 || deltaEp <= 0){
+						
 						// System.out.println("acceptee"); //TEST
 						probleme.modifElem(etat, mutation);				// faire la mutation
 						double EpActuelle = etat.Ep.calculer(etat);		// energie potentielle temporelle
@@ -100,11 +105,13 @@ public class RecuitQuantiqueParametrable extends RecuitSimuleP { 				// pas touc
 						}
 					} else {
 						proba = Math.exp(-deltaE / (this.K.k * this.temperature));	// calcul de la proba
+						//System.out.println("Proba : " + proba); //TEST
 						if (proba >= probleme.gen.nextDouble()) {
 							probleme.modifElem(etat, mutation);  		// accepter la mutation 
 						}
 					}
 				}
+				//System.out.println("Fin " + i + " : etat "+etat.toString()); //TEST	
 			}
 		}
 		

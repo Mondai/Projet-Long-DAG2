@@ -67,5 +67,4 @@ public class GrapheColorieParticule extends Probleme {
 		return this.etats;
 	}
 
-
 }
