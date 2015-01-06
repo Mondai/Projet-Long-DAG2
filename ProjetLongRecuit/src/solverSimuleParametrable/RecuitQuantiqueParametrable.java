@@ -7,7 +7,7 @@ import solverCommun.MutationElementaire;
 import solverCommun.Probleme;
 
 
-public class RecuitQuantiqueParametrable extends RecuitSimuleP { 				// pas touche à cette classe !!!
+public class RecuitQuantiqueParametrable extends RecuitSimuleP { 				
 																		// creer vos propres Temperature, ConstanteK et trucs pour les graphes
 	public Temperature Gamma;
 	public ConstanteK K;
@@ -87,15 +87,15 @@ public class RecuitQuantiqueParametrable extends RecuitSimuleP { 				// pas touc
 					deltaEc *= Jr;
 					
 					//différences du hamiltonien total
-					double deltaE = deltaEp - deltaEc/nombreRepliques/nombreRepliques;
+					double deltaE = deltaEp/nombreRepliques - deltaEc;
 					K.calculerK(deltaE);
 				
 					if (this.meilleureEnergie == 0) break;
 					
-					System.out.println(deltaEp +" " + deltaEc +" " +deltaE); //TEST
+					// System.out.println(deltaEp +" " + deltaEc +" " +deltaE); //TEST
 					
 					if( deltaE <= 0 || deltaEp <= 0){
-						
+
 						// System.out.println("acceptee"); //TEST
 						probleme.modifElem(etat, mutation);				// faire la mutation
 						double EpActuelle = etat.Ep.calculer(etat);		// energie potentielle temporelle

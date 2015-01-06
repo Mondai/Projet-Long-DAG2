@@ -42,8 +42,8 @@ public class TestQuantique {
 		
 		// test avec decroissance de T lineaire: k=7000, Tdeb=1000, Tfin=1, pas=1, N=100.
 		// Pour le450_250a: nombre de couleurs theorique 25 donne 2 ou 3 conflits. 26 donne 0 conflit.
-		//Graphe graphe = Traducteur.traduire("data/dsjc250.5.col");
-		Graphe graphe = Traducteur.traduire("data/le450_15a.col");
+		Graphe graphe = Traducteur.traduire("data/dsjc250.5.col");
+		// Graphe graphe = Traducteur.traduire("data/le450_15a.col");
 		//GrapheColorieParticule coloriage = new GrapheColorieParticule(Ep, mutation, Ec, 25 , 1, graphe);
 		//GrapheColorieParticule coloriage = new GrapheColorieParticule(Ep, mutation, Ec, 28 , 5, graphe);
 		//coloriage.initialiser();
@@ -58,20 +58,20 @@ public class TestQuantique {
 		//RecuitSimule recuit = new RecuitSimuleExponentielK(1,10000,0,0.99,10,1000000, listEnergie); // a->0, c->26
 		// RecuitSimule recuit = new RecuitSimuleLineaire(1,1000,0.01,0.1,10, listEnergie);
 		// RecuitSimule recuit = new RecuitSimuleLineaireK(1,1000,0.01,0.1,10, listEnergie);
-		int nbNoeuds = 450;
-		int nbCouleurs = 15;
+		int nbNoeuds = 250;
+		int nbCouleurs = 28;
 		double k = 1;
 		int M = 4 * nbNoeuds * nbCouleurs;
 		double G0 = 0.75;
 		int P = 10;
 		double T = 0.35/P;
 		int maxSteps = (int) Math.pow(10,4);
-		int seed = 1;
+		int seed = 100;
 		GrapheColorieParticule coloriage = new GrapheColorieParticule(Ep, mutation, Ec, nbCouleurs , P, graphe, seed);
 		coloriage.initialiser();
 		TemperatureLineaire Tparam = new TemperatureLineaire(G0,0,maxSteps);
 		ConstanteKConstant Kparam = new ConstanteKConstant(k);
-		RecuitQuantiqueParametrable recuit = new RecuitQuantiqueParametrable(Tparam,Kparam, 1/*M*/, T);
+		RecuitQuantiqueParametrable recuit = new RecuitQuantiqueParametrable(Tparam,Kparam, M, T);
 		
 		long startTime = System.nanoTime();
 		recuit.lancer(coloriage);
