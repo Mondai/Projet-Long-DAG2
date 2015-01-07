@@ -40,6 +40,10 @@ public abstract class Probleme extends Particule{
 		return this.Ec.calculerDeltaE(etat, previous, next, mutation);
 	}
 	
+	public double calculerDeltaEcUB(Etat etat, Etat previous, Etat next, MutationElementaire mutation) {
+		return this.Ec.calculerDeltaEUB(etat, previous, next, mutation); // à voir si cette fonction doit être conforme (elle sera héritée et changée normalement)
+	}
+	
 	// Effectue une mutation élémentaire du problème
 	public void modifElem(Etat etat, MutationElementaire mutation){
 		this.mutation.faire(this, etat, mutation);

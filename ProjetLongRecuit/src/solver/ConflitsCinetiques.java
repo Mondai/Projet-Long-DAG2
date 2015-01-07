@@ -84,5 +84,24 @@ public class ConflitsCinetiques extends EnergieCinetique {
 		
 		return deltaE;
 	}
+	
+	public double calculerDeltaEUB(Etat etat, Etat prev, Etat next, MutationElementaire mutation) {
+		
+		MutationElementaireNoeud m = (MutationElementaireNoeud) mutation;
+		GrapheColorie coloriage = (GrapheColorie)	etat;
+		GrapheColorie coloriageNext = (GrapheColorie)	next;
+		GrapheColorie coloriagePrev = (GrapheColorie)	prev;
+		int deltaE = 0;
+		
+		int v = m.noeud;
+		HashSet<Integer> Valpha = coloriage.getClassesCouleurs()[coloriage.getCouleurs()[m.noeud]];
+		HashSet<Integer> Vbeta = coloriage.getClassesCouleurs()[m.couleur];
+		
+		Valpha.remove(m.noeud);	// le calcul suivant requiert d'exclure v de Valpha TEST
+		
+		deltaE += 4*(Valpha.size() + Vbeta.size() -1);
+		
+		return deltaE;
+	}
 
 }

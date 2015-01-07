@@ -94,15 +94,21 @@ public class RecuitQuantiqueParametrable extends RecuitSimuleP {
 				}
 				
 				for (int j = 0; j < this.palier; j++){
+					/*System.out.print("Ep = [" + probleme.etats[0].Ep.calculer(probleme.etats[0]));
+					for(int w = 1 ; w < nombreRepliques ; w++){
+						System.out.print(","+probleme.etats[w].Ep.calculer(probleme.etats[w]));
+					}
+					System.out.println("]");*/
+					
 					MutationElementaire mutation = probleme.getMutationElementaire(etat);	// trouver une mutation possible
 					double deltaEp = probleme.calculerDeltaEp(etat, mutation);	// calculer deltaEp si la mutation etait acceptee
-					double deltaEc = probleme.calculerDeltaEc(etat, previous, next, mutation);  // calculer deltaIEc si la mutation etait acceptee
+					double deltaEc = probleme.calculerDeltaEcUB(etat, previous, next, mutation);  // calculer deltaIEc si la mutation etait acceptee
 					//puis multiplier deltaIEc par JGamma
 					deltaEc *= Jr;
 					
 					//différences du hamiltonien total
 					double deltaE = deltaEp/nombreRepliques - deltaEc;
-					K.calculerK(deltaE);
+					//K.calculerK(deltaE);
 				
 					if (this.meilleureEnergie == 0) break;
 					
@@ -128,7 +134,17 @@ public class RecuitQuantiqueParametrable extends RecuitSimuleP {
 						proba = Math.exp(-deltaE / (this.K.k * this.temperature));	// calcul de la proba
 						//System.out.println("Proba : " + proba); //TEST
 						if (proba >= probleme.gen.nextDouble()) {
-							probleme.modifElem(etat, mutation);  		// accepter la mutation 
+							deltaEc = probleme.calculerDeltaEc(etat, previous, next, mutation);  // calculer deltaIEc si la mutation etait acceptee
+							//puis multiplier deltaIEc par JGamma
+							deltaEc *= Jr;
+							
+							//différences du hamiltonien total
+							deltaE = deltaEp/nombreRepliques - deltaEc;
+							proba = Math.exp(-deltaE / (this.K.k * this.temperature));	// calcul de la proba
+							//System.out.println("Proba : " + proba); //TEST
+							if (proba >= probleme.gen.nextDouble()) {
+								probleme.modifElem(etat, mutation);  		// accepter la mutation 
+							}
 						}
 					}
 				}
