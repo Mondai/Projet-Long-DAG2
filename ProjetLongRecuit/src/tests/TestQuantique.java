@@ -25,6 +25,7 @@ import solverSimuleParametrable.TemperatureLineairePalier;
 public class TestQuantique {
 
 	public static void main(String[] args) throws IOException {
+		
 		Conflits Ep = new Conflits();
 		ConflitsCinetiques Ec = new ConflitsCinetiques();
 		
@@ -66,7 +67,7 @@ public class TestQuantique {
 		int P = 10;
 		double T = 0.35/P;
 		int maxSteps = (int) Math.pow(10,4);
-		int seed = 100;
+		int seed = 1;
 		GrapheColorieParticule coloriage = new GrapheColorieParticule(Ep, mutation, Ec, nbCouleurs , P, graphe, seed);
 		coloriage.initialiser();
 		TemperatureLineaire Tparam = new TemperatureLineaire(G0,0,maxSteps);

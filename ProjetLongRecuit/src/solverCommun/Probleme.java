@@ -1,8 +1,5 @@
 package solverCommun;
 
-import java.util.Arrays;
-import java.util.Collections;
-
 import solver.HighQualityRandom;
 /*
  * Classe abstraite représentant un problème générique soluble par recuit simulé
@@ -58,10 +55,6 @@ public abstract class Probleme extends Particule{
 	}
 	public void setSeed(int seed) {
 		this.seed = seed;
-	}
-	
-	public void shuffleEtats() {
-		Collections.shuffle(Arrays.asList(etats), gen);
 	}
 	
 }

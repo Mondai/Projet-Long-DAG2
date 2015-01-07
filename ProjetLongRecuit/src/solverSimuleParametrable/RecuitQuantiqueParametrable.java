@@ -2,6 +2,9 @@ package solverSimuleParametrable;
 
 
 
+import java.util.Arrays;
+import java.util.Collections;
+
 import solverCommun.Etat;
 import solverCommun.MutationElementaire;
 import solverCommun.Probleme;
@@ -53,30 +56,41 @@ public class RecuitQuantiqueParametrable extends RecuitSimuleP {
 		}
 
 		double proba = 1;
+
+		// tableau des indices des etats a parcourir dans un certain ordre
+		int[] indiceEtats = new int[nombreRepliques]; 
+		for( int i = 0; i < nombreRepliques ; i++){
+			indiceEtats[i] = i;
+		}
 		
 		while(Gamma.modifierT() && this.meilleureEnergie!=0){
 			
-			// probleme.shuffleEtats(); // TEST: ne pas melanger -> A FAIRE
-			double Jr = -this.temperature/2*Math.log(Math.tanh(this.Gamma.t/nombreRepliques/this.temperature));
+			Collections.shuffle(Arrays.asList(indiceEtats), probleme.gen);	// melanger l'ordre de parcours des indices
+			
+			double Jr = -this.temperature/2*Math.log(Math.tanh(this.Gamma.t/nombreRepliques/this.temperature));	// calcul de Jr pour ce palier
+			
 			//System.out.println("Energie cinétique : " + Jr); //TEST
 			
 			for (int i = 0; i < nombreRepliques; i++){
-				etat = probleme.etats[i];
 				
-				//System.out.println("Debut " + i + " : etat "+etat.toString());		//TEST	
+				int p = indiceEtats[i]; // indice de l'etat actuel
 				
-				if(i == 0){
+				etat = probleme.etats[p];
+				
+				//System.out.println("Debut " + p + " : etat "+etat.toString());		//TEST	
+				
+				if(p == 0){
 					previous = probleme.etats[nombreRepliques-1];
 				}
 				else{
-					previous = probleme.etats[i-1];
+					previous = probleme.etats[p-1];
 				}
 				
-				if (i == nombreRepliques - 1){
+				if (p == nombreRepliques - 1){
 					next = probleme.etats[0];
 				}
 				else{
-					next = probleme.etats[i+1];
+					next = probleme.etats[p+1];
 				}
 				
 				for (int j = 0; j < this.palier; j++){
@@ -101,7 +115,14 @@ public class RecuitQuantiqueParametrable extends RecuitSimuleP {
 						double EpActuelle = etat.Ep.calculer(etat);		// energie potentielle temporelle
 						if( EpActuelle < this.meilleureEnergie ){		// mettre a jour la meilleur energie
 							this.meilleureEnergie = EpActuelle;
-							System.out.println("etat "+etat.toString()+" , ME = "+this.meilleureEnergie+" , G = "+this.Gamma.t); //TEST
+							// TEST
+							System.out.print("etat "+p+" : ME = "+this.meilleureEnergie+" , G = "+this.Gamma.t+" .  Ep = [");
+							System.out.print(probleme.etats[0].Ep.calculer(probleme.etats[0]));
+							for(int w = 1 ; w < nombreRepliques ; w++){
+								System.out.print(","+probleme.etats[w].Ep.calculer(probleme.etats[w]));
+							}
+							System.out.println("]");
+							// TEST
 						}
 					} else {
 						proba = Math.exp(-deltaE / (this.K.k * this.temperature));	// calcul de la proba
