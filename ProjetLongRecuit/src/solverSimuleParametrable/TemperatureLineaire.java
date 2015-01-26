@@ -10,7 +10,7 @@ public class TemperatureLineaire extends Temperature {
 }
 
 	public boolean modifierT() { // modif de T
-		if (this.t < this.Tfinal) {
+		if (this.t+this.pasLineaire < this.Tfinal) {
 			return false;
 		} else {
 			this.t += this.pasLineaire; // le pas linearie est negatif :)

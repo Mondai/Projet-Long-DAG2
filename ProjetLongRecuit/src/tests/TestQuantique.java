@@ -66,7 +66,7 @@ public class TestQuantique {
 		double G0 = 0.75;
 		int P = 10;
 		double T = 0.35/P;
-		int maxSteps = (int) Math.pow(10,1.5);
+		int maxSteps = (int) Math.pow(10,2);
 		int seed = 12;
 		GrapheColorieParticule coloriage = new GrapheColorieParticule(Ep, mutation, Ec, nbCouleurs , P, graphe, seed);
 		coloriage.initialiser();

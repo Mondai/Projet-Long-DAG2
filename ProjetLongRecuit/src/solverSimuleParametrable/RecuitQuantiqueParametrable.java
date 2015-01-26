@@ -2,8 +2,10 @@ package solverSimuleParametrable;
 
 
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import solverCommun.Etat;
 import solverCommun.MutationElementaire;
@@ -58,22 +60,20 @@ public class RecuitQuantiqueParametrable extends RecuitSimuleP {
 		double proba = 1;
 
 		// tableau des indices des etats a parcourir dans un certain ordre
-		int[] indiceEtats = new int[nombreRepliques]; 
+		ArrayList<Integer> indiceEtats = new ArrayList<Integer>(); 
 		for( int i = 0; i < nombreRepliques ; i++){
-			indiceEtats[i] = i;
+			indiceEtats.add(i);
 		}
 		
 		while(Gamma.modifierT() && this.meilleureEnergie!=0){
-			
-			Collections.shuffle(Arrays.asList(indiceEtats), probleme.gen);	// melanger l'ordre de parcours des indices
-			
+
+			Collections.shuffle(indiceEtats, probleme.gen);	// melanger l'ordre de parcours des indices
 			double Jr = -this.temperature/2*Math.log(Math.tanh(this.Gamma.t/nombreRepliques/this.temperature));	// calcul de Jr pour ce palier
-			
+			//Jr = 0;
 			//System.out.println("Energie cinétique : " + Jr); //TEST
 			
-			for (int i = 0; i < nombreRepliques; i++){
-				
-				int p = indiceEtats[i]; // indice de l'etat actuel
+		//	for (int i = 0; i < nombreRepliques; i++){
+			for (Integer p : indiceEtats){	
 				
 				etat = probleme.etats[p];
 				
@@ -102,17 +102,18 @@ public class RecuitQuantiqueParametrable extends RecuitSimuleP {
 					
 					MutationElementaire mutation = probleme.getMutationElementaire(etat);	// trouver une mutation possible
 					double deltaEp = probleme.calculerDeltaEp(etat, mutation);	// calculer deltaEp si la mutation etait acceptee
-					double deltaEc = probleme.calculerDeltaEcUB(etat, previous, next, mutation);  // calculer deltaIEc si la mutation etait acceptee
+					double deltaEc = probleme.calculerDeltaEc(etat, previous, next, mutation);  // calculer deltaIEc si la mutation etait acceptee
 					//puis multiplier deltaIEc par JGamma
 					deltaEc *= Jr;
 					
 					//différences du hamiltonien total
 					double deltaE = deltaEp/nombreRepliques - deltaEc;
+					double deltaEUB = deltaE;
 					//K.calculerK(deltaE);
 				
 					if (this.meilleureEnergie == 0) break;
 					
-					// System.out.println(deltaEp +" " + deltaEc +" " +deltaE); //TEST
+					//System.out.println(deltaEp +" " + deltaEc +" " +deltaE); //TEST
 					
 					if( deltaE <= 0 || deltaEp <= 0){
 
@@ -122,7 +123,7 @@ public class RecuitQuantiqueParametrable extends RecuitSimuleP {
 						if( EpActuelle < this.meilleureEnergie ){		// mettre a jour la meilleur energie
 							this.meilleureEnergie = EpActuelle;
 							// TEST
-							System.out.print("etat "+p+" : ME = "+this.meilleureEnergie+" , G = "+this.Gamma.t+" .  Ep = [");
+							System.out.print("etat "+p+" : ME = "+this.meilleureEnergie+" , G = "+this.Gamma.t+" , Jr = "+Jr+" .  Ep = [");
 							System.out.print(probleme.etats[0].Ep.calculer(probleme.etats[0]));
 							for(int w = 1 ; w < nombreRepliques ; w++){
 								System.out.print(","+probleme.etats[w].Ep.calculer(probleme.etats[w]));
@@ -140,6 +141,7 @@ public class RecuitQuantiqueParametrable extends RecuitSimuleP {
 							
 							//différences du hamiltonien total
 							deltaE = deltaEp/nombreRepliques - deltaEc;
+							// System.out.println("deltaEUB = "+ deltaEUB + " , deltaE = " + deltaE); //TEST
 							proba = Math.exp(-deltaE / (this.K.k * this.temperature));	// calcul de la proba
 							//System.out.println("Proba : " + proba); //TEST
 							if (proba >= probleme.gen.nextDouble()) {
@@ -148,6 +150,14 @@ public class RecuitQuantiqueParametrable extends RecuitSimuleP {
 						}
 					}
 				}
+				// TESTTEST
+				System.out.print("etat "+p+" : ME = "+this.meilleureEnergie+" , G = "+this.Gamma.t+ " , Jr = "+Jr +" .  Ep = [");
+				System.out.print(probleme.etats[0].Ep.calculer(probleme.etats[0]));
+				for(int w = 1 ; w < nombreRepliques ; w++){
+					System.out.print(","+probleme.etats[w].Ep.calculer(probleme.etats[w]));
+				}
+				System.out.println("]");
+				// TEST
 				//System.out.println("Fin " + i + " : etat "+etat.toString()); //TEST	
 			}
 		}
