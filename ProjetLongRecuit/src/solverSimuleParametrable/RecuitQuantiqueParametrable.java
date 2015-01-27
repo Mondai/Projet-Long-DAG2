@@ -111,9 +111,7 @@ public class RecuitQuantiqueParametrable extends RecuitSimuleP {
 					double deltaE = deltaEp/nombreRepliques - deltaEc*Jr;
 					
 					//K.calculerK(deltaE);
-				
-					if (this.meilleureEnergie == 0) break;
-					
+								
 					if( deltaE <= 0 || deltaEp <= 0){
 						
 						// System.out.println("acceptee"); //TEST
@@ -129,6 +127,9 @@ public class RecuitQuantiqueParametrable extends RecuitSimuleP {
 							}
 							System.out.println("]");
 							// TEST
+							if (this.meilleureEnergie == 0){	// fin du programme
+								return probleme;
+							}
 						}
 					} else {
 						proba = Math.exp(-deltaE / (this.K.k * this.temperature));	// calcul de la proba
