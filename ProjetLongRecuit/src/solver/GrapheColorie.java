@@ -60,7 +60,7 @@ public class GrapheColorie extends Etat{
 		this.colorClasses = new HashSet[k];
 		
 		for (int i = 0; i < k; i++){
-			this.colorClasses[i] = new HashSet(); //besoin d'essayer avec initialCapacity != 16, du style getNombreNoeuds
+			this.colorClasses[i] = new HashSet<Integer>(); //besoin d'essayer avec initialCapacity != 16, du style getNombreNoeuds
 		}
 	}
 	
@@ -104,6 +104,7 @@ public class GrapheColorie extends Etat{
 	}
 	
 	public void updateLocal(int noeud, int prevColor){
+		
 		// met à jour l'appartenance du noeud en question par rapport aux classes de couleur
 		this.colorClasses[prevColor].remove(noeud);
 		this.colorClasses[this.couleurs[noeud]].add(noeud);
@@ -174,11 +175,6 @@ public class GrapheColorie extends Etat{
 	
 	// retourne le nombre de noeuds en conflit
 	public int nombreNoeudsEnConflit() {
-		/*int res = 0;
-		for(boolean i : this.noeudsConflit){
-			if(i) res ++;
-		}*/
-		//return res;
 		return this.noeudsConflitList.size();
 	}
 	

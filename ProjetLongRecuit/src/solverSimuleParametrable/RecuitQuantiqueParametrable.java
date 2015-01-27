@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import solver.GrapheColorie;
 import solverCommun.Etat;
 import solverCommun.MutationElementaire;
 import solverCommun.Probleme;
@@ -103,20 +104,18 @@ public class RecuitQuantiqueParametrable extends RecuitSimuleP {
 					MutationElementaire mutation = probleme.getMutationElementaire(etat);	// trouver une mutation possible
 					double deltaEp = probleme.calculerDeltaEp(etat, mutation);	// calculer deltaEp si la mutation etait acceptee
 					double deltaEc = probleme.calculerDeltaEc(etat, previous, next, mutation);  // calculer deltaIEc si la mutation etait acceptee
-					//puis multiplier deltaIEc par JGamma
-					deltaEc *= Jr;
 					
+
 					//différences du hamiltonien total
-					double deltaE = deltaEp/nombreRepliques - deltaEc;
-					double deltaEUB = deltaE;
+					//multiplier deltaIEc par JGamma
+					double deltaE = deltaEp/nombreRepliques - deltaEc*Jr;
+					
 					//K.calculerK(deltaE);
 				
 					if (this.meilleureEnergie == 0) break;
 					
-					//System.out.println(deltaEp +" " + deltaEc +" " +deltaE); //TEST
-					
 					if( deltaE <= 0 || deltaEp <= 0){
-
+						
 						// System.out.println("acceptee"); //TEST
 						probleme.modifElem(etat, mutation);				// faire la mutation
 						double EpActuelle = etat.Ep.calculer(etat);		// energie potentielle temporelle
@@ -134,19 +133,8 @@ public class RecuitQuantiqueParametrable extends RecuitSimuleP {
 					} else {
 						proba = Math.exp(-deltaE / (this.K.k * this.temperature));	// calcul de la proba
 						//System.out.println("Proba : " + proba); //TEST
-						if (proba >= probleme.gen.nextDouble()) {
-							deltaEc = probleme.calculerDeltaEc(etat, previous, next, mutation);  // calculer deltaIEc si la mutation etait acceptee
-							//puis multiplier deltaIEc par JGamma
-							deltaEc *= Jr;
-							
-							//différences du hamiltonien total
-							deltaE = deltaEp/nombreRepliques - deltaEc;
-							// System.out.println("deltaEUB = "+ deltaEUB + " , deltaE = " + deltaE); //TEST
-							proba = Math.exp(-deltaE / (this.K.k * this.temperature));	// calcul de la proba
-							//System.out.println("Proba : " + proba); //TEST
-							if (proba >= probleme.gen.nextDouble()) {
-								probleme.modifElem(etat, mutation);  		// accepter la mutation 
-							}
+						if (proba >= probleme.gen.nextDouble()) {							
+							probleme.modifElem(etat, mutation);  		// accepter la mutation 
 						}
 					}
 				}
