@@ -18,4 +18,11 @@ public class EnergieCinetiqueVide extends EnergieCinetique {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	@Override
+	public double calculerDeltaEUB(Etat etat, Etat prev, Etat next,
+			MutationElementaire mutation) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

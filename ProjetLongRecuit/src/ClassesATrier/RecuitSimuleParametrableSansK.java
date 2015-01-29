@@ -1,8 +1,10 @@
-package solverSimuleParametrable;
+package ClassesATrier;
 
 
 
 import solverCommun.Probleme;
+import solverSimuleParametrable.RecuitSimuleP;
+import solverSimuleParametrable.Temperature;
 
 
 public class RecuitSimuleParametrableSansK extends RecuitSimuleP { 				// pas touche à cette classe !!!

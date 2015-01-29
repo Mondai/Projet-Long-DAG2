@@ -1,4 +1,4 @@
-package solverSimuleParametrable;
+package ClassesATrier;
 
 public class SortiesAffichageJoli extends Sorties {
 	int compteur ;

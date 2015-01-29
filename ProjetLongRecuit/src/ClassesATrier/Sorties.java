@@ -1,4 +1,4 @@
-package solverSimuleParametrable;
+package ClassesATrier;
 
 public abstract class Sorties {
 
