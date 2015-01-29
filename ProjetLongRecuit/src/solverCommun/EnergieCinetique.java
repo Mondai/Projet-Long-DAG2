@@ -5,7 +5,7 @@ public abstract class EnergieCinetique{
 	/**
 	 * 
 	 * @param probleme
-	 * 				Le problème dont on calcule l'énergie cinétique.
+	 * 	Le problème dont on calcule l'énergie cinétique.
 	 * @return Un double correspondant à l'énergie cinétique totale de la particule.
 	 */
 	abstract public double calculer(Probleme probleme);

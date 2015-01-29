@@ -104,7 +104,6 @@ public class RecuitQuantiqueParametrable extends RecuitSimuleP {
 					MutationElementaire mutation = probleme.getMutationElementaire(etat);	// trouver une mutation possible
 					double deltaEp = probleme.calculerDeltaEp(etat, mutation);	// calculer deltaEp si la mutation etait acceptee
 					double deltaEc = probleme.calculerDeltaEc(etat, previous, next, mutation);  // calculer deltaIEc si la mutation etait acceptee
-					
 
 					//différences du hamiltonien total
 					//multiplier deltaIEc par JGamma
