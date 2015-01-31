@@ -111,35 +111,10 @@ public class RecuitQuantiqueParametrable_Graphique extends RecuitSimuleP {
 							
 							// System.out.println("acceptee"); //TEST
 							probleme.modifElem(etat, mutation);				// faire la mutation
-							double EpActuelle = etat.Ep.calculer(etat);		// energie potentielle temporelle
-							listeEnergie[p].add(EpActuelle);
-							
-							if ( p==1 || EpActuelle==0.) {
-								if( EpActuelle > this.meilleureEnergie ){
-							listeMeilleureEnergie.add(this.meilleureEnergie);
-								} else {
-								listeMeilleureEnergie.add(EpActuelle);
-							}
-							}
-							
 							proba = 1;
-							if( EpActuelle < this.meilleureEnergie ){		// mettre a jour la meilleur energie
-								this.meilleureEnergie = EpActuelle;
-								// TEST
-								//System.out.print("etat "+p+" : ME = "+this.meilleureEnergie+" , G = "+this.Gamma.t+" , Jr = "+Jr+" .  Ep = [");
-								//System.out.print(probleme.etats[0].Ep.calculer(probleme.etats[0]));
-								//for(int w = 1 ; w < nombreRepliques ; w++){
-									//System.out.print(","+probleme.etats[w].Ep.calculer(probleme.etats[w]));
-								//}
-								//System.out.println("]");
-								// TEST
-								if (this.meilleureEnergie == 0){	// fin du programme
-									listeMeilleureEnergie.getlistEnergie().add(0.);
-									listeEnergie[p].getlistEnergie().add(0.);
-									System.out.println("fin par ce cooté la");
-									return probleme;
-								}
-							}
+							
+							
+							
 						} else {
 							proba = Math.exp(-deltaE / (this.K.k * this.temperature));	// calcul de la proba
 							//System.out.println("Proba : " + proba); //TEST
@@ -147,10 +122,45 @@ public class RecuitQuantiqueParametrable_Graphique extends RecuitSimuleP {
 								probleme.modifElem(etat, mutation);  		// accepter la mutation 
 							}
 						}
+						
+						double EpActuelle = etat.Ep.calculer(etat);		// energie potentielle temporelle
+						if( EpActuelle < this.meilleureEnergie ){		// mettre a jour la meilleur energie
+							this.meilleureEnergie = EpActuelle;
+							// TEST
+							//System.out.print("etat "+p+" : ME = "+this.meilleureEnergie+" , G = "+this.Gamma.t+" , Jr = "+Jr+" .  Ep = [");
+							//System.out.print(probleme.etats[0].Ep.calculer(probleme.etats[0]));
+							//for(int w = 1 ; w < nombreRepliques ; w++){
+								//System.out.print(","+probleme.etats[w].Ep.calculer(probleme.etats[w]));
+							//}
+							//System.out.println("]");
+							// TEST
+							if (this.meilleureEnergie == 0){	// fin du programme
+								listeMeilleureEnergie.getlistEnergie().add(0.);
+								listeEnergie[p].getlistEnergie().add(0.);
+								System.out.println("fin par ce cooté la");
+								return probleme;
+							}
+						}
+						
+						
+						
 						//System.out.println(p);
 						//System.out.println(listeProba[p].getlistEnergie().toString());
 						//System.out.println("-_-_-_-_-_-_-_-_-_"+p);
 						listeProba[p].add(proba);
+						
+						
+						listeEnergie[p].add(EpActuelle);
+						
+						if ( p==1 || EpActuelle==0.) {
+							if( EpActuelle > this.meilleureEnergie ){
+						listeMeilleureEnergie.add(this.meilleureEnergie);
+							} else {
+							listeMeilleureEnergie.add(EpActuelle);
+						}
+						}
+						
+						
 					}
 					// TESTTEST
 					//System.out.print("etat "+p+" : ME = "+this.meilleureEnergie+" , G = "+this.Gamma.t+ " , Jr = "+Jr +" .  Ep = [");
