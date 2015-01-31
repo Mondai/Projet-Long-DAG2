@@ -79,6 +79,7 @@ public class Test_OneShot_Quantique {
 			pw.println();
 			pw.println("%---------------------------------------------------------------------");
 			pw.println("%Benchmark :"+ benchmark);
+			pw.println("close all;");
 			pw.println("clear all;");
 			pw.println("figure;");
 
@@ -88,6 +89,7 @@ public class Test_OneShot_Quantique {
 			pw2.println();
 			pw2.println("%---------------------------------------------------------------------");
 			pw2.println("%Benchmark :"+ benchmark);
+			pw.println("close all;");
 			pw2.println("clear all;");
 			pw2.println("figure;");
 
@@ -97,6 +99,8 @@ public class Test_OneShot_Quantique {
 			ListEnergie[] listeEnergie = new ListEnergie[P];
 			ListEnergie[] listeProbas = new ListEnergie[P];
 			ListEnergie listeMeilleureEnergie = new ListEnergie(echantillonage,1);
+			ListEnergie listeValeursJr = new ListEnergie(echantillonage,1);
+			ListEnergie listeRapport = new ListEnergie(echantillonage,1);
 
 			for (int j=0; j<P;j++) {
 				listeEnergie[j]=new ListEnergie(echantillonage,1);
@@ -107,7 +111,7 @@ public class Test_OneShot_Quantique {
 
 			// Time et launch
 			long startTime = System.nanoTime();
-			recuit.lancer(coloriage,listeEnergie,listeProbas,listeMeilleureEnergie);
+			recuit.lancer(coloriage,listeEnergie,listeProbas,listeMeilleureEnergie,listeValeursJr,listeRapport);
 			long endTime = System.nanoTime();
 
 			
@@ -140,6 +144,8 @@ public class Test_OneShot_Quantique {
 			for (int j=0; j<P;j++) {
 				int tailleListeActuelle=listeEnergie[j].getlistEnergie().size();
 				if (tailleListeActuelle<tailleMax) { 
+					System.out.println(""+j);
+					System.out.println(listeEnergie[j].getlistEnergie().toString());
 					double temp = listeEnergie[j].getlistEnergie().get(listeEnergie[j].getlistEnergie().size()-1);
 
 					for (int i=0;i<tailleMax-tailleListeActuelle;i++) {
@@ -227,6 +233,25 @@ public class Test_OneShot_Quantique {
 			pw.println("xlabel('Nombre d iterations');");
 			pw.println("ylabel('Energie');");
 			
+			// Plot du Jr
+			pw.println("figure;");
+			pw.println("uJr="+listeValeursJr.getlistEnergie().toString()+";");
+			pw.println("vect="+echantillonage+"*(1:length(uBest));");
+			pw.println("plot(vect,uJr)");
+			
+			pw.println("title('valeurs Jr sur le "+benchmark+"')");
+			pw.println("xlabel('Nombre d iterations');");
+			pw.println("ylabel('Jr');");
+			
+			// Plot Rapport
+			pw.println("figure;");
+			pw.println("uRapport="+listeRapport.getlistEnergie().toString()+";");
+			pw.println("vect="+echantillonage+"*(1:length(uRapport));");
+			pw.println("plot(vect,uRapport)");
+			
+			pw.println("title('valeurs de deltaEc/deltaEp sur le "+benchmark+"')");
+			pw.println("xlabel('Nombre d iterations');");
+			pw.println("ylabel('rapport');");
 			
 			// On ferme
 			pw.close();

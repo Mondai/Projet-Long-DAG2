@@ -133,6 +133,60 @@ public abstract class RecuitSimule implements IRecuit{
 	}
 	
 	
+	
+	public Probleme lancer(Probleme probleme, ListEnergie listEnergie){
+		System.out.println("debut recuit");
+		init();
+		
+		Etat etat = probleme.etats[0];
+		this.energiePrec = probleme.calculerEnergie() ;
+		listEnergie.augmenteTaille(); // on incremente le nombre d'iterations
+		this.meilleureEnergie = this.energiePrec ;
+		
+		double proba = 1;
+		
+		while(incrT() && this.meilleureEnergie!=0){
+			listEnergie.add(this.meilleureEnergie);  // choix arbitraire entre meilleure énergie et énergie actuelle
+			System.out.println(""+this.meilleureEnergie);
+			//probleme.calculerEnergie(); // pour mettre a jour coloriage.nombreNoeudsConflit
+			MutationElementaire mutation = probleme.getMutationElementaire(etat);	// trouver une mutation possible
+			
+			double deltaE = probleme.calculerDeltaEp(etat, mutation);	// calculer deltaE si la mutation etait acceptee
+			calculerK();
+			
+			listEnergie.augmenteTaille();// on incremente le nombre d'iterations
+			
+			proba = Math.exp(-deltaE/(this.k*this.T));
+			
+			if (proba>1) {proba=1;};
+		
+			
+		
+			if( deltaE <= 0){
+				probleme.modifElem(etat, mutation);				// faire la mutation
+				this.energiePrec += deltaE;						// mettre a jour l'energie
+				if( this.energiePrec < this.meilleureEnergie ){	// mettre a jour la meilleur energie
+					this.meilleureEnergie = this.energiePrec;
+					probleme.sauvegarderSolution();
+				}
+				
+			} else {
+				proba = Math.exp(-deltaE / (this.k * this.T));	// calcul de la proba
+				if (proba >= probleme.gen.nextDouble()) {
+					probleme.modifElem(etat, mutation);  		// accepter la mutation 
+					this.energiePrec += deltaE;					// mettre a jour l'energie
+				}
+			}
+		}
+		// Vérification de l'atteinte d'énergie nulle à la fin
+		listEnergie.z=listEnergie.echantillonage;
+		listEnergie.add(this.meilleureEnergie);
+		
+		System.out.println("fin recuit");
+		return probleme;
+	}
+	
+	
 	/* déclinaison de lancer, qui s'arrête quand les probas sont trop basses
 	 *  */
 	
