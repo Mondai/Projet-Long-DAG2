@@ -114,11 +114,8 @@ public class ConflitsCinetiques extends EnergieCinetique {
 		
 		MutationElementaireNoeud m = (MutationElementaireNoeud) mutation;
 		GrapheColorie coloriage = (GrapheColorie)	etat;
-		GrapheColorie coloriageNext = (GrapheColorie)	next;
-		GrapheColorie coloriagePrev = (GrapheColorie)	prev;
 		int deltaE = 0;
 		
-		int v = m.noeud;
 		HashSet<Integer> Valpha = coloriage.getClassesCouleurs()[coloriage.getCouleurs()[m.noeud]];
 		HashSet<Integer> Vbeta = coloriage.getClassesCouleurs()[m.couleur];
 		

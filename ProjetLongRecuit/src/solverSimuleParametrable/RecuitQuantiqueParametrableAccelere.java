@@ -38,6 +38,11 @@ public class RecuitQuantiqueParametrableAccelere extends RecuitSimuleP {
 		 * (peut-être changer les classes Temperature à un nom plus neutre)
 		 * Enlever les variables de spin???		
 		*/
+		
+		int mutationsTentees = 0;
+		int mutationsAccepteesUB = 0;
+		int mutationsAcceptees = 0;
+		
 		int nombreRepliques = probleme.etats.length;
 		
 		Etat etat = probleme.etats[0];
@@ -63,15 +68,10 @@ public class RecuitQuantiqueParametrableAccelere extends RecuitSimuleP {
 
 			Collections.shuffle(indiceEtats, probleme.gen);	// melanger l'ordre de parcours des indices
 			double Jr = -this.temperature/2*Math.log(Math.tanh(this.Gamma.t/nombreRepliques/this.temperature));	// calcul de Jr pour ce palier
-			//Jr = 0;
-			//System.out.println("Energie cinétique : " + Jr); //TEST
-			
-		//	for (int i = 0; i < nombreRepliques; i++){
+
 			for (Integer p : indiceEtats){	
 				
 				etat = probleme.etats[p];
-				
-				//System.out.println("Debut " + p + " : etat "+etat.toString());		//TEST	
 				
 				if(p == 0){
 					previous = probleme.etats[nombreRepliques-1];
@@ -88,61 +88,83 @@ public class RecuitQuantiqueParametrableAccelere extends RecuitSimuleP {
 				}
 				
 				for (int j = 0; j < this.palier; j++){
-					/*System.out.print("Ep = [" + probleme.etats[0].Ep.calculer(probleme.etats[0]));
-					for(int w = 1 ; w < nombreRepliques ; w++){
-						System.out.print(","+probleme.etats[w].Ep.calculer(probleme.etats[w]));
-					}
-					System.out.println("]");*/
 					
 					MutationElementaire mutation = probleme.getMutationElementaire(etat);	// trouver une mutation possible
+					mutationsTentees++; //permet d'avoir une référence indépendante pour les améliorations de l'algorithme, mais aussi sur son temps
+					
 					double deltaEp = probleme.calculerDeltaEp(etat, mutation);	// calculer deltaEp si la mutation etait acceptee
-					double deltaEc = probleme.calculerDeltaEc(etat, previous, next, mutation);  // calculer deltaIEc si la mutation etait acceptee
-
+					double deltaEcUB = probleme.calculerDeltaEcUB(etat, previous, next, mutation);  // calculer deltaIEc si la mutation etait acceptee
+					//System.out.println("UB : " + deltaEcUB)	;
 					//différences du hamiltonien total
 					//multiplier deltaIEc par JGamma
-					double deltaE = deltaEp/nombreRepliques - deltaEc*Jr;
-					
+					double deltaE = deltaEp/nombreRepliques - deltaEcUB*Jr;
 					//K.calculerK(deltaE);
 								
-					if( deltaE <= 0 || deltaEp <= 0){
-						
-						// System.out.println("acceptee"); //TEST
+					
+					if(deltaEp <= 0){
+						//deltaE ici n'est pas le bon, il dépend de EcUB
+						mutationsAcceptees++;
 						probleme.modifElem(etat, mutation);				// faire la mutation
 						double EpActuelle = etat.Ep.calculer(etat);		// energie potentielle temporelle
+						
 						if( EpActuelle < this.meilleureEnergie ){		// mettre a jour la meilleur energie
 							this.meilleureEnergie = EpActuelle;
-							// TEST
-							System.out.print("etat "+p+" : ME = "+this.meilleureEnergie+" , G = "+this.Gamma.t+" , Jr = "+Jr+" .  Ep = [");
-							System.out.print(probleme.etats[0].Ep.calculer(probleme.etats[0]));
-							for(int w = 1 ; w < nombreRepliques ; w++){
-								System.out.print(","+probleme.etats[w].Ep.calculer(probleme.etats[w]));
-							}
-							System.out.println("]");
-							// TEST
+							System.out.println("ME = "+this.meilleureEnergie);
 							if (this.meilleureEnergie == 0){	// fin du programme
+								System.out.println("Mutations tentées : " + mutationsTentees);
+								System.out.println("Mutations acceptées UB : " + mutationsAccepteesUB);
+								System.out.println("Mutations acceptées : " + mutationsAcceptees);
 								return probleme;
 							}
 						}
-					} else {
+					}
+					else {
 						proba = Math.exp(-deltaE / (this.K.k * this.temperature));	// calcul de la proba
-						//System.out.println("Proba : " + proba); //TEST
-						if (proba >= probleme.gen.nextDouble()) {							
-							probleme.modifElem(etat, mutation);  		// accepter la mutation 
+						
+						if (proba >= probleme.gen.nextDouble()) {	
+							mutationsAccepteesUB++;
+
+							double deltaEc = probleme.calculerDeltaEc(etat, previous, next, mutation);
+							deltaE = deltaEp/nombreRepliques - deltaEc*Jr;
+							
+							if( deltaE <= 0){
+								
+								mutationsAcceptees++;
+								probleme.modifElem(etat, mutation);				// faire la mutation
+								double EpActuelle = etat.Ep.calculer(etat);		// energie potentielle temporelle
+								
+								if( EpActuelle < this.meilleureEnergie ){		// mettre a jour la meilleur energie
+									this.meilleureEnergie = EpActuelle;
+									System.out.println("ME = "+this.meilleureEnergie);
+									if (this.meilleureEnergie == 0){	// fin du programme
+										System.out.println("Mutations tentées : " + mutationsTentees);
+										System.out.println("Mutations acceptées UB : " + mutationsAccepteesUB);
+										System.out.println("Mutations acceptées : " + mutationsAcceptees);
+										return probleme;
+									}
+								}
+							}
+							else{
+								proba = Math.exp(-deltaE / (this.K.k * this.temperature));	// calcul de la proba
+							
+							
+								if (proba >= probleme.gen.nextDouble()) {
+									mutationsAcceptees++;
+									probleme.modifElem(etat, mutation);  		// accepter la mutation 
+								}
+							}
+
 						}
 					}
 				}
-				// TESTTEST
-				System.out.print("etat "+p+" : ME = "+this.meilleureEnergie+" , G = "+this.Gamma.t+ " , Jr = "+Jr +" .  Ep = [");
-				System.out.print(probleme.etats[0].Ep.calculer(probleme.etats[0]));
-				for(int w = 1 ; w < nombreRepliques ; w++){
-					System.out.print(","+probleme.etats[w].Ep.calculer(probleme.etats[w]));
-				}
-				System.out.println("]");
-				// TEST
-				//System.out.println("Fin " + i + " : etat "+etat.toString()); //TEST	
+
 			}
 		}
 		
+		
+		System.out.println("Mutations tentées : " + mutationsTentees);
+		System.out.println("Mutations acceptées UB : " + mutationsAccepteesUB);
+		System.out.println("Mutations acceptées : " + mutationsAcceptees);
 		return probleme;
 	}
 }

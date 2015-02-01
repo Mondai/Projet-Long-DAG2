@@ -17,4 +17,14 @@ public class Graphe {
 	public void setNombreNoeuds(int nombreNoeuds) {
 		this.nombreNoeuds = nombreNoeuds;
 	}
+	
+	public int getAdjacenceMax(){
+		int adjMax = 0;
+		for (int i = 0; i < nombreNoeuds; i++){
+			if (connexions[i].size() > adjMax){
+				adjMax = connexions[i].size();
+			}
+		}
+		return adjMax;
+	}
 }
