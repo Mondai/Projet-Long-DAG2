@@ -254,13 +254,13 @@ public class RecuitQuantiqueParametrable_Graphique extends RecuitSimuleP {
 					// Ajout dans les listes 
 
 					
-					if ( p==1 || EpActuelle==0.) {
+					
 						if( EpActuelle > this.meilleureEnergie ){
 							listeMeilleureEnergie.add(this.meilleureEnergie);
 						} else {
 							listeMeilleureEnergie.add(EpActuelle);
 						}
-					}
+					
 				} // arrivée au palier
 			} // fin d'un tour sur les répliques
 		} // fin du while du recuit

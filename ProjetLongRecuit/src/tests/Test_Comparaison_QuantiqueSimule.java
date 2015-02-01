@@ -42,7 +42,7 @@ public class Test_Comparaison_QuantiqueSimule {
 		// Traduction et paramètres du graphe
 		String benchmark = "data/le450_25a.col";
 		Graphe graphe = Traducteur.traduire("data/le450_25a.col");
-		int nbNoeuds = 450;
+		int nbNoeuds = 250;
 		int nbCouleurs = 25;
 
 		//Paramètres du recuit quantique
@@ -57,7 +57,7 @@ public class Test_Comparaison_QuantiqueSimule {
 		double Tfin = 0.02;  
 		int k = 1;
 		int N = M;
-		int nbPoints = 2*2800000;  // nombre de points au total sur palier et changement palier
+		int nbPoints = 300000000;  // nombre de points au total sur palier et changement palier
 		// 100 fois moins de points que ce qu'il devrait y avoir
 		double pas = N*((Tdebut-Tfin)/nbPoints);
 
@@ -65,10 +65,10 @@ public class Test_Comparaison_QuantiqueSimule {
 
 
 		// Paramètres graphiques
-		int echantillonage=5000;
+		int echantillonage=2000;
 		String nomFichier= "SortiesGraphiques/Courbes_Quantique/Comparaison";
-		int tailleEchantillon=200;
-		int nbPointsHistogramme=20;
+		int tailleEchantillon=40;
+		int nbPointsHistogramme=5;
 
 
 
