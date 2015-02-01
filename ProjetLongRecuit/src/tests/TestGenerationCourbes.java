@@ -42,9 +42,9 @@ public class TestGenerationCourbes {
 
 		int echantillonnage=100;
 
-		int tailleEchantillon = 10;
+		int tailleEchantillon = 5;
 		double facteur = 0.99;
-		int N = 4;
+		int N = 10;
 		int tailleFenetre = 1000;
 		
 		// Lundy
@@ -52,7 +52,7 @@ public class TestGenerationCourbes {
 
 			// Nombre de points important car on veux comparer pour le meme nombre d'itérations
 
-		int nbPoints = 300000;  // nombre de points au total sur palier et changement palier
+		int nbPoints = 50000;  // nombre de points au total sur palier et changement palier
 		double pas = N*((Tdebut-Tfin)/nbPoints);
 		System.out.println(pas);
 		
@@ -73,7 +73,7 @@ public class TestGenerationCourbes {
 		//Initialisation des listes à itérer
 		// Liste des benchmarks
 		LinkedList<String> listBenchmarks = new LinkedList();
-		listBenchmarks.add("data/le450_25a.col");
+		listBenchmarks.add("data/dsjc250.5.col");
 		//listBenchmarks.add("data/le450_25b.col");
 		//listBenchmarks.add("le450_25c.col");
 		//listBenchmarks.add("le450_25d.col");
@@ -228,7 +228,7 @@ public class TestGenerationCourbes {
 								
 								// Lancement du programme
 								coloriage.initialiser();
-								recuit.lancer(coloriage,listEnergie,listProba,Math.pow(10, -7));
+								recuit.lancer(coloriage,listEnergie,listProba,-1);
 
 								// Ecriture des vecteurs résultats
 								pw.print("u"+i+"=");

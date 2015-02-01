@@ -65,7 +65,7 @@ public class RecuitQuantiqueParametrable_Graphique extends RecuitSimuleP {
 		}
 
 		while(Gamma.modifierT() && this.meilleureEnergie!=0){
-
+			
 			Collections.shuffle(indiceEtats, probleme.gen);	// melanger l'ordre de parcours des indices
 			double Jr = -this.temperature/2*Math.log(Math.tanh(this.Gamma.t/nombreRepliques/this.temperature));	// calcul de Jr pour ce palier
 		
@@ -192,7 +192,6 @@ public class RecuitQuantiqueParametrable_Graphique extends RecuitSimuleP {
 		}
 
 		while(Gamma.modifierT() && this.meilleureEnergie!=0){
-
 			Collections.shuffle(indiceEtats, probleme.gen);	// melanger l'ordre de parcours des indices
 			double Jr = -this.temperature/2*Math.log(Math.tanh(this.Gamma.t/nombreRepliques/this.temperature));	// calcul de Jr pour ce palier
 		

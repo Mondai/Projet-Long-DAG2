@@ -135,7 +135,7 @@ public abstract class RecuitSimule implements IRecuit{
 	
 	
 	public Probleme lancer(Probleme probleme, ListEnergie listEnergie){
-		System.out.println("debut recuit");
+		
 		init();
 		
 		Etat etat = probleme.etats[0];
@@ -147,7 +147,6 @@ public abstract class RecuitSimule implements IRecuit{
 		
 		while(incrT() && this.meilleureEnergie!=0){
 			listEnergie.add(this.meilleureEnergie);  // choix arbitraire entre meilleure énergie et énergie actuelle
-			System.out.println(""+this.meilleureEnergie);
 			//probleme.calculerEnergie(); // pour mettre a jour coloriage.nombreNoeudsConflit
 			MutationElementaire mutation = probleme.getMutationElementaire(etat);	// trouver une mutation possible
 			
@@ -182,7 +181,7 @@ public abstract class RecuitSimule implements IRecuit{
 		listEnergie.z=listEnergie.echantillonage;
 		listEnergie.add(this.meilleureEnergie);
 		
-		System.out.println("fin recuit");
+		
 		return probleme;
 	}
 	

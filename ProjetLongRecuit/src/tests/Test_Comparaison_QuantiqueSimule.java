@@ -20,7 +20,10 @@ import solver.RecuitSimuleExponentiel;
 import solver.RecuitSimuleExponentielK;
 import solver.RecuitSimuleLineaire;
 import solver.Traducteur;
+import solverCommun.EnergieCinetique;
+import solverCommun.EnergiePotentielle;
 import solverCommun.Etat;
+import solverCommun.IMutation;
 import solverSimuleParametrable.ConstanteKConstant;
 import solverSimuleParametrable.RecuitQuantiqueParametrable;
 import solverSimuleParametrable.TemperatureLineaire;
@@ -37,24 +40,24 @@ public class Test_Comparaison_QuantiqueSimule {
 		MutationConflitsAleatoire mutation = new MutationConflitsAleatoire();
 
 		// Traduction et paramètres du graphe
-		String benchmark = "data/dsjc250.5.col";
-		Graphe graphe = Traducteur.traduire("data/dsjc250.5.col");
-		int nbNoeuds = 250;
-		int nbCouleurs = 28;
+		String benchmark = "data/le450_25a.col";
+		Graphe graphe = Traducteur.traduire("data/le450_25a.col");
+		int nbNoeuds = 450;
+		int nbCouleurs = 25;
 
 		//Paramètres du recuit quantique
 		int M = 4 * nbNoeuds * nbCouleurs;
 		double G0 = 0.75;
 		int P = 10;
 		double T = 0.35/P;
-		int maxSteps = (int) Math.pow(10,1);
+		int maxSteps = (int) Math.pow(10,3);
 
 		// Paramètres recuit simulé
 		double Tdebut=0.35;
 		double Tfin = 0.02;  
 		int k = 1;
 		int N = M;
-		int nbPoints = 300000;  // nombre de points au total sur palier et changement palier
+		int nbPoints = 2*2800000;  // nombre de points au total sur palier et changement palier
 		// 100 fois moins de points que ce qu'il devrait y avoir
 		double pas = N*((Tdebut-Tfin)/nbPoints);
 
@@ -62,9 +65,10 @@ public class Test_Comparaison_QuantiqueSimule {
 
 
 		// Paramètres graphiques
-		int echantillonage=1000;
+		int echantillonage=5000;
 		String nomFichier= "SortiesGraphiques/Courbes_Quantique/Comparaison";
-		int tailleEchantillon=2;
+		int tailleEchantillon=200;
+		int nbPointsHistogramme=20;
 
 
 
@@ -92,7 +96,7 @@ public class Test_Comparaison_QuantiqueSimule {
 			ListEnergie[] uBest=new ListEnergie[tailleEchantillon];
 			ListEnergie[] vBest=new ListEnergie[tailleEchantillon];
 
-			
+
 			for (int i=0; i<tailleEchantillon ; i++) {
 
 				// Initialisation recuit
@@ -114,7 +118,7 @@ public class Test_Comparaison_QuantiqueSimule {
 
 
 
-				pw.println("'duree = "+(endTime-startTime)/1000000000+" s'");
+				pw.println("'duree quantique= "+(endTime-startTime)/1000000000+" s'");
 
 
 				// On trouve la longueur maximale
@@ -129,7 +133,7 @@ public class Test_Comparaison_QuantiqueSimule {
 				System.out.println("fin d'un echantillon");
 			}
 			System.out.println("fin recuits quantiques");
-			
+
 
 			for (int i=0; i<tailleEchantillon ; i++) {
 
@@ -137,11 +141,14 @@ public class Test_Comparaison_QuantiqueSimule {
 				RecuitSimuleLineaire recuitSimule = new RecuitSimuleLineaire( k, Tdebut, Tfin, pas, N);
 				ListEnergie listeMeilleureEnergie = new ListEnergie(echantillonage,1);
 				ListEnergie listeProba = new ListEnergie(echantillonage,1);
-				
+
 				//Initialisation coloriage
 				int seed = (int) (10000*Math.random());
 				System.out.println("seed :"+seed);
-				GrapheColorieParticule coloriage = new GrapheColorieParticule(Ep, mutation, Ec, nbCouleurs , P, graphe, seed);
+
+				Conflits Ep2 = new Conflits();
+				EnergieCinetiqueVide Ec2 = new EnergieCinetiqueVide();
+				GrapheColorieParticule coloriage = new GrapheColorieParticule(Ep2, mutation, Ec2, nbCouleurs , 1, graphe,seed);
 				coloriage.initialiser();
 
 				// Time et launch
@@ -149,7 +156,7 @@ public class Test_Comparaison_QuantiqueSimule {
 				recuitSimule.lancer(coloriage,listeMeilleureEnergie);
 				long endTime = System.nanoTime();
 
-				pw.println("'duree = "+(endTime-startTime)/1000000000+" s'");
+				pw.println("'duree simulé = "+(endTime-startTime)/1000000000+" s'");
 
 
 				// On trouve la longueur maximale
@@ -165,19 +172,56 @@ public class Test_Comparaison_QuantiqueSimule {
 			}
 
 			System.out.println("fin recuits simulés");
-			
-			
-			
+
+
+
 
 			// -----------------------------------------------------------------------------------------------------------------------
 			// Partie Matlab
 			// -----------------------------------------------------------------------------------------------------------------------
 
+
+			// D'abord distribution des résultats
+			// 1 Distribution du quantique
+			pw.println("figure;");
+			for (int y=0;y<tailleEchantillon;y++) {
+
+				pw.println("taille"+y+"="+uBest[y].getlistEnergie().size()+";");
+			}
+			pw.print("vDistribution=[");
+			for (int j=0; j< tailleEchantillon;j++) {
+				pw.print("taille"+j+"; ");
+
+			}
+			pw.println("];");
+			//pw.println("v=v./length(v);");
+			pw.println("pas=(max(vDistribution)-min(vDistribution))/"+nbPointsHistogramme);
+			pw.println("vect=(min(vDistribution):pas:max(vDistribution))");
+			pw.println("hist("+echantillonage+"*vDistribution,"+echantillonage+"*vect);");
+			pw.println("title('distribution quantique');");
 			
-			
+		
+			// 2 Distribution du simulé
+			pw.println("figure;");
+			for (int y=0;y<tailleEchantillon;y++) {
+
+				pw.println("taille"+y+"="+vBest[y].getlistEnergie().size()+";");
+			}
+			pw.print("vDistribution=[");
+			for (int j=0; j< tailleEchantillon;j++) {
+				pw.print("taille"+j+"; ");
+
+			}
+			pw.println("];");
+			//pw.println("v=v./length(v);");
+			pw.println("pas=(max(vDistribution)-min(vDistribution))/"+nbPointsHistogramme);
+			pw.println("vect=(min(vDistribution):pas:max(vDistribution))");
+			pw.println("hist("+echantillonage+"*vDistribution,"+echantillonage+"*vect);");
+			pw.println("title('distribution simulé');");
+
 			// Adaptation taille
 			int tailleMax=0;
-			
+
 			// On trouve la longueur maximale de recuit et quantique
 
 			for (int j=0; j<tailleEchantillon;j++) {
@@ -186,16 +230,20 @@ public class Test_Comparaison_QuantiqueSimule {
 				if (longueur>tailleMax) { tailleMax=longueur; }
 			}
 			System.out.println("taille max que quantique"+tailleMax);
-			
+			pw.println();
+			pw.println("%%taille max que quantique : "+tailleMax);
+			int tailleMaxQuantique=tailleMax;
+
 			for (int j=0; j<tailleEchantillon;j++) {
 				int longueur=vBest[j].getlistEnergie().size();
 				System.out.println("la longueur est"+longueur);
 				if (longueur>tailleMax) { tailleMax=longueur; }
 			}
-			System.out.println("taille max avec simulé"+tailleMax);
-			
-			
-			
+			System.out.println("%%taille max avec simulé"+tailleMax);
+			pw.println("%%taille max avec le simulé: "+tailleMax);
+
+
+
 			// On remplit les autres du quantique pour harmoniser les longueurs
 			for (int j=0; j<tailleEchantillon;j++) {
 				int tailleListeActuelle=uBest[j].getlistEnergie().size();
@@ -206,6 +254,7 @@ public class Test_Comparaison_QuantiqueSimule {
 
 					for (int z=0;z<tailleMax-tailleListeActuelle;z++) {
 						uBest[j].getlistEnergie().add(temp);
+						//System.out.println("ajout quantique");
 					}
 				}	
 			}
@@ -222,6 +271,7 @@ public class Test_Comparaison_QuantiqueSimule {
 
 					for (int z=0;z<tailleMax-tailleListeActuelle;z++) {
 						vBest[j].getlistEnergie().add(temp);
+						//System.out.println("ajout simulé");
 					}
 				}	
 			}
@@ -258,11 +308,16 @@ public class Test_Comparaison_QuantiqueSimule {
 			pw.println("			uintervalleincertitude(i,2) = umean(i) - uincertitude(i)*1.96;");
 			pw.println("			end;");
 
-
+			pw.println("figure;");
 			pw.println("plot(vect,uintervalleincertitude,'blue');");
 			pw.println("hold on;");
 
-			
+			// Affichage fin du quantique
+			tailleMaxQuantique=echantillonage*tailleMaxQuantique;
+			pw.println("plot(["+tailleMaxQuantique+" "+tailleMaxQuantique+"],[0 20],'black');");
+			pw.println("hold on;");
+
+
 			// Print des v pour représenter le recuit simulé
 			for (int i=0;i<tailleEchantillon;i++) {
 
@@ -290,7 +345,7 @@ public class Test_Comparaison_QuantiqueSimule {
 			pw.println("			end;");
 
 
-			pw.println("plot(vect,uintervalleincertitude,'blue');");
+			pw.println("plot(vect,uintervalleincertitude,'red');");
 
 
 			// Legende
