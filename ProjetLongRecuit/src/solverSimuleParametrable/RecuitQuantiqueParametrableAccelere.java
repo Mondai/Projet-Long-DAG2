@@ -5,6 +5,7 @@ package solverSimuleParametrable;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import solver.GrapheColorieParticule;
 import solverCommun.Etat;
 import solverCommun.MutationElementaire;
 import solverCommun.Probleme;
@@ -42,6 +43,7 @@ public class RecuitQuantiqueParametrableAccelere extends RecuitSimuleP {
 		int mutationsTentees = 0;
 		int mutationsAccepteesUB = 0;
 		int mutationsAcceptees = 0;
+
 		
 		int nombreRepliques = probleme.etats.length;
 		
@@ -55,6 +57,16 @@ public class RecuitQuantiqueParametrableAccelere extends RecuitSimuleP {
 			}
 
 		}
+		
+		//pas convenable avec la généralité du solver 
+		//permet de ne pas avoir à recalculer l'exponentiel de l'énergie potentielle à chaque fois
+		/*int adjacenceMax = ((GrapheColorieParticule) probleme).getAdjacenceMax() ;
+		double[] termeExpPotentiel = new double[2*adjacenceMax+1]; //tableau listant tous les exp(deltaEp/T)
+		int k = 0;
+		for (int i = -adjacenceMax; i <= adjacenceMax; i++){
+			termeExpPotentiel[k] = Math.exp(i/nombreRepliques);
+			k++;
+		}*/
 
 		double proba = 1;
 

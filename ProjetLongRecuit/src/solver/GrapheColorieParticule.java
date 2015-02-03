@@ -66,5 +66,9 @@ public class GrapheColorieParticule extends Probleme {
 	public Etat[] getEtats(){
 		return this.etats;
 	}
+	
+	public int getAdjacenceMax(){
+		return this.graphe.getAdjacenceMax();
+	}
 
 }
