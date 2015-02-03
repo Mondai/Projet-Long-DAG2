@@ -10,7 +10,7 @@ import solverCommun.MutationElementaire;
 import solverCommun.Probleme;
 
 
-public class RecuitQuantiqueParametrableAccelere extends RecuitSimuleP { 				
+public class RecuitQuantiqueParametrableAccelere  { 				
 																		// creer vos propres Temperature, ConstanteK et trucs pour les graphes
 	public Temperature Gamma;
 	public ConstanteK K;
@@ -29,7 +29,7 @@ public class RecuitQuantiqueParametrableAccelere extends RecuitSimuleP {
 		this.temperature = temperature;						//en quantique, la température est constante et le Gamma est variable, d'où le fait que Gamma soit une "température"
 	}
 
-	public Probleme lancer(Probleme probleme) {
+	public int lancer(Probleme probleme) {
 
 		// TODO methode init()
 		// init();
@@ -114,7 +114,7 @@ public class RecuitQuantiqueParametrableAccelere extends RecuitSimuleP {
 								System.out.println("Mutations tentées : " + mutationsTentees);
 								System.out.println("Mutations acceptées UB : " + mutationsAccepteesUB);
 								System.out.println("Mutations acceptées : " + mutationsAcceptees);
-								return probleme;
+								return mutationsTentees ;
 							}
 						}
 					}
@@ -140,7 +140,7 @@ public class RecuitQuantiqueParametrableAccelere extends RecuitSimuleP {
 										System.out.println("Mutations tentées : " + mutationsTentees);
 										System.out.println("Mutations acceptées UB : " + mutationsAccepteesUB);
 										System.out.println("Mutations acceptées : " + mutationsAcceptees);
-										return probleme;
+										return mutationsTentees ;
 									}
 								}
 							}
@@ -165,6 +165,6 @@ public class RecuitQuantiqueParametrableAccelere extends RecuitSimuleP {
 		System.out.println("Mutations tentées : " + mutationsTentees);
 		System.out.println("Mutations acceptées UB : " + mutationsAccepteesUB);
 		System.out.println("Mutations acceptées : " + mutationsAcceptees);
-		return probleme;
+		return mutationsTentees ;
 	}
 }
