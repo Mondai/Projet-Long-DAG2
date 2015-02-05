@@ -30,7 +30,7 @@ public class RecuitQuantiqueParametrableAccelere  {
 		this.temperature = temperature;						//en quantique, la température est constante et le Gamma est variable, d'où le fait que Gamma soit une "température"
 	}
 
-	public int lancer(Probleme probleme) {
+	public double lancer(Probleme probleme) {
 
 		// TODO methode init()
 		// init();
@@ -40,9 +40,9 @@ public class RecuitQuantiqueParametrableAccelere  {
 		 * Enlever les variables de spin???		
 		*/
 		
-		int mutationsTentees = 0;
-		int mutationsAccepteesUB = 0;
-		int mutationsAcceptees = 0;
+		double mutationsTentees = 0;
+		double mutationsAccepteesUB = 0;
+		double mutationsAcceptees = 0;
 
 		
 		int nombreRepliques = probleme.etats.length;
@@ -121,11 +121,11 @@ public class RecuitQuantiqueParametrableAccelere  {
 						
 						if( EpActuelle < this.meilleureEnergie ){		// mettre a jour la meilleur energie
 							this.meilleureEnergie = EpActuelle;
-							System.out.println("ME = "+this.meilleureEnergie);
+							//System.out.println("ME = "+this.meilleureEnergie);
 							if (this.meilleureEnergie == 0){	// fin du programme
-								System.out.println("Mutations tentées : " + mutationsTentees);
-								System.out.println("Mutations acceptées UB : " + mutationsAccepteesUB);
-								System.out.println("Mutations acceptées : " + mutationsAcceptees);
+								//System.out.println("Mutations tentées : " + mutationsTentees);
+								//System.out.println("Mutations acceptées UB : " + mutationsAccepteesUB);
+								//System.out.println("Mutations acceptées : " + mutationsAcceptees);
 								return mutationsTentees ;
 							}
 						}
@@ -147,11 +147,11 @@ public class RecuitQuantiqueParametrableAccelere  {
 								
 								if( EpActuelle < this.meilleureEnergie ){		// mettre a jour la meilleur energie
 									this.meilleureEnergie = EpActuelle;
-									System.out.println("ME = "+this.meilleureEnergie);
+									// System.out.println("ME = "+this.meilleureEnergie); //TEST
 									if (this.meilleureEnergie == 0){	// fin du programme
-										System.out.println("Mutations tentées : " + mutationsTentees);
-										System.out.println("Mutations acceptées UB : " + mutationsAccepteesUB);
-										System.out.println("Mutations acceptées : " + mutationsAcceptees);
+										//System.out.println("Mutations tentées : " + mutationsTentees);
+										//System.out.println("Mutations acceptées UB : " + mutationsAccepteesUB);
+										//System.out.println("Mutations acceptées : " + mutationsAcceptees);
 										return mutationsTentees ;
 									}
 								}
@@ -174,9 +174,9 @@ public class RecuitQuantiqueParametrableAccelere  {
 		}
 		
 		
-		System.out.println("Mutations tentées : " + mutationsTentees);
-		System.out.println("Mutations acceptées UB : " + mutationsAccepteesUB);
-		System.out.println("Mutations acceptées : " + mutationsAcceptees);
+		//System.out.println("Mutations tentées : " + mutationsTentees);
+		//System.out.println("Mutations acceptées UB : " + mutationsAccepteesUB);
+		//System.out.println("Mutations acceptées : " + mutationsAcceptees);
 		return mutationsTentees ;
 	}
 }

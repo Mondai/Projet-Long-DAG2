@@ -68,7 +68,7 @@ public class TestQuantique {
 		double G0 = 0.75;
 		int P = 10;
 		double T = 0.35/P;
-		int maxSteps = (int) Math.pow(10,3);
+		int maxSteps = (int) Math.pow(10,4);
 		int seed = 745267; //262
 		GrapheColorieParticule coloriage = new GrapheColorieParticule(Ep, mutation, Ec, nbCouleurs , P, graphe, seed);
 		coloriage.initialiser();
@@ -78,7 +78,7 @@ public class TestQuantique {
 		RecuitQuantiqueParametrableAccelere recuit = new RecuitQuantiqueParametrableAccelere(Tparam,Kparam, M, T);
 		
 		long startTime = System.nanoTime();
-		recuit.lancer(coloriage);
+		System.out.println(recuit.lancer(coloriage));
 		//recuit.lancer(coloriage, listEnergie, listProba);
 		long endTime = System.nanoTime();
 		
