@@ -64,7 +64,7 @@ public class RecuitQuantiqueParametrableAccelere  {
 		double[] termeExpPotentiel = new double[2*adjacenceMax+1]; //tableau listant tous les exp(deltaEp/T)
 		int k = 0;
 		for (int i = -adjacenceMax; i <= adjacenceMax; i++){
-			termeExpPotentiel[k] = Math.exp(i/nombreRepliques);
+			termeExpPotentiel[k] = Math.exp(i/nombreRepliques/T);
 			k++;
 		}*/
 
