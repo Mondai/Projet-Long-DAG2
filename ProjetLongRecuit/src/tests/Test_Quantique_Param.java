@@ -20,7 +20,7 @@ public class Test_Quantique_Param {
 
 		int[] seeds = {1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000, 1000000000};
 		
-		double[] T0s = {0.35,0.30,0.40,0.25,0.45,0.20,0.50,0.15,0.55,0.10,0.60,0.05,0.70,0.01,0.80,0.90,1.00};
+		double[] T0s = {0.45,0.50,0.55,0.60,0.70,0.80,0.90,1.00};
 		//double[] G0s = {0.52,0.54,0.55,0.48,0.65,0.68,0.70,0.72,0.74,0.75,0.76,0.78,0.80,0.82,0.85,0.90,0.95,1.00,0.60,0.55,0.50};
 		
 		Conflits Ep = new Conflits();
@@ -34,7 +34,7 @@ public class Test_Quantique_Param {
 			
 			double T0 = T0s[t];
 			
-			String res = "iter"+T0+" = [ ";
+			System.out.print("iter"+T0+" = [ ");
 			
 			for(int s=0; s<seeds.length ;s++){
 				
@@ -58,13 +58,14 @@ public class Test_Quantique_Param {
 
 				double iter = recuit.lancer(coloriage);
 				
-				res+=iter+", ";
-
+				if(s!=seeds.length-1){
+					System.out.print(iter+", ");
+				}else{
+					System.out.print(iter);
+				}
 			}
-		
-			res = res.substring(0, res.length()-2);
-			res+= "]";
-			System.out.println(res);
+
+			System.out.println("]");
 
 		}
 	}
