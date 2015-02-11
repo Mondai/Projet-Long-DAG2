@@ -27,4 +27,8 @@ public class Graphe {
 		}
 		return adjMax;
 	}
+	
+	public LinkedList<Integer>[] getConnexions(){
+		return this.connexions;
+	}
 }

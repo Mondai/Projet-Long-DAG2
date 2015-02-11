@@ -6,6 +6,11 @@ public class TemperatureLineairePalier extends Temperature {
 	int palier;
 	int compteurPalier;
 	
+	public void init(){
+		super.init();
+		this.compteurPalier=1;
+	}
+	
 	public TemperatureLineairePalier(double tdebut, double tfinal,int nbIteration, int palier) {
 		super(tdebut, tfinal, nbIteration);
 		this.pasLineaire = (this.Tfinal-this.Tdebut)/this.nbIteration ;

@@ -20,7 +20,13 @@ public class RecuitQuantiqueParametrableAccelere  {
 	
 	public int nbMaxIteration; 							// nombre maximale d'iteration si la solution n'est pas trouvee, redondance avec t.nbIteration
 	public int palier;
-	// abstract void init(); 								// initialisation // mais de quoi ?
+	
+	// reinitialise Gamma et K au debut de lancer
+	private void init(){
+		this.Gamma.init();
+		this.K.init();
+		meilleureEnergie = Double.MAX_VALUE;
+	}
 
 	public RecuitQuantiqueParametrableAccelere(Temperature Gamma, ConstanteK K, int palier, double temperature) {
 		this.Gamma=Gamma;												// contructeur : on lui donne la facon de calculer l'energie, K et tout le blabla
@@ -32,8 +38,7 @@ public class RecuitQuantiqueParametrableAccelere  {
 
 	public double lancer(Probleme probleme) {
 
-		// TODO methode init()
-		// init();
+		this.init();
 		
 		/*toujours a implementer :
 		 * (peut-être changer les classes Temperature à un nom plus neutre)
@@ -43,7 +48,15 @@ public class RecuitQuantiqueParametrableAccelere  {
 		double mutationsTentees = 0;
 		double mutationsAccepteesUB = 0;
 		double mutationsAcceptees = 0;
-
+		
+		//TEST variables temporaires declarees qu'une fois ici:
+		double Jr = 0;
+		double deltaEp = 0;
+		double deltaEcUB = 0;
+		double deltaE = 0;
+		double EpActuelle = 0;
+		double deltaEc = 0;
+		//TEST
 		
 		int nombreRepliques = probleme.etats.length;
 		
@@ -79,7 +92,7 @@ public class RecuitQuantiqueParametrableAccelere  {
 		while(Gamma.modifierT() && this.meilleureEnergie!=0){
 
 			Collections.shuffle(indiceEtats, probleme.gen);	// melanger l'ordre de parcours des indices
-			double Jr = -this.temperature/2*Math.log(Math.tanh(this.Gamma.t/nombreRepliques/this.temperature));	// calcul de Jr pour ce palier
+			Jr = -this.temperature/2*Math.log(Math.tanh(this.Gamma.t/nombreRepliques/this.temperature));	// calcul de Jr pour ce palier
 
 			for (Integer p : indiceEtats){	
 				
@@ -104,12 +117,12 @@ public class RecuitQuantiqueParametrableAccelere  {
 					MutationElementaire mutation = probleme.getMutationElementaire(etat);	// trouver une mutation possible
 					mutationsTentees++; //permet d'avoir une référence indépendante pour les améliorations de l'algorithme, mais aussi sur son temps
 					
-					double deltaEp = probleme.calculerDeltaEp(etat, mutation);	// calculer deltaEp si la mutation etait acceptee
-					double deltaEcUB = probleme.calculerDeltaEcUB(etat, previous, next, mutation);  // calculer deltaIEc si la mutation etait acceptee
+					deltaEp = probleme.calculerDeltaEp(etat, mutation);	// calculer deltaEp si la mutation etait acceptee
+					deltaEcUB = probleme.calculerDeltaEcUB(etat, previous, next, mutation);  // calculer deltaIEc si la mutation etait acceptee
 					//System.out.println("UB : " + deltaEcUB)	;
 					//différences du hamiltonien total
 					//multiplier deltaIEc par JGamma
-					double deltaE = deltaEp/nombreRepliques - deltaEcUB*Jr;
+					deltaE = deltaEp/nombreRepliques - deltaEcUB*Jr;
 					//K.calculerK(deltaE);
 								
 					
@@ -117,7 +130,7 @@ public class RecuitQuantiqueParametrableAccelere  {
 						//deltaE ici n'est pas le bon, il dépend de EcUB
 						mutationsAcceptees++;
 						probleme.modifElem(etat, mutation);				// faire la mutation
-						double EpActuelle = etat.Ep.calculer(etat);		// energie potentielle temporelle
+						EpActuelle = etat.Ep.calculer(etat);		// energie potentielle temporelle
 						
 						if( EpActuelle < this.meilleureEnergie ){		// mettre a jour la meilleur energie
 							this.meilleureEnergie = EpActuelle;
@@ -136,14 +149,14 @@ public class RecuitQuantiqueParametrableAccelere  {
 						if (proba >= probleme.gen.nextDouble()) {	
 							mutationsAccepteesUB++;
 
-							double deltaEc = probleme.calculerDeltaEc(etat, previous, next, mutation);
+							deltaEc = probleme.calculerDeltaEc(etat, previous, next, mutation);
 							deltaE = deltaEp/nombreRepliques - deltaEc*Jr;
 							
 							if( deltaE <= 0){
 								
 								mutationsAcceptees++;
 								probleme.modifElem(etat, mutation);				// faire la mutation
-								double EpActuelle = etat.Ep.calculer(etat);		// energie potentielle temporelle
+								EpActuelle = etat.Ep.calculer(etat);		// energie potentielle temporelle
 								
 								if( EpActuelle < this.meilleureEnergie ){		// mettre a jour la meilleur energie
 									this.meilleureEnergie = EpActuelle;

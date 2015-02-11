@@ -5,7 +5,10 @@ public class TemperatureExpoExplicite extends Temperature {
 	double coefPente; 
 	int k;                                              // k est le nombre d 'iteartion effectue
 	
-	
+	public void init(){
+		super.init();
+		this.k=0;
+	}
 	
 	public TemperatureExpoExplicite(double tdebut, double tfinal, int nbIteration, double coef ) {
 		super(tdebut,tfinal,nbIteration); 				// on utilise le constructeur de Temperautre

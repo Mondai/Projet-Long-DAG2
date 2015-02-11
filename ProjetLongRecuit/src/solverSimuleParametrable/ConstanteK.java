@@ -4,8 +4,9 @@ public abstract class ConstanteK {
  double k ;
  
  public ConstanteK() {} ; 
-  
- void calculerK(double deltaE) {}
+ 
+ void init(){};
+ void calculerK(double deltaE) {};
  
  
 }

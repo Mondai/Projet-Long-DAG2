@@ -13,10 +13,13 @@ public abstract  class Temperature {
 	 boolean  modifierT() {
 		return false;} 		//change la temperature et indique si on est à la temperature finale (true = on continue)
 		
-				
+	public void init(){
+		this.t = this.Tdebut;
+	}
+	 
 	 public Temperature(double tdebut, double tfinal, int nbIteration) {   // c'est le constructeur
-		Tdebut = tdebut;
-		Tfinal = tfinal;
+		this.Tdebut = tdebut;
+		this.Tfinal = tfinal;
 		this.nbIteration = nbIteration;
 		this.t = tdebut;
 	}

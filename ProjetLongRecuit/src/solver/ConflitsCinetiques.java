@@ -15,6 +15,8 @@ public class ConflitsCinetiques extends EnergieCinetique {
 		
 		GrapheColorieParticule coloriageParticule = (GrapheColorieParticule)	probleme;
 		int E = 0;
+		int spin1 = 1;
+		int spin2 = 1;
 		
 		//calcul des différences spins entre un état et son prochain
 		for (int p = 0; p < coloriageParticule.replique-1 ; p++){
@@ -22,8 +24,8 @@ public class ConflitsCinetiques extends EnergieCinetique {
 			GrapheColorie etatNext = (GrapheColorie) probleme.etats[p+1];
 			for (int i = 0; i < etat.getCouleurs().length; i++){
 				for (int j = 0; j < i; j++){							// les noeuds j < i
-					int spin1 = 1;
-					int spin2 = 1;
+					spin1 = 1;
+					spin2 = 1;
 					if (etat.getCouleurs()[i] == etat.getCouleurs()[j]){
 						spin1 = -1;
 					}
@@ -33,8 +35,8 @@ public class ConflitsCinetiques extends EnergieCinetique {
 					E += spin1*spin2;
 				}
 				for (int j = i+1; j < etat.getCouleurs().length; j++){	// les noeuds j > i
-					int spin1 = 1;
-					int spin2 = 1;
+					spin1 = 1;
+					spin2 = 1;
 					if (etat.getCouleurs()[i] == etat.getCouleurs()[j]){
 						spin1 = -1;
 					}
@@ -52,8 +54,8 @@ public class ConflitsCinetiques extends EnergieCinetique {
 		GrapheColorie etatNext = (GrapheColorie) probleme.etats[0];
 		for (int i = 0; i < etat.getCouleurs().length; i++){
 			for (int j = 0; j < i; j++){							// les noeuds j < i
-				int spin1 = 1;
-				int spin2 = 1;
+				spin1 = 1;
+				spin2 = 1;
 				if (etat.getCouleurs()[i] == etat.getCouleurs()[j]){
 					spin1 = -1;
 				}
@@ -63,8 +65,8 @@ public class ConflitsCinetiques extends EnergieCinetique {
 				E += spin1*spin2;
 			}
 			for (int j = i+1; j < etat.getCouleurs().length; j++){	// les noeuds j > i
-				int spin1 = 1;
-				int spin2 = 1;
+				spin1 = 1;
+				spin2 = 1;
 				if (etat.getCouleurs()[i] == etat.getCouleurs()[j]){
 					spin1 = -1;
 				}
@@ -89,8 +91,6 @@ public class ConflitsCinetiques extends EnergieCinetique {
 		GrapheColorie coloriageNext = (GrapheColorie)	next;
 		GrapheColorie coloriagePrev = (GrapheColorie)	prev;
 		int deltaE = 0;
-		
-		int v = m.noeud;
 
 		HashSet<Integer> Valpha = coloriage.getClassesCouleurs()[coloriage.getCouleurs()[m.noeud]];
 		HashSet<Integer> Vbeta = coloriage.getClassesCouleurs()[m.couleur];
@@ -98,11 +98,11 @@ public class ConflitsCinetiques extends EnergieCinetique {
 		Valpha.remove(m.noeud);	// le calcul suivant requiert d'exclure v de Valpha 
 
 		for (int u : Valpha){
-			deltaE += 2*(coloriageNext.spinConflit(u, v) + coloriagePrev.spinConflit(u, v));
+			deltaE += 2*(coloriageNext.spinConflit(u, m.noeud) + coloriagePrev.spinConflit(u, m.noeud));
 		}
 		
 		for (int u : Vbeta){
-			deltaE -= 2*(coloriageNext.spinConflit(u, v) + coloriagePrev.spinConflit(u, v));
+			deltaE -= 2*(coloriageNext.spinConflit(u, m.noeud) + coloriagePrev.spinConflit(u, m.noeud));
 		}
 		
 		Valpha.add(m.noeud);	// rajouter v dans le classe de couleur (vu qu'on l'a enleve avant)
@@ -114,18 +114,11 @@ public class ConflitsCinetiques extends EnergieCinetique {
 		
 		MutationElementaireNoeud m = (MutationElementaireNoeud) mutation;
 		GrapheColorie coloriage = (GrapheColorie)	etat;
-		int deltaE = 0;
 		
 		HashSet<Integer> Valpha = coloriage.getClassesCouleurs()[coloriage.getCouleurs()[m.noeud]];
 		HashSet<Integer> Vbeta = coloriage.getClassesCouleurs()[m.couleur];
-		
-		Valpha.remove(m.noeud);	// le calcul suivant requiert d'exclure v de Valpha 
-		
-		deltaE += 4*(Valpha.size() + Vbeta.size() -1);
-		
-		Valpha.add(m.noeud);	// rajouter v dans le classe de couleur (vu qu'on l'a enleve avant)
-		
-		return deltaE;
+
+		return 4*(Valpha.size() + Vbeta.size() -1);
 	}
 
 }

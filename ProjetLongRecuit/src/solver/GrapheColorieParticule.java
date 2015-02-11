@@ -1,7 +1,5 @@
 package solver;
 
-import java.util.LinkedList;
-
 import solverCommun.EnergieCinetique;
 import solverCommun.EnergiePotentielle;
 import solverCommun.Etat;

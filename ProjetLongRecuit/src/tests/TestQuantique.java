@@ -3,26 +3,16 @@ package tests;
 import java.io.IOException;
 
 import solver.ConflitsCinetiques;
-import solver.EnergieCinetiqueVide;
 import solver.GrapheColorie;
 import solver.GrapheColorieParticule;
 import solver.Conflits;
 import solver.Graphe;
-import solver.ListEnergie;
-import solver.ListEnergieVide;
-import solver.MutationAleatoireColoriage;
 import solver.MutationConflitsAleatoire;
-import solver.RecuitSimule;
-import solver.RecuitSimuleExponentiel;
-import solver.RecuitSimuleExponentielK;
-import solver.RecuitSimuleLineaire;
 import solver.Traducteur;
 import solverCommun.Etat;
 import solverSimuleParametrable.ConstanteKConstant;
-import solverSimuleParametrable.RecuitQuantiqueParametrable;
 import solverSimuleParametrable.RecuitQuantiqueParametrableAccelere;
 import solverSimuleParametrable.TemperatureLineaire;
-import solverSimuleParametrable.TemperatureLineairePalier;
 
 public class TestQuantique {
 
@@ -68,8 +58,8 @@ public class TestQuantique {
 		double G0 = 0.75;
 		int P = 10;
 		double T = 0.35/P;
-		int maxSteps = (int) Math.pow(10,4);
-		int seed = 745267; //262
+		int maxSteps = 1000;//(int) Math.pow(10,4);
+		int seed = 1;
 		GrapheColorieParticule coloriage = new GrapheColorieParticule(Ep, mutation, Ec, nbCouleurs , P, graphe, seed);
 		coloriage.initialiser();
 		TemperatureLineaire Tparam = new TemperatureLineaire(G0,0,maxSteps);
@@ -78,8 +68,7 @@ public class TestQuantique {
 		RecuitQuantiqueParametrableAccelere recuit = new RecuitQuantiqueParametrableAccelere(Tparam,Kparam, M, T);
 		
 		long startTime = System.nanoTime();
-		System.out.println(recuit.lancer(coloriage));
-		//recuit.lancer(coloriage, listEnergie, listProba);
+		recuit.lancer(coloriage);
 		long endTime = System.nanoTime();
 		
 		// affichage du resultat
