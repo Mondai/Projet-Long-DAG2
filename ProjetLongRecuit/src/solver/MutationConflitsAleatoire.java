@@ -18,7 +18,7 @@ public class MutationConflitsAleatoire implements IMutation {
 		// Determination aleatoire d'une mutation a effectuer parmi les noeuds en conflit.
 		int noeudsEnConflits = coloriage.nombreNoeudsEnConflit();
 		
-		int compteur = (int) (coloriage.gen.nextDouble()*noeudsEnConflits);
+		int compteur = (int) (coloriage.gen.nextInt(noeudsEnConflits));
 		//System.out.println("compteur "+compteur);
 		//System.out.println("noeuds en conflit "+noeudsEnConflits);
 		int noeud = 0;
@@ -45,7 +45,7 @@ public class MutationConflitsAleatoire implements IMutation {
 		int couleurSuiv = couleurPrec;
 		
 		while (couleurSuiv == couleurPrec){
-			couleurSuiv = (int) (coloriage.gen.nextDouble()*coloriage.k);
+			couleurSuiv = (int) (coloriage.gen.nextInt(coloriage.k));
 		}
 		
 		return new MutationElementaireNoeud(noeud, couleurSuiv);
