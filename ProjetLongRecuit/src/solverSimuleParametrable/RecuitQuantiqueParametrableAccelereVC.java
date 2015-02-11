@@ -6,12 +6,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import solver.GrapheColorieParticule;
+import solver.GrapheColorie;
 import solverCommun.Etat;
 import solverCommun.MutationElementaire;
 import solverCommun.Probleme;
 
 
-public class RecuitQuantiqueParametrableAccelere  { 				
+public class RecuitQuantiqueParametrableAccelereVC  { 				
 																		// creer vos propres Temperature, ConstanteK et trucs pour les graphes
 	public Temperature Gamma;
 	public ConstanteK K;
@@ -20,15 +21,9 @@ public class RecuitQuantiqueParametrableAccelere  {
 	
 	public int nbMaxIteration; 							// nombre maximale d'iteration si la solution n'est pas trouvee, redondance avec t.nbIteration
 	public int palier;
-	
-	// reinitialise Gamma et K au debut de lancer
-	private void init(){
-		this.Gamma.init();
-		this.K.init();
-		meilleureEnergie = Double.MAX_VALUE;
-	}
+	// abstract void init(); 								// initialisation // mais de quoi ?
 
-	public RecuitQuantiqueParametrableAccelere(Temperature Gamma, ConstanteK K, int palier, double temperature) {
+	public RecuitQuantiqueParametrableAccelereVC(Temperature Gamma, ConstanteK K, int palier, double temperature) {
 		this.Gamma=Gamma;												// contructeur : on lui donne la facon de calculer l'energie, K et tout le blabla
 		this.K=K;												// en creant une classe dedie et reutilisable qui extends temperature
 		this.nbMaxIteration=this.Gamma.nbIteration;						// ainsi on combine le tout facilement
@@ -38,7 +33,8 @@ public class RecuitQuantiqueParametrableAccelere  {
 
 	public double lancer(Probleme probleme) {
 
-		this.init();
+		// TODO methode init()
+		// init();
 		
 		/*toujours a implementer :
 		 * (peut-être changer les classes Temperature à un nom plus neutre)
@@ -48,15 +44,7 @@ public class RecuitQuantiqueParametrableAccelere  {
 		double mutationsTentees = 0;
 		double mutationsAccepteesUB = 0;
 		double mutationsAcceptees = 0;
-		
-		//TEST variables temporaires declarees qu'une fois ici:
-		double Jr = 0;
-		double deltaEp = 0;
-		double deltaEcUB = 0;
-		double deltaE = 0;
-		double EpActuelle = 0;
-		double deltaEc = 0;
-		//TEST
+
 		
 		int nombreRepliques = probleme.etats.length;
 		
@@ -70,7 +58,17 @@ public class RecuitQuantiqueParametrableAccelere  {
 			}
 
 		}
+		
 
+		//pas convenable avec la généralité du solver 
+		//permet de ne pas avoir à recalculer l'exponentiel de l'énergie potentielle à chaque fois
+		int adjacenceMax = ((GrapheColorieParticule) probleme).getAdjacenceMax() ;
+		double[] termeExpPotentiel = new double[2*adjacenceMax+1]; //tableau listant tous les exp(deltaEp/T)
+		int k = 0;
+		for (double i = -adjacenceMax; i <= adjacenceMax; i++){
+			termeExpPotentiel[k] = exp(i/nombreRepliques/this.temperature);
+			k++;
+		}
 
 		double proba = 1;
 
@@ -83,7 +81,14 @@ public class RecuitQuantiqueParametrableAccelere  {
 		while(Gamma.modifierT() && this.meilleureEnergie!=0){
 
 			Collections.shuffle(indiceEtats, probleme.gen);	// melanger l'ordre de parcours des indices
-			Jr = -this.temperature/2*Math.log(Math.tanh(this.Gamma.t/nombreRepliques/this.temperature));	// calcul de Jr pour ce palier
+			double Jr = -this.temperature/2*Math.log(Math.tanh(this.Gamma.t/nombreRepliques/this.temperature));	// calcul de Jr pour ce palier
+			int v = ((GrapheColorie) ((GrapheColorieParticule) probleme).etats[0]).getCouleurs().length;
+			double[] termeExpCinetique = new double[8*(v-1)+1]; //tableau listant tous les exp(deltaEp/T)
+			k = 0;
+			for (double i = -4*(v-1); i <= 4*(v-1); i++){
+				termeExpCinetique[k] = exp(i*Jr/this.temperature);
+				k++;
+			}
 
 			for (Integer p : indiceEtats){	
 				
@@ -108,19 +113,24 @@ public class RecuitQuantiqueParametrableAccelere  {
 					MutationElementaire mutation = probleme.getMutationElementaire(etat);	// trouver une mutation possible
 					mutationsTentees++; //permet d'avoir une référence indépendante pour les améliorations de l'algorithme, mais aussi sur son temps
 					
-					deltaEp = probleme.calculerDeltaEp(etat, mutation);	// calculer deltaEp si la mutation etait acceptee
-					deltaEcUB = probleme.calculerDeltaEcUB(etat, previous, next, mutation);  // calculer deltaIEc si la mutation etait acceptee
+					double deltaEp = probleme.calculerDeltaEp(etat, mutation);	// calculer deltaEp si la mutation etait acceptee
+					double deltaEcUB = probleme.calculerDeltaEcUB(etat, previous, next, mutation);  // calculer deltaIEc si la mutation etait acceptee
 					//System.out.println("UB : " + deltaEcUB)	;
 					//différences du hamiltonien total
 					//multiplier deltaIEc par JGamma
-					deltaE = deltaEp/nombreRepliques - deltaEcUB*Jr;
+					double deltaE = deltaEp/nombreRepliques - deltaEcUB*Jr;
 					//K.calculerK(deltaE);
-
+					/*System.out.println("deltaEp " + deltaEp);
+					System.out.println("k " + (deltaEp+adjacenceMax));
+					System.out.println("proba deltaEp " + Math.exp(((float) deltaEp)/nombreRepliques / (this.K.k * this.temperature)));
+					System.out.println("Tableau " + termeExpPotentiel[deltaEp+adjacenceMax]);*/
+	
+					
 					if(deltaEp <= 0){
 						//deltaE ici n'est pas le bon, il dépend de EcUB
 						mutationsAcceptees++;
 						probleme.modifElem(etat, mutation);				// faire la mutation
-						EpActuelle = etat.Ep.calculer(etat);		// energie potentielle temporelle
+						double EpActuelle = etat.Ep.calculer(etat);		// energie potentielle temporelle
 						
 						if( EpActuelle < this.meilleureEnergie ){		// mettre a jour la meilleur energie
 							this.meilleureEnergie = EpActuelle;
@@ -134,19 +144,25 @@ public class RecuitQuantiqueParametrableAccelere  {
 						}
 					}
 					else {
-						proba = exp1(-deltaE / (this.K.k * this.temperature));
+						//long startTime = System.nanoTime();
+						//proba = Math.exp(-deltaE / (this.K.k * this.temperature));
+						proba = termeExpCinetique[(int) (deltaEcUB+4*(v-1))]/termeExpPotentiel[(int) (deltaEp+adjacenceMax)];
+						//proba = Math.exp(deltaEcUB*Jr / (this.K.k * this.temperature))/termeExpPotentiel[(int) (deltaEp+adjacenceMax)];	// calcul de la proba
+						/*long endTime = System.nanoTime();
+						System.out.println("duree = "+(endTime-startTime)+" ns");
+						System.out.println("deltaE " + deltaE);*/
 						
 						if (proba >= probleme.gen.nextDouble()) {	
 							mutationsAccepteesUB++;
 
-							deltaEc = probleme.calculerDeltaEc(etat, previous, next, mutation);
+							double deltaEc = probleme.calculerDeltaEc(etat, previous, next, mutation);
 							deltaE = deltaEp/nombreRepliques - deltaEc*Jr;
 							
 							if( deltaE <= 0){
 								
 								mutationsAcceptees++;
 								probleme.modifElem(etat, mutation);				// faire la mutation
-								EpActuelle = etat.Ep.calculer(etat);		// energie potentielle temporelle
+								double EpActuelle = etat.Ep.calculer(etat);		// energie potentielle temporelle
 								
 								if( EpActuelle < this.meilleureEnergie ){		// mettre a jour la meilleur energie
 									this.meilleureEnergie = EpActuelle;
@@ -160,7 +176,10 @@ public class RecuitQuantiqueParametrableAccelere  {
 								}
 							}
 							else{
-								proba = exp1(-deltaE / (this.K.k * this.temperature));
+								//proba = Math.exp(-deltaE / (this.K.k * this.temperature));
+								proba = termeExpCinetique[(int) (deltaEc+4*(v-1))]/termeExpPotentiel[(int) (deltaEp+adjacenceMax)];
+								//proba = Math.exp(deltaEc*Jr / (this.K.k * this.temperature))/termeExpPotentiel[(int) (deltaEp+adjacenceMax)];	// calcul de la proba
+							
 							
 								if (proba >= probleme.gen.nextDouble()) {
 									mutationsAcceptees++;
@@ -194,3 +213,5 @@ public class RecuitQuantiqueParametrableAccelere  {
 		return Double.longBitsToDouble(tmp << 32);
 	}
 }
+
+

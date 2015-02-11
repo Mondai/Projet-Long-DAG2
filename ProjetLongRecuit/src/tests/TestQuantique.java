@@ -12,6 +12,7 @@ import solver.Traducteur;
 import solverCommun.Etat;
 import solverSimuleParametrable.ConstanteKConstant;
 import solverSimuleParametrable.RecuitQuantiqueParametrableAccelere;
+import solverSimuleParametrable.RecuitQuantiqueParametrableAccelereVC;
 import solverSimuleParametrable.TemperatureLineaire;
 
 public class TestQuantique {
@@ -58,7 +59,7 @@ public class TestQuantique {
 		double G0 = 0.75;
 		int P = 10;
 		double T = 0.35/P;
-		int maxSteps = 1000;//(int) Math.pow(10,4);
+		int maxSteps = (int) Math.pow(10,4);
 		int seed = 1;
 		GrapheColorieParticule coloriage = new GrapheColorieParticule(Ep, mutation, Ec, nbCouleurs , P, graphe, seed);
 		coloriage.initialiser();
@@ -66,6 +67,7 @@ public class TestQuantique {
 		ConstanteKConstant Kparam = new ConstanteKConstant(k);
 		//RecuitQuantiqueParametrable recuit = new RecuitQuantiqueParametrable(Tparam,Kparam, M, T);
 		RecuitQuantiqueParametrableAccelere recuit = new RecuitQuantiqueParametrableAccelere(Tparam,Kparam, M, T);
+		//RecuitQuantiqueParametrableAccelereVC recuit = new RecuitQuantiqueParametrableAccelereVC(Tparam,Kparam, M, T);
 		
 		long startTime = System.nanoTime();
 		recuit.lancer(coloriage);
