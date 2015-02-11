@@ -10,6 +10,13 @@ public class Modification {
 	// Noeud ajouté à la route
 	public int couleurPrecedente;
 	
+	/**
+	 * Creation et Stockage en mémoire d'une modification de la couleur d'un noeud
+	 * @param noeudModifie
+	 * Noeud dont on modifie la couleur
+	 * @param couleurPrecedente
+	 * Couleur précédente du noeud à garder en mémoire
+	 */
 	public Modification(int noeudModifie,int couleurPrecedente) {
 		
 		this.noeudModifie = noeudModifie;

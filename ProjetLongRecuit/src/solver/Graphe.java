@@ -10,14 +10,25 @@ public class Graphe {
 		this.connexions = connexions;
 	}
 
+	/**
+	 * Renvoie le nombre de noeuds du graphe
+	 */
 	public int getNombreNoeuds() {
 		return nombreNoeuds;
 	}
 
+	/**
+	 * Fixe le nombre de noeuds du graphe
+	 */
+	//Vraiment utile?? Fonction cohérente??
 	public void setNombreNoeuds(int nombreNoeuds) {
 		this.nombreNoeuds = nombreNoeuds;
 	}
 	
+	/**
+	 * Calcule l'adjacence maximum du graphe
+	 * @return Adjacence Maximum
+	 */
 	public int getAdjacenceMax(){
 		int adjMax = 0;
 		for (int i = 0; i < nombreNoeuds; i++){
@@ -28,6 +39,10 @@ public class Graphe {
 		return adjMax;
 	}
 	
+	/**
+	 * Renvoie les connexions représentant le graphe
+	 * @return Une liste chaînée d'Entiers
+	 */
 	public LinkedList<Integer>[] getConnexions(){
 		return this.connexions;
 	}
