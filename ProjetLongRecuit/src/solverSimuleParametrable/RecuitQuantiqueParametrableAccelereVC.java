@@ -66,10 +66,9 @@ public class RecuitQuantiqueParametrableAccelereVC  {
 		double[] termeExpPotentiel = new double[2*adjacenceMax+1]; //tableau listant tous les exp(deltaEp/T)
 		int k = 0;
 		for (double i = -adjacenceMax; i <= adjacenceMax; i++){
-			termeExpPotentiel[k] = Math.exp(i/nombreRepliques/this.temperature);
+			termeExpPotentiel[k] = exp(i/nombreRepliques/this.temperature);
 			k++;
 		}
-
 
 		double proba = 1;
 
@@ -87,10 +86,10 @@ public class RecuitQuantiqueParametrableAccelereVC  {
 			double[] termeExpCinetique = new double[8*(v-1)+1]; //tableau listant tous les exp(deltaEp/T)
 			k = 0;
 			for (double i = -4*(v-1); i <= 4*(v-1); i++){
-				termeExpCinetique[k] = Math.exp(i*Jr/this.temperature);
+				termeExpCinetique[k] = exp(i*Jr/this.temperature);
 				k++;
 			}
-			
+
 			for (Integer p : indiceEtats){	
 				
 				etat = probleme.etats[p];
@@ -201,4 +200,18 @@ public class RecuitQuantiqueParametrableAccelereVC  {
 		//System.out.println("Mutations acceptées : " + mutationsAcceptees);
 		return mutationsTentees ;
 	}
+	
+	double exp1(double x) {
+		  x = 1.0 + x / 256.0;
+		  x *= x; x *= x; x *= x; x *= x;
+		  x *= x; x *= x; x *= x; x *= x;
+		  return x;
+	}
+	
+	public static double exp(double val) {
+		final long tmp = (long) (1512775 * val + 1072632447);
+		return Double.longBitsToDouble(tmp << 32);
+	}
 }
+
+

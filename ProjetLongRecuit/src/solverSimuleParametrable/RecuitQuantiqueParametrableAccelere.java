@@ -121,7 +121,7 @@ public class RecuitQuantiqueParametrableAccelere  {
 						}
 					}
 					else {
-						proba = Math.exp(-deltaE / (this.K.k * this.temperature));
+						proba = exp1(-deltaE / (this.K.k * this.temperature));
 						
 						if (proba >= probleme.gen.nextDouble()) {	
 							mutationsAccepteesUB++;
@@ -147,7 +147,7 @@ public class RecuitQuantiqueParametrableAccelere  {
 								}
 							}
 							else{
-								proba = Math.exp(-deltaE / (this.K.k * this.temperature));
+								proba = exp1(-deltaE / (this.K.k * this.temperature));
 							
 								if (proba >= probleme.gen.nextDouble()) {
 									mutationsAcceptees++;
@@ -167,5 +167,17 @@ public class RecuitQuantiqueParametrableAccelere  {
 		//System.out.println("Mutations acceptées UB : " + mutationsAccepteesUB);
 		//System.out.println("Mutations acceptées : " + mutationsAcceptees);
 		return mutationsTentees ;
+	}
+	
+	double exp1(double x) {
+		  x = 1.0 + x / 256.0;
+		  x *= x; x *= x; x *= x; x *= x;
+		  x *= x; x *= x; x *= x; x *= x;
+		  return x;
+	}
+	
+	public static double exp(double val) {
+		final long tmp = (long) (1512775 * val + 1072632447);
+		return Double.longBitsToDouble(tmp << 32);
 	}
 }

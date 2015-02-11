@@ -71,4 +71,3 @@ public class Test_Quantique_Param {
 	}
 
 }
->>>>>>> branch 'master' of https://github.com/Mondai/Projet-Long-DAG2.git
