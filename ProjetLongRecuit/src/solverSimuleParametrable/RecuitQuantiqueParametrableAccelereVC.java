@@ -6,12 +6,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import solver.GrapheColorieParticule;
+import solver.GrapheColorie;
 import solverCommun.Etat;
 import solverCommun.MutationElementaire;
 import solverCommun.Probleme;
 
 
-public class RecuitQuantiqueParametrableAccelere  { 				
+public class RecuitQuantiqueParametrableAccelereVC  { 				
 																		// creer vos propres Temperature, ConstanteK et trucs pour les graphes
 	public Temperature Gamma;
 	public ConstanteK K;
@@ -22,7 +23,7 @@ public class RecuitQuantiqueParametrableAccelere  {
 	public int palier;
 	// abstract void init(); 								// initialisation // mais de quoi ?
 
-	public RecuitQuantiqueParametrableAccelere(Temperature Gamma, ConstanteK K, int palier, double temperature) {
+	public RecuitQuantiqueParametrableAccelereVC(Temperature Gamma, ConstanteK K, int palier, double temperature) {
 		this.Gamma=Gamma;												// contructeur : on lui donne la facon de calculer l'energie, K et tout le blabla
 		this.K=K;												// en creant une classe dedie et reutilisable qui extends temperature
 		this.nbMaxIteration=this.Gamma.nbIteration;						// ainsi on combine le tout facilement
@@ -57,6 +58,17 @@ public class RecuitQuantiqueParametrableAccelere  {
 			}
 
 		}
+		
+
+		//pas convenable avec la généralité du solver 
+		//permet de ne pas avoir à recalculer l'exponentiel de l'énergie potentielle à chaque fois
+		int adjacenceMax = ((GrapheColorieParticule) probleme).getAdjacenceMax() ;
+		double[] termeExpPotentiel = new double[2*adjacenceMax+1]; //tableau listant tous les exp(deltaEp/T)
+		int k = 0;
+		for (double i = -adjacenceMax; i <= adjacenceMax; i++){
+			termeExpPotentiel[k] = Math.exp(i/nombreRepliques/this.temperature);
+			k++;
+		}
 
 
 		double proba = 1;
@@ -71,7 +83,14 @@ public class RecuitQuantiqueParametrableAccelere  {
 
 			Collections.shuffle(indiceEtats, probleme.gen);	// melanger l'ordre de parcours des indices
 			double Jr = -this.temperature/2*Math.log(Math.tanh(this.Gamma.t/nombreRepliques/this.temperature));	// calcul de Jr pour ce palier
-
+			int v = ((GrapheColorie) ((GrapheColorieParticule) probleme).etats[0]).getCouleurs().length;
+			double[] termeExpCinetique = new double[8*(v-1)+1]; //tableau listant tous les exp(deltaEp/T)
+			k = 0;
+			for (double i = -4*(v-1); i <= 4*(v-1); i++){
+				termeExpCinetique[k] = Math.exp(i*Jr/this.temperature);
+				k++;
+			}
+			
 			for (Integer p : indiceEtats){	
 				
 				etat = probleme.etats[p];
@@ -102,7 +121,12 @@ public class RecuitQuantiqueParametrableAccelere  {
 					//multiplier deltaIEc par JGamma
 					double deltaE = deltaEp/nombreRepliques - deltaEcUB*Jr;
 					//K.calculerK(deltaE);
-
+					/*System.out.println("deltaEp " + deltaEp);
+					System.out.println("k " + (deltaEp+adjacenceMax));
+					System.out.println("proba deltaEp " + Math.exp(((float) deltaEp)/nombreRepliques / (this.K.k * this.temperature)));
+					System.out.println("Tableau " + termeExpPotentiel[deltaEp+adjacenceMax]);*/
+	
+					
 					if(deltaEp <= 0){
 						//deltaE ici n'est pas le bon, il dépend de EcUB
 						mutationsAcceptees++;
@@ -121,7 +145,13 @@ public class RecuitQuantiqueParametrableAccelere  {
 						}
 					}
 					else {
-						proba = Math.exp(-deltaE / (this.K.k * this.temperature));
+						//long startTime = System.nanoTime();
+						//proba = Math.exp(-deltaE / (this.K.k * this.temperature));
+						proba = termeExpCinetique[(int) (deltaEcUB+4*(v-1))]/termeExpPotentiel[(int) (deltaEp+adjacenceMax)];
+						//proba = Math.exp(deltaEcUB*Jr / (this.K.k * this.temperature))/termeExpPotentiel[(int) (deltaEp+adjacenceMax)];	// calcul de la proba
+						/*long endTime = System.nanoTime();
+						System.out.println("duree = "+(endTime-startTime)+" ns");
+						System.out.println("deltaE " + deltaE);*/
 						
 						if (proba >= probleme.gen.nextDouble()) {	
 							mutationsAccepteesUB++;
@@ -147,7 +177,10 @@ public class RecuitQuantiqueParametrableAccelere  {
 								}
 							}
 							else{
-								proba = Math.exp(-deltaE / (this.K.k * this.temperature));
+								//proba = Math.exp(-deltaE / (this.K.k * this.temperature));
+								proba = termeExpCinetique[(int) (deltaEc+4*(v-1))]/termeExpPotentiel[(int) (deltaEp+adjacenceMax)];
+								//proba = Math.exp(deltaEc*Jr / (this.K.k * this.temperature))/termeExpPotentiel[(int) (deltaEp+adjacenceMax)];	// calcul de la proba
+							
 							
 								if (proba >= probleme.gen.nextDouble()) {
 									mutationsAcceptees++;
