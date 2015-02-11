@@ -2,28 +2,16 @@ package algoDeLaMire;
 
 import java.io.IOException;
 import java.util.Arrays;
-
 import solver.ConflitsCinetiques;
-import solver.EnergieCinetiqueVide;
-import solver.GrapheColorie;
 import solver.GrapheColorieParticule;
 import solver.Conflits;
 import solver.Graphe;
-import solver.ListEnergie;
-import solver.ListEnergieVide;
-import solver.MutationAleatoireColoriage;
 import solver.MutationConflitsAleatoire;
-import solver.RecuitSimule;
-import solver.RecuitSimuleExponentiel;
-import solver.RecuitSimuleExponentielK;
-import solver.RecuitSimuleLineaire;
 import solver.Traducteur;
-import solverCommun.Etat;
 import solverSimuleParametrable.ConstanteKConstant;
-import solverSimuleParametrable.RecuitQuantiqueParametrable;
 import solverSimuleParametrable.RecuitQuantiqueParametrableAccelere;
 import solverSimuleParametrable.TemperatureLineaire;
-import solverSimuleParametrable.TemperatureLineairePalier;
+
 
 public class Mire {
 	
@@ -32,7 +20,7 @@ public class Mire {
 	double T;
 	double deltaT;
 	Graphe graphe;
-	int pointCentral ;  //c'est la somme des nombres d'itération pour 5 recuits
+	int pointCentral ;  //c'est la somme des nombres d'itération pour 1 recuits
 	
 	//les variables suivantes dépendent du graphe
 	int nbNoeuds = 250;
@@ -41,7 +29,7 @@ public class Mire {
 	int M = 4 * nbNoeuds * nbCouleurs;
 	int P = 10;
 	int maxSteps = 1000;
-	int seed = 745267;
+	
 	
 
 	public static void main(String[] args) throws IOException {
@@ -73,6 +61,7 @@ public class Mire {
 
 		Conflits Ep = new Conflits();
 		ConflitsCinetiques Ec = new ConflitsCinetiques();
+		int seed = (int) (500000 + Math.random()*250000 + Math.random()*100000 + Math.random()*50000) ;
 		MutationConflitsAleatoire mutation = new MutationConflitsAleatoire();
 		GrapheColorieParticule coloriage = new GrapheColorieParticule(Ep,
 				mutation, Ec, nbCouleurs, P, graphe, seed);
@@ -81,13 +70,14 @@ public class Mire {
 		ConstanteKConstant Kparam = new ConstanteKConstant(k);
 		RecuitQuantiqueParametrableAccelere recuit = new RecuitQuantiqueParametrableAccelere(
 				Tparam, Kparam, M, t);
-		double somme = 0. ;
+		
+		/*double somme = 0. ;
 		for (int i = 0 ; i < 5 ; i++) {
 			somme = somme + recuit.lancer(coloriage) ;
 		}
-		
 			return (int) somme ;
-
+		 */
+		return (int) recuit.lancer(coloriage) ;
 	}
 	
 	/* c'est juste une mire en 2D
@@ -96,9 +86,13 @@ public class Mire {
 	 */
 	public void  UneEtape() {
 		int haut = testerParam(G0,T+deltaT);
+		System.out.print("en haut : "+haut+" / ");
 		int gauche = testerParam(G0-deltaG0,T);
+		System.out.print("en gauche : "+gauche+" / ");
 		int droit = testerParam(G0+deltaG0,T);
+		System.out.print("en droit : "+droit+" / ");
 		int bas = testerParam(G0,T-deltaT);
+		System.out.print("en bas : "+bas+" / ");
 		
 		int[] tab = new int[] {this.pointCentral, haut, gauche, droit, bas} ;
 		Arrays.sort(tab);
