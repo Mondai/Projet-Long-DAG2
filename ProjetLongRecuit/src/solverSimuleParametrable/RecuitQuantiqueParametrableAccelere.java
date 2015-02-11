@@ -5,7 +5,6 @@ package solverSimuleParametrable;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import solver.GrapheColorieParticule;
 import solverCommun.Etat;
 import solverCommun.MutationElementaire;
 import solverCommun.Probleme;
@@ -134,7 +133,7 @@ public class RecuitQuantiqueParametrableAccelere  {
 						}
 					}
 					else {
-						proba = exp1(-deltaE / (this.K.k * this.temperature));
+						proba = exp(-deltaE / (this.K.k * this.temperature));
 						
 						if (proba >= probleme.gen.nextDouble()) {	
 							mutationsAccepteesUB++;
@@ -160,7 +159,7 @@ public class RecuitQuantiqueParametrableAccelere  {
 								}
 							}
 							else{
-								proba = exp1(-deltaE / (this.K.k * this.temperature));
+								proba = exp(-deltaE / (this.K.k * this.temperature));
 							
 								if (proba >= probleme.gen.nextDouble()) {
 									mutationsAcceptees++;
