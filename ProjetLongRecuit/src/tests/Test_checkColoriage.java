@@ -3,17 +3,17 @@ package tests;
 import java.io.IOException;
 import java.util.LinkedList;
 
-import solver.Conflits;
-import solver.ConflitsCinetiques;
-import solver.Graphe;
-import solver.GrapheColorie;
-import solver.GrapheColorieParticule;
-import solver.MutationConflitsAleatoire;
-import solver.Traducteur;
-import solverCommun.Etat;
-import solverSimuleParametrable.ConstanteKConstant;
-import solverSimuleParametrable.RecuitQuantiqueParametrableAccelere;
-import solverSimuleParametrable.TemperatureLineaire;
+import solver.commun.Etat;
+import solver.parametres.ConstanteKConstant;
+import solver.parametres.FonctionLineaire;
+import solver.quantique.RecuitQuantiqueParametrableAccelere;
+import vertexColoring.Conflits;
+import vertexColoring.ConflitsCinetiques;
+import vertexColoring.Graphe;
+import vertexColoring.GrapheColorie;
+import vertexColoring.GrapheColorieParticule;
+import vertexColoring.MutationConflitsAleatoire;
+import vertexColoring.Traducteur;
 
 public class Test_checkColoriage {
 
@@ -33,12 +33,12 @@ public class Test_checkColoriage {
 		int seed = 1;
 		GrapheColorieParticule coloriage = new GrapheColorieParticule(Ep, mutation, Ec, nbCouleurs , P, graphe, seed);
 		coloriage.initialiser();
-		TemperatureLineaire Tparam = new TemperatureLineaire(G0,0,maxSteps);
+		FonctionLineaire Tparam = new FonctionLineaire(G0,0,maxSteps);
 		ConstanteKConstant Kparam = new ConstanteKConstant(k);
 		RecuitQuantiqueParametrableAccelere recuit = new RecuitQuantiqueParametrableAccelere(Tparam,Kparam, M, T);
 		
 		long startTime = System.nanoTime();
-		System.out.println(recuit.lancer(coloriage));
+		recuit.lancer(coloriage);
 		long endTime = System.nanoTime();
 		
 		// check s'il n'y a pas de conflits sur l'etat resolu

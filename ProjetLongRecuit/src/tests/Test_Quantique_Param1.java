@@ -2,17 +2,17 @@ package tests;
 
 import java.io.IOException;
 
-import solver.Conflits;
-import solver.ConflitsCinetiques;
-import solver.Graphe;
-import solver.GrapheColorie;
-import solver.GrapheColorieParticule;
-import solver.MutationConflitsAleatoire;
-import solver.Traducteur;
-import solverCommun.Etat;
-import solverSimuleParametrable.ConstanteKConstant;
-import solverSimuleParametrable.RecuitQuantiqueParametrableAccelere;
-import solverSimuleParametrable.TemperatureLineaire;
+import solver.commun.Etat;
+import solver.parametres.ConstanteKConstant;
+import solver.parametres.FonctionLineaire;
+import solver.quantique.RecuitQuantiqueParametrableAccelere;
+import vertexColoring.Conflits;
+import vertexColoring.ConflitsCinetiques;
+import vertexColoring.Graphe;
+import vertexColoring.GrapheColorie;
+import vertexColoring.GrapheColorieParticule;
+import vertexColoring.MutationConflitsAleatoire;
+import vertexColoring.Traducteur;
 
 public class Test_Quantique_Param1 {
 
@@ -49,18 +49,20 @@ public class Test_Quantique_Param1 {
 
 				GrapheColorieParticule coloriage = new GrapheColorieParticule(Ep, mutation, Ec, nbCouleurs , P, graphe, seed);
 				coloriage.initialiser();
-				TemperatureLineaire Tparam = new TemperatureLineaire(G0,0,maxSteps);
+				FonctionLineaire Tparam = new FonctionLineaire(G0,0,maxSteps);
 				ConstanteKConstant Kparam = new ConstanteKConstant(k);
 				//RecuitQuantiqueParametrable recuit = new RecuitQuantiqueParametrable(Tparam,Kparam, M, T);
 				RecuitQuantiqueParametrableAccelere recuit = new RecuitQuantiqueParametrableAccelere(Tparam,Kparam, M, T);
 
+				/*
 				double iter = recuit.lancer(coloriage);
 				
 				if(s!=seeds.length-1){
 					System.out.print(iter+", ");
 				}else{
 					System.out.print(iter);
-				}
+				}*/
+				recuit.lancer(coloriage);
 			}
 
 			System.out.println("]");

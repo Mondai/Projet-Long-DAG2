@@ -2,18 +2,18 @@ package tests;
 
 import java.io.IOException;
 
-import solver.ConflitsCinetiques;
-import solver.GrapheColorie;
-import solver.GrapheColorieParticule;
-import solver.Conflits;
-import solver.Graphe;
-import solver.MutationConflitsAleatoire;
-import solver.Traducteur;
-import solverCommun.Etat;
-import solverSimuleParametrable.ConstanteKConstant;
-import solverSimuleParametrable.RecuitQuantiqueParametrableAccelere;
-import solverSimuleParametrable.RecuitQuantiqueParametrableAccelereVC;
-import solverSimuleParametrable.TemperatureLineaire;
+import solver.commun.Etat;
+import solver.parametres.ConstanteKConstant;
+import solver.parametres.FonctionLineaire;
+import solver.quantique.RecuitQuantiqueParametrableAccelere;
+import vertexColoring.Conflits;
+import vertexColoring.ConflitsCinetiques;
+import vertexColoring.Graphe;
+import vertexColoring.GrapheColorie;
+import vertexColoring.GrapheColorieParticule;
+import vertexColoring.MutationConflitsAleatoire;
+import vertexColoring.RecuitQuantiqueParametrableAccelereVC;
+import vertexColoring.Traducteur;
 
 public class TestQuantique {
 
@@ -59,11 +59,11 @@ public class TestQuantique {
 		double G0 = 0.75;
 		int P = 10;
 		double T = 0.35/P;
-		int maxSteps = (int) Math.pow(10,4);
+		int maxSteps = (int) Math.pow(10,3);
 		int seed = 352;
 		GrapheColorieParticule coloriage = new GrapheColorieParticule(Ep, mutation, Ec, nbCouleurs , P, graphe, seed);
 		coloriage.initialiser();
-		TemperatureLineaire Tparam = new TemperatureLineaire(G0,0,maxSteps);
+		FonctionLineaire Tparam = new FonctionLineaire(G0,0,maxSteps);
 		ConstanteKConstant Kparam = new ConstanteKConstant(k);
 		//RecuitQuantiqueParametrable recuit = new RecuitQuantiqueParametrable(Tparam,Kparam, M, T);
 		RecuitQuantiqueParametrableAccelere recuit = new RecuitQuantiqueParametrableAccelere(Tparam,Kparam, M, T);

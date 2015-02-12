@@ -8,20 +8,19 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import solver.Conflits;
-import solver.EnergieCinetiqueVide;
-import solver.Graphe;
-import solver.GrapheColorieParticule;
-import solver.ListEnergie;
-import solver.MutationAleatoireColoriage;
-import solver.MutationConflitsAleatoire;
-import solver.RecuitSimule;
-import solver.RecuitSimuleExponentiel;
-import solver.RecuitSimuleExponentielK;
-import solver.RecuitSimuleLineaire;
-import solver.RecuitSimuleLineaireK;
-import solver.Traducteur;
-import solverCommun.IMutation;
+
+import solver.commun.IMutation;
+import solver.graphique.ListEnergie;
+import solver.parametres.ConstanteKConstant;
+import solver.parametres.FonctionLineaire;
+import solver.quantique.EnergieCinetiqueVide;
+import solver.quantique.RecuitQuantiqueParametrable_Graphique;
+import vertexColoring.Conflits;
+import vertexColoring.Graphe;
+import vertexColoring.GrapheColorieParticule;
+import vertexColoring.MutationAleatoireColoriage;
+import vertexColoring.MutationConflitsAleatoire;
+import vertexColoring.Traducteur;
 
 
 public class TestDistribution {
@@ -47,7 +46,7 @@ public class TestDistribution {
 		
 		String benchmark = "data/le450_15c.col";
 		IMutation mutation = new MutationConflitsAleatoire();
-		double k=1;
+		
 		
 	
 		// Parametres distribution
@@ -59,9 +58,9 @@ public class TestDistribution {
 		double pas = N*((Tdebut-Tfin)/nbPoints);
 		
 		// Recuit
-		RecuitSimule recuit = new RecuitSimuleLineaire(k, Tdebut, Tfin, pas, N);
+		//RecuitSimule recuit = new RecuitSimuleLineaire(k, Tdebut, Tfin, pas, N);
 		
-
+	
 		// Création Fichier Texte
 
 		try {

@@ -2,15 +2,16 @@ package algoDeLaMire;
 
 import java.io.IOException;
 import java.util.Arrays;
-import solver.ConflitsCinetiques;
-import solver.GrapheColorieParticule;
-import solver.Conflits;
-import solver.Graphe;
-import solver.MutationConflitsAleatoire;
-import solver.Traducteur;
-import solverSimuleParametrable.ConstanteKConstant;
-import solverSimuleParametrable.RecuitQuantiqueParametrableAccelere;
-import solverSimuleParametrable.TemperatureLineaire;
+
+import solver.parametres.ConstanteKConstant;
+import solver.parametres.FonctionLineaire;
+import solver.quantique.RecuitQuantiqueParametrableAccelere;
+import vertexColoring.Conflits;
+import vertexColoring.ConflitsCinetiques;
+import vertexColoring.Graphe;
+import vertexColoring.GrapheColorieParticule;
+import vertexColoring.MutationConflitsAleatoire;
+import vertexColoring.Traducteur;
 
 
 public class Mire {
@@ -66,7 +67,7 @@ public class Mire {
 		GrapheColorieParticule coloriage = new GrapheColorieParticule(Ep,
 				mutation, Ec, nbCouleurs, P, graphe, seed);
 		coloriage.initialiser();
-		TemperatureLineaire Tparam = new TemperatureLineaire(g0, 0, maxSteps);
+		FonctionLineaire Tparam = new FonctionLineaire(g0, 0, maxSteps);
 		ConstanteKConstant Kparam = new ConstanteKConstant(k);
 		RecuitQuantiqueParametrableAccelere recuit = new RecuitQuantiqueParametrableAccelere(
 				Tparam, Kparam, M, t);

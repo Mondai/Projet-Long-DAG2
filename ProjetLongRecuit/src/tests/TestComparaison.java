@@ -3,20 +3,20 @@ import java.io.IOException;
 import java.lang.management.ManagementFactory;
 import java.lang.management.ThreadMXBean;
 
-import solver.Conflits;
-import solver.EnergieCinetiqueVide;
-import solver.Graphe;
-import solver.GrapheColorie;
-import solver.GrapheColorieParticule;
-import solver.ListEnergie;
-import solver.MutationConflitsAleatoire;
 import solver.RecuitSimule;
 import solver.RecuitSimuleLineaire;
-import solver.Traducteur;
-import solverSimuleParametrable.ConstanteKConstant;
-import solverSimuleParametrable.RecuitSimuleParametrable;
-import solverSimuleParametrable.TemperatureLineaire;
-import solverSimuleParametrable.TemperatureLineairePalier;
+import solver.graphique.ListEnergie;
+import solver.parametres.ConstanteKConstant;
+import solver.parametres.FonctionLineaire;
+import solver.parametres.FonctionLineairePalier;
+import solver.quantique.EnergieCinetiqueVide;
+import solver.simule.RecuitSimuleParametrable;
+import vertexColoring.Conflits;
+import vertexColoring.Graphe;
+import vertexColoring.GrapheColorie;
+import vertexColoring.GrapheColorieParticule;
+import vertexColoring.MutationConflitsAleatoire;
+import vertexColoring.Traducteur;
 
 public class TestComparaison {
 	
@@ -76,7 +76,7 @@ public static void main(String[] args) throws IOException {
 	//System.out.println(((GrapheColorie)coloriage.etats.get(0)).getNoeudsConflitList());
 
 	// Nouveau RecuitSimuleParametrable
-	TemperatureLineairePalier Tparam = new TemperatureLineairePalier(T0,0,maxSteps,M);
+	FonctionLineairePalier Tparam = new FonctionLineairePalier(T0,0,maxSteps,M);
 	ConstanteKConstant Kparam = new ConstanteKConstant(k);
 	coloriage = new GrapheColorieParticule(Ep, mutation, Ec, nbCouleurs, 1, graphe, seed);
 	coloriage.initialiser();

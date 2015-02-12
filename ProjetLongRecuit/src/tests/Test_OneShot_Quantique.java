@@ -5,27 +5,23 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import solver.ConflitsCinetiques;
-import solver.EnergieCinetiqueVide;
-import solver.GrapheColorie;
-import solver.GrapheColorieParticule;
-import solver.Conflits;
-import solver.Graphe;
-import solver.ListEnergie;
-import solver.ListEnergieVide;
-import solver.MutationAleatoireColoriage;
-import solver.MutationConflitsAleatoire;
-import solver.RecuitSimule;
-import solver.RecuitSimuleExponentiel;
-import solver.RecuitSimuleExponentielK;
-import solver.RecuitSimuleLineaire;
-import solver.Traducteur;
-import solverCommun.Etat;
-import solverSimuleParametrable.ConstanteKConstant;
-import solverSimuleParametrable.RecuitQuantiqueParametrable;
-import solverSimuleParametrable.TemperatureLineaire;
-import solverSimuleParametrable.TemperatureLineairePalier;
-import solverSimuleParametrable.RecuitQuantiqueParametrable_Graphique;
+import solver.commun.Etat;
+import solver.graphique.ListEnergie;
+import solver.graphique.ListEnergieVide;
+import solver.parametres.ConstanteKConstant;
+import solver.parametres.FonctionLineaire;
+import solver.parametres.FonctionLineairePalier;
+import solver.quantique.EnergieCinetiqueVide;
+import solver.quantique.RecuitQuantiqueParametrable;
+import solver.quantique.RecuitQuantiqueParametrable_Graphique;
+import vertexColoring.Conflits;
+import vertexColoring.ConflitsCinetiques;
+import vertexColoring.Graphe;
+import vertexColoring.GrapheColorie;
+import vertexColoring.GrapheColorieParticule;
+import vertexColoring.MutationAleatoireColoriage;
+import vertexColoring.MutationConflitsAleatoire;
+import vertexColoring.Traducteur;
 
 public class Test_OneShot_Quantique {
 
@@ -37,10 +33,10 @@ public class Test_OneShot_Quantique {
 		MutationConflitsAleatoire mutation = new MutationConflitsAleatoire();
 
 		// Traduction et paramètres du graphe
-		String benchmark = "data/dsjc250.5.col";
-		Graphe graphe = Traducteur.traduire("data/dsjc250.5.col");
-		int nbNoeuds = 250;
-		int nbCouleurs = 28;
+		String benchmark = "data/le450_25a.col";
+		Graphe graphe = Traducteur.traduire("data/le450_25a.col");
+		int nbNoeuds = 450;
+		int nbCouleurs = 25;
 
 		//Paramètres du recuit
 		int M = 4 * nbNoeuds * nbCouleurs;
@@ -51,7 +47,7 @@ public class Test_OneShot_Quantique {
 		int seed = 745262;
 		GrapheColorieParticule coloriage = new GrapheColorieParticule(Ep, mutation, Ec, nbCouleurs , P, graphe, seed);
 		coloriage.initialiser();
-		TemperatureLineaire Tparam = new TemperatureLineaire(G0,0,maxSteps);
+		FonctionLineaire Tparam = new FonctionLineaire(G0,0,maxSteps);
 		int k=1;
 		ConstanteKConstant Kparam = new ConstanteKConstant(k);
 		RecuitQuantiqueParametrable_Graphique recuit = new RecuitQuantiqueParametrable_Graphique(Tparam,Kparam, M, T);

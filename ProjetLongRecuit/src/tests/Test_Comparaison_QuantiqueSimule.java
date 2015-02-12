@@ -5,30 +5,30 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import solver.ConflitsCinetiques;
-import solver.EnergieCinetiqueVide;
-import solver.GrapheColorie;
-import solver.GrapheColorieParticule;
-import solver.Conflits;
-import solver.Graphe;
-import solver.ListEnergie;
-import solver.ListEnergieVide;
-import solver.MutationAleatoireColoriage;
-import solver.MutationConflitsAleatoire;
 import solver.RecuitSimule;
 import solver.RecuitSimuleExponentiel;
 import solver.RecuitSimuleExponentielK;
 import solver.RecuitSimuleLineaire;
-import solver.Traducteur;
-import solverCommun.EnergieCinetique;
-import solverCommun.EnergiePotentielle;
-import solverCommun.Etat;
-import solverCommun.IMutation;
-import solverSimuleParametrable.ConstanteKConstant;
-import solverSimuleParametrable.RecuitQuantiqueParametrable;
-import solverSimuleParametrable.TemperatureLineaire;
-import solverSimuleParametrable.TemperatureLineairePalier;
-import solverSimuleParametrable.RecuitQuantiqueParametrable_Graphique;
+import solver.commun.EnergieCinetique;
+import solver.commun.EnergiePotentielle;
+import solver.commun.Etat;
+import solver.commun.IMutation;
+import solver.graphique.ListEnergie;
+import solver.graphique.ListEnergieVide;
+import solver.parametres.ConstanteKConstant;
+import solver.parametres.FonctionLineaire;
+import solver.parametres.FonctionLineairePalier;
+import solver.quantique.EnergieCinetiqueVide;
+import solver.quantique.RecuitQuantiqueParametrable;
+import solver.quantique.RecuitQuantiqueParametrable_Graphique;
+import vertexColoring.Conflits;
+import vertexColoring.ConflitsCinetiques;
+import vertexColoring.Graphe;
+import vertexColoring.GrapheColorie;
+import vertexColoring.GrapheColorieParticule;
+import vertexColoring.MutationAleatoireColoriage;
+import vertexColoring.MutationConflitsAleatoire;
+import vertexColoring.Traducteur;
 
 public class Test_Comparaison_QuantiqueSimule {
 
@@ -100,7 +100,7 @@ public class Test_Comparaison_QuantiqueSimule {
 			for (int i=0; i<tailleEchantillon ; i++) {
 
 				// Initialisation recuit
-				TemperatureLineaire Tparam = new TemperatureLineaire(G0,0,maxSteps);
+				FonctionLineaire Tparam = new FonctionLineaire(G0,0,maxSteps);
 				ConstanteKConstant Kparam = new ConstanteKConstant(k);
 				RecuitQuantiqueParametrable_Graphique recuit = new RecuitQuantiqueParametrable_Graphique(Tparam,Kparam, M, T);
 				ListEnergie listeMeilleureEnergie = new ListEnergie(echantillonage,1);
