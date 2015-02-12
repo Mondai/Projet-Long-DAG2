@@ -1,5 +1,11 @@
 package solverCommun;
 
+/**
+ * Classe abstraite qui sert de template pour les énergies potentielles des recuits.
+ * Concrètement, cette classe correspond à une méthode de calcul de l'énergie potentielle spécifique à un problème.
+ * @author DAG2
+ * 
+ */
 public abstract class EnergiePotentielle{
 	
 	/**
