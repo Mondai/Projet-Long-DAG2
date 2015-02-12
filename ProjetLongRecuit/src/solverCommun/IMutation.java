@@ -1,6 +1,10 @@
 package solverCommun;
-// Interface représentant le concept abstrait de mutation dans l'algorithme de recuit
 
+/**
+ * Interface représentant le concept abstrait de mutation dans l'algorithme de recuit
+ * @author DAG2
+ *
+ */
 public interface IMutation {
 
 	/**

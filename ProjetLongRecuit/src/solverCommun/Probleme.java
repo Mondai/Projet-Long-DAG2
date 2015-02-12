@@ -1,12 +1,17 @@
 package solverCommun;
 
 import solver.HighQualityRandom;
-/*
- * Classe abstraite représentant un problème générique soluble par recuit simulé
- * Pour résoudre un problème grâce au recuit il faut faire une classe fille qui implémente
- * les différentes méthodes abstraites utilisées par l'algorithme
- */
 
+
+/**
+ * Classe abstraite représentant un problème générique soluble par recuit.
+ * Pour résoudre un problème grâce au recuit, il faut faire une classe fille qui implémente
+ * les différentes méthodes abstraites utilisées par l'algorithme.
+ * Elle hérite de particules et disposent donc d'attributs en conséquence.
+ * On utilise pour l'aléatoire une classe appelée HighQualityRandom.
+ * @author DAG2
+ * @see IMutation,HighQualityRandom,Particule
+ */
 public abstract class Probleme extends Particule{
 	
 	public IMutation mutation;

@@ -1,10 +1,10 @@
 package solverCommun;
 
 /**
- * Classe abstraite servant de template pour les états d'un problème. Un état dispose nécessairement
- * d'un lien vers une énergie potentielle.
+ * Classe abstraite servant de template pour les états d'un problème. Un état représente une configuration 
+ * possible d'une particule. Un état dispose nécessairement d'un lien vers une énergie potentielle. 
  * @author DAG2
- * @see EnergiePotentielle
+ * @see EnergiePotentielle, Particule
  *
  */
 public abstract class Etat {

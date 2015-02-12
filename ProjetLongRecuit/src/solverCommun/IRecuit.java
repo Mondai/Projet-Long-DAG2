@@ -1,5 +1,10 @@
 package solverCommun;
 
+/**
+ * Template pour le recuit. Tous les recuits doivent implémenter cette interface ou hériter d'une classe le faisant.
+ * @author DAG2
+ *
+ */
 public interface IRecuit {
 	
 	/**
