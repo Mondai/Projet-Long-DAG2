@@ -126,8 +126,9 @@ public class RecuitQuantiqueParametrableAccelere implements IRecuit{
 						
 						if( EpActuelle < this.meilleureEnergie ){		// mettre a jour la meilleur energie
 							this.meilleureEnergie = EpActuelle;
-							//System.out.println("ME = "+this.meilleureEnergie);
+							//System.out.println("ME = "+this.meilleureEnergie);	//TEST
 							if (this.meilleureEnergie == 0){	// fin du programme
+								System.out.println(mutationsTentees+" ");
 								//System.out.println("Mutations tentées : " + mutationsTentees);
 								//System.out.println("Mutations acceptées UB : " + mutationsAccepteesUB);
 								//System.out.println("Mutations acceptées : " + mutationsAcceptees);
@@ -150,16 +151,6 @@ public class RecuitQuantiqueParametrableAccelere implements IRecuit{
 								probleme.modifElem(etat, mutation);				// faire la mutation
 								EpActuelle = etat.Ep.calculer(etat);		// energie potentielle temporelle
 								
-								if( EpActuelle < this.meilleureEnergie ){		// mettre a jour la meilleur energie
-									this.meilleureEnergie = EpActuelle;
-									// System.out.println("ME = "+this.meilleureEnergie); //TEST
-									if (this.meilleureEnergie == 0){	// fin du programme
-										//System.out.println("Mutations tentées : " + mutationsTentees);
-										//System.out.println("Mutations acceptées UB : " + mutationsAccepteesUB);
-										//System.out.println("Mutations acceptées : " + mutationsAcceptees);
-										return;
-									}
-								}
 							}
 							else{
 								proba = exp(-deltaE / (this.K.k * this.temperature));

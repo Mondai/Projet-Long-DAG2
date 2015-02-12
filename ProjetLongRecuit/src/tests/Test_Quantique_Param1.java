@@ -19,8 +19,9 @@ public class Test_Quantique_Param1 {
 	public static void main(String[] args) throws IOException {
 
 		int[] seeds = {1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000, 1000000000};
+		//int[] seeds = {6435, 613467, 500, 5000, 50000, 500000, 5000000, 20000000, 200000000, 2000000000};
 		
-		int[] Ps = {2,3,4,7};
+		int[] Ps = {5,7};
 		
 		Conflits Ep = new Conflits();
 		ConflitsCinetiques Ec = new ConflitsCinetiques();
