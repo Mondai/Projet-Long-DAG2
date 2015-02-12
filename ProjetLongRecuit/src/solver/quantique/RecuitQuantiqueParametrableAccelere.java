@@ -128,7 +128,7 @@ public class RecuitQuantiqueParametrableAccelere implements IRecuit{
 							this.meilleureEnergie = EpActuelle;
 							//System.out.println("ME = "+this.meilleureEnergie);	//TEST
 							if (this.meilleureEnergie == 0){	// fin du programme
-								System.out.println(mutationsTentees+" ");
+								System.out.print(mutationsTentees+" ");
 								//System.out.println("Mutations tentées : " + mutationsTentees);
 								//System.out.println("Mutations acceptées UB : " + mutationsAccepteesUB);
 								//System.out.println("Mutations acceptées : " + mutationsAcceptees);
