@@ -22,6 +22,12 @@ import vertexColoring.MutationAleatoireColoriage;
 import vertexColoring.MutationConflitsAleatoire;
 import vertexColoring.Traducteur;
 
+/// A effacer peut-être
+//
+//
+//
+//
+//
 
 public class TestDistribution {
 

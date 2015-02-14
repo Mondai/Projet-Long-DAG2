@@ -5,10 +5,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import solver.RecuitSimule;
-import solver.RecuitSimuleExponentiel;
-import solver.RecuitSimuleExponentielK;
-import solver.RecuitSimuleLineaire;
 import solver.commun.EnergieCinetique;
 import solver.commun.EnergiePotentielle;
 import solver.commun.Etat;
@@ -29,6 +25,13 @@ import vertexColoring.GrapheColorieParticule;
 import vertexColoring.MutationAleatoireColoriage;
 import vertexColoring.MutationConflitsAleatoire;
 import vertexColoring.Traducteur;
+
+/// A effacer peut-être
+//
+//
+//
+//
+//
 
 public class Test_Comparaison_QuantiqueSimule {
 
@@ -138,7 +141,7 @@ public class Test_Comparaison_QuantiqueSimule {
 			for (int i=0; i<tailleEchantillon ; i++) {
 
 				// Initialisation recuit simulé
-				RecuitSimuleLineaire recuitSimule = new RecuitSimuleLineaire( k, Tdebut, Tfin, pas, N);
+				//RecuitSimuleLineaire recuitSimule = new RecuitSimuleLineaire( k, Tdebut, Tfin, pas, N);
 				ListEnergie listeMeilleureEnergie = new ListEnergie(echantillonage,1);
 				ListEnergie listeProba = new ListEnergie(echantillonage,1);
 
@@ -153,7 +156,7 @@ public class Test_Comparaison_QuantiqueSimule {
 
 				// Time et launch
 				long startTime = System.nanoTime();
-				recuitSimule.lancer(coloriage,listeMeilleureEnergie);
+				//recuitSimule.lancer(coloriage,listeMeilleureEnergie);
 				long endTime = System.nanoTime();
 
 				pw.println("'duree simulé = "+(endTime-startTime)/1000000000+" s'");

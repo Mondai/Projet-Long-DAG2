@@ -1,24 +1,38 @@
 package solver.parametres;
 
+/**
+ * {@inheritDoc}
+ * <p>
+ * A chaque appel de modification de la température, la température descend d'un pas constant.
+ * Le nombre réel d'itérations est une approximation puisque le pas linéaire est un double à précision limitée.
+ */
 public class FonctionLineaire extends Fonction {
 
-	double pasLineaire;															// ce sera la modif lineaire
+	/**
+	 * Valeur approximée du pas(en négatif) pour descendre de la 
+	 * température de début à celle de fin en le nombre d'itérations voulu.
+	 */
+	double pasLineaire;
 	
+	/**
+	 * Création d'une variable pasLineaire.
+	 */
 	public FonctionLineaire(double tdebut, double tfinal, int nbIteration) {
-		super(tdebut,tfinal,nbIteration); 										// on utilise le constructeur de Temperautre
-		this.pasLineaire = (this.Tfinal-this.Tdebut)/this.nbIteration ; 		//calcul de la modif lineaire
+		super(tdebut,tfinal,nbIteration); 
+		this.pasLineaire = (this.Tfinal-this.Tdebut)/this.nbIteration ; 
 }
 
-	public boolean modifierT() { // modif de T
+	/**
+	 * {@inheritDoc}
+	 * <p>
+	 * Ici, on ajoute le pas à la température et on vérifie si la température résultante est inférieure à la température de fin.
+	 */
+	public boolean modifierT() {
 		if (this.t+this.pasLineaire < this.Tfinal) {
 			return false;
 		} else {
-			this.t += this.pasLineaire; // le pas linearie est negatif :)
+			this.t += this.pasLineaire; //pas lineaire negatif
 			return true;
 		}
 	}
 }
-
-
-// approximation du nombre d'iteration car le pas lineaire est est nombre flotant 
-// lolilol cours d'archi norme IEEE bref ca passe

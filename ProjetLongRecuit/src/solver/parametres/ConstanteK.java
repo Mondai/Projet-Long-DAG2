@@ -3,6 +3,12 @@ package solver.parametres;
 public abstract class ConstanteK {    
  public double k ;
  
+ /**
+  * Classe qui décrit le comportement de la "constante" k dans le calcul de la probabilité.
+  * Dans la majorité des cas, elle est constante.
+  * Cependant, elle dispose de méthodes qui permettrait de changer le comportement en fonction des 
+  * dernières valeurs d'énergie (moyenne sur une fenêtre par exemple).
+  */
  public ConstanteK() {} ; 
  
  public void init(){};

@@ -3,13 +3,14 @@ import java.io.IOException;
 import java.lang.management.ManagementFactory;
 import java.lang.management.ThreadMXBean;
 
-import solver.RecuitSimule;
-import solver.RecuitSimuleLineaire;
 import solver.graphique.ListEnergie;
+import solver.parametres.ConstanteK;
 import solver.parametres.ConstanteKConstant;
+import solver.parametres.Fonction;
 import solver.parametres.FonctionLineaire;
 import solver.parametres.FonctionLineairePalier;
 import solver.quantique.EnergieCinetiqueVide;
+import solver.quantique.RecuitQuantiqueParametrableAccelere;
 import solver.simule.RecuitSimuleParametrable;
 import vertexColoring.Conflits;
 import vertexColoring.Graphe;
@@ -17,6 +18,14 @@ import vertexColoring.GrapheColorie;
 import vertexColoring.GrapheColorieParticule;
 import vertexColoring.MutationConflitsAleatoire;
 import vertexColoring.Traducteur;
+
+
+/// A effacer peut-être
+//
+//
+//
+//
+//
 
 public class TestComparaison {
 	
@@ -51,10 +60,10 @@ public static void main(String[] args) throws IOException {
 	
 	GrapheColorieParticule coloriage = new GrapheColorieParticule(Ep, mutation, Ec, nbCouleurs, 1, graphe, seed);
 	
+	/*
 	// Ancien RecuitSimule
 	coloriage.initialiser();
-	RecuitSimule recuit = new RecuitSimuleLineaire(k,T0,0,T0/maxSteps,M);						
-	//
+	RecuitSimule recuit = new RecuitSimuleLineaire(k,T0,0,T0/maxSteps,M);	
 	
     ThreadMXBean temp = ManagementFactory.getThreadMXBean( );  // recuperer temps cpu
 	long startTime = System.nanoTime();
@@ -62,12 +71,12 @@ public static void main(String[] args) throws IOException {
 	recuit.lancer(coloriage);
 	
 	
-	/*// Avec une proba limite
+	// Avec une proba limite
 	int echantillonnage=1000;
 	int tailleFenetre=20;
 	ListEnergie listEnergie = new ListEnergie(echantillonnage,tailleFenetre); 
 	ListEnergie listProba = new ListEnergie(echantillonnage,tailleFenetre); // taille de la fenetre non utile ici
-	recuit.lancer(coloriage,listEnergie,listProba,0);*/
+	recuit.lancer(coloriage,listEnergie,listProba,0);
 	
 	long endCpu = temp.getCurrentThreadCpuTime();
 	long endTime = System.nanoTime();
@@ -75,6 +84,8 @@ public static void main(String[] args) throws IOException {
 	System.out.println("seed = "+seed +".  Nombre de conflits : "+recuit.getMeilleureEnergie()+", Duree = "+(endTime-startTime)/1000000000+" s"+", Duree CPU = "+(endCpu-startCpu)/1000000000+" s");
 	//System.out.println(((GrapheColorie)coloriage.etats.get(0)).getNoeudsConflitList());
 
+	*/
+	
 	// Nouveau RecuitSimuleParametrable
 	FonctionLineairePalier Tparam = new FonctionLineairePalier(T0,0,maxSteps,M);
 	ConstanteKConstant Kparam = new ConstanteKConstant(k);

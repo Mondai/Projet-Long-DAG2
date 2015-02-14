@@ -1,5 +1,11 @@
 package solver.parametres;
 
+/**
+ * Classe qui décrit un comportement (par exemple linéaire ou exponentiel), et qui est utilisé entre autre pour la température.
+ * Cette classe permet de modéliser le comportement des paramètres comme la température dans le recuit simulé ou le
+ * paramètre Gamma dans le recuit quantique.
+ *
+ */
 public abstract  class Fonction {       
 
 	double Tdebut; 				// utile pour le constructeur
@@ -9,14 +15,29 @@ public abstract  class Fonction {
 	
 	public double t;  					// c'est la temperature actuelle
 	
-	
+	/**
+	 * Fonction qui change la temperature et indique si on est à la temperature finale.
+	 * @return True si il faut continuer, false sinon.
+	 */
 	 public boolean  modifierT() {
-		return false;} 		//change la temperature et indique si on est à la temperature finale (true = on continue)
+		return false;
+	} 
 		
+	/**
+	 * Fonction d'initialisation(ou plus précisemment réinitialisation) de l'instance. 
+	 * La température gardée dans l'instance est réinitialisée à la température de début donnée
+	 * à l'instanciation de l'objet.
+	 */
 	public void init(){
 		this.t = this.Tdebut;
 	}
 	 
+	/**
+	 * Constructeur.
+	 * @param tdebut Température de début, gardée em mémoire pour une réinitialisation possible.
+	 * @param tfinal Température de fin, gardée en mémoire.
+	 * @param nbIteration Le nombre d'itérations, gardé en mémoire.
+	 */
 	 public Fonction(double tdebut, double tfinal, int nbIteration) {   // c'est le constructeur
 		this.Tdebut = tdebut;
 		this.Tfinal = tfinal;
