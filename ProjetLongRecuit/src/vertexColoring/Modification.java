@@ -1,13 +1,24 @@
 package vertexColoring;
+
 /* Une modification est une mutation élémentaire de la situation du problème
  * Un noeud de la route de l'utilisateur est remplacé par un autre, ce qui revient
  * à supprimer 2 arêtes consécutives de sa route et en rajouter 2 autres 
  */
+
+/**
+ * Une modification est une mutation élémentaire de la situation du problème.
+ * Un noeud change de couleur, on stocke ici le noeud et sa couleur précédente pour pouvoir
+ * inverser la modification si besoin.
+ */
 public class Modification {
 
-	// Noeud supprimé de la route
+	/**
+	 * Noeud dont la couleur est modifiée.
+	 */
 	public int noeudModifie;
-	// Noeud ajouté à la route
+	/**
+	 * Couleur précédente du noeud.
+	 */
 	public int couleurPrecedente;
 	
 	/**

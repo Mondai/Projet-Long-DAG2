@@ -1,6 +1,13 @@
 package vertexColoring;
 import java.util.LinkedList;
 
+/**
+ * Classe qui représente la structure sous-jacente du graphe.
+ * <p>
+ * Elle dispose d'un tableau pour les connexions. Pour chaque noeud, ce tableau va disposer d'une liste chaînée
+ * avec tous les autres noeuds connectés.
+ * Les noeuds sont représentés par des entiers.
+ */
 public class Graphe {
 	protected LinkedList<Integer>[] connexions; // représente les connexions entre noeuds du graphe
 	private int nombreNoeuds;

@@ -1,8 +1,7 @@
 package solver.commun;
 
 /**
- * 
- * @author DAG2
+ * Représente le concept abstrait de la plus petite mutation possible.
  *
  */
 public abstract class MutationElementaire {

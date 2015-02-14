@@ -5,11 +5,17 @@ import solver.commun.IMutation;
 import solver.commun.MutationElementaire;
 import solver.commun.Probleme;
 
-// Implementation de l'interface IMutation sous la forme d'une mutation aleatoire de coloriage
-// Premiere ebauche avec le noeud pris aleatoirement et la couleur aussi.
+
+/**
+ * Implémentation de l'interface IMutation sous la forme d'une mutation aléatoire de coloriage.
+ * Le noeud et la couleur sont pris aléatoirement.
+ */
 public class MutationAleatoireColoriage implements IMutation {
 
-	
+	/**
+	 * Fonction qui retourne une MutationElementaireNoeud possible, avec un noeud puis une couleur aléatoire
+	 * (différente de celle précédente du noeud).
+	 */
 	public MutationElementaire getMutationElementaire(Probleme probleme, Etat etat) {
 		
 		GrapheColorie coloriage = (GrapheColorie) etat;
@@ -26,7 +32,9 @@ public class MutationAleatoireColoriage implements IMutation {
 		return new MutationElementaireNoeud(noeudAleatoire, couleurAleatoire);
 	}
 
-
+	/**
+	 * Fonction qui modifie l'état, ici un GrapheColorié, pour prendre en compte la mutation effectuée.
+	 */
 	public void faire(Probleme probleme, Etat etat, MutationElementaire mutation) {
 
 		GrapheColorie coloriage = (GrapheColorie) etat;

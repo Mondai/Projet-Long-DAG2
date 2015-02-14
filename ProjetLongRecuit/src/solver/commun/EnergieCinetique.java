@@ -4,7 +4,6 @@ package solver.commun;
  * 
  * Classe abstraite qui sert de template pour les énergies cinétiques du recuit quantique.
  * Concrètement, cette classe correspond à une méthode de calcul de l'énergie cinétique spécifique à un problème.
- * @author DAG2
  */
 public abstract class EnergieCinetique{
 	

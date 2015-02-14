@@ -7,35 +7,68 @@ import solver.commun.EnergiePotentielle;
 import solver.commun.Etat;
 import solver.commun.HighQualityRandom;
 
-/*
-Classe qui contient son propre seed et generateur random
-Les couleurs actuelles de l'etat, les meilleurs couleurs et le graphe
-le nombre de couleurs, de conflits et de noeuds en conflit
-Contient une sauvegarde de la dernière modification, propre à chaque état
-*/
-
+/**
+ * Classe qui représente un coloriage des noeuds d'un graphe.
+ * <p>
+ * Elle contient son propre seed et generateur aléatoire, ainsi que les couleurs 
+ * actuelles, les meilleures couleurs trouvées dans le passé, un lien vers le graphe,
+ * les classes de couleurs et le nombre d'arêtes en conflits pour un calcul plus rapide de l'énergie potentielle.
+ * @see Graphe,HighQualityRandom
+ */
 public class GrapheColorie extends Etat{
 	
+	/**
+	 * Seed du générateur aléatoire.
+	 */
 	private int seed = new HighQualityRandom().nextInt();
+	/**
+	 * Générateur aléatoire.
+	 */
 	HighQualityRandom gen = new HighQualityRandom(getSeed());
 	
-	int[] couleurs; //Tableau des noeuds repertoriant leurs couleurs
-	private int[] meilleuresCouleurs; // Tableau des noeuds repertoriant la meilleure repartition des couleurs trouvee jusqu'ici
+	/**
+	 * Tableau des noeuds répertoriant leurs couleurs.
+	 */
+	int[] couleurs;
+	/**
+	 * Tableau des noeuds répertoriant la meilleure répartition des couleurs trouvée jusqu'ici.
+	 */
+	private int[] meilleuresCouleurs;
+	/**
+	 * Graphe sous-jacent.
+	 */
 	Graphe graphe;
 	
-	int k; // nombre de couleurs pour le coloriage
-	//boolean[][] conflitsConnexions; //Tableau contenant True si les noeuds de l'arete sont en conflit et False sinon (peut être non nécessaire de stocker les spins)
-	//private boolean[] noeudsConflit;// tableau avec True si noeud en conflit et False sinon
+	/**
+	 * Nombre de couleurs pour le coloriage.
+	 */
+	int k;
+
+	/**
+	 * Liste des noeuds en conflit.
+	 */
 	private LinkedList<Integer> noeudsConflitList;
+	/**
+	 * Nombre d'arêtes en conflit.
+	 */
 	private int nombreConflitsAretes;
+	/**
+	 * Classes de couleur.
+	 */
 	private HashSet<Integer>[] colorClasses;
 	
-	// F[Noeuds][Couleurs] inspire de l'algo Tabucol. Permet de calculer rapidement le DelatE d'une mutation
-	// F[v][c] = nombre de voisins de v ayant pour couleur c.
-	// Propriete: DelatE = F[v][cSuiv] - F[v][cPrec]
+
+	/**
+	 * F[Noeuds][Couleurs] inspire de l'algo Tabucol. Permet de calculer rapidement la différence d'énergie(deltaE) d'une mutation.
+	 * F[v][c] = nombre de voisins de v ayant pour couleur c.
+	 * Propriété: DeltaE = F[v][couleurSuivante] - F[v][couleurPrécédente]
+	 */
 	int[][] F; 
 	
-	// Sauvegarde de la derniere modification effectuee
+	
+	/**
+	 * Sauvegarde de la dernière modification effectuée.
+	 */
 	public Modification derniereModif;
 	
 	public GrapheColorie(EnergiePotentielle Ep, int k, Graphe graphe, int seed) {
@@ -51,9 +84,9 @@ public class GrapheColorie extends Etat{
 		this.seed = seed;
 		this.gen = new HighQualityRandom(seed);
 		
-		//this.noeudsConflit = new boolean[graphe.getNombreNoeuds()];
+
 		this.noeudsConflitList= new LinkedList<Integer>();
-		//this.conflitsConnexions = new boolean[graphe.getNombreNoeuds()][graphe.getNombreNoeuds()];
+
 		this.nombreConflitsAretes = 0;
 		
 		this.F = new int[graphe.getNombreNoeuds()][this.k];
@@ -69,18 +102,20 @@ public class GrapheColorie extends Etat{
 		this(Ep, k, graphe, new HighQualityRandom().nextInt()); 
 	}
 	
-	// Initialisation de l'etat: affectation de couleurs aleatoires
+	/**
+	 * Initialisation de l'état: affectation de couleurs aleatoires.
+	 */
 	public void initialiserSansSeed(){
 		
 		// Affectation des couleurs
-		// mettre à jour tous les conflits initiaux 
+		// Mettre à jour tous les conflits initiaux 
 		// et rajouter tous les noeuds à la liste des noeuds en conflit
 		for (int j = 0; j < this.graphe.getNombreNoeuds(); j++) {			
 			this.couleurs[j]=(int)(this.gen.nextDouble()*this.k);  // affectation couleurs aleatoires
 			this.colorClasses[this.couleurs[j]].add(j); //partie qui initialise les classes couleurs
 		}
 		
-		//calcul du nombre initial de conflits
+		//Calcul du nombre initial de conflits
 		int conflits = 0;
 		for (int noeudActuel = 0; noeudActuel < this.graphe.getNombreNoeuds(); noeudActuel++) {
 			for (int noeudAdjacent : graphe.connexions[noeudActuel]){
@@ -98,24 +133,33 @@ public class GrapheColorie extends Etat{
 		this.nombreConflitsAretes = (conflits/2); // chaque conflit est compte deux fois
 	}
 	
+	/**
+	 * Réinitialisation. Le seed est changé à la valeur précédente plus un.
+	 */
 	public void initialiser(){
 		this.initialiserSansSeed();
 		this.setSeed(this.getSeed() + 1);
 		this.gen = new HighQualityRandom(this.getSeed());
 	}
 	
+	/**
+	 * Mise à jour des classes de couleurs et de F à appeller à chaque fois qu'un noeud change de couleur.
+	 * Les changements sont locaux, centrés sur le noeud en question.
+	 * @param noeud
+	 * @param prevColor
+	 */
 	public void updateLocal(int noeud, int prevColor){
 		
-		// met à jour l'appartenance du noeud en question par rapport aux classes de couleur
+		// Met à jour l'appartenance du noeud en question par rapport aux classes de couleur
 		this.colorClasses[prevColor].remove(noeud);
 		this.colorClasses[this.couleurs[noeud]].add(noeud);
 		
 		for (int j : graphe.connexions[noeud]){
-			// mise a jour F
+			// Mise a jour de F
 			this.F[j][this.couleurs[noeud]] ++;
 			this.F[j][prevColor] --;
 			
-			// mise a jour conflits
+			// Mise a jour des conflits
 			if (this.couleurs[j] == prevColor){
 				//this.conflitsConnexions[noeud][j] = false;
 				//this.conflitsConnexions[j][noeud] = false;
@@ -123,7 +167,6 @@ public class GrapheColorie extends Etat{
 				if(!enConflit(j)) {
 					//this.noeudsConflit[j] = false;
 					this.noeudsConflitList.removeFirstOccurrence(j);
-					//System.out.println("removed");
 				}
 			}
 			else if (this.couleurs[j] == this.couleurs[noeud]){
@@ -132,16 +175,19 @@ public class GrapheColorie extends Etat{
 				this.nombreConflitsAretes ++;
 				//this.noeudsConflit[j] = true;
 				if (! this.noeudsConflitList.contains(j)) this.noeudsConflitList.add(j);
-				//System.out.println("added");
 			}
 		}
 		if (!enConflit(noeud)){
 			//this.noeudsConflit[noeud] = false;
 			this.noeudsConflitList.removeFirstOccurrence(noeud);
-			//System.out.println("removed");
 		}
 	}
 	
+	/**
+	 * Vérifie si le noeud est en conflit ou pas.
+	 * @param noeud
+	 * @return True si le noeud est en conflit, false sinon.
+	 */
 	public boolean enConflit(int noeud){
 		
 		boolean res = false;
@@ -155,6 +201,12 @@ public class GrapheColorie extends Etat{
 		return res;
 	}
 	
+	/**
+	 * Donne le spin de l'arête entre deux noeuds.
+	 * @param noeud
+	 * @param noeud2
+	 * @return 1 si les deux noeuds n'ont pas la même couleur, -1 sinon.
+	 */
 	public int spinConflit(int noeud, int noeud2){
 		
 		if (couleurs[noeud] == couleurs[noeud2]){
@@ -163,7 +215,10 @@ public class GrapheColorie extends Etat{
 		return 1;
 	}
 
-	// Sauvegarde du coloriage actuel dans une variable
+
+	/**
+	 * Sauvegarde du coloriage actuel dans couleurs.
+	 */
 	public void sauvegarderSolution(){
 	
 		//Affectation des couleurs
@@ -174,7 +229,10 @@ public class GrapheColorie extends Etat{
 		
 	}
 	
-	// retourne le nombre de noeuds en conflit
+	/**
+	 * 
+	 * @return Nombre de noeuds en conflit.
+	 */
 	public int nombreNoeudsEnConflit() {
 		return this.noeudsConflitList.size();
 	}
