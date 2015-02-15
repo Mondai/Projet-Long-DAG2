@@ -7,11 +7,16 @@ import solver.commun.Etat;
 import solver.commun.MutationElementaire;
 import solver.commun.Probleme;
 
-
+/**
+ * Décrit l'énergie cinétique pour le problème de coloriage de graphes.
+ *
+ */
 public class ConflitsCinetiques extends EnergieCinetique {
 
+	/**
+	 * Calcule l'énergie cinétique totale de la particule quantique.
+	 */
 	public double calculer(Probleme probleme) {
-		// implémentation à bien tester!!
 		
 		GrapheColorieParticule coloriageParticule = (GrapheColorieParticule)	probleme;
 		int E = 0;
@@ -83,7 +88,12 @@ public class ConflitsCinetiques extends EnergieCinetique {
 
 	}
 
-	@Override
+	/**
+	 * Calcule la différence d'énergie cinétique d'un état avec son état suivant et son état précédent, 
+	 * lorsqu'il subit la mutation donnée.
+	 * <p>
+	 * Utilise les classes de couleur du noeud changé, celle de la couleur précédente et celle de la nouvelle.
+	 */
 	public double calculerDeltaE(Etat etat, Etat prev, Etat next, MutationElementaire mutation) {
 		
 		MutationElementaireNoeud m = (MutationElementaireNoeud) mutation;
@@ -110,6 +120,14 @@ public class ConflitsCinetiques extends EnergieCinetique {
 		return deltaE;
 	}
 	
+	/**
+	 * Calcule une borne supérieure pour la différence d'énergie cinétique liée à la mutation donnée en temps constant.
+	 * <p>
+	 * Cette méthode est utilisée pour accélérer le recuit quantique, puisque si la borne supérieure de 
+	 * la différence d'énergie cinétique n'est pas assez pour que la différence d'énergie totale soit négative,
+	 * alors il y a aucune chance que la différence d'énergie cinétique rendre celle ci négative.
+	 * Le calcul est en temps constant car la valeur retournée est 4*(|Va|+|Vb|-1).
+	 */
 	public double calculerDeltaEUB(Etat etat, Etat prev, Etat next, MutationElementaire mutation) {
 		
 		MutationElementaireNoeud m = (MutationElementaireNoeud) mutation;

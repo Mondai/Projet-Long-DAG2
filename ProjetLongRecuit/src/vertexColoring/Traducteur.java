@@ -4,9 +4,20 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.LinkedList;
 
-
+/**
+ * Permet de traduire des fichiers .col en instances de graphe.
+ * Implémente une fonction statique pour cela.
+ *
+ */
 public class Traducteur {
 	
+	/**
+	 * Traduit un fichier(.col) en un graphe.
+	 * @param lien
+	 * Lien faisant référence au fichier texte dans le projet java.
+	 * @return Le graphe décrit par le fichier texte envoyé.
+	 * @throws IOException
+	 */
 	public static Graphe traduire(String lien) throws IOException {
 
 		int nbNoeuds = 0;
@@ -16,11 +27,11 @@ public class Traducteur {
 		String line = null;
 		String[] temp = null;
 		
-		// saute les lignes commenÃ§ant par un "c"
+		// saute les lignes commencant par un "c"
 		while ((line = reader.readLine()) != null && line.startsWith("c")) {
 		}
 		
-		// lignes commenÃ§ant par "p": p edge nbNoeuds nbArrÃªtes 
+		// lignes commencant par "p": p edge nbNoeuds nbAretes 
 		if (line.startsWith("p")) {
 			nbNoeuds = Integer.parseInt(line.split("\\s")[2]);
 			connexions = new LinkedList[nbNoeuds];
@@ -29,9 +40,9 @@ public class Traducteur {
 		for (int i = 0; i < nbNoeuds; i++) {
 			connexions[i] = new LinkedList<Integer>();
 		}
-		// lignes commenÃ§ant par "e": e noeud1 noeud2
-		// dÃ©calage des indices (1er indice 1 devient 0)
-		// chaque arrÃªte est prÃ©sente une fois dans les donnÃ©es. Et deux fois dans notre tableau.
+		// lignes commencant par "e": e noeud1 noeud2
+		// decalage des indices (1er indice 1 devient 0)
+		// chaque arete est presente une fois dans les donnees. Et deux fois dans notre tableau.
 		while ((line = reader.readLine()) != null) {
 			temp = line.split("\\s");
 			connexions[Integer.parseInt(temp[1]) - 1].add(Integer.parseInt(temp[2]) - 1);
