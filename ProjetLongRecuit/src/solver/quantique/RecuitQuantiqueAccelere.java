@@ -124,7 +124,7 @@ public class RecuitQuantiqueAccelere extends RecuitQuantique{
 					}
 					else {
 						if (deltaE < 0) proba = 1;
-						else proba = exp(-deltaE / (this.K.k * this.temperature));
+						else proba = Math.exp(-deltaE / (this.K.k * this.temperature));
 						
 						if (proba >= probleme.gen.nextDouble()) {	
 							mutationsAccepteesUB++;
@@ -140,7 +140,7 @@ public class RecuitQuantiqueAccelere extends RecuitQuantique{
 								
 							}
 							else{
-								proba = exp(-deltaE / (this.K.k * this.temperature));
+								proba = Math.exp(-deltaE / (this.K.k * this.temperature));
 							
 								if (proba >= probleme.gen.nextDouble()) {
 									mutationsAcceptees++;
