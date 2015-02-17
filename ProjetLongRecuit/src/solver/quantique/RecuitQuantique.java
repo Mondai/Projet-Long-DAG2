@@ -12,35 +12,97 @@ import solver.commun.Probleme;
 import solver.parametres.ConstanteK;
 import solver.parametres.Fonction;
 
-
+/**
+ * Classe implémentant le Recuit Quantique, qui prend en paramètres un Gamma et un K modulables ainsi qu'une température constante
+ * et un nombre d'itérations consécutives sur un état.
+ * <p>
+ * Le recuit quantique est une variante du recuit simulé. Au lieu d'avoir une seule instance du problème, on en a ici plusieurs
+ * qui peuvent intéragir entre elles.
+ * On va parler d'une particule, qui disposera de plusieurs états. Ces états influenceront chacun deux autres états dans une chaîne
+ * liée invariante. On modifiera les états dans un ordre aléatoire, chaque état subiera le même nombre d'essais de mutations.
+ * 
+ * @see RecuitSimule, Particule, Etat
+ */
 public class RecuitQuantique implements IRecuit { 				
-																		// creer vos propres Temperature, ConstanteK et trucs pour les graphes
+
+	/**
+	 * Fonction Gamma modulable. Représente l'effet tunnel.
+	 * @see Fonction
+	 */
 	public Fonction Gamma;
+	/**
+	 * Constante k modulable.
+	 * @see Constante
+	 */
 	public ConstanteK K;
-	public double meilleureEnergie = Double.MAX_VALUE;									// en soit, nos energies pourraient etre des Int, mais bon 
+	/**
+	 * Meilleure énergie(potentielle + cinétique) atteinte par le recuit simulé.
+	 */
+	public double meilleureEnergie = Double.MAX_VALUE;
+	/**
+	 * Température du recuit intervenant dans les calculs de probabilité, constante dans le recuit quantique.
+	 */
 	public double temperature;
 	
-	public int nbMaxIteration; 							// nombre maximale d'iteration si la solution n'est pas trouvee, redondance avec t.nbIteration
+	/**
+	 * Nombre maximal d'itérations si la solution n'est pas trouvée, en redondance avec T.nbIteration
+	 */
+	public int nbMaxIteration;
+	/**
+	 * Nombre d'itérations consécutives sur un seul état.
+	 */
 	public int palier;
-	// abstract void init(); 								// initialisation // mais de quoi ?
 
-	public RecuitQuantique(Fonction Gamma, ConstanteK K, int palier, double temperature) {
-		this.Gamma=Gamma;												// contructeur : on lui donne la facon de calculer l'energie, K et tout le blabla
-		this.K=K;												// en creant une classe dedie et reutilisable qui extends temperature
-		this.nbMaxIteration=this.Gamma.nbIteration;						// ainsi on combine le tout facilement
-		this.palier = palier;		
-		this.temperature = temperature;						//en quantique, la température est constante et le Gamma est variable, d'où le fait que Gamma soit une "température"
+
+	/**
+	 * Réinitialise Gamma et K au début de lancer().
+	 */
+	protected void init(){
+		this.Gamma.init();
+		this.K.init();
+		meilleureEnergie = Double.MAX_VALUE;
 	}
 
+	/**
+	 * On envoie les paramètres modulables.
+	 * @param Gamma
+	 * Fonction Gamma effet tunnel créée au préalable.
+	 * @param K
+	 * Constante k créée au préalable.
+	 * @param palier
+	 * Nombre d'itérations consécutives sur un seul état.
+	 * @param temperature
+	 * Température constante du recuit quantique.
+	 */
+	public RecuitQuantique(Fonction Gamma, ConstanteK K, int palier, double temperature) {
+		this.Gamma=Gamma;
+		this.K=K;
+		this.nbMaxIteration=this.Gamma.nbIteration;
+		this.palier = palier;		
+		this.temperature = temperature;
+	}
+
+
+	/**
+	 * Effectue le recuit quantique sur le problème.
+	 * Le recuit quantique va préparer les variables, puis circuler aléatoirement sur une chaîne liée invariante connectant les 
+	 * divers états du problèmes.
+	 * Ensuite il va penser à une mutations possible à l'état. Si elle est positive(diminue l'énergie potentielle) 
+	 * alors on va l'effectuer, sinon on va l'effectuer avec une probabilité dépendante de la température, de la
+	 * différence d'énergie potentielle de la mutation et de k.
+	 * On réitère le processus un certain nombre de fois puis on change d'état.
+	 * On réitère le tout jusqu'à avoir trouvé une réponse voulue ou un nombre d'itération maximale.
+	 * <p>
+	 * Pour ce qui est de l'utilisation de ce recuit, il faut créer une Fonction Gamma, une Constante k et un Problème 
+	 * au préalable. On initialise le recuit avec les deux premiers ainsi qu'une température et un palier constant,
+	 * et on lance ensuite le recuit en lui envoyant le problème.
+	 * A la fin de lancer, on peut obtenir les résultats sur la variable problème modifiée.
+	 * @param problem
+	 * Le problème sur lequel on veut effectuer le recuit quantique.
+	 */
 	public void lancer(Probleme probleme) {
 
-		// TODO methode init()
-		// init();
-		
-		/*toujours a implementer :
-		 * (peut-être changer les classes Temperature à un nom plus neutre)
-		 * Enlever les variables de spin???		
-		*/
+		this.init();
 		
 		int mutationsTentees = 0;
 		int mutationsAcceptees = 0;
@@ -70,15 +132,10 @@ public class RecuitQuantique implements IRecuit {
 
 			Collections.shuffle(indiceEtats, probleme.gen);	// melanger l'ordre de parcours des indices
 			double Jr = -this.temperature/2*Math.log(Math.tanh(this.Gamma.t/nombreRepliques/this.temperature));	// calcul de Jr pour ce palier
-			//Jr = 0;
-			//System.out.println("Energie cinétique : " + Jr); //TEST
 			
-		//	for (int i = 0; i < nombreRepliques; i++){
 			for (Integer p : indiceEtats){	
 				
-				etat = probleme.etats[p];
-				
-				//System.out.println("Debut " + p + " : etat "+etat.toString());		//TEST	
+				etat = probleme.etats[p];	
 				
 				if(p == 0){
 					previous = probleme.etats[nombreRepliques-1];
@@ -95,11 +152,6 @@ public class RecuitQuantique implements IRecuit {
 				}
 				
 				for (int j = 0; j < this.palier; j++){
-					/*System.out.print("Ep = [" + probleme.etats[0].Ep.calculer(probleme.etats[0]));
-					for(int w = 1 ; w < nombreRepliques ; w++){
-						System.out.print(","+probleme.etats[w].Ep.calculer(probleme.etats[w]));
-					}
-					System.out.println("]");*/
 					
 					MutationElementaire mutation = probleme.getMutationElementaire(etat);	// trouver une mutation possible
 					mutationsTentees++; //permet d'avoir une référence indépendante pour les améliorations de l'algorithme, mais aussi sur son temps
@@ -115,21 +167,11 @@ public class RecuitQuantique implements IRecuit {
 								
 					if( deltaE <= 0 || deltaEp <= 0){
 						
-						// System.out.println("acceptee"); //TEST
 						mutationsAcceptees++;
 						probleme.modifElem(etat, mutation);				// faire la mutation
 						double EpActuelle = etat.Ep.calculer(etat);		// energie potentielle temporelle
 						if( EpActuelle < this.meilleureEnergie ){		// mettre a jour la meilleur energie
 							this.meilleureEnergie = EpActuelle;
-							// TEST
-							/*
-							System.out.print("etat "+p+" : ME = "+this.meilleureEnergie+" , G = "+this.Gamma.t+" , Jr = "+Jr+" .  Ep = [");
-							System.out.print(probleme.etats[0].Ep.calculer(probleme.etats[0]));
-							for(int w = 1 ; w < nombreRepliques ; w++){
-								System.out.print(","+probleme.etats[w].Ep.calculer(probleme.etats[w]));
-							}
-							System.out.println("]");*/
-							// TEST
 							if (this.meilleureEnergie == 0){	// fin du programme
 								System.out.println("Mutations tentées : " + mutationsTentees);
 								System.out.println("Mutations acceptées : " + mutationsAcceptees);
@@ -138,23 +180,12 @@ public class RecuitQuantique implements IRecuit {
 						}
 					} else {
 						proba = Math.exp(-deltaE / (this.K.k * this.temperature));	// calcul de la proba
-						//System.out.println("Proba : " + proba); //TEST
 						if (proba >= probleme.gen.nextDouble()) {	
 							mutationsAcceptees++;
 							probleme.modifElem(etat, mutation);  		// accepter la mutation 
 						}
 					}
 				}
-				// TESTTEST
-				/*
-				System.out.print("etat "+p+" : ME = "+this.meilleureEnergie+" , G = "+this.Gamma.t+ " , Jr = "+Jr +" .  Ep = [");
-				System.out.print(probleme.etats[0].Ep.calculer(probleme.etats[0]));
-				for(int w = 1 ; w < nombreRepliques ; w++){
-					System.out.print(","+probleme.etats[w].Ep.calculer(probleme.etats[w]));
-				}
-				System.out.println("]");*/
-				// TEST
-				//System.out.println("Fin " + i + " : etat "+etat.toString()); //TEST	
 				
 
 			}
@@ -164,5 +195,17 @@ public class RecuitQuantique implements IRecuit {
 		System.out.println("Mutations tentées : " + mutationsTentees);
 		System.out.println("Mutations acceptées : " + mutationsAcceptees);
 		return;
+	}
+	
+	double exp1(double x) {
+		  x = 1.0 + x / 256.0;
+		  x *= x; x *= x; x *= x; x *= x;
+		  x *= x; x *= x; x *= x; x *= x;
+		  return x;
+	}
+	
+	public static double exp(double val) {
+		final long tmp = (long) (1512775 * val + 1072632447);
+		return Double.longBitsToDouble(tmp << 32);
 	}
 }

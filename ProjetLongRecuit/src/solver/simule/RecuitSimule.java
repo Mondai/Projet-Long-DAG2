@@ -10,7 +10,7 @@ import solver.parametres.ConstanteK;
 import solver.parametres.Fonction;
 
 /**
- * Classe implémentant le Recuit Simulé, qui prend en paramètres une température et un k modulables.
+ * Classe implémentant le Recuit Simulé, qui prend en paramètres une température et un K modulables.
  * <p>
  * Le recuit est une variante de la descente par gradient.
  * La différence avec une variante stochastique normale est que la probabilité va changer au fur à mesure du temps,
@@ -28,7 +28,7 @@ public class RecuitSimule implements IRecuit {
 	 */
 	public ConstanteK K;
 	/**
-	 * Meilleure énergie atteinte par le recuit simulé.
+	 * Meilleure énergie potentielle(la plus basse possible) atteinte par le recuit simulé.
 	 */
 	public double meilleureEnergie;		
 	/**
@@ -57,7 +57,7 @@ public class RecuitSimule implements IRecuit {
 	}
 
 	/**
-	 * Effectue le recuit sur le problème.
+	 * Effectue le recuit simulé sur un état du problème(le premier état du problème).
 	 * Le recuit va penser à une mutations possible au problème. Si elle est positive(diminue l'énergie potentielle) 
 	 * alors on va l'effectuer, sinon on va l'effectuer avec une probabilité dépendante de la température, de la
 	 * différence d'énergie potentielle de la mutation et de k.
@@ -70,10 +70,30 @@ public class RecuitSimule implements IRecuit {
 	 * Le problème sur lequel on veut effectuer le recuit.
 	 */
 	public void lancer(Probleme probleme) {
+		this.lancer(probleme,0);
+	}
+	
+	/**
+	 * Effectue le recuit simulé sur un état du problème.
+	 * Le recuit va penser à une mutations possible pour l'état en question. Si elle est positive(diminue l'énergie potentielle) 
+	 * alors on va l'effectuer, sinon on va l'effectuer avec une probabilité dépendante de la température, de la
+	 * différence d'énergie potentielle de la mutation et de k.
+	 * On réitère le processus jusqu'à avoir trouvé une réponse voulue ou un nombre d'itération maximale.
+	 * <p>
+	 * Pour ce qui est de l'utilisation de ce recuit, il faut créer une Fonction température, une Constante k et un Problème 
+	 * au préalable. On initialise le recuit avec les deux premiers et on lance ensuite le recuit en lui envoyant le problème.
+	 * A la fin de lancer, on peut obtenir les résultats sur la variable problème modifiée.
+	 * @param problem
+	 * Le problème sur lequel on veut effectuer le recuit.
+	 * @param i
+	 * L'état du problème que l'on veut améliorer par recuit simulé. Si cet état n'existe pas, on effectue le recuit sur le 
+	 * premier état du problème.
+	 */
+	public void lancer(Probleme probleme, int i) {
 
 		// init();
-		
-		Etat etat = probleme.etats[0];
+		if (i >= probleme.etats.length) i = 0;
+		Etat etat = probleme.etats[i];
 		this.energiePrec = probleme.calculerEnergie() ;
 		this.meilleureEnergie = this.energiePrec ;
 		double proba = 1;

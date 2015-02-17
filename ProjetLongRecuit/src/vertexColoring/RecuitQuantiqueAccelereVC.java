@@ -10,36 +10,31 @@ import solver.commun.MutationElementaire;
 import solver.commun.Probleme;
 import solver.parametres.ConstanteK;
 import solver.parametres.Fonction;
+import solver.quantique.RecuitQuantiqueAccelere;
 
-
-public class RecuitQuantiqueAccelereVC  { 				
-																		// creer vos propres Temperature, ConstanteK et trucs pour les graphes
-	public Fonction Gamma;
-	public ConstanteK K;
-	public double meilleureEnergie = Double.MAX_VALUE;									// en soit, nos energies pourraient etre des Int, mais bon 
-	public double temperature;
-	
-	public int nbMaxIteration; 							// nombre maximale d'iteration si la solution n'est pas trouvee, redondance avec t.nbIteration
-	public int palier;
-	// abstract void init(); 								// initialisation // mais de quoi ?
+/**
+ * {@inheritDoc}
+ * <p>
+ * On utilise ici de plus certaines propriétés propres au coloriage de graphe, pour créer des tableaux pour garder
+ * les exponentielles calculées en mémoire. Cependant, après amélioration du calcul de l'exponentiel, l'amélioration donnée par cette classe
+ * est devenu moindre si ce n'est négatif.
+ */
+public class RecuitQuantiqueAccelereVC extends RecuitQuantiqueAccelere { 				
 
 	public RecuitQuantiqueAccelereVC(Fonction Gamma, ConstanteK K, int palier, double temperature) {
-		this.Gamma=Gamma;												// contructeur : on lui donne la facon de calculer l'energie, K et tout le blabla
-		this.K=K;												// en creant une classe dedie et reutilisable qui extends temperature
-		this.nbMaxIteration=this.Gamma.nbIteration;						// ainsi on combine le tout facilement
-		this.palier = palier;		
-		this.temperature = temperature;						//en quantique, la température est constante et le Gamma est variable, d'où le fait que Gamma soit une "température"
+		super(Gamma, K, palier, temperature);
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 * <p>
+	 * De plus, ici on garde les exponentielles en mémoire dans des tableaux à taille prédéterminée théoriquement.
+	 * Il y a un tableau pour les énergies potentielles crée au début du recuit, et un tableau pour les énergies cinétiques
+	 * mis à jour à chaque fois que JGamma change.
+	 */
+	public void lancer(Probleme probleme) {
 
-	public double lancer(Probleme probleme) {
-
-		// TODO methode init()
-		// init();
-		
-		/*toujours a implementer :
-		 * (peut-être changer les classes Temperature à un nom plus neutre)
-		 * Enlever les variables de spin???		
-		*/
+		this.init();
 		
 		double mutationsTentees = 0;
 		double mutationsAccepteesUB = 0;
@@ -139,7 +134,7 @@ public class RecuitQuantiqueAccelereVC  {
 								//System.out.println("Mutations tentées : " + mutationsTentees);
 								//System.out.println("Mutations acceptées UB : " + mutationsAccepteesUB);
 								//System.out.println("Mutations acceptées : " + mutationsAcceptees);
-								return mutationsTentees ;
+								return; 
 							}
 						}
 					}
@@ -171,7 +166,7 @@ public class RecuitQuantiqueAccelereVC  {
 										//System.out.println("Mutations tentées : " + mutationsTentees);
 										//System.out.println("Mutations acceptées UB : " + mutationsAccepteesUB);
 										//System.out.println("Mutations acceptées : " + mutationsAcceptees);
-										return mutationsTentees ;
+										return;
 									}
 								}
 							}
@@ -198,19 +193,7 @@ public class RecuitQuantiqueAccelereVC  {
 		//System.out.println("Mutations tentées : " + mutationsTentees);
 		//System.out.println("Mutations acceptées UB : " + mutationsAccepteesUB);
 		//System.out.println("Mutations acceptées : " + mutationsAcceptees);
-		return mutationsTentees ;
-	}
-	
-	double exp1(double x) {
-		  x = 1.0 + x / 256.0;
-		  x *= x; x *= x; x *= x; x *= x;
-		  x *= x; x *= x; x *= x; x *= x;
-		  return x;
-	}
-	
-	public static double exp(double val) {
-		final long tmp = (long) (1512775 * val + 1072632447);
-		return Double.longBitsToDouble(tmp << 32);
+		return;
 	}
 }
 

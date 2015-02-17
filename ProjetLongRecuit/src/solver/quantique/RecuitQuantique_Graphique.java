@@ -1,8 +1,6 @@
 package solver.quantique;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 
 import solver.commun.Etat;
 import solver.commun.IRecuit;
@@ -11,7 +9,6 @@ import solver.commun.Probleme;
 import solver.graphique.ListEnergie;
 import solver.parametres.ConstanteK;
 import solver.parametres.Fonction;
-import vertexColoring.GrapheColorie;
 
 public class RecuitQuantique_Graphique implements IRecuit { 
 
