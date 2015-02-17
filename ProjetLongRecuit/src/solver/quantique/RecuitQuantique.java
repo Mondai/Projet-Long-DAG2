@@ -13,7 +13,7 @@ import solver.parametres.ConstanteK;
 import solver.parametres.Fonction;
 
 
-public class RecuitQuantiqueParametrable implements IRecuit { 				
+public class RecuitQuantique implements IRecuit { 				
 																		// creer vos propres Temperature, ConstanteK et trucs pour les graphes
 	public Fonction Gamma;
 	public ConstanteK K;
@@ -24,7 +24,7 @@ public class RecuitQuantiqueParametrable implements IRecuit {
 	public int palier;
 	// abstract void init(); 								// initialisation // mais de quoi ?
 
-	public RecuitQuantiqueParametrable(Fonction Gamma, ConstanteK K, int palier, double temperature) {
+	public RecuitQuantique(Fonction Gamma, ConstanteK K, int palier, double temperature) {
 		this.Gamma=Gamma;												// contructeur : on lui donne la facon de calculer l'energie, K et tout le blabla
 		this.K=K;												// en creant une classe dedie et reutilisable qui extends temperature
 		this.nbMaxIteration=this.Gamma.nbIteration;						// ainsi on combine le tout facilement

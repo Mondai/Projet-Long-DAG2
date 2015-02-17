@@ -16,7 +16,7 @@ import solver.parametres.Fonction;
  * La différence avec une variante stochastique normale est que la probabilité va changer au fur à mesure du temps,
  * forte au début et faible à la fin, en fonction de la température.
  */
-public class RecuitSimuleParametrable implements IRecuit { 				
+public class RecuitSimule implements IRecuit { 				
 	/**
 	 * Fonction température modulable.
 	 * @see Fonction
@@ -50,7 +50,7 @@ public class RecuitSimuleParametrable implements IRecuit {
 	 * @param K
 	 * Constante k créée au préalable.
 	 */
-	public RecuitSimuleParametrable(Fonction T, ConstanteK K) {
+	public RecuitSimule(Fonction T, ConstanteK K) {
 		this.T=T;
 		this.K=K;
 		this.nbMaxIteration=this.T.nbIteration;

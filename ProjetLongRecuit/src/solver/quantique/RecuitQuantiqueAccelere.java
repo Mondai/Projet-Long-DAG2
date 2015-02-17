@@ -13,7 +13,7 @@ import solver.parametres.ConstanteK;
 import solver.parametres.Fonction;
 
 
-public class RecuitQuantiqueParametrableAccelere implements IRecuit{ 				
+public class RecuitQuantiqueAccelere implements IRecuit{ 				
 																		// creer vos propres Temperature, ConstanteK et trucs pour les graphes
 	public Fonction Gamma;
 	public ConstanteK K;
@@ -30,7 +30,7 @@ public class RecuitQuantiqueParametrableAccelere implements IRecuit{
 		meilleureEnergie = Double.MAX_VALUE;
 	}
 
-	public RecuitQuantiqueParametrableAccelere(Fonction Gamma, ConstanteK K, int palier, double temperature) {
+	public RecuitQuantiqueAccelere(Fonction Gamma, ConstanteK K, int palier, double temperature) {
 		this.Gamma=Gamma;												// contructeur : on lui donne la facon de calculer l'energie, K et tout le blabla
 		this.K=K;												// en creant une classe dedie et reutilisable qui extends temperature
 		this.nbMaxIteration=this.Gamma.nbIteration;						// ainsi on combine le tout facilement
