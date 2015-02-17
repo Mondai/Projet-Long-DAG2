@@ -9,27 +9,68 @@ import solver.commun.Probleme;
 import solver.parametres.ConstanteK;
 import solver.parametres.Fonction;
 
+/**
+ * Classe implémentant le Recuit Simulé, qui prend en paramètres une température et un k modulables.
+ * <p>
+ * Le recuit est une variante de la descente par gradient.
+ * La différence avec une variante stochastique normale est que la probabilité va changer au fur à mesure du temps,
+ * forte au début et faible à la fin, en fonction de la température.
+ */
 public class RecuitSimuleParametrable implements IRecuit { 				
-																		// creer vos propres Temperature, ConstanteK et trucs pour les graphes
+	/**
+	 * Fonction température modulable.
+	 * @see Fonction
+	 */
 	public Fonction T;
+	/**
+	 * Constante k modulable.
+	 * @see Constante
+	 */
 	public ConstanteK K;
-	public double meilleureEnergie;									// en soit, nos energies pourraient etre des Int, mais bon 
-	public double energiePrec;										// probleme nous renvoie des doubles
+	/**
+	 * Meilleure énergie atteinte par le recuit simulé.
+	 */
+	public double meilleureEnergie;		
+	/**
+	 * Energie précédente gardée en mémoire par le recuit.
+	 */
+	public double energiePrec;
 
+	/**
+	 * Nombre maximal d'itérations si la solution n'est pas trouvée, en redondance avec T.nbIteration
+	 */
+	public int nbMaxIteration; 							
 	
-	public int nbMaxIteration; 							// nombre maximale d'iteration si la solution n'est pas trouvee, redondance avec t.nbIteration
+	// abstract void init();
 
-	// abstract void init(); 								// initialisation // mais de quoi ?
-
+	/**
+	 * On envoie les paramètres modulables.
+	 * @param T
+	 * Fonction température créée au préalable.
+	 * @param K
+	 * Constante k créée au préalable.
+	 */
 	public RecuitSimuleParametrable(Fonction T, ConstanteK K) {
-		this.T=T;												// contructeur : on lui donne la facon de calculer l'energie, K et tout le blabla
-		this.K=K;												// en creant une classe dedie et reutilisable qui extends temperature
-		this.nbMaxIteration=this.T.nbIteration;						// ainsi on combine le tout facilement
+		this.T=T;
+		this.K=K;
+		this.nbMaxIteration=this.T.nbIteration;
 	}
 
+	/**
+	 * Effectue le recuit sur le problème.
+	 * Le recuit va penser à une mutations possible au problème. Si elle est positive(diminue l'énergie potentielle) 
+	 * alors on va l'effectuer, sinon on va l'effectuer avec une probabilité dépendante de la température, de la
+	 * différence d'énergie potentielle de la mutation et de k.
+	 * On réitère le processus jusqu'à avoir trouvé une réponse voulue ou un nombre d'itération maximale.
+	 * <p>
+	 * Pour ce qui est de l'utilisation de ce recuit, il faut créer une Fonction température, une Constante k et un Problème 
+	 * au préalable. On initialise le recuit avec les deux premiers et on lance ensuite le recuit en lui envoyant le problème.
+	 * A la fin de lancer, on peut obtenir les résultats sur la variable problème modifiée.
+	 * @param problem
+	 * Le problème sur lequel on veut effectuer le recuit.
+	 */
 	public void lancer(Probleme probleme) {
 
-		// TODO methode init()
 		// init();
 		
 		Etat etat = probleme.etats[0];
