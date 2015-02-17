@@ -5,7 +5,7 @@ import java.io.IOException;
 import solver.commun.Etat;
 import solver.parametres.ConstanteKConstant;
 import solver.parametres.FonctionLineaire;
-import solver.quantique.RecuitQuantiqueParametrableAccelere;
+import solver.quantique.RecuitQuantiqueAccelere;
 import vertexColoring.Conflits;
 import vertexColoring.ConflitsCinetiques;
 import vertexColoring.Graphe;
@@ -53,7 +53,7 @@ public class Test_Quantique_Param1 {
 				FonctionLineaire Tparam = new FonctionLineaire(G0,0,maxSteps);
 				ConstanteKConstant Kparam = new ConstanteKConstant(k);
 				//RecuitQuantiqueParametrable recuit = new RecuitQuantiqueParametrable(Tparam,Kparam, M, T);
-				RecuitQuantiqueParametrableAccelere recuit = new RecuitQuantiqueParametrableAccelere(Tparam,Kparam, M, T);
+				RecuitQuantiqueAccelere recuit = new RecuitQuantiqueAccelere(Tparam,Kparam, M, T);
 
 				/*
 				double iter = recuit.lancer(coloriage);
