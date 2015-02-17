@@ -11,7 +11,11 @@ package tests;
   		exp-> 0.9999947900417283		 <- proba de rejet <0.001%
   		exp1-> 0.9999947900416788		 <- idem
   		exp2-> 0.9710040092468262		 <- proba de rejet= 3%
-  		
+  	
+  	*	exp( -1000 ) :
+  		exp-> 0.0						 <- proba de rejet = 100%
+  		exp1-> 4.104312118349824E118	 <- proba de rejet =   0%  
+  		exp2-> -1.6562896245449562E182	 <- proba de rejet = 100%   (mais bizarre quand meme)
   	
  */
 
@@ -43,10 +47,10 @@ public class Test_exp {
 		
 		System.out.println("teste grands nombres");
 		for(int i = 1; i < 1000000000; i*=10){
-			System.out.println("exp( "+i+" ) :");
-			System.out.println("  exp-> "+Math.exp(i));
-			System.out.println("  exp1-> "+exp1(i));
-			System.out.println("  exp2-> "+exp2(i));
+			System.out.println("exp( "+-i+" ) :");
+			System.out.println("  exp-> "+Math.exp(-i));
+			System.out.println("  exp1-> "+exp1(-i));
+			System.out.println("  exp2-> "+exp2(-i));
 		}
 		
 		long startTime = System.nanoTime();
