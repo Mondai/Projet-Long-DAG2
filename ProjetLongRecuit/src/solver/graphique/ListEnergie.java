@@ -3,6 +3,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+/**
+ * Une instance de la classe ListEnergie stocke des
+ * valeurs avec un certain echantillonage
+ * Elle est utilisée pour observer l'évolution de l'énergie en fonction du nombre d'itérations
+ * Elle comprend deux listes, la premiere liste qui echantillone, et la deuxième moyene.
+ * 
+ * @author DAG2
+ */
+
 public class ListEnergie extends IListEnergie {
 
 	ArrayList<Double> list;
@@ -21,6 +30,11 @@ public class ListEnergie extends IListEnergie {
 		this.fenetreK = fenetreK;
 	}	
 	
+	
+	/**
+	 * Ajoute dans la liste si z=echantillonage, et z réinitialisé
+	 * sinon on incrémente z
+	 */
 	public void add(double energie) {
 		if (this.z == this.echantillonage) {
 			this.list.add(energie);
@@ -32,14 +46,27 @@ public class ListEnergie extends IListEnergie {
 		}
 	}
 	
+	/**
+	 * Stockage des n dernières valeurs, afin de moyenner
+	 */
+	
 	public void addTotal(double energieCourante) {
 		this.listTotale.add(energieCourante);
 		if (this.listTotale.size() > (this.fenetreK + 1) ) this.listTotale.remove(0);
 	}
 	
+	/**
+	 * getter de la liste
+	 */
+	
 	public List<Double> getlistEnergie() {
 		return this.list;
 	}
+	
+	/**
+	 * getter de la liste des n derniers
+	 */
+	
 	
 	public List<Double> getlistEnergieTotale() {
 		return this.listTotale;
