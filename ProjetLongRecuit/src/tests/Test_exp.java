@@ -29,6 +29,11 @@ public class Test_exp {
 		return Double.longBitsToDouble(tmp << 32);
 	}
 	
+	public static double expf(double val) {
+		if (val < -1) return exp2(val);
+		else return exp1(val);
+	}
+	
 	public static void main(String[] args) {
 		
 		double[] tab = {-1000,-100,-10,-1,-0.1,-0.01,-0.001,-0.0001,-0.0001, 0.00001, 0.0001, 0.001, 0.01, 0.1, 1, 10, 100};
@@ -39,6 +44,7 @@ public class Test_exp {
 			System.out.println("  exp-> "+Math.exp(val));
 			System.out.println("  exp1-> "+exp1(val));
 			System.out.println("  exp2-> "+exp2(val));
+			System.out.println("  expf-> "+expf(val));
 		}
 		
 		System.out.println("teste grands nombres");
@@ -47,6 +53,7 @@ public class Test_exp {
 			System.out.println("  exp-> "+Math.exp(i));
 			System.out.println("  exp1-> "+exp1(i));
 			System.out.println("  exp2-> "+exp2(i));
+			System.out.println("  expf-> "+expf(i));
 		}
 		
 		long startTime = System.nanoTime();
@@ -62,6 +69,13 @@ public class Test_exp {
 		}
 		endTime = System.nanoTime();
 		System.out.println("exp2 10^9 duree = "+(endTime-startTime)/1000000000+" s");
+		
+		startTime = System.nanoTime();
+		for(int i = 0; i<1000000000; i++){
+			expf(-Math.random());
+		}
+		endTime = System.nanoTime();
+		System.out.println("expf 10^9 duree = "+(endTime-startTime)/1000000000+" s");
 
 	}
 
