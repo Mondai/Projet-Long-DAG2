@@ -6,7 +6,7 @@ package solver.commun;
 public interface IRecuit {
 	
 	/**
-	 * 
+	 * Effectue le recuit sur le problème.
 	 * @param problem
 	 * Le problème sur lequel on veut effectuer le recuit.
 	 */

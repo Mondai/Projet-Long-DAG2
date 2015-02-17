@@ -8,12 +8,23 @@ package solver.parametres;
  */
 public abstract  class Fonction {       
 
-	double Tdebut; 				// utile pour le constructeur
+	/**
+	 * Température de départ de la fonction
+	 */
+	double Tdebut;
+	/**
+	 * Température de fin de la fonction
+	 */
 	double Tfinal;
+	/**
+	 * Nombre d'itérations théoriques effectués(en vrai, peut être un peu différent)
+	 */
 	public int nbIteration ; 
 	
-	
-	public double t;  					// c'est la temperature actuelle
+	/**
+	 * Température actuelle de la fonction
+	 */
+	public double t;
 	
 	/**
 	 * Fonction qui change la temperature et indique si on est à la temperature finale.
@@ -38,7 +49,7 @@ public abstract  class Fonction {
 	 * @param tfinal Température de fin, gardée en mémoire.
 	 * @param nbIteration Le nombre d'itérations, gardé en mémoire.
 	 */
-	 public Fonction(double tdebut, double tfinal, int nbIteration) {   // c'est le constructeur
+	 public Fonction(double tdebut, double tfinal, int nbIteration) {
 		this.Tdebut = tdebut;
 		this.Tfinal = tfinal;
 		this.nbIteration = nbIteration;

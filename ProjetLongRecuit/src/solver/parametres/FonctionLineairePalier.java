@@ -19,6 +19,9 @@ public class FonctionLineairePalier extends Fonction {
 	 * Nombre d'itérations que l'on va faire avant de descendre de température.
 	 */
 	int palier;
+	/**
+	 * Nombre d'itérations faites sur le palier courant
+	 */
 	int compteurPalier;
 	
 	public void init(){
