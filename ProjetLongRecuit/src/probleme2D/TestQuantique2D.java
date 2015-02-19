@@ -25,7 +25,7 @@ public class TestQuantique2D {
 	public static void main(String[] args) {
 	
 		
-		String path = "src/images/Final2.jpg";
+		String path = "src/images/grey-gradient-background.jpg";
 		Image image = (new ImageIcon(path).getImage());
 		BufferedImage bimage = new BufferedImage(image.getWidth(null), image
 		        .getHeight(null), BufferedImage.TYPE_BYTE_GRAY);
@@ -68,11 +68,11 @@ public class TestQuantique2D {
 		 
 		 // Paramètres du recuit
 		double k = 1;
-		int M = 4;
-		double G0 = 0.000000001;
-		int P = 10;
-		double T = 35/P;
-		int maxSteps = (int) Math.pow(10,1);
+		int M = 10;
+		double G0 = 10;
+		int P = 20;
+		double T = 0.35/P;
+		int maxSteps = (int) Math.pow(10,3);
 		FonctionLineaire Tparam = new FonctionLineaire(G0,0,maxSteps);
 		ConstanteKConstant Kparam = new ConstanteKConstant(k);
 		RecuitQuantique recuit = new RecuitQuantique(Tparam,Kparam, M, T);

@@ -12,6 +12,9 @@ public class Mutation1Pixel implements IMutation{
 
 	
 	String direction;
+	static final int Diametre = 10;
+	static final int bordure = 50;
+	
 	
 	
 	@Override
@@ -35,17 +38,24 @@ public class Mutation1Pixel implements IMutation{
 		Position2D position2D = (Position2D) etat;
 		MutationElementairePixel m = (MutationElementairePixel) mutation;
 		
+		int largeur=position2D.relief.largeur;
+		int hauteur=position2D.relief.hauteur;
 		
 		int x=position2D.getX()+m.deltaX;
 		
-		int largeur=position2D.relief.largeur;
-		position2D.setX((((x % (largeur-10)) + largeur-10) % (largeur-10)));
+		x=Math.max(bordure, x);
+		x=Math.min(largeur-Diametre-bordure, x);
+		
+		
+		position2D.setX(x);
 		//System.out.println("largeur "+largeur);
 		int y=position2D.getY()+m.deltaY;
 		
+		y=Math.max(bordure, y);
+		y=Math.min(hauteur-Diametre-bordure, y);
 		
-		int hauteur=position2D.relief.hauteur;
-		position2D.setY((((y % (hauteur-10)) + hauteur-10) % (hauteur-10)));
+	
+		position2D.setY(y);
 		//System.out.println("hauteur "+hauteur);
 		
 		
