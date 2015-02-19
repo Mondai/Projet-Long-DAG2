@@ -21,13 +21,13 @@ public class Mutation1Pixel implements IMutation{
 		int random = randomizer.nextInt(4);
 		
 		if (random==0) {
-			return new MutationElementairePixel(-1,0);
+			return new MutationElementairePixel(-4,0);
 		} else if (random==1) {
-			return new MutationElementairePixel(0,1);
+			return new MutationElementairePixel(0,4);
 		} else if (random==2) {
-			return new MutationElementairePixel(1,0);
+			return new MutationElementairePixel(4,0);
 		} else  {
-			return new MutationElementairePixel(0,-1);
+			return new MutationElementairePixel(0,-4);
 		}
 	}
 	@Override
@@ -35,10 +35,32 @@ public class Mutation1Pixel implements IMutation{
 		Position2D position2D = (Position2D) etat;
 		MutationElementairePixel m = (MutationElementairePixel) mutation;
 		
-		position2D.setX(position2D.getX()+m.deltaX%position2D.relief.largeur);
-		position2D.setY(position2D.getY()+m.deltaY%position2D.relief.hauteur);
+		
+		int x=position2D.getX()+m.deltaX;
+		
+		int largeur=position2D.relief.largeur;
+		position2D.setX((((x % (largeur-10)) + largeur-10) % (largeur-10)));
+		//System.out.println("largeur "+largeur);
+		int y=position2D.getY()+m.deltaY;
 		
 		
+		int hauteur=position2D.relief.hauteur;
+		position2D.setY((((y % (hauteur-10)) + hauteur-10) % (hauteur-10)));
+		//System.out.println("hauteur "+hauteur);
+		
+		
+		
+		((Position2DParticule) probleme).ModificationGraphique(x, y, ((Position2D)etat).getNumero());
+		
+		//System.out.println(" x et y :"+position2D.getX()+ " "+position2D.getY());
+		((Position2DParticule) probleme).getFenetre().updateGraphics();
+		
+		try {
+			Thread.sleep(10);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 

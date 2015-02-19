@@ -1,6 +1,18 @@
 package probleme2D;
 
 
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBuffer;
+import java.awt.image.Raster;
+
+import javax.swing.ImageIcon;
+
+import GraphiqueProbleme2D.Fenetre;
+import GraphiqueProbleme2D.FenetreRepliques;
+import GraphiqueProbleme2D.Panneau;
+import GraphiqueProbleme2D.PanneauRepliques;
 import solver.parametres.ConstanteKConstant;
 import solver.parametres.FonctionLineaire;
 import solver.quantique.RecuitQuantique;
@@ -13,21 +25,54 @@ public class TestQuantique2D {
 	public static void main(String[] args) {
 	
 		
-		int[] v = { 1, 2, 3, 1, 2, 1, 5, 1, 2, 3, 4, 5,5,6,5,2,3,4,5,2,6,4,6,4,5,5,5,4,6,5,6,2,5,8,4,2,6,2,8,6,5,4,2,6,5,4,2,6,0,5,2,5,4,5,2,6,0,5,6,8,6,5,9,8,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-		int[][] u = {v,v,v,v,v,v,v,v,v,v,v};
+		String path = "src/images/Final2.jpg";
+		Image image = (new ImageIcon(path).getImage());
+		BufferedImage bimage = new BufferedImage(image.getWidth(null), image
+		        .getHeight(null), BufferedImage.TYPE_BYTE_GRAY);
 		
-		 Relief2D relief = new Relief2D(u[0].length,u.length,u);
-
+		Graphics g = bimage.getGraphics();  
+		g.drawImage(image, 0, 0, null);  
+		g.dispose();  
+		
+		
+		DataBuffer dataBuffer = bimage.getRaster().getDataBuffer();
+		
+		
+		Raster rast = bimage.getRaster();
+		int largeur =bimage.getWidth();
+    	int hauteur = bimage.getHeight();
+    	
+    	
+    	// Création de la matrice représentatrice
+		int[][] u = new int[hauteur][largeur];
+		
+		for (int i=0;i<hauteur;i++) {
+			for (int j=0;j<hauteur;j++) {
+				//u[i][j] = dataBuffer.getElem(i * largeur + j);
+				u[i][j] = rast.getSample(j,i,0);
+			}
+		}
+		
+		//System.out.println(u[283][140]);
+		//System.out.println(u[51][110]);
+		//System.out.println(u[256][310]);
+		//System.out.println(u[16][548]);
+		
+		
+		
+		
+		 Relief2D relief = new Relief2D(u.length,u[0].length,u);
+		 
 		 
 		
 		 
 		 // Paramètres du recuit
 		double k = 1;
 		int M = 4;
-		double G0 = 0.75;
+		double G0 = 0.000000001;
 		int P = 10;
-		double T = 0.35/P;
-		int maxSteps = (int) Math.pow(10,4);
+		double T = 35/P;
+		int maxSteps = (int) Math.pow(10,1);
 		FonctionLineaire Tparam = new FonctionLineaire(G0,0,maxSteps);
 		ConstanteKConstant Kparam = new ConstanteKConstant(k);
 		RecuitQuantique recuit = new RecuitQuantique(Tparam,Kparam, M, T);
@@ -37,10 +82,12 @@ public class TestQuantique2D {
 		Hauteur Ep=new Hauteur();
 		Mutation1Pixel mutation = new Mutation1Pixel();
 		
-		 Position2DParticule probleme= new Position2DParticule(Ep,Ec, P, relief,mutation);
-		 probleme.initialiser();
+		//initialisation avec image
+		Position2DParticule probleme= new Position2DParticule(Ep,Ec,P,relief,mutation,new PanneauRepliques(image));
+		probleme.initialiser();
 		
-		 
+		FenetreRepliques fenetre = new FenetreRepliques(path,((Position2DParticule)probleme).getPanneau());
+		((Position2DParticule) probleme).setFenetre(fenetre); // Attention la fenetre fois bien être mise
 		
 		long startTime = System.nanoTime();
 		recuit.lancer(probleme);
@@ -53,6 +100,10 @@ public class TestQuantique2D {
 		
 		for (int i=0;i<P;i++) {
 			System.out.println("Meilleure Energie du ième : "+((Position2D)probleme.etats[i]).getMeilleureEnergie());	
+			}
+		
+		for (int i=0;i<P;i++) {
+			System.out.println("Position du "+i+"eme : x:="+((Position2D)probleme.etats[i]).x+" y:="+((Position2D)probleme.etats[i]).y);	
 			}
 		
 		System.out.println("duree = "+(endTime-startTime)/1000000000+" s");
