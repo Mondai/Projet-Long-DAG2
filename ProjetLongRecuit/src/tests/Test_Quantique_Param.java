@@ -19,7 +19,7 @@ public class Test_Quantique_Param {
 
 		int[] seeds = {1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000, 1000000000};
 		
-		double[] T0s = {0.50};
+		double[] T0s = {0.30};
 		//double[] G0s = {0.52,0.54,0.55,0.48,0.65,0.68,0.70,0.72,0.74,0.75,0.76,0.78,0.80,0.82,0.85,0.90,0.95,1.00,0.60,0.55,0.50};
 		
 		Conflits Ep = new Conflits();
@@ -42,7 +42,7 @@ public class Test_Quantique_Param {
 				int nbCouleurs = 28;
 				double k = 1;
 				int M = 4 * nbNoeuds * nbCouleurs;
-				double G0 = 0.60; //0.75;
+				double G0 = 0.3; //0.75;
 				int P = 10;
 				//double T = 0.35/P;
 			 	double T = T0/P;

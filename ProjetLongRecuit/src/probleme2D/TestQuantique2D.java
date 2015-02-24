@@ -9,9 +9,7 @@ import java.awt.image.Raster;
 
 import javax.swing.ImageIcon;
 
-import GraphiqueProbleme2D.Fenetre;
 import GraphiqueProbleme2D.FenetreRepliques;
-import GraphiqueProbleme2D.Panneau;
 import GraphiqueProbleme2D.PanneauRepliques;
 import solver.parametres.ConstanteKConstant;
 import solver.parametres.FonctionLineaire;
