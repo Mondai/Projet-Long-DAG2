@@ -5,6 +5,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 // Test des fonctions approchees d'exponentiel
 
@@ -41,19 +44,27 @@ public class Test_exp {
 
 	public static void main(String[] args) throws IOException {
 
-		double[] tab = { 0.00001, 0.0001, 0.001, 0.01, 0.1, 1, 10, 100, 1000 };
+		double[] tab = {0, 0.00001, 0.0001, 0.001, 0.01, 0.1, 1, 10, 100, 1000 };
 
 		// transforme les elements de tab en negatif
 		for (int i = 0; i < tab.length; i++)
 			tab[i] = -tab[i];
 
 		int N = 1000;
-		double[] x = new double[tab.length * 9];
+		Double[] x = new Double[tab.length * 9];
 		for (int i = 0; i < tab.length; i++) {
 			for (int j = 0; j < 9; j++) {
 				x[i * 9 + j] = tab[i] * (j + 1);
 			}
 		}
+		
+		/*
+		// renverser l'ordre de x si besoin
+		List<Double> l = Arrays.asList(x);
+		Collections.reverse(l);
+		x = (Double[]) l.toArray();
+		*/
+		
 		double[] erreursExp1 = new double[x.length];
 		double[] erreursExp2 = new double[x.length];
 		double[] erreursExpf = new double[x.length];
@@ -97,8 +108,11 @@ public class Test_exp {
 
 		// calcul du temps
 		int iter = 100000;
-		// Math.exp
 		double[] temps0 = new double[x.length];
+		double[] temps1 = new double[x.length];
+		double[] temps2 = new double[x.length];
+		double[] tempsf = new double[x.length];
+		// Math.exp
 		for (int i = 0; i < x.length; i++) {
 			long startTime = System.nanoTime();
 			for (int j = 0; j < iter; j++) {
@@ -109,7 +123,6 @@ public class Test_exp {
 			temps0[i] = (endTime - startTime) / ((double) iter);
 		}
 		// exp1
-		double[] temps1 = new double[x.length];
 		for (int i = 0; i < x.length; i++) {
 			long startTime = System.nanoTime();
 			for (int j = 0; j < iter; j++) {
@@ -120,7 +133,6 @@ public class Test_exp {
 			temps1[i] = (endTime - startTime) / ((double) iter);
 		}
 		// exp2
-		double[] temps2 = new double[x.length];
 		for (int i = 0; i < x.length; i++) {
 			long startTime = System.nanoTime();
 			for (int j = 0; j < iter; j++) {
@@ -131,16 +143,15 @@ public class Test_exp {
 			temps2[i] = (endTime - startTime) / ((double) iter);
 		}
 		// expf
-				double[] tempsf = new double[x.length];
-				for (int i = 0; i < x.length; i++) {
-					long startTime = System.nanoTime();
-					for (int j = 0; j < iter; j++) {
-						double val = (Math.random() * 9 + 1) * x[i];
-						expf(val);
-					}
-					long endTime = System.nanoTime();
-					tempsf[i] = (endTime - startTime) / ((double) iter);
-				}
+		for (int i = 0; i < x.length; i++) {
+			long startTime = System.nanoTime();
+			for (int j = 0; j < iter; j++) {
+				double val = (Math.random() * 9 + 1) * x[i];
+				expf(val);
+			}
+			long endTime = System.nanoTime();
+			tempsf[i] = (endTime - startTime) / ((double) iter);
+		}
 
 		// ecrire dans un fichier txt
 		String nomFichier = "SortiesGraphiques/test_exp.txt";
