@@ -22,15 +22,18 @@ public class Mutation1Pixel implements IMutation{
 			Etat etat) {
 		HighQualityRandom randomizer = new HighQualityRandom();
 		int random = randomizer.nextInt(4);
+		int distance = 5;
 		
 		if (random==0) {
-			return new MutationElementairePixel(-4,0);
+			return new MutationElementairePixel(-distance,0);
 		} else if (random==1) {
-			return new MutationElementairePixel(0,4);
+			return new MutationElementairePixel(0,distance);
 		} else if (random==2) {
-			return new MutationElementairePixel(4,0);
-		} else  {
-			return new MutationElementairePixel(0,-4);
+			return new MutationElementairePixel(distance,0);
+		} else if (random==3) {
+			return new MutationElementairePixel(0,-distance);
+		} else {
+			return new MutationElementairePixel(0,0);
 		}
 	}
 	@Override

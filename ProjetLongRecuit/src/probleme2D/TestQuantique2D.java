@@ -45,7 +45,7 @@ public class TestQuantique2D {
 		int[][] u = new int[hauteur][largeur];
 		
 		for (int i=0;i<hauteur;i++) {
-			for (int j=0;j<hauteur;j++) {
+			for (int j=0;j<largeur;j++) {
 				//u[i][j] = dataBuffer.getElem(i * largeur + j);
 				u[i][j] = rast.getSample(j,i,0);
 			}
@@ -66,10 +66,10 @@ public class TestQuantique2D {
 		 
 		 // Paramètres du recuit
 		double k = 1;
-		int M = 10;
-		double G0 = 10;
-		int P = 20;
-		double T = 0.35/P;
+		int M = 50;
+		double G0 = 0.0001;
+		int P = 10;
+		double T = 0.035/P;
 		int maxSteps = (int) Math.pow(10,3);
 		FonctionLineaire Tparam = new FonctionLineaire(G0,0,maxSteps);
 		ConstanteKConstant Kparam = new ConstanteKConstant(k);
