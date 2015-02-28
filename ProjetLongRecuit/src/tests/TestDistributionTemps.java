@@ -7,12 +7,14 @@ import solver.parametres.ConstanteKConstant;
 import solver.parametres.FonctionLineaire;
 import solver.quantique.RecuitQuantique;
 import solver.quantique.RecuitQuantiqueAccelere;
+import solver.quantique.RecuitQuantiqueExpf;
 import vertexColoring.Conflits;
 import vertexColoring.ConflitsCinetiques;
 import vertexColoring.Graphe;
 import vertexColoring.GrapheColorie;
 import vertexColoring.GrapheColorieParticule;
 import vertexColoring.MutationConflitsAleatoire;
+import vertexColoring.RecuitQuantiqueAccelereVC;
 import vertexColoring.Traducteur;
 
 public class TestDistributionTemps {
@@ -42,25 +44,7 @@ public class TestDistributionTemps {
 
 		int nombre = 1;
 
-		for (int i=0;i<nombre;i++) {
-
-			RecuitQuantiqueAccelere recuitAccelere = new RecuitQuantiqueAccelere(Tparam,Kparam, M, T);
-			coloriage.initialiser();
-			long startTime = System.nanoTime();
-			recuitAccelere.lancer(coloriage);
-			long endTime = System.nanoTime();
-
-			// affichage du resultat
-			for (Etat etat : coloriage.getEtats()){
-				GrapheColorie g = (GrapheColorie) etat;
-
-				System.out.println("Energie de l'état : " + g.Ep.calculer(g));
-
-			}
-
-
-			System.out.println("duree du "+i+"ème recuit accéléré = "+(endTime-startTime)/1000000000+" s");
-		}
+		
 
 		for (int j=0;j<nombre;j++) {
 
@@ -79,6 +63,25 @@ public class TestDistributionTemps {
 			}
 
 			System.out.println("duree du "+j+"ème recuit non accéléré = "+(endTime-startTime)/1000000000+" s");
+		}
+		
+		for (int i=0;i<nombre;i++) {
+
+			RecuitQuantiqueExpf recuitExpf = new RecuitQuantiqueExpf(Tparam,Kparam, M, T);
+			coloriage.initialiser();
+			long startTime = System.nanoTime();
+			recuitExpf.lancer(coloriage);
+			long endTime = System.nanoTime();
+
+			// affichage du resultat
+			for (Etat etat : coloriage.getEtats()){
+				GrapheColorie g = (GrapheColorie) etat;
+
+				System.out.println("Energie de l'état : " + g.Ep.calculer(g));
+
+			}
+
+			System.out.println("duree du "+i+"ème recuit accéléré = "+(endTime-startTime)/1000000000+" s");
 		}
 
 

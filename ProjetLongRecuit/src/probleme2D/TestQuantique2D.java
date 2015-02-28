@@ -49,7 +49,7 @@ public class TestQuantique2D {
 		for (int i=0;i<hauteur;i++) {
 			for (int j=0;j<largeur;j++) {
 				//u[i][j] = dataBuffer.getElem(i * largeur + j);
-				u[i][j] = rast.getSample(j,i,0);
+				u[i][j] = rast.getSample(j,i,0)+1;
 			}
 		}
 		
@@ -72,7 +72,7 @@ public class TestQuantique2D {
 		double G0 = 2;
 		int P = 10;
 		double T = 0.7/P;
-		int maxSteps = (int) Math.pow(10,2);
+		int maxSteps = (int) Math.pow(10,3);
 		//FonctionLineaire Tparam = new FonctionLineaire(G0,0,maxSteps);
 		FonctionExpoRecursive Tparam = new FonctionExpoRecursive(G0,0.,maxSteps,5);
 	
