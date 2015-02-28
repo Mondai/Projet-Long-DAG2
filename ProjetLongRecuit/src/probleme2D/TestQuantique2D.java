@@ -48,11 +48,11 @@ public class TestQuantique2D {
 		
 			
 		for (int i=0;i<P;i++) {
-		System.out.println("Energie du ième : "+Ep.calculer(probleme.etats[i]));	
+		System.out.println("Energie du "+i+"ème : "+Ep.calculer(probleme.etats[i]));	
 		}
 		
 		for (int i=0;i<P;i++) {
-			System.out.println("Meilleure Energie du ième : "+((Position2D)probleme.etats[i]).getMeilleureEnergie());	
+			System.out.println("Meilleure Energie du "+i+"ème : "+((Position2D)probleme.etats[i]).getMeilleureEnergie());	
 			}
 		
 		System.out.println("duree = "+(endTime-startTime)/1000000000+" s");

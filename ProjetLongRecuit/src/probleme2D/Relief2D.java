@@ -12,13 +12,13 @@ public class Relief2D {
 	
 	
 
-		public Relief2D(int hauteur, int largeur, int[][] matrice2d) {
+	public Relief2D(int hauteur, int largeur, int[][] matrice2d) {
 		super();
 		this.hauteur = hauteur;
 		this.largeur = largeur;
 		Matrice2D = matrice2d;
 	}
-		public int getHauteur() {
+	public int getHauteur() {
 		return hauteur;
 	}
 	public int getLargeur() {
