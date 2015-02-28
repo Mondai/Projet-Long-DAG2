@@ -10,15 +10,19 @@ import javax.swing.JFrame;
 public class FenetreRepliques extends JFrame {
      
 	PanneauRepliques panneau;
+	int echantillonage;
+	int compteur=0;
 	
     private static final long serialVersionUID = 1L;
      
-    public FenetreRepliques(){
+    public FenetreRepliques(int echantillonage){
     	this.panneau=new PanneauRepliques();
+    	this.echantillonage=echantillonage;
     };
     
     
-    public FenetreRepliques(String path,PanneauRepliques panneau){
+    public FenetreRepliques(String path,PanneauRepliques panneau, int echantillonage){
+    	this.echantillonage=echantillonage;
     	this.panneau =panneau;
         this.setContentPane((panneau));
         
@@ -40,8 +44,11 @@ public class FenetreRepliques extends JFrame {
         
     }
     
-    public void updateGraphics() {
-        this.panneau.paint(getGraphics());
+    public void updateGraphics(int numero) {
+    	if (this.compteur==0) {
+        this.panneau.paintComponent(getGraphics(),numero);
+    	} 
+    	this.compteur=(this.compteur+1)%this.echantillonage;
     }
     
  

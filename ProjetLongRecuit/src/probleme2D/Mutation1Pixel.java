@@ -22,8 +22,8 @@ public class Mutation1Pixel implements IMutation{
 			Etat etat) {
 		HighQualityRandom randomizer = new HighQualityRandom();
 		int random = randomizer.nextInt(4);
-		int distance = 5;
-		
+		//int distance = 5;
+		int distance = randomizer.nextInt(10);
 		if (random==0) {
 			return new MutationElementairePixel(-distance,0);
 		} else if (random==1) {
@@ -62,11 +62,11 @@ public class Mutation1Pixel implements IMutation{
 		//System.out.println("hauteur "+hauteur);
 		
 		
-		
+		int numero = ((Position2D)etat).getNumero();
 		((Position2DParticule) probleme).ModificationGraphique(x, y, ((Position2D)etat).getNumero());
 		
 		//System.out.println(" x et y :"+position2D.getX()+ " "+position2D.getY());
-		((Position2DParticule) probleme).getFenetre().updateGraphics();
+		((Position2DParticule) probleme).getFenetre().updateGraphics(numero);
 		
 		try {
 			Thread.sleep(10);

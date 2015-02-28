@@ -12,8 +12,10 @@ import javax.swing.ImageIcon;
 import GraphiqueProbleme2D.FenetreRepliques;
 import GraphiqueProbleme2D.PanneauRepliques;
 import solver.parametres.ConstanteKConstant;
+import solver.parametres.FonctionExpoRecursive;
 import solver.parametres.FonctionLineaire;
 import solver.quantique.RecuitQuantique;
+import solver.quantique.RecuitQuantiqueAccelere;
 
 public class TestQuantique2D {
 
@@ -23,7 +25,7 @@ public class TestQuantique2D {
 	public static void main(String[] args) {
 	
 		
-		String path = "src/images/grey-gradient-background.jpg";
+		String path = "src/images/grey-gradient-background180Flouénew.jpg";
 		Image image = (new ImageIcon(path).getImage());
 		BufferedImage bimage = new BufferedImage(image.getWidth(null), image
 		        .getHeight(null), BufferedImage.TYPE_BYTE_GRAY);
@@ -66,13 +68,16 @@ public class TestQuantique2D {
 		 
 		 // Paramètres du recuit
 		double k = 1;
-		int M = 50;
-		double G0 = 0.0001;
+		int M = 100;
+		double G0 = 2;
 		int P = 10;
-		double T = 0.035/P;
-		int maxSteps = (int) Math.pow(10,3);
-		FonctionLineaire Tparam = new FonctionLineaire(G0,0,maxSteps);
+		double T = 0.7/P;
+		int maxSteps = (int) Math.pow(10,2);
+		//FonctionLineaire Tparam = new FonctionLineaire(G0,0,maxSteps);
+		FonctionExpoRecursive Tparam = new FonctionExpoRecursive(G0,0.,maxSteps,5);
+	
 		ConstanteKConstant Kparam = new ConstanteKConstant(k);
+		//RecuitQuantiqueAccelere recuit = new RecuitQuantiqueAccelere(Tparam,Kparam, M, T);
 		RecuitQuantique recuit = new RecuitQuantique(Tparam,Kparam, M, T);
 		 
 		 //Initialisation probleme
@@ -81,10 +86,11 @@ public class TestQuantique2D {
 		Mutation1Pixel mutation = new Mutation1Pixel();
 		
 		//initialisation avec image
-		Position2DParticule probleme= new Position2DParticule(Ep,Ec,P,relief,mutation,new PanneauRepliques(image));
+		int echantillonage = 50;
+		Position2DParticule probleme= new Position2DParticule(Ep,Ec,P,relief,mutation,new PanneauRepliques(image),echantillonage);
 		probleme.initialiser();
 		
-		FenetreRepliques fenetre = new FenetreRepliques(path,((Position2DParticule)probleme).getPanneau());
+		FenetreRepliques fenetre = new FenetreRepliques(path,((Position2DParticule)probleme).getPanneau(),echantillonage);
 		((Position2DParticule) probleme).setFenetre(fenetre); // Attention la fenetre fois bien être mise
 		
 		long startTime = System.nanoTime();

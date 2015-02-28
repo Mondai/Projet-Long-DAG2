@@ -16,6 +16,7 @@ public class PanneauRepliques extends JPanel {
 	
 	
 	
+	
 	 public PanneauRepliques(Image img, int[] setDesX, int[] setDesY) {
 		super();
 		this.img = img;
@@ -23,6 +24,7 @@ public class PanneauRepliques extends JPanel {
 		this.hauteur=img.getHeight(null);
 		this.setDesX = setDesX;
 		this.setDesY = setDesY;
+		
 	}
 	 
 	 public PanneauRepliques(Image img) {
@@ -90,14 +92,17 @@ public class PanneauRepliques extends JPanel {
 
 
 
-	public void paintComponent(Graphics g) {
+	public void paintComponent(Graphics g, int numero) {
 		    //g.drawImage(this.img, 0, 0, this.getWidth(),this.getHeight(),null);
+			
 			g.drawImage(this.img, 0, 0,null);
 	        g.setColor( new Color(255,0,0));
 	        
 	        for (int i=0;i<setDesX.length;i++) {
 	        	g.fillOval(this.setDesX[i], this.setDesY[i], 8, 8);
 	        }
+	        g.setColor( new Color(0,255,0));
+	        g.fillOval(this.setDesX[numero], this.setDesY[numero], 8, 8);
 	        
 	    }
 	

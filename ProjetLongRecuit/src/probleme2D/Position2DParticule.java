@@ -20,7 +20,7 @@ public class Position2DParticule extends Probleme{
 	
 	
 
-	public Position2DParticule(EnergiePotentielle Ep, EnergieCinetique Ec, int replique, Relief2D relief,IMutation mutation,PanneauRepliques panneau) {
+	public Position2DParticule(EnergiePotentielle Ep, EnergieCinetique Ec, int replique, Relief2D relief,IMutation mutation,PanneauRepliques panneau, int echantillonage) {
 		this.Ec=Ec;
 		this.replique = replique;
 		this.relief = relief;
@@ -31,7 +31,7 @@ public class Position2DParticule extends Probleme{
 			this.etats[i] = new Position2D(Ep,relief, this.gen.nextInt(),0,0,0,0,i);
 		}
 		this.panneau=panneau;
-		this.fenetre=new FenetreRepliques();
+		this.fenetre=new FenetreRepliques(echantillonage);
 		
 		
 	}
