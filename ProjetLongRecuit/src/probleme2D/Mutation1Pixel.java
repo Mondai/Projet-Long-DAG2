@@ -12,6 +12,9 @@ public class Mutation1Pixel implements IMutation{
 
 	
 	String direction;
+	static final int Diametre = 10;
+	static final int bordure = 50;
+	
 	
 	
 	@Override
@@ -19,15 +22,18 @@ public class Mutation1Pixel implements IMutation{
 			Etat etat) {
 		HighQualityRandom randomizer = new HighQualityRandom();
 		int random = randomizer.nextInt(4);
-		
+		//int distance = 5;
+		int distance = randomizer.nextInt(10);
 		if (random==0) {
-			return new MutationElementairePixel(-1,0);
+			return new MutationElementairePixel(-distance,0);
 		} else if (random==1) {
-			return new MutationElementairePixel(0,1);
+			return new MutationElementairePixel(0,distance);
 		} else if (random==2) {
-			return new MutationElementairePixel(1,0);
-		} else  {
-			return new MutationElementairePixel(0,-1);
+			return new MutationElementairePixel(distance,0);
+		} else if (random==3) {
+			return new MutationElementairePixel(0,-distance);
+		} else {
+			return new MutationElementairePixel(0,0);
 		}
 	}
 	@Override
@@ -35,10 +41,39 @@ public class Mutation1Pixel implements IMutation{
 		Position2D position2D = (Position2D) etat;
 		MutationElementairePixel m = (MutationElementairePixel) mutation;
 		
-		position2D.setX(position2D.getX()+m.deltaX%position2D.relief.largeur);
-		position2D.setY(position2D.getY()+m.deltaY%position2D.relief.hauteur);
+		int largeur=position2D.relief.largeur;
+		int hauteur=position2D.relief.hauteur;
+		
+		int x=position2D.getX()+m.deltaX;
+		
+		x=Math.max(bordure, x);
+		x=Math.min(largeur-Diametre-bordure, x);
 		
 		
+		position2D.setX(x);
+		//System.out.println("largeur "+largeur);
+		int y=position2D.getY()+m.deltaY;
+		
+		y=Math.max(bordure, y);
+		y=Math.min(hauteur-Diametre-bordure, y);
+		
+	
+		position2D.setY(y);
+		//System.out.println("hauteur "+hauteur);
+		
+		
+		int numero = ((Position2D)etat).getNumero();
+		((Position2DParticule) probleme).ModificationGraphique(x, y, ((Position2D)etat).getNumero());
+		
+		//System.out.println(" x et y :"+position2D.getX()+ " "+position2D.getY());
+		((Position2DParticule) probleme).getFenetre().updateGraphics(numero);
+		
+		try {
+			Thread.sleep(10);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 

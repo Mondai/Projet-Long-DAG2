@@ -23,6 +23,7 @@ public class FonctionExpoRecursive extends Fonction {
 	public FonctionExpoRecursive(double tdebut, double tfinal, int nbIteration, double coef ) {
 		super(tdebut,tfinal,nbIteration);
 		this.facteur = Math.exp(-coef/this.nbIteration) ; 
+		System.out.println(this.facteur);
 	}
 
 	/**
@@ -35,6 +36,7 @@ public class FonctionExpoRecursive extends Fonction {
 		if (this.t < this.Tfinal) return false;
 		else { 
 			this.t=(this.t-this.Tfinal)*this.facteur+this.Tfinal;
+			//System.out.println("valeur de G "+this.t);
 			return true;		  
 		}
 	}

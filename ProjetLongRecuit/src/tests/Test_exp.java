@@ -1,81 +1,204 @@
 package tests;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 // Test des fonctions approchees d'exponentiel
-/* Les performances en temps des 2 exponentielles sont presque pareilles, par contre on a les erreurs de calculs suivant sur certaines plages de valeurs:
-  	*   exp( 1000 ) :
-    	exp -> Infinity					 <- positif
-    	exp1-> 6.790731620590713E176     <- positif
-    	exp2-> -6.162916874664818E-183	 <- negatif
-    	
-    *	exp( -5.209971843526424E-6 ) :
-  		exp-> 0.9999947900417283		 <- proba de rejet <0.001%
-  		exp1-> 0.9999947900416788		 <- idem
-  		exp2-> 0.9710040092468262		 <- proba de rejet= 3%
-  		
-  	
- */
 
 public class Test_exp {
 
 	public static double exp1(double x) {
-		  x = 1.0 + x / 256.0;
-		  x *= x; x *= x; x *= x; x *= x;
-		  x *= x; x *= x; x *= x; x *= x;
-		  return x;
+		x = 1.0 + x / 256.0;
+		x *= x;
+		x *= x;
+		x *= x;
+		x *= x;
+		x *= x;
+		x *= x;
+		x *= x;
+		x *= x;
+		return x;
 	}
-	
+
 	public static double exp2(double val) {
 		final long tmp = (long) (1512775 * val + 1072632447);
 		return Double.longBitsToDouble(tmp << 32);
 	}
-	
+
 	public static double expf(double val) {
-		if (val < -1) return exp2(val);
-		else return exp1(val);
+		if (val >= 0)
+			return 1;
+		if (val > -2.5)
+			return exp1(val);
+		if (val > -700)
+			return exp2(val);
+		else
+			return 0;
 	}
-	
-	public static void main(String[] args) {
-		
-		double[] tab = {-1000,-100,-10,-1,-0.1,-0.01,-0.001,-0.0001,-0.0001, 0.00001, 0.0001, 0.001, 0.01, 0.1, 1, 10, 100};
-		
-		for(int i = 0 ; i<tab.length ; i++){
-			double val = Math.random()*tab[i];
-			System.out.println("exp( "+val+" ) :");
-			System.out.println("  exp-> "+Math.exp(val));
-			System.out.println("  exp1-> "+exp1(val));
-			System.out.println("  exp2-> "+exp2(val));
-			System.out.println("  expf-> "+expf(val));
+
+	public static void main(String[] args) throws IOException {
+
+		double[] tab = {0, 0.00001, 0.0001, 0.001, 0.01, 0.1, 1, 10, 100, 1000 };
+
+		// transforme les elements de tab en negatif
+		for (int i = 0; i < tab.length; i++)
+			tab[i] = -tab[i];
+
+		int N = 1000;
+		Double[] x = new Double[tab.length * 9];
+		for (int i = 0; i < tab.length; i++) {
+			for (int j = 0; j < 9; j++) {
+				x[i * 9 + j] = tab[i] * (j + 1);
+			}
 		}
 		
-		System.out.println("teste grands nombres");
-		for(int i = 1; i < 1000000000; i*=10){
-			System.out.println("exp( "+i+" ) :");
-			System.out.println("  exp-> "+Math.exp(i));
-			System.out.println("  exp1-> "+exp1(i));
-			System.out.println("  exp2-> "+exp2(i));
-			System.out.println("  expf-> "+expf(i));
-		}
+		/*
+		// renverser l'ordre de x si besoin
+		List<Double> l = Arrays.asList(x);
+		Collections.reverse(l);
+		x = (Double[]) l.toArray();
+		*/
 		
-		long startTime = System.nanoTime();
-		for(int i = 0; i<1000000000; i++){
-			exp1(-Math.random());
+		double[] erreursExp1 = new double[x.length];
+		double[] erreursExp2 = new double[x.length];
+		double[] erreursExpf = new double[x.length];
+
+		// calcul erreursExp
+		for (int i = 0; i < x.length; i++) {
+			double temp1 = 0;
+			double temp2 = 0;
+			double tempf = 0;
+			for (int j = 0; j < N; j++) {
+				double val = x[i];
+				
+				if (Math.exp(val) == Double.POSITIVE_INFINITY) {
+					if (exp1(val) < 1e150)
+						temp1 += Double.POSITIVE_INFINITY;
+					if (exp2(val) < 1e150)
+						temp2 += Double.POSITIVE_INFINITY;
+					if (expf(val) < 1e150)
+						tempf += Double.POSITIVE_INFINITY;
+				} else if (Math.exp(val) <= 1e-300) {
+					if (exp1(val) > 1e-5)
+						temp1 += Double.POSITIVE_INFINITY;
+					if (exp2(val) > 1e-5)
+						temp2 += Double.POSITIVE_INFINITY;
+					if (expf(val) > 1e-5)
+						tempf += Double.POSITIVE_INFINITY;
+				} else {
+					temp1 += Math.abs(Math.exp(val) - exp1(val))
+							/ Math.exp(val);
+					temp2 += Math.abs(Math.exp(val) - exp2(val))
+							/ Math.exp(val);
+					tempf += Math.abs(Math.exp(val) - expf(val))
+							/ Math.exp(val);
+				}
+			}
+			// moyenne
+			erreursExp1[i] = temp1 / N;
+			erreursExp2[i] = temp2 / N;
+			erreursExpf[i] = tempf / N;
 		}
-		long endTime = System.nanoTime();
-		System.out.println("exp1 10^9 duree = "+(endTime-startTime)/1000000000+" s");
-		
-		startTime = System.nanoTime();
-		for(int i = 0; i<1000000000; i++){
-			exp2(-Math.random());
+
+		// calcul du temps
+		int iter = 100000;
+		double[] temps0 = new double[x.length];
+		double[] temps1 = new double[x.length];
+		double[] temps2 = new double[x.length];
+		double[] tempsf = new double[x.length];
+		// Math.exp
+		for (int i = 0; i < x.length; i++) {
+			long startTime = System.nanoTime();
+			for (int j = 0; j < iter; j++) {
+				double val = (Math.random() * 9 + 1) * x[i];
+				Math.exp(val);
+			}
+			long endTime = System.nanoTime();
+			temps0[i] = (endTime - startTime) / ((double) iter);
 		}
-		endTime = System.nanoTime();
-		System.out.println("exp2 10^9 duree = "+(endTime-startTime)/1000000000+" s");
-		
-		startTime = System.nanoTime();
-		for(int i = 0; i<1000000000; i++){
-			expf(-Math.random());
+		// exp1
+		for (int i = 0; i < x.length; i++) {
+			long startTime = System.nanoTime();
+			for (int j = 0; j < iter; j++) {
+				double val = (Math.random() * 9 + 1) * x[i];
+				exp1(val);
+			}
+			long endTime = System.nanoTime();
+			temps1[i] = (endTime - startTime) / ((double) iter);
 		}
-		endTime = System.nanoTime();
-		System.out.println("expf 10^9 duree = "+(endTime-startTime)/1000000000+" s");
+		// exp2
+		for (int i = 0; i < x.length; i++) {
+			long startTime = System.nanoTime();
+			for (int j = 0; j < iter; j++) {
+				double val = (Math.random() * 9 + 1) * x[i];
+				exp2(val);
+			}
+			long endTime = System.nanoTime();
+			temps2[i] = (endTime - startTime) / ((double) iter);
+		}
+		// expf
+		for (int i = 0; i < x.length; i++) {
+			long startTime = System.nanoTime();
+			for (int j = 0; j < iter; j++) {
+				double val = (Math.random() * 9 + 1) * x[i];
+				expf(val);
+			}
+			long endTime = System.nanoTime();
+			tempsf[i] = (endTime - startTime) / ((double) iter);
+		}
+
+		// ecrire dans un fichier txt
+		String nomFichier = "SortiesGraphiques/test_exp.txt";
+		File file = new File(nomFichier);
+		PrintWriter pw = new PrintWriter(new BufferedWriter(
+				new FileWriter(file)));
+		pw.print("erreursExp1 = [");
+		for (int i = 0; i < erreursExp1.length; i++) {
+			pw.print(erreursExp1[i] + " ");
+		}
+		pw.println("];");
+		pw.print("erreursExp2 = [");
+		for (int i = 0; i < erreursExp2.length; i++) {
+			pw.print(erreursExp2[i] + " ");
+		}
+		pw.println("];");
+		pw.print("erreursExpf = [");
+		for (int i = 0; i < erreursExpf.length; i++) {
+			pw.print(erreursExpf[i] + " ");
+		}
+		pw.println("];");
+		pw.print("x = [");
+		for (int i = 0; i < x.length; i++) {
+			pw.print(x[i] + " ");
+		}
+		pw.println("];");
+		pw.print("t0 = [");
+		for (int i = 0; i < x.length; i++) {
+			pw.print(temps0[i] + " ");
+		}
+		pw.println("];");
+		pw.print("t1 = [");
+		for (int i = 0; i < x.length; i++) {
+			pw.print(temps1[i] + " ");
+		}
+		pw.println("];");
+		pw.print("t2 = [");
+		for (int i = 0; i < x.length; i++) {
+			pw.print(temps2[i] + " ");
+		}
+		pw.println("];");
+		pw.print("tf = [");
+		for (int i = 0; i < x.length; i++) {
+			pw.print(tempsf[i] + " ");
+		}
+		pw.println("];");
+		pw.close();
 
 	}
 
