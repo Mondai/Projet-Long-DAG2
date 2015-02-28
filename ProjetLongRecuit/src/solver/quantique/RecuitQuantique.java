@@ -196,16 +196,4 @@ public class RecuitQuantique implements IRecuit {
 		System.out.println("Mutations acceptées : " + mutationsAcceptees);
 		return;
 	}
-	
-	double exp1(double x) {
-		  x = 1.0 + x / 256.0;
-		  x *= x; x *= x; x *= x; x *= x;
-		  x *= x; x *= x; x *= x; x *= x;
-		  return x;
-	}
-	
-	public static double exp(double val) {
-		final long tmp = (long) (1512775 * val + 1072632447);
-		return Double.longBitsToDouble(tmp << 32);
-	}
 }
