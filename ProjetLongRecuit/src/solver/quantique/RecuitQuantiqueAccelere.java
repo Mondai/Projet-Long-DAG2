@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import solver.commun.Etat;
+import solver.commun.Expo;
 import solver.commun.MutationElementaire;
 import solver.commun.Probleme;
 import solver.parametres.ConstanteK;
@@ -124,7 +125,7 @@ public class RecuitQuantiqueAccelere extends RecuitQuantique{
 					}
 					else {
 						if (deltaE < 0) proba = 1;
-						else proba = Math.exp(-deltaE / (this.K.k * this.temperature));
+						else proba = Expo.expf(-deltaE / (this.K.k * this.temperature));
 						
 						if (proba >= probleme.gen.nextDouble()) {	
 							mutationsAccepteesUB++;
@@ -140,7 +141,7 @@ public class RecuitQuantiqueAccelere extends RecuitQuantique{
 								
 							}
 							else{
-								proba = Math.exp(-deltaE / (this.K.k * this.temperature));
+								proba = Expo.expf(-deltaE / (this.K.k * this.temperature));
 							
 								if (proba >= probleme.gen.nextDouble()) {
 									mutationsAcceptees++;
