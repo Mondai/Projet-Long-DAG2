@@ -9,20 +9,14 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-// Test des fonctions approchees d'exponentiel
+// Test des fonctions approchees d'exponentielle
 
 public class Test_exp {
 
 	public static double exp1(double x) {
 		x = 1.0 + x / 256.0;
-		x *= x;
-		x *= x;
-		x *= x;
-		x *= x;
-		x *= x;
-		x *= x;
-		x *= x;
-		x *= x;
+		x *= x;	x *= x;	x *= x;	x *= x;
+		x *= x;	x *= x;	x *= x;	x *= x;
 		return x;
 	}
 
@@ -50,7 +44,6 @@ public class Test_exp {
 		for (int i = 0; i < tab.length; i++)
 			tab[i] = -tab[i];
 
-		int N = 1000;
 		Double[] x = new Double[tab.length * 9];
 		for (int i = 0; i < tab.length; i++) {
 			for (int j = 0; j < 9; j++) {
@@ -74,84 +67,34 @@ public class Test_exp {
 			double temp1 = 0;
 			double temp2 = 0;
 			double tempf = 0;
-			for (int j = 0; j < N; j++) {
-				double val = x[i];
-				
-				if (Math.exp(val) == Double.POSITIVE_INFINITY) {
-					if (exp1(val) < 1e150)
-						temp1 += Double.POSITIVE_INFINITY;
-					if (exp2(val) < 1e150)
-						temp2 += Double.POSITIVE_INFINITY;
-					if (expf(val) < 1e150)
-						tempf += Double.POSITIVE_INFINITY;
-				} else if (Math.exp(val) <= 1e-300) {
-					if (exp1(val) > 1e-5)
-						temp1 += Double.POSITIVE_INFINITY;
-					if (exp2(val) > 1e-5)
-						temp2 += Double.POSITIVE_INFINITY;
-					if (expf(val) > 1e-5)
-						tempf += Double.POSITIVE_INFINITY;
-				} else {
-					temp1 += Math.abs(Math.exp(val) - exp1(val))
-							/ Math.exp(val);
-					temp2 += Math.abs(Math.exp(val) - exp2(val))
-							/ Math.exp(val);
-					tempf += Math.abs(Math.exp(val) - expf(val))
-							/ Math.exp(val);
-				}
+			double val = x[i];
+
+			if (Math.exp(val) == Double.POSITIVE_INFINITY) {
+				if (exp1(val) < 1e150)
+					temp1 += Double.POSITIVE_INFINITY;
+				if (exp2(val) < 1e150)
+					temp2 += Double.POSITIVE_INFINITY;
+				if (expf(val) < 1e150)
+					tempf += Double.POSITIVE_INFINITY;
+			} else if (Math.exp(val) <= 1e-300) {
+				if (exp1(val) > 1e-5)
+					temp1 += Double.POSITIVE_INFINITY;
+				if (exp2(val) > 1e-5)
+					temp2 += Double.POSITIVE_INFINITY;
+				if (expf(val) > 1e-5)
+					tempf += Double.POSITIVE_INFINITY;
+			} else {
+				temp1 += Math.abs(Math.exp(val) - exp1(val)) / Math.exp(val);
+				temp2 += Math.abs(Math.exp(val) - exp2(val)) / Math.exp(val);
+				tempf += Math.abs(Math.exp(val) - expf(val)) / Math.exp(val);
 			}
-			// moyenne
-			erreursExp1[i] = temp1 / N;
-			erreursExp2[i] = temp2 / N;
-			erreursExpf[i] = tempf / N;
+
+			erreursExp1[i] = temp1 ;
+			erreursExp2[i] = temp2 ;
+			erreursExpf[i] = tempf ;
 		}
 
-		// calcul du temps
-		int iter = 100000;
-		double[] temps0 = new double[x.length];
-		double[] temps1 = new double[x.length];
-		double[] temps2 = new double[x.length];
-		double[] tempsf = new double[x.length];
-		// Math.exp
-		for (int i = 0; i < x.length; i++) {
-			long startTime = System.nanoTime();
-			for (int j = 0; j < iter; j++) {
-				double val = (Math.random() * 9 + 1) * x[i];
-				Math.exp(val);
-			}
-			long endTime = System.nanoTime();
-			temps0[i] = (endTime - startTime) / ((double) iter);
-		}
-		// exp1
-		for (int i = 0; i < x.length; i++) {
-			long startTime = System.nanoTime();
-			for (int j = 0; j < iter; j++) {
-				double val = (Math.random() * 9 + 1) * x[i];
-				exp1(val);
-			}
-			long endTime = System.nanoTime();
-			temps1[i] = (endTime - startTime) / ((double) iter);
-		}
-		// exp2
-		for (int i = 0; i < x.length; i++) {
-			long startTime = System.nanoTime();
-			for (int j = 0; j < iter; j++) {
-				double val = (Math.random() * 9 + 1) * x[i];
-				exp2(val);
-			}
-			long endTime = System.nanoTime();
-			temps2[i] = (endTime - startTime) / ((double) iter);
-		}
-		// expf
-		for (int i = 0; i < x.length; i++) {
-			long startTime = System.nanoTime();
-			for (int j = 0; j < iter; j++) {
-				double val = (Math.random() * 9 + 1) * x[i];
-				expf(val);
-			}
-			long endTime = System.nanoTime();
-			tempsf[i] = (endTime - startTime) / ((double) iter);
-		}
+		
 
 		// ecrire dans un fichier txt
 		String nomFichier = "SortiesGraphiques/test_exp.txt";
@@ -178,28 +121,8 @@ public class Test_exp {
 			pw.print(x[i] + " ");
 		}
 		pw.println("];");
-		pw.print("t0 = [");
-		for (int i = 0; i < x.length; i++) {
-			pw.print(temps0[i] + " ");
-		}
-		pw.println("];");
-		pw.print("t1 = [");
-		for (int i = 0; i < x.length; i++) {
-			pw.print(temps1[i] + " ");
-		}
-		pw.println("];");
-		pw.print("t2 = [");
-		for (int i = 0; i < x.length; i++) {
-			pw.print(temps2[i] + " ");
-		}
-		pw.println("];");
-		pw.print("tf = [");
-		for (int i = 0; i < x.length; i++) {
-			pw.print(tempsf[i] + " ");
-		}
-		pw.println("];");
 		pw.close();
-
+		
 	}
 
 }
