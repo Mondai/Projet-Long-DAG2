@@ -1,6 +1,10 @@
+GraphiqueProbleme2D
+algoDeLaMire
+probleme2D
 solver.commun
 solver.graphique
 solver.parametres
 solver.quantique
 solver.simule
+tests
 vertexColoring

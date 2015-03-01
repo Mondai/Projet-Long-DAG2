@@ -1,7 +1,6 @@
 package solver.quantique;
 
 
-
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -32,7 +31,7 @@ public class RecuitQuantique implements IRecuit {
 	public Fonction Gamma;
 	/**
 	 * Constante k modulable.
-	 * @see Constante
+	 * @see ConstanteK
 	 */
 	public ConstanteK K;
 	/**
@@ -97,7 +96,7 @@ public class RecuitQuantique implements IRecuit {
 	 * au préalable. On initialise le recuit avec les deux premiers ainsi qu'une température et un palier constant,
 	 * et on lance ensuite le recuit en lui envoyant le problème.
 	 * A la fin de lancer, on peut obtenir les résultats sur la variable problème modifiée.
-	 * @param problem
+	 * @param probleme
 	 * Le problème sur lequel on veut effectuer le recuit quantique.
 	 */
 	public void lancer(Probleme probleme) {
