@@ -11,11 +11,16 @@ import javax.swing.ImageIcon;
 
 import GraphiqueProbleme2D.FenetreRepliques;
 import GraphiqueProbleme2D.PanneauRepliques;
+import solver.commun.Probleme;
+import solver.graphique.IListEnergie;
+import solver.graphique.ListEnergie;
+import solver.graphique.ListEnergieVide;
 import solver.parametres.ConstanteKConstant;
 import solver.parametres.FonctionExpoRecursive;
 import solver.parametres.FonctionLineaire;
 import solver.quantique.RecuitQuantique;
 import solver.quantique.RecuitQuantiqueAccelere;
+import solver.quantique.RecuitQuantique_Graphique;
 
 public class TestQuantique2D {
 
@@ -68,25 +73,30 @@ public class TestQuantique2D {
 		 
 		 // Paramètres du recuit
 		double k = 1;
-		int M = 100;
+		int M = 50;
 		double G0 = 2;
 		int P = 20;
 		double T = 0.7/P;
 		int maxSteps = 2*(int) Math.pow(10,2);
 		//FonctionLineaire Tparam = new FonctionLineaire(G0,0,maxSteps);
-		FonctionExpoRecursive Tparam = new FonctionExpoRecursive(G0,0.001,maxSteps,5);
+		FonctionExpoRecursive Tparam = new FonctionExpoRecursive(G0,0.,maxSteps,5);
 	
 		ConstanteKConstant Kparam = new ConstanteKConstant(k);
 		//RecuitQuantiqueAccelere recuit = new RecuitQuantiqueAccelere(Tparam,Kparam, M, T);
-		RecuitQuantique recuit = new RecuitQuantique(Tparam,Kparam, M, T);
-		 
+		//RecuitQuantique recuit = new RecuitQuantique(Tparam,Kparam, M, T);
+		
+		// Avec fenetre Graphique
+		int echantillonage = 10;
+		ListEnergie ListValeursJr = new ListEnergie(echantillonage,1);
+		ListEnergie ListRapport = new ListEnergie(echantillonage,1000);
+		RecuitQuantique_Graphique recuit = new RecuitQuantique_Graphique(Tparam,Kparam, M, T);
+		
 		 //Initialisation probleme
 		Distances Ec = new Distances();
 		Hauteur Ep=new Hauteur();
 		Mutation1Pixel mutation = new Mutation1Pixel();
 		
 		//initialisation avec image
-		int echantillonage = 50;
 		int seed=4;
 		Position2DParticule probleme= new Position2DParticule(Ep,Ec,P,relief,mutation,new PanneauRepliques(image),echantillonage,seed);
 		probleme.initialiser();
@@ -95,7 +105,8 @@ public class TestQuantique2D {
 		((Position2DParticule) probleme).setFenetre(fenetre); // Attention la fenetre fois bien être mise
 		
 		long startTime = System.nanoTime();
-		recuit.lancer(probleme);
+		//recuit.lancer(probleme);
+		recuit.lancer(probleme,ListValeursJr,ListRapport);
 		long endTime = System.nanoTime();
 		
 			

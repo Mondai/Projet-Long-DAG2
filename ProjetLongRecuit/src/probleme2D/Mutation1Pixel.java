@@ -22,7 +22,7 @@ public class Mutation1Pixel implements IMutation{
 			Etat etat) {
 		HighQualityRandom randomizer = ((Position2D)etat).getGen();
 		int random = randomizer.nextInt(4);
-		int distance = 5;
+		int distance = 1;
 		//int distance = randomizer.nextInt(10);
 		if (random==0) {
 			return new MutationElementairePixel(-distance,0);
