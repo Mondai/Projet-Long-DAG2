@@ -35,6 +35,29 @@ public class Position2DParticule extends Probleme{
 		
 		
 	}
+	
+	
+	
+	public Position2DParticule(EnergiePotentielle Ep, EnergieCinetique Ec, int replique, Relief2D relief,IMutation mutation,PanneauRepliques panneau, int echantillonage,int seed) {
+		this.setSeed(seed);
+		this.gen = new HighQualityRandom(seed);
+		this.Ec=Ec;
+		this.replique = replique;
+		this.relief = relief;
+		this.mutation = mutation;
+		
+		this.etats = new Etat[replique];
+		for (int i = 0; i < this.replique; i++){
+			this.etats[i] = new Position2D(Ep,relief, seed,0,0,0,0,i);
+		}
+		this.panneau=panneau;
+		this.fenetre=new FenetreRepliques(echantillonage);
+		
+		
+		
+	}
+	
+	
 
 
 	public void ModificationGraphique (int X, int Y, int numeroReplique) {

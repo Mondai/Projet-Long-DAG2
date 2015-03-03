@@ -1,4 +1,5 @@
 package solver.quantique;
+import java.awt.List;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -19,6 +20,7 @@ public class RecuitQuantique_Graphique implements IRecuit {
 	public double temperature;
 	public int nbMaxIteration; 							// nombre maximale d'iteration si la solution n'est pas trouvee, redondance avec t.nbIteration
 	public int palier;
+	public double rapportMoyen;
 	// abstract void init(); 				        	// initialisation // mais de quoi ?
 
 	public RecuitQuantique_Graphique(Fonction Gamma, ConstanteK K, int palier, double temperature) {
@@ -26,7 +28,9 @@ public class RecuitQuantique_Graphique implements IRecuit {
 		this.K=K;												// en creant une classe dedie et reutilisable qui extends temperature
 		this.nbMaxIteration=this.Gamma.nbIteration;						// ainsi on combine le tout facilement
 		this.palier = palier;		
-		this.temperature = temperature;						//en quantique, la température est constante et le Gamma est variable, d'où le fait que Gamma soit une "température"
+		this.temperature = temperature;		
+		this.rapportMoyen=0;
+		//en quantique, la température est constante et le Gamma est variable, d'où le fait que Gamma soit une "température"
 	}
 
 
@@ -120,6 +124,9 @@ public class RecuitQuantique_Graphique implements IRecuit {
 						if (this.meilleureEnergie == 0){	// fin du programme
 							listeMeilleureEnergie.getlistEnergie().add(0.);
 							listeEnergie[p].getlistEnergie().add(0.);
+							listeValeursJr.add(Jr);
+							listeRapport.add(this.rapportMoyen);
+							
 							System.out.println("fin par ce cooté la");
 							return;
 						}
@@ -129,8 +136,11 @@ public class RecuitQuantique_Graphique implements IRecuit {
 					// Ajout dans les listes 
 					
 					if (deltaEp!=0 && p==1) {
-						listeRapport.add((deltaEc*(-Jr))/(deltaEp/nombreRepliques));
-					}
+						double rapport = Math.abs(deltaEc*(-Jr))/(deltaEp/nombreRepliques);
+						listeRapport.addTotal(rapport);
+						calculerRapportMoyen(rapport, listeRapport);
+						listeRapport.add(this.rapportMoyen);
+						}
 					
 					
 					if (p==1) {
@@ -265,6 +275,26 @@ public class RecuitQuantique_Graphique implements IRecuit {
 			} // fin d'un tour sur les répliques
 		} // fin du while du recuit
 		return;
+	}
+	
+	
+	public void calculerRapportMoyen(double proba, ListEnergie listProba){
+		int taille = listProba.getTaille();
+		ArrayList<Double> list = listProba.getlistEnergieTotale();
+		int tailleL = list.size();
+		int fenetreK = listProba.getFenetreK();
+		//System.out.println(list);
+		
+		
+		if (taille == 1){
+			this.rapportMoyen = proba;
+		} else if (taille <= fenetreK ){
+			this.rapportMoyen = (this.rapportMoyen*(tailleL-1)+ proba) /tailleL;  // moyenne des probas
+		} else{
+			// Moyenne des probas
+			this.rapportMoyen = (this.rapportMoyen*fenetreK - list.get(0) + proba )/ fenetreK;
+		}
+		// System.out.println("Proba Moyenne : " + this.probaMoyenne); TEST
 	}
 	
 	

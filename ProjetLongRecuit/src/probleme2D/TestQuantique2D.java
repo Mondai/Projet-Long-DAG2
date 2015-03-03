@@ -72,7 +72,7 @@ public class TestQuantique2D {
 		double G0 = 2;
 		int P = 10;
 		double T = 0.7/P;
-		int maxSteps = (int) Math.pow(10,3);
+		int maxSteps = (int) Math.pow(10,2);
 		//FonctionLineaire Tparam = new FonctionLineaire(G0,0,maxSteps);
 		FonctionExpoRecursive Tparam = new FonctionExpoRecursive(G0,0.,maxSteps,5);
 	
@@ -87,7 +87,8 @@ public class TestQuantique2D {
 		
 		//initialisation avec image
 		int echantillonage = 50;
-		Position2DParticule probleme= new Position2DParticule(Ep,Ec,P,relief,mutation,new PanneauRepliques(image),echantillonage);
+		int seed=2;
+		Position2DParticule probleme= new Position2DParticule(Ep,Ec,P,relief,mutation,new PanneauRepliques(image),echantillonage,seed);
 		probleme.initialiser();
 		
 		FenetreRepliques fenetre = new FenetreRepliques(path,((Position2DParticule)probleme).getPanneau(),echantillonage);

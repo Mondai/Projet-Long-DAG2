@@ -12,8 +12,7 @@ import solver.parametres.ConstanteKConstant;
 import solver.parametres.FonctionLineaire;
 import solver.parametres.FonctionLineairePalier;
 import solver.quantique.EnergieCinetiqueVide;
-import solver.quantique.RecuitQuantiqueParametrable;
-import solver.quantique.RecuitQuantiqueParametrable_Graphique;
+import solver.quantique.RecuitQuantique_Graphique;
 import vertexColoring.Conflits;
 import vertexColoring.ConflitsCinetiques;
 import vertexColoring.Graphe;
@@ -33,10 +32,10 @@ public class Test_OneShot_Quantique {
 		MutationConflitsAleatoire mutation = new MutationConflitsAleatoire();
 
 		// Traduction et paramètres du graphe
-		String benchmark = "data/le450_25a.col";
-		Graphe graphe = Traducteur.traduire("data/le450_25a.col");
-		int nbNoeuds = 450;
-		int nbCouleurs = 25;
+		String benchmark = "data/dsjc250.5.col";
+		Graphe graphe = Traducteur.traduire(benchmark);
+		int nbNoeuds = 250;
+		int nbCouleurs = 28;
 
 		//Paramètres du recuit
 		int M = 4 * nbNoeuds * nbCouleurs;
@@ -44,13 +43,13 @@ public class Test_OneShot_Quantique {
 		int P = 10;
 		double T = 0.35/P;
 		int maxSteps = (int) Math.pow(10,3);
-		int seed = 745262;
-		GrapheColorieParticule coloriage = new GrapheColorieParticule(Ep, mutation, Ec, nbCouleurs , P, graphe, seed);
+		//int seed = 745262;
+		GrapheColorieParticule coloriage = new GrapheColorieParticule(Ep, mutation, Ec, nbCouleurs , P, graphe);
 		coloriage.initialiser();
 		FonctionLineaire Tparam = new FonctionLineaire(G0,0,maxSteps);
 		int k=1;
 		ConstanteKConstant Kparam = new ConstanteKConstant(k);
-		RecuitQuantiqueParametrable_Graphique recuit = new RecuitQuantiqueParametrable_Graphique(Tparam,Kparam, M, T);
+		RecuitQuantique_Graphique recuit = new RecuitQuantique_Graphique(Tparam,Kparam, M, T);
 
 		// Paramètres graphiques
 		int echantillonage=1000;
@@ -96,7 +95,7 @@ public class Test_OneShot_Quantique {
 			ListEnergie[] listeProbas = new ListEnergie[P];
 			ListEnergie listeMeilleureEnergie = new ListEnergie(echantillonage,1);
 			ListEnergie listeValeursJr = new ListEnergie(echantillonage,1);
-			ListEnergie listeRapport = new ListEnergie(echantillonage,1);
+			ListEnergie listeRapport = new ListEnergie(echantillonage,1000);
 
 			for (int j=0; j<P;j++) {
 				listeEnergie[j]=new ListEnergie(echantillonage,1);
@@ -162,6 +161,7 @@ public class Test_OneShot_Quantique {
 			}
 
 			// Print des u
+			/*
 			for (int j=0; j<P;j++) {
 				pw.println("u"+j+"="+listeEnergie[j].getlistEnergie().toString()+";");
 				pw2.println("u"+j+"="+listeProbas[j].getlistEnergie().toString()+";");
@@ -215,7 +215,7 @@ public class Test_OneShot_Quantique {
 			pw2.println("title('Proba d'une courbe sur le "+benchmark+"')");
 			pw2.println("xlabel('Nombre d iterations');");
 			pw2.println("ylabel('Proba');");
-			
+			*/
 			
 			
 			// Plot de la meilleure courbe

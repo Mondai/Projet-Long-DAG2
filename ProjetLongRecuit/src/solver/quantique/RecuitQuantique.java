@@ -157,14 +157,15 @@ public class RecuitQuantique implements IRecuit {
 					
 					double deltaEp = probleme.calculerDeltaEp(etat, mutation);	// calculer deltaEp si la mutation etait acceptee
 					double deltaEc = probleme.calculerDeltaEc(etat, previous, next, mutation);  // calculer deltaIEc si la mutation etait acceptee
-						
+					
 					//différences du hamiltonien total
 					//multiplier deltaIEc par JGamma
 					double deltaE = deltaEp/nombreRepliques - deltaEc*Jr;
+					System.out.println("DeltaEc "+deltaEc*Jr);
 					
 					//K.calculerK(deltaE);
 								
-					if( deltaE <= 0 || deltaEp <= 0){
+					if( deltaE <= 0) { //|| deltaEp <= 0){
 						
 						mutationsAcceptees++;
 						probleme.modifElem(etat, mutation);				// faire la mutation
