@@ -79,7 +79,9 @@ public class Position2DParticule extends Probleme{
 		int[] SetDesYStarter= new int[replique];
 		
 			for (int i = 0; i < this.replique; i++){
-				Position2D etat =  new Position2D(Ep, relief, this.gen.nextInt(),0,0,0,0,i);
+				int futureSeed = this.gen.nextInt();
+				Position2D etat =  new Position2D(Ep, relief, futureSeed,0,0,0,0,i);
+				System.out.println(i+"ème générateur :"+futureSeed);
 				etat.initialiser();
 				this.etats[i] = etat;
 				SetDesXStarter[i]=etat.x;

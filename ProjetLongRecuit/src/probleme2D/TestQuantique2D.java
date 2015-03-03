@@ -25,7 +25,7 @@ public class TestQuantique2D {
 	public static void main(String[] args) {
 	
 		
-		String path = "src/images/grey-gradient-background180Flouénew.jpg";
+		String path = "src/images/marilyn.jpg";
 		Image image = (new ImageIcon(path).getImage());
 		BufferedImage bimage = new BufferedImage(image.getWidth(null), image
 		        .getHeight(null), BufferedImage.TYPE_BYTE_GRAY);
@@ -70,11 +70,11 @@ public class TestQuantique2D {
 		double k = 1;
 		int M = 100;
 		double G0 = 2;
-		int P = 10;
+		int P = 20;
 		double T = 0.7/P;
-		int maxSteps = (int) Math.pow(10,2);
+		int maxSteps = 2*(int) Math.pow(10,2);
 		//FonctionLineaire Tparam = new FonctionLineaire(G0,0,maxSteps);
-		FonctionExpoRecursive Tparam = new FonctionExpoRecursive(G0,0.,maxSteps,5);
+		FonctionExpoRecursive Tparam = new FonctionExpoRecursive(G0,0.001,maxSteps,5);
 	
 		ConstanteKConstant Kparam = new ConstanteKConstant(k);
 		//RecuitQuantiqueAccelere recuit = new RecuitQuantiqueAccelere(Tparam,Kparam, M, T);
@@ -87,7 +87,7 @@ public class TestQuantique2D {
 		
 		//initialisation avec image
 		int echantillonage = 50;
-		int seed=2;
+		int seed=4;
 		Position2DParticule probleme= new Position2DParticule(Ep,Ec,P,relief,mutation,new PanneauRepliques(image),echantillonage,seed);
 		probleme.initialiser();
 		

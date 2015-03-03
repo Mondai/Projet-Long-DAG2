@@ -20,7 +20,7 @@ public class Mutation1Pixel implements IMutation{
 	@Override
 	public MutationElementaire getMutationElementaire(Probleme probleme,
 			Etat etat) {
-		HighQualityRandom randomizer = new HighQualityRandom();
+		HighQualityRandom randomizer = ((Position2D)etat).getGen();
 		int random = randomizer.nextInt(4);
 		int distance = 5;
 		//int distance = randomizer.nextInt(10);
