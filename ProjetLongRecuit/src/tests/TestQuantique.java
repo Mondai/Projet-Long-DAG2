@@ -5,14 +5,13 @@ import java.io.IOException;
 import solver.commun.Etat;
 import solver.parametres.ConstanteKConstant;
 import solver.parametres.FonctionLineaire;
-import solver.quantique.RecuitQuantiqueParametrableAccelere;
+import solver.quantique.RecuitQuantique;
 import vertexColoring.Conflits;
 import vertexColoring.ConflitsCinetiques;
 import vertexColoring.Graphe;
 import vertexColoring.GrapheColorie;
 import vertexColoring.GrapheColorieParticule;
 import vertexColoring.MutationConflitsAleatoire;
-import vertexColoring.RecuitQuantiqueParametrableAccelereVC;
 import vertexColoring.Traducteur;
 
 public class TestQuantique {
@@ -36,7 +35,7 @@ public class TestQuantique {
 		
 		// test avec decroissance de T lineaire: k=7000, Tdeb=1000, Tfin=1, pas=1, N=100.
 		// Pour le450_250a: nombre de couleurs theorique 25 donne 2 ou 3 conflits. 26 donne 0 conflit.
-		Graphe graphe = Traducteur.traduire("data/dsjc250.5.col");
+		Graphe graphe = Traducteur.traduire("data/le450_25a.col");
 		// Graphe graphe = Traducteur.traduire("data/le450_15a.col");
 		//GrapheColorieParticule coloriage = new GrapheColorieParticule(Ep, mutation, Ec, 25 , 1, graphe);
 		//GrapheColorieParticule coloriage = new GrapheColorieParticule(Ep, mutation, Ec, 28 , 5, graphe);
@@ -52,21 +51,21 @@ public class TestQuantique {
 		//RecuitSimule recuit = new RecuitSimuleExponentielK(1,10000,0,0.99,10,1000000, listEnergie); // a->0, c->26
 		// RecuitSimule recuit = new RecuitSimuleLineaire(1,1000,0.01,0.1,10, listEnergie);
 		// RecuitSimule recuit = new RecuitSimuleLineaireK(1,1000,0.01,0.1,10, listEnergie);
-		int nbNoeuds = 250;
-		int nbCouleurs = 28;
+		int nbNoeuds = 450;
+		int nbCouleurs = 24;
 		double k = 1;
 		int M = 4 * nbNoeuds * nbCouleurs;
 		double G0 = 0.75;
 		int P = 10;
 		double T = 0.35/P;
-		int maxSteps = (int) Math.pow(10,3);
+		int maxSteps = (int) Math.pow(10,2);
 		int seed = 352;
 		GrapheColorieParticule coloriage = new GrapheColorieParticule(Ep, mutation, Ec, nbCouleurs , P, graphe, seed);
 		coloriage.initialiser();
 		FonctionLineaire Tparam = new FonctionLineaire(G0,0,maxSteps);
 		ConstanteKConstant Kparam = new ConstanteKConstant(k);
 		//RecuitQuantiqueParametrable recuit = new RecuitQuantiqueParametrable(Tparam,Kparam, M, T);
-		RecuitQuantiqueParametrableAccelere recuit = new RecuitQuantiqueParametrableAccelere(Tparam,Kparam, M, T);
+		RecuitQuantique recuit = new RecuitQuantique(Tparam,Kparam, M, T);
 		//RecuitQuantiqueParametrableAccelereVC recuit = new RecuitQuantiqueParametrableAccelereVC(Tparam,Kparam, M, T);
 		
 		long startTime = System.nanoTime();

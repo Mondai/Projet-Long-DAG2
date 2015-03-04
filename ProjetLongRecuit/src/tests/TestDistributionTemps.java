@@ -28,13 +28,13 @@ public class TestDistributionTemps {
 		Graphe graphe = Traducteur.traduire("data/dsjc250.5.col");
 
 		int nbNoeuds = 250;
-		int nbCouleurs = 27;
+		int nbCouleurs = 28;
 		double k = 1;
-		int M =  8*nbNoeuds * nbCouleurs;
-		double G0 = 0.75;
+		int M =  4*nbNoeuds * nbCouleurs;
+		double G0 = 0.55;
 		int P = 10;
 		double T = 0.35/P;
-		int maxSteps = (int) Math.pow(10,2);
+		int maxSteps = (int) Math.pow(10,4);
 		GrapheColorieParticule coloriage = new GrapheColorieParticule(Ep, mutation, Ec, nbCouleurs , P, graphe);
 
 		FonctionLineaire Tparam = new FonctionLineaire(G0,0,maxSteps);
@@ -53,14 +53,15 @@ public class TestDistributionTemps {
 			long startTime = System.nanoTime();
 			recuit.lancer(coloriage);
 			long endTime = System.nanoTime();
-
+			
+			/*
 			// affichage du resultat
 			for (Etat etat : coloriage.getEtats()){
 				GrapheColorie g = (GrapheColorie) etat;
 
 				System.out.println("Energie de l'état : " + g.Ep.calculer(g));
 
-			}
+			}*/
 
 			System.out.println("duree du "+j+"ème recuit non accéléré = "+(endTime-startTime)/1000000000+" s");
 		}
@@ -72,14 +73,15 @@ public class TestDistributionTemps {
 			long startTime = System.nanoTime();
 			recuitExpf.lancer(coloriage);
 			long endTime = System.nanoTime();
-
+			
+			/*
 			// affichage du resultat
 			for (Etat etat : coloriage.getEtats()){
 				GrapheColorie g = (GrapheColorie) etat;
 
 				System.out.println("Energie de l'état : " + g.Ep.calculer(g));
 
-			}
+			}*/
 
 			System.out.println("duree du "+i+"ème recuit accéléré = "+(endTime-startTime)/1000000000+" s");
 		}
