@@ -5,14 +5,21 @@ import java.io.IOException;
 import solver.commun.Etat;
 import solver.parametres.ConstanteKConstant;
 import solver.parametres.FonctionLineaire;
+<<<<<<< HEAD
 import solver.quantique.RecuitQuantiqueAccelere;
+=======
+import solver.quantique.RecuitQuantique;
+>>>>>>> branch 'master' of https://github.com/Mondai/Projet-Long-DAG2.git
 import vertexColoring.Conflits;
 import vertexColoring.ConflitsCinetiques;
 import vertexColoring.Graphe;
 import vertexColoring.GrapheColorie;
 import vertexColoring.GrapheColorieParticule;
 import vertexColoring.MutationConflitsAleatoire;
+<<<<<<< HEAD
 import vertexColoring.RecuitQuantiqueAccelereVC;
+=======
+>>>>>>> branch 'master' of https://github.com/Mondai/Projet-Long-DAG2.git
 import vertexColoring.Traducteur;
 
 public class TestQuantique {
