@@ -35,6 +35,29 @@ public class Position2DParticule extends Probleme{
 		
 		
 	}
+	
+	
+	
+	public Position2DParticule(EnergiePotentielle Ep, EnergieCinetique Ec, int replique, Relief2D relief,IMutation mutation,PanneauRepliques panneau, int echantillonage,int seed) {
+		this.setSeed(seed);
+		this.gen = new HighQualityRandom(seed);
+		this.Ec=Ec;
+		this.replique = replique;
+		this.relief = relief;
+		this.mutation = mutation;
+		
+		this.etats = new Etat[replique];
+		for (int i = 0; i < this.replique; i++){
+			this.etats[i] = new Position2D(Ep,relief, seed,0,0,0,0,i);
+		}
+		this.panneau=panneau;
+		this.fenetre=new FenetreRepliques(echantillonage);
+		
+		
+		
+	}
+	
+	
 
 
 	public void ModificationGraphique (int X, int Y, int numeroReplique) {
@@ -56,7 +79,9 @@ public class Position2DParticule extends Probleme{
 		int[] SetDesYStarter= new int[replique];
 		
 			for (int i = 0; i < this.replique; i++){
-				Position2D etat =  new Position2D(Ep, relief, this.gen.nextInt(),0,0,0,0,i);
+				int futureSeed = this.gen.nextInt();
+				Position2D etat =  new Position2D(Ep, relief, futureSeed,0,0,0,0,i);
+				System.out.println(i+"ème générateur :"+futureSeed);
 				etat.initialiser();
 				this.etats[i] = etat;
 				SetDesXStarter[i]=etat.x;

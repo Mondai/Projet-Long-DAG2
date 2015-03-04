@@ -45,16 +45,19 @@ public class Distances extends EnergieCinetique {
 		double DeltaEc=EcsuivantX+EcsuivantY-EcPrecedentX-EcPrecedentY;
 		*/
 		
-		/*
+		
 		// Norme 2
+		/*
 		double EcPrecedent = Math.sqrt(Math.pow(position2Dnext.getX()- position2D.getX(),2)+Math.pow(position2Dnext.getY()- position2D.getY(),2))+
 				Math.sqrt(Math.pow(position2Dprev.getX()- position2D.getX(),2)+Math.pow(position2Dprev.getY()- position2D.getY(),2));
 		
 		double EcSuivant= Math.sqrt(Math.pow(position2Dnext.getX()- position2D.getX()-mutation2D.deltaX,2)+Math.pow(position2Dnext.getY()- position2D.getY()-mutation2D.deltaY,2))+
 				Math.sqrt(Math.pow(position2Dprev.getX()- position2D.getX()-mutation2D.deltaX,2)+Math.pow(position2Dprev.getY()- position2D.getY()-mutation2D.deltaY,2));
-		double DeltaEc=EcSuivant-EcPrecedent; */
+		double DeltaEc=EcSuivant-EcPrecedent; 
+		*/
 		
 		// Carré de norme 2
+		
 		double EcPrecedent = Math.pow(position2Dnext.getX()- position2D.getX(),2)+Math.pow(position2Dnext.getY()- position2D.getY(),2)+
 				Math.pow(position2Dprev.getX()- position2D.getX(),2)+Math.pow(position2Dprev.getY()- position2D.getY(),2);
 		
@@ -70,6 +73,7 @@ public class Distances extends EnergieCinetique {
 		
 		
 		return -DeltaEc;
+		
 	}
 
 	@Override

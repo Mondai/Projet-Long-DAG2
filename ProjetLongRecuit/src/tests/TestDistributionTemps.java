@@ -25,7 +25,7 @@ public class TestDistributionTemps {
 		ConflitsCinetiques Ec = new ConflitsCinetiques();
 
 		MutationConflitsAleatoire mutation = new MutationConflitsAleatoire();
-		Graphe graphe = Traducteur.traduire("data/dsjc250.5.col");
+		Graphe graphe = Traducteur.traduire("data/le450_25a.col");
 
 		int nbNoeuds = 250;
 		int nbCouleurs = 28;
@@ -42,7 +42,7 @@ public class TestDistributionTemps {
 
 		//RecuitQuantiqueParametrableAccelereVC recuit = new RecuitQuantiqueParametrableAccelereVC(Tparam,Kparam, M, T);
 
-		int nombre = 1;
+		int nombre = 3;
 
 		
 
@@ -68,7 +68,7 @@ public class TestDistributionTemps {
 		
 		for (int i=0;i<nombre;i++) {
 
-			RecuitQuantiqueExpf recuitExpf = new RecuitQuantiqueExpf(Tparam,Kparam, M, T);
+			RecuitQuantiqueAccelere recuitExpf = new RecuitQuantiqueAccelere(Tparam,Kparam, M, T);
 			coloriage.initialiser();
 			long startTime = System.nanoTime();
 			recuitExpf.lancer(coloriage);

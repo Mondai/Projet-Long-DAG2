@@ -11,8 +11,9 @@ public class Position2D extends Etat {
 		int y;
 		int meilleurX;
 		int meilleurY;
-		HighQualityRandom gen = new HighQualityRandom(getSeed());
-		private int seed = new HighQualityRandom().nextInt();
+		private int seed;
+		//HighQualityRandom gen = new HighQualityRandom(getSeed());
+		HighQualityRandom gen;
 		public double meilleureEnergie;
 		int numero;
 		
@@ -47,6 +48,8 @@ public class Position2D extends Etat {
 			this.meilleurX = meilleurX;
 			this.meilleurY = meilleurY;
 			this.seed=seed;
+			this.gen = new HighQualityRandom(seed);
+			
 			this.meilleureEnergie=1000;
 			this.numero=i;
 		}
@@ -85,8 +88,15 @@ public class Position2D extends Etat {
 		}
 		
 		public void initialiser() {
-			this.initialiserSansSeed();
-			this.gen = new HighQualityRandom(this.getSeed());
+			int x = this.gen.nextInt(relief.getLargeur());
+			this.setMeilleurX(x);
+			this.setX(x);
+			System.out.println("x d'initialisation"+x);
+			
+			int y = this.gen.nextInt(relief.getHauteur());
+			this.setMeilleurY(relief.getLargeur());
+			this.setY(y);
+			System.out.println("y d'initialisation"+y);
 		}
 		
 		public void sauvegarderSolution(){

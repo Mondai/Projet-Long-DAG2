@@ -59,7 +59,7 @@ public class ListEnergie extends IListEnergie {
 	 * getter de la liste
 	 */
 	
-	public List<Double> getlistEnergie() {
+	public ArrayList<Double> getlistEnergie() {
 		return this.list;
 	}
 	
@@ -68,7 +68,7 @@ public class ListEnergie extends IListEnergie {
 	 */
 	
 	
-	public List<Double> getlistEnergieTotale() {
+	public ArrayList<Double> getlistEnergieTotale() {
 		return this.listTotale;
 	}
 	
