@@ -75,7 +75,8 @@ public class RecuitQuantiqueAccelere extends RecuitQuantique{
 
 			Collections.shuffle(indiceEtats, probleme.gen);	// melanger l'ordre de parcours des indices
 			Jr = -this.temperature/2*Math.log(Math.tanh(this.Gamma.t/nombreRepliques/this.temperature));	// calcul de Jr pour ce palier
-
+			long startTime = System.nanoTime();
+			
 			for (Integer p : indiceEtats){	
 				
 				etat = probleme.etats[p];
@@ -125,7 +126,7 @@ public class RecuitQuantiqueAccelere extends RecuitQuantique{
 					}
 					else {
 						if (deltaE < 0) proba = 1;
-						else proba = Expo.expf(-deltaE / (this.K.k * this.temperature));
+						else proba = Expo.exp1(-deltaE / (this.K.k * this.temperature));
 						
 						if (proba >= probleme.gen.nextDouble()) {	
 							mutationsAccepteesUB++;
@@ -141,7 +142,7 @@ public class RecuitQuantiqueAccelere extends RecuitQuantique{
 								
 							}
 							else{
-								proba = Expo.expf(-deltaE / (this.K.k * this.temperature));
+								proba = Expo.exp1(-deltaE / (this.K.k * this.temperature));
 							
 								if (proba >= probleme.gen.nextDouble()) {
 									mutationsAcceptees++;
@@ -154,6 +155,8 @@ public class RecuitQuantiqueAccelere extends RecuitQuantique{
 				}
 
 			}
+			long endTime = System.nanoTime();
+			System.out.println("duree = "+(endTime-startTime)/1000000+" s");
 		}
 		
 		System.out.print(mutationsTentees+" ");
