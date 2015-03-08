@@ -6,16 +6,13 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import solver.commun.Etat;
 import solver.parametres.ConstanteKConstant;
 import solver.parametres.FonctionLineaire;
 import solver.quantique.MutableDouble;
-import solver.quantique.RecuitQuantiqueAccelere;
 import solver.quantique.RecuitQuantiqueAccelere_Iter;
 import vertexColoring.Conflits;
 import vertexColoring.ConflitsCinetiques;
 import vertexColoring.Graphe;
-import vertexColoring.GrapheColorie;
 import vertexColoring.GrapheColorieParticule;
 import vertexColoring.MutationConflitsAleatoire;
 import vertexColoring.Traducteur;
@@ -53,11 +50,11 @@ public class Test_Quantique_Param1 {
 			int maxSteps = ((int) Math.pow(10,4))*10/P;
 			double T = T0/P;
 			
-			System.out.print("iter_"+G0+"_"+T0+" = [ ");	// affichage terminal
+			System.out.print("iter_"+P+" = [ ");	// affichage terminal
 			
 			// initialisation du PrintWriter: on ouvre et ferme les flux a chaque fois que l'on souhaite ecrire, pour eviter la perte d'information en cas de coupure.
 			PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(file, true))); // true -> append
-			pw.print("iter_"+G0+"_"+T0+" = [ ");			// ecriture dans le fichier txt
+			pw.print("iter_"+P+" = [ ");			// ecriture dans le fichier txt
 			pw.close();		// fermeture flux
 			
 			for(int s=0; s<seeds.length ;s++){
