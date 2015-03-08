@@ -38,7 +38,7 @@ public class Test_Quantique_Param {
 		int nbNoeuds = 500;
 		int nbCouleurs = 48;
 		double k = 1;
-		int M = 10; //4 * nbNoeuds * nbCouleurs;
+		int M = 4 * nbNoeuds * nbCouleurs;
 		double G0 = G0s[0];		// Raphael: a modifier d'un appareil a l'autre
 		int P = 10;
 		int maxSteps = (int) Math.pow(10,1);
