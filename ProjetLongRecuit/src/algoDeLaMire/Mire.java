@@ -2,10 +2,9 @@ package algoDeLaMire;
 
 import java.io.IOException;
 import java.util.Arrays;
-
 import solver.parametres.ConstanteKConstant;
 import solver.parametres.FonctionLineaire;
-import solver.quantique.RecuitQuantiqueParametrableAccelere;
+import solver.quantique.RecuitQuantiqueAccelere;
 import vertexColoring.Conflits;
 import vertexColoring.ConflitsCinetiques;
 import vertexColoring.Graphe;
@@ -69,7 +68,7 @@ public class Mire {
 		coloriage.initialiser();
 		FonctionLineaire Tparam = new FonctionLineaire(g0, 0, maxSteps);
 		ConstanteKConstant Kparam = new ConstanteKConstant(k);
-		RecuitQuantiqueParametrableAccelere recuit = new RecuitQuantiqueParametrableAccelere(
+		RecuitQuantiqueAccelere recuit = new RecuitQuantiqueAccelere(
 				Tparam, Kparam, M, t);
 		
 		/*double somme = 0. ;
