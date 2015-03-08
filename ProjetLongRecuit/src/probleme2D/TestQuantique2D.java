@@ -98,7 +98,7 @@ public class TestQuantique2D {
 		
 		//initialisation avec image
 		int seed=4;
-		Position2DParticule probleme= new Position2DParticule(Ep,Ec,P,relief,mutation,new PanneauRepliques(image),echantillonage,seed);
+		Position2DParticule probleme = new Position2DParticule(Ep,Ec,P,relief,mutation,new PanneauRepliques(image),echantillonage,seed);
 		probleme.initialiser();
 		
 		FenetreRepliques fenetre = new FenetreRepliques(path,((Position2DParticule)probleme).getPanneau(),echantillonage);
