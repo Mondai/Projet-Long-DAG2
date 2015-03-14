@@ -23,7 +23,7 @@ public class Test_Quantique_Param1 {
 
 		int[] seeds = {1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000, 1000000000};
 		
-		int[] Ps = {20,25,30,40,50};
+		int[] Ps = {100,150};
 		
 		Conflits Ep = new Conflits();
 		ConflitsCinetiques Ec = new ConflitsCinetiques();
@@ -40,7 +40,7 @@ public class Test_Quantique_Param1 {
 		double T0 = 0.35;
 		
 		// fichier txt
-		String nomFichier = "SortiesGraphiques/Iter_Quantique/iter_P.txt";
+		String nomFichier = "SortiesGraphiques/iter_P2.txt";
 		File file = new File(nomFichier);
 		
 		// G0 fixe. Boucle sur T0.
