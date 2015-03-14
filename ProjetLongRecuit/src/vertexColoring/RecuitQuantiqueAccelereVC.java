@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import solver.commun.Etat;
+import solver.commun.Expo;
 import solver.commun.MutationElementaire;
 import solver.commun.Probleme;
 import solver.parametres.ConstanteK;
@@ -61,7 +62,7 @@ public class RecuitQuantiqueAccelereVC extends RecuitQuantiqueAccelere {
 		double[] termeExpPotentiel = new double[2*adjacenceMax+1]; //tableau listant tous les exp(deltaEp/T)
 		int k = 0;
 		for (double i = -adjacenceMax; i <= adjacenceMax; i++){
-			termeExpPotentiel[k] = exp(i/nombreRepliques/this.temperature);
+			termeExpPotentiel[k] = Expo.expf(i/nombreRepliques/this.temperature);
 			k++;
 		}
 
@@ -81,7 +82,7 @@ public class RecuitQuantiqueAccelereVC extends RecuitQuantiqueAccelere {
 			double[] termeExpCinetique = new double[8*(v-1)+1]; //tableau listant tous les exp(deltaEp/T)
 			k = 0;
 			for (double i = -4*(v-1); i <= 4*(v-1); i++){
-				termeExpCinetique[k] = exp(i*Jr/this.temperature);
+				termeExpCinetique[k] = Expo.expf(i*Jr/this.temperature);
 				k++;
 			}
 
