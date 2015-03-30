@@ -3,9 +3,12 @@ package dag3;
 import java.util.HashSet;
 import java.util.LinkedList;
 
-import solver.commun.EnergiePotentielle;
-import solver.commun.Etat;
+import parametrage.EnergiePotentielle;
 import solver.commun.HighQualityRandom;
+import modele.Etat;
+
+
+
 
 /**
  * Classe qui représente un coloriage des noeuds d'un graphe.
