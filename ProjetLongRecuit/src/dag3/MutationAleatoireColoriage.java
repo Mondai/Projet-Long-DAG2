@@ -1,7 +1,5 @@
 package dag3;
 
-import vertexColoring.GrapheColorie;
-import vertexColoring.MutationElementaireNoeud;
 import modele.Etat;
 import modele.Probleme;
 import mutation.IMutation;

@@ -4,7 +4,6 @@ import parametrage.EnergieCinetique;
 import parametrage.EnergiePotentielle;
 import parametrage.ParametreGamma;
 import parametrage.Temperature;
-import vertexColoring.GrapheColorie;
 import modele.Etat;
 import modele.Probleme;
 
@@ -33,8 +32,10 @@ public class GrapheColorieParticule extends Probleme {
 	}
 	
 	public Etat creeEtatAleatoire() {
-		GrapheColorie etat =  new GrapheColorie(energiepot, k, graphe, this.gen.nextInt());
+		GrapheColorie etat =  new GrapheColorie(this.getEpot(), k, graphe, this.getSeed());
 		etat.initialiser();
+//		etat.setnext(etat);
+//		etat.setprevious(etat);
 		return etat;
 	}
 	

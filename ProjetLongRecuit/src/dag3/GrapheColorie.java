@@ -68,16 +68,9 @@ public class GrapheColorie extends Etat{
 	 */
 	int[][] F; 
 	
-	
-	/**
-	 * Sauvegarde de la dernière modification effectuée.
-	 */
-	public Modification derniereModif;
-	
 	public GrapheColorie(EnergiePotentielle Ep, int k, Graphe graphe, int seed) {
 		
-		this.derniereModif = null;
-		this.Ep = Ep;
+		super(Ep);
 		
 		this.k = k; 
 		this.couleurs = new int[graphe.getNombreNoeuds()];
@@ -143,6 +136,11 @@ public class GrapheColorie extends Etat{
 		this.initialiserSansSeed();
 		this.setSeed(this.getSeed() + 1);
 		this.gen = new HighQualityRandom(this.getSeed());
+	}
+	
+	@Override
+	public int distanceIsing(Etat e){
+		return 0;
 	}
 	
 	/**
