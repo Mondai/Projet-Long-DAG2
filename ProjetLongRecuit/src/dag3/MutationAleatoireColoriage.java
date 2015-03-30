@@ -1,9 +1,6 @@
 package dag3;
 
-import solver.commun.Etat;
-import solver.commun.IMutation;
-import solver.commun.MutationElementaire;
-import solver.commun.Probleme;
+import recuitDAG3.*;
 
 
 /**
