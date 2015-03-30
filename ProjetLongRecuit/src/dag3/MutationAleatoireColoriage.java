@@ -1,5 +1,7 @@
 package dag3;
 
+import vertexColoring.GrapheColorie;
+import vertexColoring.MutationElementaireNoeud;
 import modele.Etat;
 import modele.Probleme;
 import mutation.IMutation;
@@ -11,32 +13,26 @@ import mutation.IMutation;
  */
 public class MutationAleatoireColoriage implements IMutation {
 
-	/**
-	 * Fonction qui retourne une MutationElementaireNoeud possible, avec un noeud puis une couleur aléatoire
-	 * (différente de celle précédente du noeud).
-	 */
-	public MutationElementaire getMutationElementaire(Probleme probleme, Etat etat) {
-		
-
-		
-		return new MutationElementaireNoeud(noeudAleatoire, couleurAleatoire);
-	}
-
-
 	@Override
-	public double calculer(Probleme arg0) {
-		// TODO Auto-generated method stub
+	public double calculer(Probleme probleme) {
+		// différence d'énergie totale
 		return 0;
 	}
 
 	@Override
-	public double calculer(Probleme arg0, Etat arg1) {
-		// TODO Auto-generated method stub
-		return 0;
+	public double calculer(Probleme probleme, Etat etat) {
+		
+		MutationElementaireNoeud m = (MutationElementaireNoeud) mutation;
+		GrapheColorie coloriage = (GrapheColorie)	etat;
+
+		// Propriete: DelatE = F[v][couleurSuiv] - F[v][couleurPrec]
+		return coloriage.F[m.noeud][m.couleur] - coloriage.F[m.noeud][coloriage.couleurs[m.noeud]];
+		
+		// différence d'énergie potentielle
 	}
 
 	@Override
-	public void faire(Probleme arg0) {
+	public void faire(Probleme probleme) {
 		// TODO Auto-generated method stub
 		
 	}
