@@ -1,9 +1,11 @@
 package dag3;
 
-import solver.commun.Etat;
-import solver.commun.IMutation;
-import solver.commun.MutationElementaire;
-import solver.commun.Probleme;
+import java.util.HashSet;
+
+import modele.Etat;
+import modele.Probleme;
+import mutation.IMutation;
+
 
 
 /**
@@ -11,15 +13,64 @@ import solver.commun.Probleme;
  * Le noeud est aléatoirement choisi parmis les noeuds en conflits, la couleur est prise aléatoirement.
  */
 public class MutationConflitsAleatoire implements IMutation {
+	
+	int noeud;
+	int couleur;
 
-	/**
-	 * Fonction qui retourne une MutationElementaireNoeud possible, avec un noeud pris parmis les noeuds en conflit.
-	 * Ensuite, on choisit une couleur aléatoire différente de celle précédente du noeud.
-	 */
-	public MutationElementaire getMutationElementaire(Probleme probleme, Etat etat) {
+	@Override
+	public double calculer(Probleme probleme) {
+		// sert à rien
+		return 0;
+	}
+
+	@Override
+	public double calculer(Probleme probleme, Etat etat) {
 		
 		GrapheColorie coloriage = (GrapheColorie) etat;
-	
+
+		int couleurNoeud = coloriage.couleurs[this.noeud];
+
+		// Propriete: DelatE = F[v][couleurSuiv] - F[v][couleurPrec]
+		int Epot = coloriage.F[this.noeud][this.couleur] - coloriage.F[this.noeud][couleurNoeud];	
+		// différence d'énergie potentielle
+		
+		GrapheColorie coloriageNext = (GrapheColorie)	coloriage.getNext();
+		GrapheColorie coloriagePrev = (GrapheColorie)	coloriage.getPrevious();
+		int deltaE = 0;
+
+		HashSet<Integer> Valpha = coloriage.getClassesCouleurs()[this.couleur];
+		HashSet<Integer> Vbeta = coloriage.getClassesCouleurs()[couleurNoeud];
+
+		Valpha.remove(this.noeud);	// le calcul suivant requiert d'exclure v de Valpha 
+
+		for (int u : Valpha){
+			deltaE += 2*(coloriageNext.spinConflit(u, this.noeud) + coloriagePrev.spinConflit(u, this.noeud));
+		}
+		
+		for (int u : Vbeta){
+			deltaE -= 2*(coloriageNext.spinConflit(u, this.noeud) + coloriagePrev.spinConflit(u, this.noeud));
+		}
+		
+		Valpha.add(this.noeud);	// rajouter v dans le classe de couleur (vu qu'on l'a enleve avant)
+		
+		return deltaE + Epot;
+		//renvoie "energieCin" + energie potentielle
+	}
+
+	@Override
+	public void faire(Probleme probleme, Etat etat) {
+		GrapheColorie coloriage = (GrapheColorie) etat;
+		
+		int couleurNoeud = coloriage.couleurs[this.noeud];
+		coloriage.couleurs[this.noeud] = this.couleur;
+		coloriage.updateLocal(this.noeud, couleurNoeud);
+	}
+
+	@Override
+	public void maj(Probleme probleme, Etat etat) {
+		
+		GrapheColorie coloriage = (GrapheColorie) etat;
+		
 		// Determination aleatoire d'une mutation a effectuer parmi les noeuds en conflit.
 		int noeudsEnConflits = coloriage.nombreNoeudsEnConflit();
 		
@@ -40,20 +91,14 @@ public class MutationConflitsAleatoire implements IMutation {
 			couleurSuiv = (int) (coloriage.gen.nextInt(coloriage.k));
 		}
 		
-		return new MutationElementaireNoeud(noeud, couleurSuiv);
+		this.noeud = noeud;
+		this.couleur = couleurSuiv;
+		
 	}
 
-	/**
-	 * Fonction qui modifie l'état, ici un GrapheColorié, pour prendre en compte la mutation effectuée.
-	 */
-	public void faire(Probleme probleme, Etat etat, MutationElementaire mutation) {
-		
-		GrapheColorie coloriage = (GrapheColorie) etat;
-		MutationElementaireNoeud m = (MutationElementaireNoeud) mutation;
-		
-		int couleurPrec = coloriage.couleurs[m.noeud];
-		coloriage.couleurs[m.noeud] = m.couleur;
-		coloriage.updateLocal(m.noeud, couleurPrec);
+	@Override
+	public void faire(Probleme arg0) {
+		// TODO Auto-generated method stub
 		
 	}
 

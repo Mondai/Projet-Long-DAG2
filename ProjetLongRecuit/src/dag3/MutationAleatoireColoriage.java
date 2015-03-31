@@ -28,37 +28,30 @@ public class MutationAleatoireColoriage implements IMutation {
 		
 		GrapheColorie coloriage = (GrapheColorie) etat;
 
-		// Determination aleatoire d'une mutation elementaire a effectuer.
-		int noeudAleatoire = (int) (coloriage.gen.nextDouble() * coloriage.graphe.getNombreNoeuds());
-		int couleurNoeud = coloriage.couleurs[noeudAleatoire];
-		int couleurAleatoire = couleurNoeud;
-
-		while (couleurAleatoire == couleurNoeud) {
-			couleurAleatoire = (int) (coloriage.gen.nextDouble() * coloriage.k);
-		}
+		int couleurNoeud = coloriage.couleurs[this.noeud];
 
 		// Propriete: DelatE = F[v][couleurSuiv] - F[v][couleurPrec]
-		int Epot = coloriage.F[noeudAleatoire][couleurAleatoire] - coloriage.F[noeudAleatoire][couleurNoeud];	
+		int Epot = coloriage.F[this.noeud][this.couleur] - coloriage.F[this.noeud][couleurNoeud];	
 		// différence d'énergie potentielle
 		
 		GrapheColorie coloriageNext = (GrapheColorie)	coloriage.getNext();
 		GrapheColorie coloriagePrev = (GrapheColorie)	coloriage.getPrevious();
 		int deltaE = 0;
 
-		HashSet<Integer> Valpha = coloriage.getClassesCouleurs()[couleurAleatoire];
+		HashSet<Integer> Valpha = coloriage.getClassesCouleurs()[this.couleur];
 		HashSet<Integer> Vbeta = coloriage.getClassesCouleurs()[couleurNoeud];
 
-		Valpha.remove(noeudAleatoire);	// le calcul suivant requiert d'exclure v de Valpha 
+		Valpha.remove(this.noeud);	// le calcul suivant requiert d'exclure v de Valpha 
 
 		for (int u : Valpha){
-			deltaE += 2*(coloriageNext.spinConflit(u, noeudAleatoire) + coloriagePrev.spinConflit(u, noeudAleatoire));
+			deltaE += 2*(coloriageNext.spinConflit(u, this.noeud) + coloriagePrev.spinConflit(u, this.noeud));
 		}
 		
 		for (int u : Vbeta){
-			deltaE -= 2*(coloriageNext.spinConflit(u, noeudAleatoire) + coloriagePrev.spinConflit(u, noeudAleatoire));
+			deltaE -= 2*(coloriageNext.spinConflit(u, this.noeud) + coloriagePrev.spinConflit(u, this.noeud));
 		}
 		
-		Valpha.add(noeudAleatoire);	// rajouter v dans le classe de couleur (vu qu'on l'a enleve avant)
+		Valpha.add(this.noeud);	// rajouter v dans le classe de couleur (vu qu'on l'a enleve avant)
 		
 		return deltaE + Epot;
 		//renvoie "energieCin" + energie potentielle
@@ -67,18 +60,10 @@ public class MutationAleatoireColoriage implements IMutation {
 	@Override
 	public void faire(Probleme probleme, Etat etat) {
 		GrapheColorie coloriage = (GrapheColorie) etat;
-
-		// Determination aleatoire d'une mutation elementaire a effectuer.
-		int noeudAleatoire = (int) (coloriage.gen.nextDouble() * coloriage.graphe.getNombreNoeuds());
-		int couleurNoeud = coloriage.couleurs[noeudAleatoire];
-		int couleurAleatoire = couleurNoeud;
-
-		while (couleurAleatoire == couleurNoeud) {
-			couleurAleatoire = (int) (coloriage.gen.nextDouble() * coloriage.k);
-		}
 		
-		coloriage.couleurs[noeudAleatoire] = couleurAleatoire;
-		coloriage.updateLocal(noeudAleatoire, couleurNoeud);
+		int couleurNoeud = coloriage.couleurs[this.noeud];
+		coloriage.couleurs[this.noeud] = this.couleur;
+		coloriage.updateLocal(this.noeud, couleurNoeud);
 	}
 
 	@Override
