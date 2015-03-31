@@ -8,8 +8,6 @@ import solver.commun.HighQualityRandom;
 import modele.Etat;
 
 
-
-
 /**
  * Classe qui représente un coloriage des noeuds d'un graphe.
  * <p>
@@ -140,7 +138,46 @@ public class GrapheColorie extends Etat{
 	
 	@Override
 	public int distanceIsing(Etat e){
-		return 0;
+		
+		int E = 0;
+		int spin1 = 1;
+		int spin2 = 1;
+		
+		GrapheColorie[] v = {(GrapheColorie) e.getPrevious(),(GrapheColorie) e.getNext()};
+		
+		//calcul des différences spins entre e et ses voisins
+		for (int p = 0; p < 2 ; p++){
+			GrapheColorie etat = (GrapheColorie) e;
+			GrapheColorie etatNext = (GrapheColorie) v[p];
+			for (int i = 0; i < etat.getCouleurs().length; i++){
+				for (int j = 0; j < i; j++){							// les noeuds j < i
+					spin1 = 1;
+					spin2 = 1;
+					if (etat.getCouleurs()[i] == etat.getCouleurs()[j]){
+						spin1 = -1;
+					}
+					if (etatNext.getCouleurs()[i] == etatNext.getCouleurs()[j]){
+						spin2 = -1;
+					}
+					E += spin1*spin2;
+				}
+				for (int j = i+1; j < etat.getCouleurs().length; j++){	// les noeuds j > i
+					spin1 = 1;
+					spin2 = 1;
+					if (etat.getCouleurs()[i] == etat.getCouleurs()[j]){
+						spin1 = -1;
+					}
+					if (etatNext.getCouleurs()[i] == etatNext.getCouleurs()[j]){
+						spin2 = -1;
+					}
+					E += spin1*spin2;
+				}
+			}
+		}
+		
+		E /= 2; // Tous les spins sont comptés deux fois dans les calculs
+		
+		return E;
 	}
 	
 	/**
