@@ -19,7 +19,7 @@ public class MutationAleatoireColoriage implements IMutation {
 
 	@Override
 	public double calculer(Probleme probleme) {
-		// différence d'énergie totale
+		// sert à rien
 		return 0;
 	}
 
@@ -65,13 +65,7 @@ public class MutationAleatoireColoriage implements IMutation {
 	}
 
 	@Override
-	public void faire(Probleme probleme) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public Etat faire(Probleme probleme, Etat etat) {
+	public void faire(Probleme probleme, Etat etat) {
 		GrapheColorie coloriage = (GrapheColorie) etat;
 
 		// Determination aleatoire d'une mutation elementaire a effectuer.
@@ -85,12 +79,12 @@ public class MutationAleatoireColoriage implements IMutation {
 		
 		coloriage.couleurs[noeudAleatoire] = couleurAleatoire;
 		coloriage.updateLocal(noeudAleatoire, couleurNoeud);
-		
-		return coloriage;
 	}
 
 	@Override
-	public void maj() {
+	public void maj(Probleme probleme, Etat etat) {
+		GrapheColorie coloriage = (GrapheColorie) etat;
+		
 		// Determination aleatoire d'une mutation elementaire a effectuer.
 		int noeudAleatoire = (int) (coloriage.gen.nextDouble() * coloriage.graphe.getNombreNoeuds());
 		int couleurNoeud = coloriage.couleurs[noeudAleatoire];
@@ -99,6 +93,15 @@ public class MutationAleatoireColoriage implements IMutation {
 		while (couleurAleatoire == couleurNoeud) {
 			couleurAleatoire = (int) (coloriage.gen.nextDouble() * coloriage.k);
 		}
+		
+		this.noeud = noeudAleatoire;
+		this.couleur = couleurAleatoire;
+		
+	}
+
+	@Override
+	public void faire(Probleme arg0) {
+		// TODO Auto-generated method stub
 		
 	}
 	
