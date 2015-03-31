@@ -2,11 +2,14 @@ package solver.commun;
 
 /**
  * Interface représentant le concept abstrait de mutation dans l'algorithme de recuit.
+ * <p>
+ * Il est nécessaire de coder une classe qui implémente cette interface. Elle doit implémenter les deux fonctions 
+ * getMutationElementaire() et faire().
  */
 public interface IMutation {
 
 	/**
-	 * Renvoie une MutationElementaire possible selon le problème et l'état envoyés.
+	 * Renvoie une MutationElementaire possible selon le problème et l'état envoyés, sans l'effectuer.
 	 * @param probleme
 	 * Le problème dont on cherche une mutation élementaire possible.
 	 * @param etat

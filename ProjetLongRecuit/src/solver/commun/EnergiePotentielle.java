@@ -3,7 +3,8 @@ package solver.commun;
 /**
  * Classe abstraite qui sert de template pour les énergies potentielles des recuits.
  * Concrètement, cette classe correspond à une méthode de calcul de l'énergie potentielle spécifique à un problème.
- * 
+ * <p>
+ * Il est nécessaire de coder une sous-classe fille pour chaque projet, et d'y implémenter calculer() et et calculerDeltaE().
  */
 public abstract class EnergiePotentielle{
 	

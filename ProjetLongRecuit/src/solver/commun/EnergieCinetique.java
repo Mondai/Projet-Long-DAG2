@@ -4,6 +4,9 @@ package solver.commun;
  * 
  * Classe abstraite qui sert de template pour les énergies cinétiques du recuit quantique.
  * Concrètement, cette classe correspond à une méthode de calcul de l'énergie cinétique spécifique à un problème.
+ * <p>
+ * Il est nécessaire d'implémenter une sous-classe fille, et d'y implémenter calculer() et calculerDeltaE().
+ * Il faut aussi implémenter calculerDeltaEUB() pour pouvoir utiliser le Recuit Quantique Accéléré.
  */
 public abstract class EnergieCinetique{
 	

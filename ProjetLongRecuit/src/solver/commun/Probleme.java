@@ -9,6 +9,9 @@ package solver.commun;
  * les différentes méthodes abstraites utilisées par l'algorithme.
  * Elle hérite de particules et disposent donc d'attributs en conséquence.
  * On utilise pour l'aléatoire une classe appelée HighQualityRandom.
+ * <p>
+ * Pour utiliser un recuit, il faut implémenter un Probleme spécifique à notre problème,
+ * et implémenter la fonction initialiser(), qui initialise le problème ainsi que les états.
  * @see IMutation,HighQualityRandom,Particule
  */
 public abstract class Probleme extends Particule{
