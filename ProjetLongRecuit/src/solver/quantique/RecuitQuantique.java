@@ -161,7 +161,7 @@ public class RecuitQuantique implements IRecuit {
 					//différences du hamiltonien total
 					//multiplier deltaIEc par JGamma
 					double deltaE = deltaEp/nombreRepliques - deltaEc*Jr;
-					System.out.println("DeltaEc "+deltaEc*Jr);
+					//System.out.println("DeltaEc "+deltaEc*Jr);
 					
 					//K.calculerK(deltaE);
 								
