@@ -344,14 +344,31 @@ public class GrapheColorie extends Etat{
 	}
 
 	public Etat clone(){
+		
 		GrapheColorie e = new GrapheColorie(this.getE(),this.k,this.graphe,this.getSeed());
-		e.setMeilleuresCouleurs(meilleuresCouleurs);
-		e.setNombreConflitsAretes(nombreConflitsAretes);
-		e.setColorClasses(colorClasses);
-		e.setCouleurs(couleurs);
-		e.setF(F);
-		e.setNoeudsConflitList(noeudsConflitList);
+		
+		
+		// Reclonage
+		
 		e.setGen(gen);
+		e.setColorClasses(colorClasses.clone());
+		e.setMeilleuresCouleurs(meilleuresCouleurs.clone());
+		e.setF(F.clone());
+		e.setCouleurs(couleurs.clone());
+		
+		
+		
+		
+		int nb = nombreConflitsAretes;
+		e.setNombreConflitsAretes(nb);
+		
+		@SuppressWarnings("unchecked")
+		LinkedList<Integer> listeConflitsNoeuds = (LinkedList<Integer>) noeudsConflitList.clone();
+		e.setNoeudsConflitList(listeConflitsNoeuds);
+		
+		
+		
+		
 		
 		return e;
 		}

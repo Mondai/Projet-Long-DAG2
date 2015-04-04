@@ -61,7 +61,26 @@ public class GrapheColorieParticule extends Probleme {
 		
 		
 		GrapheColorieParticule p = new GrapheColorieParticule(r,this.getT(),this.getSeed(),this.getEcin(),this.getEpot(),this.getGamma(), this.graphe);
+		
+		p.setReplique(P);
+		p.setK(k);
 		return p;
+	}
+
+	public int getK() {
+		return k;
+	}
+
+	public int getReplique() {
+		return replique;
+	}
+
+	public void setK(int k) {
+		this.k = k;
+	}
+
+	public void setReplique(int replique) {
+		this.replique = replique;
 	}
 	
 		
