@@ -5,6 +5,7 @@ import java.util.HashSet;
 import modele.Etat;
 import modele.Probleme;
 import mutation.IMutation;
+import dag3.GrapheColorie;
 
 
 
@@ -73,6 +74,7 @@ public class MutationConflitsAleatoire implements IMutation {
 		
 		// Determination aleatoire d'une mutation a effectuer parmi les noeuds en conflit.
 		int noeudsEnConflits = coloriage.nombreNoeudsEnConflit();
+		//System.out.println("nombre noeuds en conflits "+noeudsEnConflits);
 		
 		int compteur = (int) (coloriage.gen.nextInt(noeudsEnConflits));
 

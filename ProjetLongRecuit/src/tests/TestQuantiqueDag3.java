@@ -56,6 +56,7 @@ public class TestQuantiqueDag3 {
 		GrapheColorieParticule coloriage = new GrapheColorieParticule(etats, T, seed, Ec, Ep, gamma, graphe);
 		RecuitTruanderie recuit = new RecuitTruanderie();
 		
+		
 		long startTime = System.nanoTime();
 		try {
 			recuit.solution(coloriage, mutation, maxSteps, seed, M);

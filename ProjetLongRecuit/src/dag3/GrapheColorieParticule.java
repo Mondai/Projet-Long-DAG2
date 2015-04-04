@@ -1,5 +1,7 @@
 package dag3;
 
+import java.util.ArrayList;
+
 import parametrage.EnergieCinetique;
 import parametrage.EnergiePotentielle;
 import parametrage.ParametreGamma;
@@ -37,6 +39,35 @@ public class GrapheColorieParticule extends Probleme {
 		return etat;
 	}
 	
+	public GrapheColorieParticule clone() {
+		int n = this.getEtat().size();
+		ArrayList<Etat> r = new ArrayList<Etat>(n);
+		for(int i=0; i<n; i++){
+			r.add(( (this.getEtat().get(i)).clone()));
+		}
+		
+		int P = n;
+		java.util.ArrayList<Etat> etats = this.getEtat();
+	
+		
+		etats.get(0).setprevious(etats.get(P-1));
+		etats.get(0).setnext(etats.get(1));
+		for(int i =1; i<P-1;i++){
+			etats.get(i).setprevious(etats.get(i-1));
+			etats.get(i).setnext(etats.get(i+1));
+		}
+		etats.get(P-1).setprevious(etats.get(P-2));
+		etats.get(P-1).setnext(etats.get(0));
+		
+		
+		GrapheColorieParticule p = new GrapheColorieParticule(r,this.getT(),this.getSeed(),this.getEcin(),this.getEpot(),this.getGamma(), this.graphe);
+		return p;
+	}
+	
+		
+		
+	}
+	
 
 
-}
+

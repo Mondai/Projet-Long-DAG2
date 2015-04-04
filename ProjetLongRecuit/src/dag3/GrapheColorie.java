@@ -309,5 +309,52 @@ public class GrapheColorie extends Etat{
 	public void setNombreConflitsAretes(int nombreConflitsAretes) {
 		this.nombreConflitsAretes = nombreConflitsAretes;
 	}
+	
+	
+	public HighQualityRandom getGen() {
+		return gen;
+	}
+
+	public HashSet<Integer>[] getColorClasses() {
+		return colorClasses;
+	}
+
+	public int[][] getF() {
+		return F;
+	}
+
+	public void setGen(HighQualityRandom gen) {
+		this.gen = gen;
+	}
+
+	public void setCouleurs(int[] couleurs) {
+		this.couleurs = couleurs;
+	}
+
+	public void setNoeudsConflitList(LinkedList<Integer> noeudsConflitList) {
+		this.noeudsConflitList = noeudsConflitList;
+	}
+
+	public void setColorClasses(HashSet<Integer>[] colorClasses) {
+		this.colorClasses = colorClasses;
+	}
+
+	public void setF(int[][] f) {
+		F = f;
+	}
+
+	public Etat clone(){
+		GrapheColorie e = new GrapheColorie(this.getE(),this.k,this.graphe,this.getSeed());
+		e.setMeilleuresCouleurs(meilleuresCouleurs);
+		e.setNombreConflitsAretes(nombreConflitsAretes);
+		e.setColorClasses(colorClasses);
+		e.setCouleurs(couleurs);
+		e.setF(F);
+		e.setNoeudsConflitList(noeudsConflitList);
+		e.setGen(gen);
+		
+		return e;
+		}
+	
 
 }

@@ -91,6 +91,7 @@ public class RecuitTruanderie extends JFrame
 		
 		while(i<nombreIterations && energieBest!=0){
 			
+			
 			 E = Epot-J.calcul(p.getT(), nombreEtat)*compteurSpinique;
 			 
 
@@ -98,13 +99,14 @@ public class RecuitTruanderie extends JFrame
 			 
 			 ArrayList<Etat> e2 = p2.getEtat();
 			 
-			for(int j=0;j<nombreEtat;j++){// on effectue M  fois la mutation sur chaque particule avant de descendre gamma
+			for(int j=0;j<nombreEtat;j++){// on effectue M  fois la mutation sur chaque réplique avant de descendre gamma
+				
 				
 				Etat r1 = e.get(j);
 				Etat r2 = e2.get(j);
 				
 				for(int k=0; k<M; k++){
-					
+					System.out.println(energieBest);
 					mutationsTentees++;
 					
 					m.maj(p2, r2); //TODO pas sur de ca...
@@ -127,8 +129,12 @@ public class RecuitTruanderie extends JFrame
 						p.setEtat(e);
 						
 						Epot += deltapot/nombreEtat;
+						System.out.println("Epot "+Epot);
 						E += delta;// L'energie courante est modifiée
+						System.out.println("delta "+delta);
 						energie += deltapot;
+						System.out.println("deltapot "+deltapot);
+						System.out.println("energie "+energie);
 						
 					}
 					if (energie < energieBest){
