@@ -1,10 +1,12 @@
 package tests;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import modele.Etat;
 import parametrage.ParametreGamma;
 import parametrage.Temperature;
+import recuit.Recuit;
 import dag3.Conflits;
 import dag3.ConflitsCinetiques;
 import dag3.Graphe;
@@ -37,7 +39,7 @@ public class TestQuantiqueDag3 {
 		int seed = 1;
 		Temperature T = new Temperature(0.35/P);
 		// construire liste d'etats
-		java.util.ArrayList<Etat> etats = new java.util.ArrayList<Etat>();
+		ArrayList<Etat> etats = new ArrayList<Etat>();
 		for(int i=0;i<P;i++){
 			GrapheColorie e = new GrapheColorie(Ep, P, graphe, seed);
 			e.initialiser();
@@ -54,7 +56,8 @@ public class TestQuantiqueDag3 {
 		// fin construire liste etats
 		ParametreGamma gamma = new ParametreGamma(G0, 0.01, 0) ; // TODO gamma lineaire, car decroissance exponentielle ici
 		GrapheColorieParticule coloriage = new GrapheColorieParticule(etats, T, seed, Ec, Ep, gamma, graphe);
-		RecuitTruanderie recuit = new RecuitTruanderie();
+		//RecuitTruanderie recuit = new RecuitTruanderie();
+		Recuit recuit = new Recuit();
 		
 		
 		long startTime = System.nanoTime();

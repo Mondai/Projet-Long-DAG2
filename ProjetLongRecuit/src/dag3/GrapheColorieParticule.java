@@ -28,11 +28,6 @@ public class GrapheColorieParticule extends Probleme {
 	 */
 	Graphe graphe;
 	
-	public GrapheColorieParticule(ArrayList<Etat> etat, Graphe graphe) {
-		this.etat = etat;
-		this.graphe = graphe;
-	}
-	
 	public GrapheColorieParticule(ArrayList<Etat> etat, Temperature T, int seed, EnergieCinetique energiecin, EnergiePotentielle energiepot, ParametreGamma gamma, Graphe graphe) {
 		super(etat, T, seed, energiecin, energiepot, gamma);
 		this.graphe = graphe;
@@ -48,11 +43,12 @@ public class GrapheColorieParticule extends Probleme {
 		int n = this.getEtat().size();
 		ArrayList<Etat> r = new ArrayList<Etat>(n);
 		for(int i=0; i<n; i++){
-			r.add(( (this.getEtat().get(i)).clone()));
+			r.add( ( (GrapheColorie) this.getEtat().get(i)).clone());
 		}
 		
+		/* inutile d'après l'exemple TSP
 		int P = n;
-		java.util.ArrayList<Etat> etats = this.getEtat();
+		ArrayList<Etat> etats = this.getEtat();
 	
 		
 		etats.get(0).setprevious(etats.get(P-1));
@@ -62,12 +58,12 @@ public class GrapheColorieParticule extends Probleme {
 			etats.get(i).setnext(etats.get(i+1));
 		}
 		etats.get(P-1).setprevious(etats.get(P-2));
-		etats.get(P-1).setnext(etats.get(0));
+		etats.get(P-1).setnext(etats.get(0));*/
 		
 		
 		GrapheColorieParticule p = new GrapheColorieParticule(r,this.getT(),this.getSeed(),this.getEcin(),this.getEpot(),this.getGamma(), this.graphe);
-		
-		p.setReplique(P);
+		p.setT(this.getT()); //utilisé dans TSP exemple, je ne sais pas si c'est nécessaire....
+		p.setReplique(n);
 		p.setK(k);
 		return p;
 	}
@@ -79,10 +75,6 @@ public class GrapheColorieParticule extends Probleme {
 	public int getReplique() {
 		return replique;
 	}
-	
-	public Graphe getGraphe() {
-		return this.graphe;
-	}
 
 	public void setK(int k) {
 		this.k = k;
@@ -90,6 +82,29 @@ public class GrapheColorieParticule extends Probleme {
 
 	public void setReplique(int replique) {
 		this.replique = replique;
+	}
+	
+	
+	// ajout pour essayer d'avoir un comportement normal
+	/*
+	 * 
+	 * 
+	 */
+	
+	public Graphe getGraphe() {
+		return this.graphe;
+	}
+	
+	public double calculerEnergieCinetique(){
+		return this.calculerCompteurCinetique();
+	}
+	
+	public double calculerCompteurCinetique(){
+		return ConflitsCinetiques.calculer(this);
+	}
+	
+	public Temperature getTemperature() {
+		return this.getT();
 	}
 	
 		

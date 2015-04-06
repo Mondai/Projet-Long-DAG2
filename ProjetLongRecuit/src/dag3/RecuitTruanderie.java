@@ -79,8 +79,11 @@ public class RecuitTruanderie extends JFrame
 		ArrayList<Etat> e = p.getEtat();
 		Ponderation J = new Ponderation(p.getGamma());
 		double Epot = p.calculerEnergiePotentielle();
+		System.out.println("Epot " + Epot);
 		double compteurSpinique = p.calculerEnergieCinetique();
+		System.out.println("CompteurSpin " + compteurSpinique);
 		double E = Epot-J.calcul(p.getT(), nombreEtat)*compteurSpinique;
+		System.out.println("E " + E);
 		double deltapot  = 0;
 		double energie = (e.get(0)).getEnergie();
 		double energieBest = energie;
@@ -116,10 +119,9 @@ public class RecuitTruanderie extends JFrame
 					
 					double delta = deltapot/nombreEtat  -J.calcul(p.getT(),nombreEtat)*p.differenceSpins(r2,m);
 					
-					//VA REGARDER SI L'ON APPLIQUE LA MUTATION OU NON
-					double pr=probaAcceptation(delta,deltapot,p.getT());
-					if(pr>Math.random()){
-						
+					//test deltaE < 0
+					/*
+					if (deltapot < 0){
 						mutationsAcceptees++;
 						
 						m.faire(p2,r2);
@@ -135,6 +137,27 @@ public class RecuitTruanderie extends JFrame
 						energie += deltapot;
 						System.out.println("deltapot "+deltapot);
 						System.out.println("energie "+energie);
+					}*/
+					
+					//VA REGARDER SI L'ON APPLIQUE LA MUTATION OU NON
+					double pr=probaAcceptation(delta,deltapot,p.getT());
+					if(pr>Math.random()){
+						
+						mutationsAcceptees++;
+						
+						m.faire(p2,r2);
+						compteurSpinique += p.differenceSpins(r2,m);
+						
+						e.set(j, r2);
+						p.setEtat(e);
+						
+						Epot += deltapot/nombreEtat;
+						//System.out.println("Epot "+Epot);
+						E += delta;// L'energie courante est modifiée
+						//System.out.println("delta "+delta);
+						energie += deltapot;
+						//System.out.println("deltapot "+deltapot);
+						//System.out.println("energie "+energie);
 						
 					}
 					if (energie < energieBest){

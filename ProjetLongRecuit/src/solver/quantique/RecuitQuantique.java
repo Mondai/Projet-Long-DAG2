@@ -116,8 +116,11 @@ public class RecuitQuantique implements IRecuit {
 			if (energie < this.meilleureEnergie){
 				this.meilleureEnergie = energie ;
 			}
+			//System.out.println(energie);
 
 		}
+		
+		//System.out.println("EC : " + probleme.Ec.calculer(probleme));
 
 		double proba = 1;
 
@@ -161,6 +164,14 @@ public class RecuitQuantique implements IRecuit {
 					//différences du hamiltonien total
 					//multiplier deltaIEc par JGamma
 					double deltaE = deltaEp/nombreRepliques - deltaEc*Jr;
+					/*
+					System.out.println("DEP : " + deltaEp);
+					System.out.println("DEC : " + deltaEc);
+					System.out.println("DE : " + deltaE);
+					System.out.println("EP : " + probleme.calculerEnergiePotentielle());
+					*/
+					
+					
 					//System.out.println("DeltaEc "+deltaEc*Jr);
 					
 					//K.calculerK(deltaE);
