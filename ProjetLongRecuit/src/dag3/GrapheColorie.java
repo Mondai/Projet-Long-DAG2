@@ -104,8 +104,10 @@ public class GrapheColorie extends Etat{
 		// Affectation des couleurs
 		// Mettre à jour tous les conflits initiaux 
 		// et rajouter tous les noeuds à la liste des noeuds en conflit
+		System.out.println("Noeuds : " + this.graphe.getNombreNoeuds());
 		for (int j = 0; j < this.graphe.getNombreNoeuds(); j++) {			
 			this.couleurs[j]=(int)(this.gen.nextDouble()*this.k);  // affectation couleurs aleatoires
+			System.out.println("C : " + this.couleurs[j]);
 			this.colorClasses[this.couleurs[j]].add(j); //partie qui initialise les classes couleurs
 		}
 		
