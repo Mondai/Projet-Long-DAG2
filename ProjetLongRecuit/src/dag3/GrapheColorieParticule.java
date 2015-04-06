@@ -20,21 +20,20 @@ public class GrapheColorieParticule extends Probleme {
 	 */
 	int k;
 	/**
-	 * Nombre de répliques(possibilités quantiques).
-	 */
-	int replique;
-	/**
 	 * Graphe sous-jacent.
 	 */
 	Graphe graphe;
 	
-	public GrapheColorieParticule(ArrayList<Etat> etat, Temperature T, int seed, EnergieCinetique energiecin, EnergiePotentielle energiepot, ParametreGamma gamma, Graphe graphe) {
+	public GrapheColorieParticule(ArrayList<Etat> etat, Temperature T, int seed, EnergieCinetique energiecin, EnergiePotentielle energiepot, ParametreGamma gamma, Graphe graphe, int k) {
 		super(etat, T, seed, energiecin, energiepot, gamma);
+		
 		this.graphe = graphe;
+		this.k = k;
 	}
 	
 	public Etat creeEtatAleatoire() {
-		GrapheColorie etat =  new GrapheColorie(this.getEpot(), k, graphe, this.getSeed());
+		System.out.println("F");
+		GrapheColorie etat =  new GrapheColorie(this.getEpot(), this.k, this.graphe, this.getSeed());
 		etat.initialiser();
 		return etat;
 	}
@@ -61,9 +60,8 @@ public class GrapheColorieParticule extends Probleme {
 		etats.get(P-1).setnext(etats.get(0));*/
 		
 		
-		GrapheColorieParticule p = new GrapheColorieParticule(r,this.getT(),this.getSeed(),this.getEcin(),this.getEpot(),this.getGamma(), this.graphe);
+		GrapheColorieParticule p = new GrapheColorieParticule(r,this.getT(),this.getSeed(),this.getEcin(),this.getEpot(),this.getGamma(), this.graphe, this.k);
 		p.setT(this.getT()); //utilisé dans TSP exemple, je ne sais pas si c'est nécessaire....
-		p.setReplique(n);
 		p.setK(k);
 		return p;
 	}
@@ -72,16 +70,8 @@ public class GrapheColorieParticule extends Probleme {
 		return k;
 	}
 
-	public int getReplique() {
-		return replique;
-	}
-
 	public void setK(int k) {
 		this.k = k;
-	}
-
-	public void setReplique(int replique) {
-		this.replique = replique;
 	}
 	
 	

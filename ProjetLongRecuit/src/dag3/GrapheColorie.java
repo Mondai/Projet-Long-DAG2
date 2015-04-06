@@ -67,8 +67,9 @@ public class GrapheColorie extends Etat{
 	int[][] F; 
 	
 	public GrapheColorie(EnergiePotentielle Ep, int k, Graphe graphe, int seed) {
-		
 		super(Ep);
+		
+		System.out.println("k " + k);
 		
 		this.k = k; 
 		this.couleurs = new int[graphe.getNombreNoeuds()];
@@ -85,9 +86,9 @@ public class GrapheColorie extends Etat{
 		
 		this.F = new int[graphe.getNombreNoeuds()][this.k];
 		
-		this.colorClasses = new HashSet[k];
+		this.colorClasses = new HashSet[this.k];
 		
-		for (int i = 0; i < k; i++){
+		for (int i = 0; i < this.k; i++){
 			this.colorClasses[i] = new HashSet<Integer>(); //besoin d'essayer avec initialCapacity != 16, du style getNombreNoeuds
 		}
 	}
@@ -104,10 +105,13 @@ public class GrapheColorie extends Etat{
 		// Affectation des couleurs
 		// Mettre à jour tous les conflits initiaux 
 		// et rajouter tous les noeuds à la liste des noeuds en conflit
-		System.out.println("Noeuds : " + this.graphe.getNombreNoeuds());
+		
+		//System.out.println("Noeuds : " + this.graphe.getNombreNoeuds());
+		//System.out.println("NCC : " + this.colorClasses[0]);
 		for (int j = 0; j < this.graphe.getNombreNoeuds(); j++) {			
 			this.couleurs[j]=(int)(this.gen.nextDouble()*this.k);  // affectation couleurs aleatoires
-			System.out.println("C : " + this.couleurs[j]);
+			//System.out.println("C" + j + " : " + this.couleurs[j]);
+			//System.out.println("CC" + j + " : " + this.colorClasses[this.couleurs[j]]);
 			this.colorClasses[this.couleurs[j]].add(j); //partie qui initialise les classes couleurs
 		}
 		
@@ -373,7 +377,7 @@ public class GrapheColorie extends Etat{
 		
 		
 		return e;
-		}
+	}
 	
 
 }
