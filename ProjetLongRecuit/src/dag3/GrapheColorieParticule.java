@@ -28,7 +28,12 @@ public class GrapheColorieParticule extends Probleme {
 	 */
 	Graphe graphe;
 	
-	public GrapheColorieParticule(java.util.ArrayList<Etat> etat, Temperature T, int seed, EnergieCinetique energiecin, EnergiePotentielle energiepot, ParametreGamma gamma, Graphe graphe) {
+	public GrapheColorieParticule(ArrayList<Etat> etat, Graphe graphe) {
+		this.etat = etat;
+		this.graphe = graphe;
+	}
+	
+	public GrapheColorieParticule(ArrayList<Etat> etat, Temperature T, int seed, EnergieCinetique energiecin, EnergiePotentielle energiepot, ParametreGamma gamma, Graphe graphe) {
 		super(etat, T, seed, energiecin, energiepot, gamma);
 		this.graphe = graphe;
 	}
@@ -74,6 +79,10 @@ public class GrapheColorieParticule extends Probleme {
 	public int getReplique() {
 		return replique;
 	}
+	
+	public Graphe getGraphe() {
+		return this.graphe;
+	}
 
 	public void setK(int k) {
 		this.k = k;
@@ -85,7 +94,7 @@ public class GrapheColorieParticule extends Probleme {
 	
 		
 		
-	}
+}
 	
 
 

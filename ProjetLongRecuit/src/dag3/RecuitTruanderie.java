@@ -106,7 +106,7 @@ public class RecuitTruanderie extends JFrame
 				Etat r2 = e2.get(j);
 				
 				for(int k=0; k<M; k++){
-					System.out.println(energieBest);
+					//System.out.println(energieBest);
 					mutationsTentees++;
 					
 					m.maj(p2, r2); //TODO pas sur de ca...
