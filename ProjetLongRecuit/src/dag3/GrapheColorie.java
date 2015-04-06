@@ -69,7 +69,7 @@ public class GrapheColorie extends Etat{
 	public GrapheColorie(EnergiePotentielle Ep, int k, Graphe graphe, int seed) {
 		super(Ep);
 		
-		System.out.println("k " + k);
+		//System.out.println("k " + k);
 		
 		this.k = k; 
 		this.couleurs = new int[graphe.getNombreNoeuds()];

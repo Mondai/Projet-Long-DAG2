@@ -32,9 +32,13 @@ public class GrapheColorieParticule extends Probleme {
 	}
 	
 	public Etat creeEtatAleatoire() {
-		System.out.println("F");
+		//System.out.println("F");
 		GrapheColorie etat =  new GrapheColorie(this.getEpot(), this.k, this.graphe, this.getSeed());
 		etat.initialiser();
+		// Pour éviter des erreurs dans les mutations, à vérifier exactement comment connecter les états
+		etat.setnext(this.getEtat().get(0));
+		etat.setprevious(this.getEtat().get(this.getEtat().size()-1));
+		System.out.println(this.getEtat());
 		return etat;
 	}
 	
