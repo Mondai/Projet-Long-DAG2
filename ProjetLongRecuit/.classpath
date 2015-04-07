@@ -2,10 +2,14 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
-	<classpathentry kind="lib" path="lib/jardag3.jar"/>
-	<classpathentry kind="lib" path="lib/recuitDAG3.jar" sourcepath="lib/recuitDAG3.jar">
+	<classpathentry kind="lib" path="lib/RecuitDAG3.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/ProjetLongRecuit/lib/recuitDAG3.jar!/doc"/>
+			<attribute name="javadoc_location" value="jar:platform:/resource/ProjetLongRecuit/lib/RecuitDAG3.jar!/doc"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/RecuitDAG3C.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/ProjetLongRecuit/lib/RecuitDAG3C.jar!/doc"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="output" path="bin"/>

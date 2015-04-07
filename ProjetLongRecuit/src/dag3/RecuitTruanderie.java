@@ -105,25 +105,27 @@ public class RecuitTruanderie extends JFrame
 			for(int j=0;j<nombreEtat;j++){// on effectue M  fois la mutation sur chaque réplique avant de descendre gamma
 				
 				
-				Etat r1 = e.get(j);
+				//Etat r1 = e.get(j);
 				Etat r2 = e2.get(j);
 				
 				for(int k=0; k<M; k++){
 					//System.out.println(energieBest);
 					mutationsTentees++;
 					
+					System.out.println("E");
+					
 					m.maj(p2, r2); //TODO pas sur de ca...
-					energie = r2.getEnergie();
 					
 					deltapot =  m.calculer(p2,r2);
+					System.out.println("deltapot : " + deltapot);
 					
 					double delta = deltapot/nombreEtat  -J.calcul(p.getT(),nombreEtat)*p.differenceSpins(r2,m);
 					
 					//test deltaE < 0
-					/*
+					
 					if (deltapot < 0){
 						mutationsAcceptees++;
-						
+						System.out.println("DE < 0 : " + r2);
 						m.faire(p2,r2);
 						compteurSpinique += p.differenceSpins(r2,m);
 						
@@ -137,32 +139,36 @@ public class RecuitTruanderie extends JFrame
 						energie += deltapot;
 						//System.out.println("deltapot "+deltapot);
 						//System.out.println("energie "+energie);
-					}*/
-					
-					//VA REGARDER SI L'ON APPLIQUE LA MUTATION OU NON
-					double pr=probaAcceptation(delta,deltapot,p.getT());
-					if(pr>Math.random()){
-						
-						mutationsAcceptees++;
-						
-						m.faire(p2,r2);
-						compteurSpinique += p.differenceSpins(r2,m);
-						
-						e.set(j, r2);
-						p.setEtat(e);
-						
-						Epot += deltapot/nombreEtat;
-						//System.out.println("Epot "+Epot);
-						E += delta;// L'energie courante est modifiée
-						//System.out.println("delta "+delta);
-						energie += deltapot;
-						//System.out.println("deltapot "+deltapot);
-						//System.out.println("energie "+energie);
-						
 					}
-					if (energie < energieBest){
-						pBest.setEtat(e);
-						energieBest = energie;
+					else{
+						
+						//VA REGARDER SI L'ON APPLIQUE LA MUTATION OU NON
+						double pr=probaAcceptation(delta,deltapot,p.getT());
+						if(pr>Math.random()){
+							
+							mutationsAcceptees++;
+							System.out.println("PA " + r2);
+							m.faire(p2,r2); //redonne comportement du recuit DAG3 --> très bizarre
+							compteurSpinique += p.differenceSpins(r2,m);
+							
+							e.set(j, r2);
+							p.setEtat(e);
+							
+							Epot += deltapot/nombreEtat;
+							//System.out.println("Epot "+Epot);
+							E += delta;// L'energie courante est modifiée
+							//System.out.println("delta "+delta);
+							energie = r2.getEnergie();
+							energie += deltapot;
+							//System.out.println("deltapot "+deltapot);
+							//System.out.println("energie "+energie);
+							
+						}
+						if (energie < energieBest){
+							pBest.setEtat(e);
+							energie = r2.getEnergie();
+							energieBest = energie;
+						}
 					}
 					/*if(compteurpourlasortie%1000==0){
 					Writer.ecriture(compteurpourlasortie,distanceBest, sortie);

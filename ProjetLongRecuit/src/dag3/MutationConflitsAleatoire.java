@@ -26,6 +26,7 @@ public class MutationConflitsAleatoire implements IMutation {
 
 	@Override
 	public double calculer(Probleme probleme, Etat etat) {
+		System.out.println("Calcul Mutation");
 		
 		GrapheColorie coloriage = (GrapheColorie) etat;
 
@@ -35,6 +36,7 @@ public class MutationConflitsAleatoire implements IMutation {
 		int Epot = coloriage.F[this.noeud][this.couleur] - coloriage.F[this.noeud][couleurNoeud];	
 		// différence d'énergie potentielle
 		
+		/*
 		GrapheColorie coloriageNext = (GrapheColorie)	coloriage.getNext();
 		//System.out.println("D : " + coloriage.getNext() );
 		GrapheColorie coloriagePrev = (GrapheColorie)	coloriage.getPrevious();
@@ -56,9 +58,11 @@ public class MutationConflitsAleatoire implements IMutation {
 		}
 		
 		Valpha.add(this.noeud);	// rajouter v dans le classe de couleur (vu qu'on l'a enleve avant)
+		*/
 		
-		return deltaE + Epot;
-		//renvoie "energieCin" + energie potentielle
+		//return deltaE + Epot;
+		return Epot;
+		//renvoie energie potentielle
 	}
 
 	@Override
@@ -66,12 +70,15 @@ public class MutationConflitsAleatoire implements IMutation {
 		GrapheColorie coloriage = (GrapheColorie) etat;
 		
 		int couleurNoeud = coloriage.couleurs[this.noeud];
+		System.out.println(couleurNoeud);
 		coloriage.couleurs[this.noeud] = this.couleur;
 		coloriage.updateLocal(this.noeud, couleurNoeud);
+		System.out.println(coloriage.couleurs[this.noeud] );
 	}
 
 	@Override
 	public void maj(Probleme probleme, Etat etat) {
+		System.out.println("MAJ");
 		
 		GrapheColorie coloriage = (GrapheColorie) etat;
 		

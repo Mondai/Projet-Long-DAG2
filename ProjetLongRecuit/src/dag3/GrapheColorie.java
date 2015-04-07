@@ -131,6 +131,7 @@ public class GrapheColorie extends Etat{
 		}
 		
 		this.nombreConflitsAretes = (conflits/2); // chaque conflit est compte deux fois
+		//System.out.println("this.nombreConflitsAretes : " + this.nombreConflitsAretes);
 	}
 	
 	/**
@@ -183,6 +184,8 @@ public class GrapheColorie extends Etat{
 		
 		E /= 2; // Tous les spins sont comptés deux fois dans les calculs
 		
+		//System.out.println(E);
+		
 		return E;
 	}
 	
@@ -193,6 +196,8 @@ public class GrapheColorie extends Etat{
 	 * @param prevColor
 	 */
 	public void updateLocal(int noeud, int prevColor){
+		System.out.println("UL");
+		System.out.println("this.nombreConflitsAretes : " + this.nombreConflitsAretes);
 		
 		// Met à jour l'appartenance du noeud en question par rapport aux classes de couleur
 		this.colorClasses[prevColor].remove(noeud);
@@ -205,26 +210,20 @@ public class GrapheColorie extends Etat{
 			
 			// Mise a jour des conflits
 			if (this.couleurs[j] == prevColor){
-				//this.conflitsConnexions[noeud][j] = false;
-				//this.conflitsConnexions[j][noeud] = false;
 				this.nombreConflitsAretes --;
 				if(!enConflit(j)) {
-					//this.noeudsConflit[j] = false;
 					this.noeudsConflitList.removeFirstOccurrence(j);
 				}
 			}
 			else if (this.couleurs[j] == this.couleurs[noeud]){
-				//this.conflitsConnexions[noeud][j] = true;
-				//this.conflitsConnexions[j][noeud] = true;
 				this.nombreConflitsAretes ++;
-				//this.noeudsConflit[j] = true;
 				if (! this.noeudsConflitList.contains(j)) this.noeudsConflitList.add(j);
 			}
 		}
 		if (!enConflit(noeud)){
-			//this.noeudsConflit[noeud] = false;
 			this.noeudsConflitList.removeFirstOccurrence(noeud);
 		}
+		System.out.println("this.nombreConflitsAretes : " + this.nombreConflitsAretes);
 	}
 	
 	/**
@@ -264,7 +263,7 @@ public class GrapheColorie extends Etat{
 	 * Sauvegarde du coloriage actuel dans couleurs.
 	 */
 	public void sauvegarderSolution(){
-	
+		System.out.println("SS");
 		//Affectation des couleurs
 		for (int j = 0; j < this.graphe.getNombreNoeuds(); j++) {
 			this.meilleuresCouleurs[j] = this.couleurs[j];
@@ -353,6 +352,7 @@ public class GrapheColorie extends Etat{
 		
 		GrapheColorie e = new GrapheColorie(this.getE(),this.k,this.graphe,this.getSeed());
 		
+		System.out.println("Clone GC");
 		
 		// Reclonage
 		

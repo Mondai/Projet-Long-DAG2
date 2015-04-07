@@ -36,7 +36,7 @@ public class TestQuantiqueDag3 {
 		double G0 = 0.75;
 		int P = 10;
 		int maxSteps = (int) Math.pow(10,3);
-		int seed = 1;
+		int seed = 20;
 		Temperature T = new Temperature(0.35/P);
 		// construire liste d'etats
 		ArrayList<Etat> etats = new ArrayList<Etat>();
@@ -56,8 +56,8 @@ public class TestQuantiqueDag3 {
 		// fin construire liste etats
 		ParametreGamma gamma = new ParametreGamma(G0, 0.01, 0) ; // TODO gamma lineaire, car decroissance exponentielle ici
 		GrapheColorieParticule coloriage = new GrapheColorieParticule(etats, T, seed, Ec, Ep, gamma, graphe, nbCouleurs);
-		//RecuitTruanderie recuit = new RecuitTruanderie();
-		Recuit recuit = new Recuit();
+		RecuitTruanderie recuit = new RecuitTruanderie();
+		//Recuit recuit = new Recuit();
 		
 		
 		long startTime = System.nanoTime();
@@ -70,6 +70,7 @@ public class TestQuantiqueDag3 {
 		long endTime = System.nanoTime();
 		
 		// affichage du resultat
+		
 		for (Etat etat : coloriage.getEtat()){
 			GrapheColorie g = (GrapheColorie) etat;
 			/*
@@ -77,8 +78,8 @@ public class TestQuantiqueDag3 {
 				System.out.println(i + " -> couleur "
 				+ g.getMeilleuresCouleurs()[i]);
 				if (g.getNoeudsConflitList().contains(i)) System.out.println("Dessus En conflit");
-			}
-			*/
+			}*/
+			
 			System.out.println("Energie de l'état : " + Ep.calculer(g));
 			System.out.println("Nombre de noeuds en conflits : " + g.nombreNoeudsEnConflit());
 			System.out.println("Nombre d'arêtes en conflits : " + g.getNombreConflitsAretes());
