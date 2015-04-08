@@ -31,6 +31,14 @@ public class GrapheColorieParticule extends Probleme {
 		this.k = k;
 	}
 	
+	public double calculerEnergiePotentielle(){
+		double compteur=0;
+		for (Etat i:this.getEtat()){
+			compteur += Conflits.calculer((GrapheColorie)i);
+		}
+		return compteur/this.getEtat().size();
+	}
+		
 	public Etat creeEtatAleatoire() {
 		//System.out.println("CEA");
 		GrapheColorie etat =  new GrapheColorie(this.getEpot(), this.k, this.graphe, this.getSeed());
@@ -41,6 +49,8 @@ public class GrapheColorieParticule extends Probleme {
 	}
 	
 	public GrapheColorieParticule clone() {
+		System.out.println("Clone GCP");
+		
 		int n = this.getEtat().size();
 		ArrayList<Etat> r = new ArrayList<Etat>(n);
 		for(int i=0; i<n; i++){
@@ -92,7 +102,7 @@ public class GrapheColorieParticule extends Probleme {
 	}
 	
 	public double calculerCompteurCinetique(){
-		return ConflitsCinetiques.calculer(this);
+		return ConflitsCinetiques.calculerCompteurSpinique(this);
 	}
 	
 	public Temperature getTemperature() {

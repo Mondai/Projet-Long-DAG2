@@ -56,6 +56,7 @@ public class TestQuantiqueDag3 {
 		// fin construire liste etats
 		ParametreGamma gamma = new ParametreGamma(G0, 0.01, 0) ; // TODO gamma lineaire, car decroissance exponentielle ici
 		GrapheColorieParticule coloriage = new GrapheColorieParticule(etats, T, seed, Ec, Ep, gamma, graphe, nbCouleurs);
+		System.out.println(coloriage.calculerCompteurCinetique());
 		RecuitTruanderie recuit = new RecuitTruanderie();
 		//Recuit recuit = new Recuit();
 		

@@ -1,7 +1,6 @@
 package dag3;
 
 import modele.Etat;
-import modele.Probleme;
 import parametrage.EnergieCinetique;
 import parametrage.Ponderation;
 
@@ -15,7 +14,7 @@ public class ConflitsCinetiques extends EnergieCinetique {
 	/**
 	 * Calcule l'énergie cinétique totale de la particule quantique.
 	 */
-	public static double calculer(Probleme probleme) {
+	public static double calculerCompteurSpinique(GrapheColorieParticule probleme) {
 		
 		int E = 0;
 		int spin1 = 1;
@@ -58,8 +57,9 @@ public class ConflitsCinetiques extends EnergieCinetique {
 	}
 	
 	public static double calculer(GrapheColorieParticule p, Ponderation J){
+		System.out.println("W-W");
 		int n = p.getEtat().size();
-		return J.calcul(p.getT(), n)*calculer(p);
+		return J.calcul(p.getT(), n)*calculerCompteurSpinique(p);
 	}
 
 }

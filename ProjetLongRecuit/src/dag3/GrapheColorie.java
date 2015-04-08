@@ -226,6 +226,10 @@ public class GrapheColorie extends Etat{
 		System.out.println("this.nombreConflitsAretes : " + this.nombreConflitsAretes);
 	}
 	
+	public double getEnergie(){
+		return this.getNombreConflitsAretes();
+	}
+	
 	/**
 	 * Vérifie si le noeud est en conflit ou pas.
 	 * @param noeud

@@ -77,6 +77,7 @@ public class RecuitTruanderie extends JFrame
 		Probleme pBest = p.clone();
 		
 		ArrayList<Etat> e = p.getEtat();
+		System.out.println(e);
 		Ponderation J = new Ponderation(p.getGamma());
 		double Epot = p.calculerEnergiePotentielle();
 		System.out.println("Epot " + Epot);
@@ -86,6 +87,7 @@ public class RecuitTruanderie extends JFrame
 		System.out.println("E " + E);
 		double deltapot  = 0;
 		double energie = (e.get(0)).getEnergie();
+		System.out.println("En : " + energie);
 		double energieBest = energie;
 		
 		int i = 0;
@@ -101,6 +103,7 @@ public class RecuitTruanderie extends JFrame
 			 Probleme p2 = p.clone();
 			 
 			 ArrayList<Etat> e2 = p2.getEtat();
+			System.out.println("Iter");
 			 
 			for(int j=0;j<nombreEtat;j++){// on effectue M  fois la mutation sur chaque réplique avant de descendre gamma
 				

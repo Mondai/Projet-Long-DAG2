@@ -1,6 +1,5 @@
 package dag3;
 
-import modele.Etat;
 import parametrage.EnergiePotentielle;
 
 
@@ -15,12 +14,8 @@ public class Conflits extends EnergiePotentielle {
 	 * Ici, la fonction qui calcule l'énergie potentielle de l'état en question va chercher le nombre d'arêtes
 	 * d'un coloriage(état) et le renvoie.
 	 */
-	public double calculer(Etat etat) {
-		
-		GrapheColorie coloriage = (GrapheColorie)	etat;
-		
+	public static double calculer(GrapheColorie coloriage) {
 		return coloriage.getNombreConflitsAretes();
-
 	}
 
 }
