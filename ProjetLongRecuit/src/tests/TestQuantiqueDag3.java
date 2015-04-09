@@ -36,7 +36,7 @@ public class TestQuantiqueDag3 {
 		double G0 = 0.75;
 		int P = 10;
 		int maxSteps = (int) Math.pow(10,3);
-		int seed = 20;
+		int seed = 22;
 		Temperature T = new Temperature(0.35/P);
 		// construire liste d'etats
 		ArrayList<Etat> etats = new ArrayList<Etat>();
@@ -57,8 +57,13 @@ public class TestQuantiqueDag3 {
 		ParametreGamma gamma = new ParametreGamma(G0, 0.01, 0) ; // TODO gamma lineaire, car decroissance exponentielle ici
 		GrapheColorieParticule coloriage = new GrapheColorieParticule(etats, T, seed, Ec, Ep, gamma, graphe, nbCouleurs);
 		System.out.println(coloriage.calculerCompteurCinetique());
-		RecuitTruanderie recuit = new RecuitTruanderie();
-		//Recuit recuit = new Recuit();
+		//RecuitTruanderie recuit = new RecuitTruanderie();
+		Recuit recuit = new Recuit();
+		mutation.maj(coloriage, coloriage.getEtat().get(0));
+		System.out.println(coloriage.getEtat().get(0).getEnergie());
+		System.out.println("Mutation : " + mutation.calculer(coloriage, coloriage.getEtat().get(0)) );
+		mutation.faire(coloriage, coloriage.getEtat().get(0));
+		System.out.println(coloriage.getEtat().get(0).getEnergie());
 		
 		
 		long startTime = System.nanoTime();

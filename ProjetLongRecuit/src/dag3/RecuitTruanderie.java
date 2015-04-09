@@ -125,7 +125,7 @@ public class RecuitTruanderie extends JFrame
 					double delta = deltapot/nombreEtat  -J.calcul(p.getT(),nombreEtat)*p.differenceSpins(r2,m);
 					
 					//test deltaE < 0
-					
+					/*
 					if (deltapot < 0){
 						mutationsAcceptees++;
 						System.out.println("DE < 0 : " + r2);
@@ -142,8 +142,8 @@ public class RecuitTruanderie extends JFrame
 						energie += deltapot;
 						//System.out.println("deltapot "+deltapot);
 						//System.out.println("energie "+energie);
-					}
-					else{
+					}*/
+			//		else{
 						
 						//VA REGARDER SI L'ON APPLIQUE LA MUTATION OU NON
 						double pr=probaAcceptation(delta,deltapot,p.getT());
@@ -172,7 +172,7 @@ public class RecuitTruanderie extends JFrame
 							energie = r2.getEnergie();
 							energieBest = energie;
 						}
-					}
+				//	}
 					/*if(compteurpourlasortie%1000==0){
 					Writer.ecriture(compteurpourlasortie,distanceBest, sortie);
 					}

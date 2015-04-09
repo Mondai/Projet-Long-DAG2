@@ -26,7 +26,7 @@ public class MutationConflitsAleatoire implements IMutation {
 
 	@Override
 	public double calculer(Probleme probleme, Etat etat) {
-		System.out.println("Calcul Mutation");
+		
 		
 		GrapheColorie coloriage = (GrapheColorie) etat;
 
@@ -34,6 +34,7 @@ public class MutationConflitsAleatoire implements IMutation {
 
 		// Propriete: DelatE = F[v][couleurSuiv] - F[v][couleurPrec]
 		int Epot = coloriage.F[this.noeud][this.couleur] - coloriage.F[this.noeud][couleurNoeud];	
+		System.out.println("Calcul Mutation de couleur " + couleurNoeud + " , " + this.couleur + " est " + Epot);
 		// différence d'énergie potentielle
 		
 		/*
@@ -70,15 +71,13 @@ public class MutationConflitsAleatoire implements IMutation {
 		GrapheColorie coloriage = (GrapheColorie) etat;
 		
 		int couleurNoeud = coloriage.couleurs[this.noeud];
-		System.out.println(couleurNoeud);
 		coloriage.couleurs[this.noeud] = this.couleur;
 		coloriage.updateLocal(this.noeud, couleurNoeud);
-		System.out.println(coloriage.couleurs[this.noeud] );
+		System.out.println("Mutation du noeud " + this.noeud + " de couleur " + couleurNoeud + " , " + coloriage.couleurs[this.noeud] );
 	}
 
 	@Override
 	public void maj(Probleme probleme, Etat etat) {
-		System.out.println("MAJ");
 		
 		GrapheColorie coloriage = (GrapheColorie) etat;
 		
@@ -91,6 +90,7 @@ public class MutationConflitsAleatoire implements IMutation {
 		int noeud = 0;
 
 		try {
+			System.out.println(coloriage.getNoeudsConflitList().size());
 			noeud=coloriage.getNoeudsConflitList().get(compteur);
 		}
 		catch (IndexOutOfBoundsException e){
@@ -105,6 +105,7 @@ public class MutationConflitsAleatoire implements IMutation {
 		
 		this.noeud = noeud;
 		this.couleur = couleurSuiv;
+		System.out.println("Noeud : " + this.noeud + " et couleur : " + this.couleur);
 		
 	}
 

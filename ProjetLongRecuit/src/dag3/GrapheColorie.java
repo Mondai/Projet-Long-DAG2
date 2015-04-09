@@ -1,5 +1,6 @@
 package dag3;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedList;
 
@@ -196,8 +197,7 @@ public class GrapheColorie extends Etat{
 	 * @param prevColor
 	 */
 	public void updateLocal(int noeud, int prevColor){
-		System.out.println("UL");
-		System.out.println("this.nombreConflitsAretes : " + this.nombreConflitsAretes);
+		int temp = this.nombreConflitsAretes;
 		
 		// Met à jour l'appartenance du noeud en question par rapport aux classes de couleur
 		this.colorClasses[prevColor].remove(noeud);
@@ -223,7 +223,7 @@ public class GrapheColorie extends Etat{
 		if (!enConflit(noeud)){
 			this.noeudsConflitList.removeFirstOccurrence(noeud);
 		}
-		System.out.println("this.nombreConflitsAretes : " + this.nombreConflitsAretes);
+		System.out.println("UL : " + temp + " , " + this.nombreConflitsAretes);
 	}
 	
 	public double getEnergie(){
@@ -352,6 +352,7 @@ public class GrapheColorie extends Etat{
 		F = f;
 	}
 
+	
 	public Etat clone(){
 		
 		GrapheColorie e = new GrapheColorie(this.getE(),this.k,this.graphe,this.getSeed());
@@ -363,7 +364,11 @@ public class GrapheColorie extends Etat{
 		e.setGen(gen);
 		e.setColorClasses(colorClasses.clone());
 		e.setMeilleuresCouleurs(meilleuresCouleurs.clone());
-		e.setF(F.clone());
+		int[][] F2 = F.clone();
+		for (int i = 0; i < F2.length; i++){
+			F2[i] = F[i].clone();
+		}
+		e.setF(F2);
 		e.setCouleurs(couleurs.clone());
 		
 		
@@ -373,11 +378,13 @@ public class GrapheColorie extends Etat{
 		e.setNombreConflitsAretes(nb);
 		
 		@SuppressWarnings("unchecked")
-		LinkedList<Integer> listeConflitsNoeuds = (LinkedList<Integer>) noeudsConflitList.clone();
+		//LinkedList<Integer> listeConflitsNoeuds = (LinkedList<Integer>) noeudsConflitList.clone();
+		LinkedList<Integer> listeConflitsNoeuds = new LinkedList<Integer>(noeudsConflitList);
+		Collections.copy(listeConflitsNoeuds, (LinkedList<Integer>) noeudsConflitList);
 		e.setNoeudsConflitList(listeConflitsNoeuds);
 		
-		
-		
+		e.setnext(this.getNext());
+		e.setprevious(this.getPrevious());
 		
 		
 		return e;
