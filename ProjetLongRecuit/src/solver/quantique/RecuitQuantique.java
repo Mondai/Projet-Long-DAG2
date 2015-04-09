@@ -183,6 +183,7 @@ public class RecuitQuantique implements IRecuit {
 						double EpActuelle = etat.Ep.calculer(etat);		// energie potentielle temporelle
 						if( EpActuelle < this.meilleureEnergie ){		// mettre a jour la meilleur energie
 							this.meilleureEnergie = EpActuelle;
+							System.out.println("meilleureEnergie = "+ this.meilleureEnergie);
 							if (this.meilleureEnergie == 0){	// fin du programme
 								System.out.println("Mutations tentées : " + mutationsTentees);
 								System.out.println("Mutations acceptées : " + mutationsAcceptees);

@@ -8,6 +8,7 @@ import parametrage.ParametreGamma;
 import parametrage.Temperature;
 import modele.Etat;
 import modele.Probleme;
+import mutation.IMutation;
 
 /**
  * Particule Quantique représentée par un certains nombres de répliques, c'est-à-dire des GrapheColorie.
@@ -103,6 +104,10 @@ public class GrapheColorieParticule extends Probleme {
 	
 	public double calculerCompteurCinetique(){
 		return ConflitsCinetiques.calculerCompteurSpinique(this);
+	}
+	
+	public int differenceSpins(Etat e, IMutation m){
+		return ((GrapheColorie)e).calculerDeltaEc(m);
 	}
 	
 	public Temperature getTemperature() {

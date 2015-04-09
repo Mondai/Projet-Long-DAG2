@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import parametrage.EnergiePotentielle;
 import solver.commun.HighQualityRandom;
 import modele.Etat;
+import mutation.IMutation;
 
 
 /**
@@ -190,6 +191,32 @@ public class GrapheColorie extends Etat{
 		return E;
 	}
 	
+	public int calculerDeltaEc(IMutation mutation) {
+		
+		MutationConflitsAleatoire m = (MutationConflitsAleatoire) mutation;
+		GrapheColorie coloriage = (GrapheColorie)	this;
+		GrapheColorie coloriageNext = (GrapheColorie)	this.getNext();
+		GrapheColorie coloriagePrev = (GrapheColorie)	this.getPrevious();
+		int deltaE = 0;
+
+		HashSet<Integer> Valpha = coloriage.getClassesCouleurs()[coloriage.getCouleurs()[m.noeud]];
+		HashSet<Integer> Vbeta = coloriage.getClassesCouleurs()[m.couleur];
+
+		Valpha.remove(m.noeud);	// le calcul suivant requiert d'exclure v de Valpha 
+
+		for (int u : Valpha){
+			deltaE += 2*(coloriageNext.spinConflit(u, m.noeud) + coloriagePrev.spinConflit(u, m.noeud));
+		}
+		
+		for (int u : Vbeta){
+			deltaE -= 2*(coloriageNext.spinConflit(u, m.noeud) + coloriagePrev.spinConflit(u, m.noeud));
+		}
+		
+		Valpha.add(m.noeud);	// rajouter v dans le classe de couleur (vu qu'on l'a enleve avant)
+		
+		return deltaE;
+	}
+	
 	/**
 	 * Mise à jour des classes de couleurs et de F à appeller à chaque fois qu'un noeud change de couleur.
 	 * Les changements sont locaux, centrés sur le noeud en question.
@@ -223,7 +250,7 @@ public class GrapheColorie extends Etat{
 		if (!enConflit(noeud)){
 			this.noeudsConflitList.removeFirstOccurrence(noeud);
 		}
-		System.out.println("UL : " + temp + " , " + this.nombreConflitsAretes);
+		//System.out.println("UL : " + temp + " , " + this.nombreConflitsAretes);
 	}
 	
 	public double getEnergie(){
@@ -357,7 +384,7 @@ public class GrapheColorie extends Etat{
 		
 		GrapheColorie e = new GrapheColorie(this.getE(),this.k,this.graphe,this.getSeed());
 		
-		System.out.println("Clone GC");
+		//System.out.println("Clone GC");
 		
 		// Reclonage
 		

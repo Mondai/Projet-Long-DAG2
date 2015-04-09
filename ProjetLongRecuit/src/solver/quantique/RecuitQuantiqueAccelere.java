@@ -75,7 +75,6 @@ public class RecuitQuantiqueAccelere extends RecuitQuantique{
 
 			Collections.shuffle(indiceEtats, probleme.gen);	// melanger l'ordre de parcours des indices
 			Jr = -this.temperature/2*Math.log(Math.tanh(this.Gamma.t/nombreRepliques/this.temperature));	// calcul de Jr pour ce palier
-			long startTime = System.nanoTime();
 			
 			for (Integer p : indiceEtats){	
 				
@@ -108,13 +107,14 @@ public class RecuitQuantiqueAccelere extends RecuitQuantique{
 					//K.calculerK(deltaE);
 
 					if(deltaEp <= 0){
-						//deltaE ici n'est pas le bon, il dépend de EcUB
+						
 						mutationsAcceptees++;
 						probleme.modifElem(etat, mutation);				// faire la mutation
 						EpActuelle = etat.Ep.calculer(etat);		// energie potentielle temporelle
 						
 						if( EpActuelle < this.meilleureEnergie ){		// mettre a jour la meilleur energie
 							this.meilleureEnergie = EpActuelle;
+							System.out.println("meilleureEnergie = "+ this.meilleureEnergie);
 							if (this.meilleureEnergie == 0){	// fin du programme
 								System.out.print(mutationsTentees+" ");
 								//System.out.println("Mutations tentées : " + mutationsTentees);
@@ -125,6 +125,7 @@ public class RecuitQuantiqueAccelere extends RecuitQuantique{
 						}
 					}
 					else {
+						//deltaE ici correspond à deltaEUB, il dépend de EcUB
 						if (deltaE < 0) proba = 1;
 						else proba = Expo.expf(-deltaE / (this.K.k * this.temperature));
 						
@@ -155,8 +156,6 @@ public class RecuitQuantiqueAccelere extends RecuitQuantique{
 				}
 
 			}
-			long endTime = System.nanoTime();
-			System.out.println("duree = "+(endTime-startTime)/1000000+" s");
 		}
 		
 		System.out.print(mutationsTentees+" ");
