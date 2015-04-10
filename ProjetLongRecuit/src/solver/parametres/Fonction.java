@@ -26,6 +26,18 @@ public abstract  class Fonction {
 	 */
 	public double t;
 	
+	public double getTdebut() {
+		return Tdebut;
+	}
+
+	public double getTfinal() {
+		return Tfinal;
+	}
+
+	public double getT() {
+		return t;
+	}
+
 	/**
 	 * Fonction qui change la temperature et indique si on est à la temperature finale.
 	 * @return True si il faut continuer, false sinon.
