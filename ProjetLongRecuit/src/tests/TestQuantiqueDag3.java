@@ -2,9 +2,12 @@ package tests;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import modele.Etat;
 import parametrage.ParametreGamma;
+import parametrage.ParametreurGamma;
+import parametrage.ParametreurT;
 import parametrage.Temperature;
 import dag3.Conflits;
 import dag3.ConflitsCinetiques;
@@ -34,7 +37,7 @@ public class TestQuantiqueDag3 {
 		int M = 4*nbNoeuds*nbCouleurs; //1;
 		double G0 = 0.55;
 		int P = 10;
-		int maxSteps = (int) Math.pow(10,4);
+		int maxSteps = (int) Math.pow(10,5)*4;
 		int seed = 22;
 		
 		Temperature T = new Temperature(0.35/P);
@@ -54,9 +57,13 @@ public class TestQuantiqueDag3 {
 		etats.get(P-1).setprevious(etats.get(P-2));
 		etats.get(P-1).setnext(etats.get(0));
 		// fin construire liste etats
-		
-		ParametreGamma gamma = new ParametreGamma(G0, G0/maxSteps, 0) ; // TODO gamma lineaire, car decroissance exponentielle ici
-		GrapheColorieParticule coloriage = new GrapheColorieParticule(etats, T, seed, Ec, Ep, gamma, graphe, nbCouleurs);
+		//ParametreGamma gamma = new ParametreGamma(G0, 0.01, 0);// TODO gamma lineaire, car decroissance exponentielle ici
+		GrapheColorieParticule coloriage = new GrapheColorieParticule(etats, T, seed, Ec, Ep, new ParametreGamma(1,1,0), graphe, nbCouleurs);
+		List<Double> listeDelta = ParametreurT.parametreurRecuit(coloriage , mutation, maxSteps);
+		coloriage.setT(new Temperature(/*listeDelta.get(50)/P)*/0.035));
+		System.out.println(listeDelta.get(50)/P);
+		ParametreGamma gamma = ParametreurGamma.parametrageGamma(maxSteps,P,T,listeDelta.get(200)) ;
+		coloriage.setGamma(gamma);
 		//System.out.println(coloriage.calculerCompteurCinetique());
 		RecuitTruanderie2 recuit = new RecuitTruanderie2();
 		//Recuit recuit = new Recuit();
