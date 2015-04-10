@@ -2,13 +2,10 @@ package dag3;
 import modele.*;
 import parametrage.*;
 import mutation.*;
-import io.Writer;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 import javax.swing.*;
 
@@ -74,7 +71,10 @@ public class RecuitTruanderie2 extends JFrame
 	public  double solution(Probleme p,IMutation m,int nombreIterations, int seed, int M) throws IOException, InterruptedException
 	{	
 		int nombreEtat=p.nombreEtat();
-		Probleme pBest = p.clone();
+		//TODO
+		//Probleme pBest = p.clone();
+		//TODO
+		double palierTEST = 1e7;
 		
 		ArrayList<Etat> e = p.getEtat();
 		System.out.println(e);
@@ -89,10 +89,6 @@ public class RecuitTruanderie2 extends JFrame
 		double energie = (e.get(0)).getEnergie();
 		System.out.println("En : " + energie);
 		double energieBest = energie;
-		
-		//test
-		double palier = 1e8;
-		//TODO
 		
 		int i = 0;
 		int mutationsAcceptees = 0;
@@ -115,7 +111,7 @@ public class RecuitTruanderie2 extends JFrame
 					
 					//System.out.println("E");
 					
-					m.maj(p, r); //TODO pas sur de ca...
+					m.maj(p, r);
 					
 					deltapot =  m.calculer(p,r);
 					//System.out.println("deltapot : " + deltapot);
@@ -152,8 +148,9 @@ public class RecuitTruanderie2 extends JFrame
 							//System.out.println("avant "+r.getEnergie());
 							m.faire(p,r); //redonne comportement du recuit DAG3 --> très bizarre
 							
-							e.set(j, r);
-							p.setEtat(e);
+							//TODO à supprimer
+							//e.set(j, r);
+							//p.setEtat(e);
 							
 							Epot += deltapot/nombreEtat;
 							//System.out.println("Epot "+Epot);
@@ -167,14 +164,18 @@ public class RecuitTruanderie2 extends JFrame
 							
 						}
 						if (energie < energieBest){
-							pBest.setEtat(e);
-							energie = r.getEnergie();
+							//pBest.setEtat(e); //TODO
 							energieBest = energie;
-							System.out.println(energieBest);
+							System.out.println("meilleureEnergie = "+energieBest);
+							//TODO
+							for (Etat etat : p.getEtat()){
+								GrapheColorie g = (GrapheColorie) etat;
+								System.out.println("Energie de l'état : " + Conflits.calculer(g));
+								System.out.println("Nombre de noeuds en conflits : " + g.nombreNoeudsEnConflit());
+								System.out.println("Nombre d'arêtes en conflits : " + g.getNombreConflitsAretes());
+							}
 						}
 				}
-				
-				
 			}
 			//UNE FOIS EFFECTUEE SUR tout les etat de la particule on descend gamma
 			p.majgamma();
@@ -182,22 +183,21 @@ public class RecuitTruanderie2 extends JFrame
 			Collections.shuffle(p.getEtat());
 			
 			i++;
-			//TEST TODO
-			if(mutationsTentees>1e8){
-				System.out.println("mT "+mutationsTentees);
-				System.out.println("mA "+mutationsAcceptees);
-				for (Etat etat : p.getEtat()){
-					GrapheColorie g = (GrapheColorie) etat;
-					System.out.println("Nombre de noeuds en conflits : " + g.nombreNoeudsEnConflit());
-					System.out.println("Nombre d'arêtes en conflits : " + g.getNombreConflitsAretes());
+			
+			if(mutationsTentees>palierTEST){
+				palierTEST+=1e7;
+				System.out.println();
+				System.out.println("mutationsTentees : "+mutationsTentees);
+				System.out.println("J : "+J.calcul(p.getT(),nombreEtat));
+				System.out.println("G : "+p.getGamma().getGamma());
+				//TODO
+				for (int i1=0;i1<nombreEtat;i1++){
+					GrapheColorie g = (GrapheColorie) p.getEtat().get(i1);
+					System.out.print("{"+g.nombreNoeudsEnConflit()+","+g.getNombreConflitsAretes()+"} ");
 				}
+				System.out.println();
 			}
 			
-			if(mutationsTentees>palier){
-				System.out.println("mutationsTentees : "+palier);
-				palier+=1e8;
-			}
-			//TEST
 		}
 		// nb mutations 
 		System.out.println("Mutations tentées : " + mutationsTentees);
@@ -206,9 +206,4 @@ public class RecuitTruanderie2 extends JFrame
 		return energieBest;
 
 	}
-	
-	
-
-
-
 }

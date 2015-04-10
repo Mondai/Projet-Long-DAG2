@@ -6,14 +6,12 @@ import java.util.ArrayList;
 import modele.Etat;
 import parametrage.ParametreGamma;
 import parametrage.Temperature;
-import recuit.Recuit;
 import dag3.Conflits;
 import dag3.ConflitsCinetiques;
 import dag3.Graphe;
 import dag3.GrapheColorie;
 import dag3.GrapheColorieParticule;
 import dag3.MutationConflitsAleatoire;
-import dag3.ParametreGammaLineaire;
 import dag3.RecuitTruanderie2;
 import dag3.Traducteur;
 
@@ -38,6 +36,7 @@ public class TestQuantiqueDag3 {
 		int P = 10;
 		int maxSteps = (int) Math.pow(10,4);
 		int seed = 22;
+		
 		Temperature T = new Temperature(0.35/P);
 		// construire liste d'etats
 		ArrayList<Etat> etats = new ArrayList<Etat>();
@@ -55,16 +54,12 @@ public class TestQuantiqueDag3 {
 		etats.get(P-1).setprevious(etats.get(P-2));
 		etats.get(P-1).setnext(etats.get(0));
 		// fin construire liste etats
-		ParametreGammaLineaire gamma = new ParametreGammaLineaire(G0, G0/maxSteps, 0) ; // TODO gamma lineaire, car decroissance exponentielle ici
+		
+		ParametreGamma gamma = new ParametreGamma(G0, G0/maxSteps, 0) ; // TODO gamma lineaire, car decroissance exponentielle ici
 		GrapheColorieParticule coloriage = new GrapheColorieParticule(etats, T, seed, Ec, Ep, gamma, graphe, nbCouleurs);
-		System.out.println(coloriage.calculerCompteurCinetique());
+		//System.out.println(coloriage.calculerCompteurCinetique());
 		RecuitTruanderie2 recuit = new RecuitTruanderie2();
 		//Recuit recuit = new Recuit();
-		mutation.maj(coloriage, coloriage.getEtat().get(0));
-		System.out.println(coloriage.getEtat().get(0).getEnergie());
-		System.out.println("Mutation : " + mutation.calculer(coloriage, coloriage.getEtat().get(0)) );
-		mutation.faire(coloriage, coloriage.getEtat().get(0));
-		System.out.println(coloriage.getEtat().get(0).getEnergie());
 		
 		
 		long startTime = System.nanoTime();
@@ -87,7 +82,7 @@ public class TestQuantiqueDag3 {
 				if (g.getNoeudsConflitList().contains(i)) System.out.println("Dessus En conflit");
 			}*/
 			
-			System.out.println("Energie de l'état : " + Ep.calculer(g));
+			System.out.println("Energie de l'état : " + Conflits.calculer(g));
 			System.out.println("Nombre de noeuds en conflits : " + g.nombreNoeudsEnConflit());
 			System.out.println("Nombre d'arêtes en conflits : " + g.getNombreConflitsAretes());
 		}

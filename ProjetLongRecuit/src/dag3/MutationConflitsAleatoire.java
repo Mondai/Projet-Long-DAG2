@@ -37,31 +37,6 @@ public class MutationConflitsAleatoire implements IMutation {
 		//System.out.println("Calcul Mutation de couleur " + couleurNoeud + " , " + this.couleur + " est " + Epot);
 		// différence d'énergie potentielle
 		
-		/*
-		GrapheColorie coloriageNext = (GrapheColorie)	coloriage.getNext();
-		//System.out.println("D : " + coloriage.getNext() );
-		GrapheColorie coloriagePrev = (GrapheColorie)	coloriage.getPrevious();
-		int deltaE = 0;
-
-		HashSet<Integer> Valpha = coloriage.getClassesCouleurs()[this.couleur];
-		HashSet<Integer> Vbeta = coloriage.getClassesCouleurs()[couleurNoeud];
-
-		Valpha.remove(this.noeud);	// le calcul suivant requiert d'exclure v de Valpha 
-		
-		//int d = coloriageNext.spinConflit(0, this.noeud);
-
-		for (int u : Valpha){
-			deltaE += 2*(coloriageNext.spinConflit(u, this.noeud) + coloriagePrev.spinConflit(u, this.noeud));
-		}
-		
-		for (int u : Vbeta){
-			deltaE -= 2*(coloriageNext.spinConflit(u, this.noeud) + coloriagePrev.spinConflit(u, this.noeud));
-		}
-		
-		Valpha.add(this.noeud);	// rajouter v dans le classe de couleur (vu qu'on l'a enleve avant)
-		*/
-		
-		//return deltaE + Epot;
 		return Epot;
 		//renvoie energie potentielle
 	}
