@@ -90,6 +90,10 @@ public class RecuitTruanderie2 extends JFrame
 		System.out.println("En : " + energie);
 		double energieBest = energie;
 		
+		//test
+		double palier = 1e8;
+		//TODO
+		
 		int i = 0;
 		int mutationsAcceptees = 0;
 		int mutationsTentees = 0;
@@ -158,7 +162,6 @@ public class RecuitTruanderie2 extends JFrame
 							energie = r.getEnergie();
 							//System.out.println("Dpot "+deltapot);
 							//System.out.println("apres "+r.getEnergie());
-							//energie += deltapot; // TODO supprimer!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 							//System.out.println("deltapot "+deltapot);
 							//System.out.println("energie "+energie);
 							
@@ -169,12 +172,6 @@ public class RecuitTruanderie2 extends JFrame
 							energieBest = energie;
 							System.out.println(energieBest);
 						}
-				//	}
-					/*if(compteurpourlasortie%1000==0){
-					Writer.ecriture(compteurpourlasortie,distanceBest, sortie);
-					}
-					compteurpourlasortie++;
-					*/	
 				}
 				
 				
@@ -185,7 +182,22 @@ public class RecuitTruanderie2 extends JFrame
 			Collections.shuffle(p.getEtat());
 			
 			i++;
+			//TEST TODO
+			if(mutationsTentees>1e8){
+				System.out.println("mT "+mutationsTentees);
+				System.out.println("mA "+mutationsAcceptees);
+				for (Etat etat : p.getEtat()){
+					GrapheColorie g = (GrapheColorie) etat;
+					System.out.println("Nombre de noeuds en conflits : " + g.nombreNoeudsEnConflit());
+					System.out.println("Nombre d'arêtes en conflits : " + g.getNombreConflitsAretes());
+				}
+			}
 			
+			if(mutationsTentees>palier){
+				System.out.println("mutationsTentees : "+palier);
+				palier+=1e8;
+			}
+			//TEST
 		}
 		// nb mutations 
 		System.out.println("Mutations tentées : " + mutationsTentees);
