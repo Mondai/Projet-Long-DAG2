@@ -37,7 +37,7 @@ public class TestQuantiqueDag3 {
 		int M = 4*nbNoeuds*nbCouleurs; //1;
 		double G0 = 0.55;
 		int P = 10;
-		int maxSteps = (int) Math.pow(10,5)*4;
+		int maxSteps = (int) Math.pow(10,2);
 		int seed = 22;
 		
 		Temperature T = new Temperature(0.35/P);

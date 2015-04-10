@@ -40,7 +40,7 @@ public abstract  class Fonction {
 
 	/**
 	 * Fonction qui change la temperature et indique si on est à la temperature finale.
-	 * @return True si il faut continuer, false sinon.
+	 * @return True s'il faut continuer, false sinon.
 	 */
 	 public boolean  modifierT() {
 		return false;

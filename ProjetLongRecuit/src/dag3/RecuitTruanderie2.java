@@ -149,7 +149,7 @@ public class RecuitTruanderie2 extends JFrame
 							mutationsAcceptees++;
 							//System.out.println("PA " + r2);
 							//System.out.println("avant "+r.getEnergie());
-							m.faire(p,r); //redonne comportement du recuit DAG3 --> très bizarre
+							m.faire(p,r);
 							
 							//TODO à supprimer
 							//e.set(j, r);
@@ -177,6 +177,7 @@ public class RecuitTruanderie2 extends JFrame
 								return energieBest;
 							}
 							//TODO
+							/*
 							System.out.println();
 							for (Etat etat : p.getEtat()){
 								GrapheColorie g = (GrapheColorie) etat;
@@ -184,7 +185,7 @@ public class RecuitTruanderie2 extends JFrame
 								System.out.println("Nombre de noeuds en conflits : " + g.nombreNoeudsEnConflit());
 								System.out.println("Nombre d'arêtes en conflits : " + g.getNombreConflitsAretes());
 							}
-							System.out.println();
+							System.out.println();*/
 						}
 				}
 			}
