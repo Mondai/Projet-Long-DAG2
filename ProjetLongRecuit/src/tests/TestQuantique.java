@@ -31,7 +31,7 @@ public class TestQuantique {
 		int nbCouleurs = 28;
 		double k = 1;
 		int M = 4 * nbNoeuds * nbCouleurs;
-		double G0 = 0.55;
+		double G0 = 0.75;
 		int P = 10;
 		double T = 0.35/P;
 		int maxSteps = (int) Math.pow(10,4);
@@ -40,8 +40,8 @@ public class TestQuantique {
 		coloriage.initialiser();
 		FonctionLineaire Tparam = new FonctionLineaire(G0,0,maxSteps);
 		ConstanteKConstant Kparam = new ConstanteKConstant(k);
-		//RecuitQuantique recuit = new RecuitQuantique(Tparam,Kparam, M, T);
-		RecuitQuantiqueAccelere recuit = new RecuitQuantiqueAccelere(Tparam,Kparam, M, T);
+		RecuitQuantique recuit = new RecuitQuantique(Tparam,Kparam, M, T);
+		//RecuitQuantiqueAccelere recuit = new RecuitQuantiqueAccelere(Tparam,Kparam, M, T);
 		//RecuitQuantiqueAccelereVC recuit = new RecuitQuantiqueAccelereVC(Tparam,Kparam, M, T);
 		
 		long startTime = System.nanoTime();

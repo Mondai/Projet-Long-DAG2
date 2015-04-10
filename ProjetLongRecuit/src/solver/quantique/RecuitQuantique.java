@@ -176,7 +176,7 @@ public class RecuitQuantique implements IRecuit {
 					
 					//K.calculerK(deltaE);
 								
-					if( deltaE <= 0) { //|| deltaEp <= 0){
+					if( deltaE <= 0 || deltaEp <= 0){
 						
 						mutationsAcceptees++;
 						probleme.modifElem(etat, mutation);				// faire la mutation

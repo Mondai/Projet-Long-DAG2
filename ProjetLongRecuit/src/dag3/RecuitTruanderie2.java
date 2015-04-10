@@ -99,13 +99,13 @@ public class RecuitTruanderie2 extends JFrame
 			
 			 E = Epot-J.calcul(p.getT(), nombreEtat)*compteurSpinique;
 			 
+			 double jG = J.calcul(p.getT(),nombreEtat);
+
 			//System.out.println("Iter");
 			 
 			for(int j=0;j<nombreEtat;j++){// on effectue M  fois la mutation sur chaque réplique avant de descendre gamma
 				
 				Etat r = e.get(j);
-				
-				double jG = J.calcul(p.getT(),nombreEtat);
 				
 				for(int k=0; k<M; k++){
 					//System.out.println(energieBest);
@@ -177,12 +177,14 @@ public class RecuitTruanderie2 extends JFrame
 								return energieBest;
 							}
 							//TODO
+							System.out.println();
 							for (Etat etat : p.getEtat()){
 								GrapheColorie g = (GrapheColorie) etat;
 								System.out.println("Energie de l'état : " + Conflits.calculer(g));
 								System.out.println("Nombre de noeuds en conflits : " + g.nombreNoeudsEnConflit());
 								System.out.println("Nombre d'arêtes en conflits : " + g.getNombreConflitsAretes());
 							}
+							System.out.println();
 						}
 				}
 			}
@@ -192,7 +194,8 @@ public class RecuitTruanderie2 extends JFrame
 			Collections.shuffle(p.getEtat());
 			
 			i++;
-			
+			//TEST TODO
+			/*
 			if(mutationsTentees>palierTEST){
 				palierTEST+=1e7;
 				System.out.println();
@@ -206,7 +209,7 @@ public class RecuitTruanderie2 extends JFrame
 				}
 				System.out.println();
 			}
-			
+			*/
 		}
 		// nb mutations 
 		System.out.println("Mutations tentées : " + mutationsTentees);
