@@ -114,7 +114,7 @@ public class RecuitTruanderie2 extends JFrame
 					m.maj(p, r); //TODO pas sur de ca...
 					
 					deltapot =  m.calculer(p,r);
-					//System.out.println("deltapot : " + deltapot);
+					System.out.println("deltapot : " + deltapot);
 					
 					double delta = deltapot/nombreEtat  -J.calcul(p.getT(),nombreEtat)*p.differenceSpins(r,m);
 					
@@ -165,7 +165,7 @@ public class RecuitTruanderie2 extends JFrame
 						}
 						if (energie < energieBest){
 							pBest.setEtat(e);
-							energie = r.getEnergie();
+							//energie = r.getEnergie();
 							energieBest = energie;
 							System.out.println(energieBest);
 						}

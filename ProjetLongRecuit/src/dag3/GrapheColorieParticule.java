@@ -6,6 +6,7 @@ import parametrage.EnergieCinetique;
 import parametrage.EnergiePotentielle;
 import parametrage.ParametreGamma;
 import parametrage.Temperature;
+import solver.commun.HighQualityRandom;
 import modele.Etat;
 import modele.Probleme;
 import mutation.IMutation;
@@ -24,11 +25,13 @@ public class GrapheColorieParticule extends Probleme {
 	 * Graphe sous-jacent.
 	 */
 	Graphe graphe;
+	HighQualityRandom gen;
 	
 	public GrapheColorieParticule(ArrayList<Etat> etat, Temperature T, int seed, EnergieCinetique energiecin, EnergiePotentielle energiepot, ParametreGamma gamma, Graphe graphe, int k) {
 		super(etat, T, seed, energiecin, energiepot, gamma);
 		
 		this.graphe = graphe;
+		this.gen = new HighQualityRandom(seed);
 		this.k = k;
 	}
 	
@@ -42,7 +45,7 @@ public class GrapheColorieParticule extends Probleme {
 		
 	public Etat creeEtatAleatoire() {
 		//System.out.println("CEA");
-		GrapheColorie etat =  new GrapheColorie(this.getEpot(), this.k, this.graphe, this.getSeed());
+		GrapheColorie etat =  new GrapheColorie(this.getEpot(), this.k, this.graphe, this.gen.nextInt());
 		etat.initialiser();
 		etat.setnext(this.getEtat().get(0));
 		etat.setprevious(this.getEtat().get(this.getEtat().size()-1));
