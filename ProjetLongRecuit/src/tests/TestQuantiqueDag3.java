@@ -38,7 +38,7 @@ public class TestQuantiqueDag3 {
 		int M = 1; //1;
 		double G0 = 0.75;
 		int P = 10;
-		int maxSteps = (int) Math.pow(10,5);
+		int maxSteps = (int) Math.pow(10,5)*4;
 		int seed = 22;
 		
 		Temperature T = new Temperature(0.35/P);
@@ -58,7 +58,7 @@ public class TestQuantiqueDag3 {
 		etats.get(P-1).setprevious(etats.get(P-2));
 		etats.get(P-1).setnext(etats.get(0));
 		// fin construire liste etats
-		//ParametreGamma gamma = new ParametreGamma(G0, 0.01, 0)// TODO gamma lineaire, car decroissance exponentielle ici
+		//ParametreGamma gamma = new ParametreGamma(G0, 0.01, 0);// TODO gamma lineaire, car decroissance exponentielle ici
 		GrapheColorieParticule coloriage = new GrapheColorieParticule(etats, T, seed, Ec, Ep, new ParametreGamma(1,1,0), graphe, nbCouleurs);
 		List<Double> listeDelta = ParametreurT.parametreurRecuit(coloriage , mutation, maxSteps);
 		coloriage.setT(new Temperature(/*listeDelta.get(50)/P)*/0.035));
