@@ -170,6 +170,12 @@ public class RecuitTruanderie2 extends JFrame
 							//pBest.setEtat(e); //TODO
 							energieBest = energie;
 							System.out.println("meilleureEnergie = "+energieBest);
+							if(energieBest==0){	// condition de fin
+								// nb mutations 
+								System.out.println("Mutations tentées : " + mutationsTentees);
+								System.out.println("Mutations acceptées : " + mutationsAcceptees);
+								return energieBest;
+							}
 							//TODO
 							for (Etat etat : p.getEtat()){
 								GrapheColorie g = (GrapheColorie) etat;
