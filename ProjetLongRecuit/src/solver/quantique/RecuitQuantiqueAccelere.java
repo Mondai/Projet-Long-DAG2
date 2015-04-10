@@ -1,7 +1,5 @@
 package solver.quantique;
 
-
-
 import java.util.ArrayList;
 import java.util.Collections;
 

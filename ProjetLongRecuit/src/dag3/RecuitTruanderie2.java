@@ -106,7 +106,6 @@ public class RecuitTruanderie2 extends JFrame
 				Etat r = e.get(j);
 				
 				double jG = J.calcul(p.getT(),nombreEtat);
-				System.out.println(J.calcul(p.getT(),nombreEtat));
 				
 				for(int k=0; k<M; k++){
 					//System.out.println(energieBest);
