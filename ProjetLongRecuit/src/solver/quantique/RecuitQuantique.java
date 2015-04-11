@@ -141,6 +141,7 @@ public class RecuitQuantique implements IRecuit {
 			double DE = 0;
 			
 			for (Integer p : indiceEtats){	
+				mutationsTentees++;
 				
 				etat = probleme.etats[p];	
 				
@@ -157,11 +158,12 @@ public class RecuitQuantique implements IRecuit {
 				else{
 					next = probleme.etats[p+1];
 				}
+				//System.out.println("palier : " + this.palier);
 				
 				for (int j = 0; j < this.palier; j++){
 
 					MutationElementaire mutation = probleme.getMutationElementaire(etat);	// trouver une mutation possible
-					mutationsTentees++; //permet d'avoir une référence indépendante pour les améliorations de l'algorithme, mais aussi sur son temps
+					//mutationsTentees++; //permet d'avoir une référence indépendante pour les améliorations de l'algorithme, mais aussi sur son temps
 					
 					double deltaEp = probleme.calculerDeltaEp(etat, mutation);	// calculer deltaEp si la mutation etait acceptee
 					double deltaEc = probleme.calculerDeltaEc(etat, previous, next, mutation);  // calculer deltaIEc si la mutation etait acceptee

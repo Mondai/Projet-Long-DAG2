@@ -36,6 +36,7 @@ public abstract class Probleme extends Particule{
 	 */
 	public double calculerEnergie(){
 		return ( this.Ec.calculer(this) + calculerEnergiePotentielle() );
+		//peut-être pas très utile
 	}
 	
 	/**
@@ -48,6 +49,7 @@ public abstract class Probleme extends Particule{
 			energiePotentiel += etat.Ep.calculer(etat);
 		}
 		return energiePotentiel;
+		// peut-être renvoyer energiePotentielle / nombre de répliques??
 	}
 	
 
