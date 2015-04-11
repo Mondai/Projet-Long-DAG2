@@ -11,18 +11,19 @@ import dag3.ConflitsCinetiques;
 import dag3.Graphe;
 import dag3.MutationConflitsAleatoire;
 import Lanceurs.LanceurDAG3;
+import Lanceurs.LanceurDAG3Graphique;
 
 
-public class TestQuantiqueRaph {
+public class TestQuantiqueRaphDistribution {
 
 	public static void main(String[] args) throws IOException {
 	
-		LanceurDAG3 launcher = new LanceurDAG3();
+		LanceurDAG3Graphique launcher = new LanceurDAG3Graphique();
 		
 		// Paramètres généraux
 		launcher.setEc(new ConflitsCinetiques());
 		launcher.setEp(new Conflits());
-		launcher.setSeed(22);
+		launcher.setSeed(22); // Génère aussi le Gen
 		launcher.setMutation(new MutationConflitsAleatoire());
 		
 		// Paramètres vertex coloring
@@ -35,11 +36,15 @@ public class TestQuantiqueRaph {
 		launcher.setM(4*launcher.getNbNoeuds()*launcher.getNbCouleurs());
 		launcher.setG0(0.75);
 		launcher.setP(10);
-		launcher.setMaxSteps((int) Math.pow(10,4));
+		launcher.setMaxSteps((int) Math.pow(10,2));
 		launcher.setT(new Temperature(0.35/launcher.getP()));
 		
+		//Paramètres graphiques
+		launcher.setTailleDuSet(10);
+		launcher.setEchantillonage(5000);
+		
 		// Lancement
-		launcher.lancer();
+		launcher.lancerEnergieFinalePourNombreIterationDonne();
 		
 		
 	}

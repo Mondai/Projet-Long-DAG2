@@ -358,6 +358,9 @@ public class GrapheColorie extends Etat{
 		return F;
 	}
 
+	
+	
+	
 	public void setGen(HighQualityRandom gen) {
 		this.gen = gen;
 	}

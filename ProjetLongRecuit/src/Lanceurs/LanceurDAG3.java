@@ -7,6 +7,7 @@ import java.io.IOException;
 import dag3.GrapheColorie;
 import modele.*;
 import parametrage.*;
+import solver.commun.HighQualityRandom;
 import mutation.*;
 import dag3.Conflits;
 import dag3.ConflitsCinetiques;
@@ -52,9 +53,12 @@ public class LanceurDAG3 {
 	public void lancer() throws IOException {
 
 		// Initialisation des états car bizzare dans leur recuit
+		
+		HighQualityRandom gen = new HighQualityRandom(seed);
+		
 		ArrayList<Etat> etats = new ArrayList<Etat>();
 		for(int i=0;i<P;i++){
-			GrapheColorie e = new GrapheColorie(Ep, nbCouleurs, graphe, seed);
+			GrapheColorie e = new GrapheColorie(Ep, nbCouleurs, graphe, gen.nextInt(100*seed));
 			e.initialiser();
 			etats.add(e);
 		}
@@ -66,11 +70,18 @@ public class LanceurDAG3 {
 		}
 		etats.get(P-1).setprevious(etats.get(P-2));
 		etats.get(P-1).setnext(etats.get(0));
+		
+		
 
 		// fin construire liste etats
 
 		ParametreGamma gamma = new ParametreGamma(G0, G0/maxSteps, 0) ;
 		GrapheColorieParticule coloriage = new GrapheColorieParticule(etats, T, seed, Ec, Ep, gamma, graphe, nbCouleurs);
+		
+		for(int i=0;i<P;i++){
+			System.out.println("Seed"+i+" : "+(((GrapheColorie)coloriage.getEtat().get(i)).getSeed()));
+		}
+		
 		RecuitTruanderie2 recuit = new RecuitTruanderie2();
 
 		//TODO
@@ -85,24 +96,12 @@ public class LanceurDAG3 {
 			e.printStackTrace();
 		}
 		long endTime = System.nanoTime();
+		
+		System.out.println("duree = "+(endTime-startTime)/1000000000+" s");
 
 	}
 
-	public IMutation getMutation() {
-		return mutation;
-	}
-
-	public EnergiePotentielle getEp() {
-		return Ep;
-	}
-
-	public EnergieCinetique getEc() {
-		return Ec;
-	}
-
-	public int getSeed() {
-		return seed;
-	}
+	
 
 	public int getNbNoeuds() {
 		return nbNoeuds;
@@ -116,29 +115,13 @@ public class LanceurDAG3 {
 		return nomGraphe;
 	}
 
-	public int getK() {
-		return k;
-	}
-
-	public int getM() {
-		return M;
-	}
-
-	public double getG0() {
-		return G0;
-	}
+	
 
 	public int getP() {
 		return P;
 	}
 
-	public int getMaxSteps() {
-		return maxSteps;
-	}
-
-	public Temperature getT() {
-		return T;
-	}
+	
 
 	public void setMutation(MutationConflitsAleatoire mutation) {
 		this.mutation = mutation;
