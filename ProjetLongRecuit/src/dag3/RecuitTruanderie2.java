@@ -71,12 +71,9 @@ public class RecuitTruanderie2 extends JFrame
 	public  double solution(Probleme p,IMutation m,int nombreIterations, int seed, int M) throws IOException, InterruptedException
 	{	
 		int nombreEtat=p.nombreEtat();
-		//TODO
-		//Probleme pBest = p.clone();
-		//TODO
-		double palierTEST = 1e7;
 		
 		ArrayList<Etat> e = p.getEtat();
+		
 		//System.out.println(e);
 		Ponderation J = new Ponderation(p.getGamma());
 		double Epot = p.calculerEnergiePotentielle();
@@ -101,11 +98,6 @@ public class RecuitTruanderie2 extends JFrame
 			 
 			 double jG = J.calcul(p.getT(),nombreEtat);
 			 
-			 //TODO
-			 int testEc = 0;
-			 int A=0;
-			 double DE = 0;
-			 
 			//System.out.println("Iter");
 			 
 			for(int j=0;j<nombreEtat;j++){// on effectue M  fois la mutation sur chaque réplique avant de descendre gamma
@@ -124,10 +116,6 @@ public class RecuitTruanderie2 extends JFrame
 					//System.out.println("deltapot : " + deltapot);
 					
 					double delta = deltapot/nombreEtat  - jG*p.differenceSpins(r,m);
-
-					//TODO
-					testEc += p.differenceSpins(r,m);
-					DE+=delta;
 					
 					//test deltaE < 0
 					/*
@@ -158,14 +146,7 @@ public class RecuitTruanderie2 extends JFrame
 							//System.out.println("avant "+r.getEnergie());
 
 							m.faire(p,r); //redonne comportement du recuit DAG3 --> très bizarre
-							
-							//TODO
-							A++;
-							
-							//TODO à supprimer
-							//e.set(j, r);
-							//p.setEtat(e);
-							
+
 							Epot += deltapot/nombreEtat;
 							//System.out.println("Epot "+Epot);
 							E += delta;// L'energie courante est modifiée
@@ -178,10 +159,9 @@ public class RecuitTruanderie2 extends JFrame
 							
 						}
 						if (energie < energieBest){
-							//pBest.setEtat(e); //TODO
 							energieBest = energie;
-							System.out.println("meilleureEnergie = "+energieBest);
-							System.out.println("mutationsTentees = "+ mutationsTentees);
+							//System.out.println("meilleureEnergie = "+energieBest);
+							//System.out.println("mutationsTentees = "+ mutationsTentees);
 							if(energieBest==0){	// condition de fin
 								// nb mutations 
 								System.out.println("Mutations tentées : " + mutationsTentees);
@@ -189,19 +169,6 @@ public class RecuitTruanderie2 extends JFrame
 								System.out.println("Gfin : "+p.getGamma().getGamma());
 								return energieBest;
 							}
-							/*
-							//TODO
-							/*
-							System.out.println();
-							for (Etat etat : p.getEtat()){
-								GrapheColorie g = (GrapheColorie) etat;
-								System.out.println("Energie de l'état : " + Conflits.calculer(g));
-								System.out.println("Nombre de noeuds en conflits : " + g.nombreNoeudsEnConflit());
-								System.out.println("Nombre d'arêtes en conflits : " + g.getNombreConflitsAretes());
-							}
-
-							System.out.println();
-							*/
 
 						}
 				}
@@ -210,30 +177,9 @@ public class RecuitTruanderie2 extends JFrame
 			p.majgamma();
 			J.setGamma(p.getGamma());
 			Collections.shuffle(p.getEtat());
-			
+
 			i++;
 			
-			//TODO
-			//System.out.println(testEc/((double)M*nombreEtat));
-			//System.out.println("A : "+A);
-			//System.out.println("DE : "+DE/((double)M*nombreEtat));
-			
-			//TEST TODO
-			/*
-			if(mutationsTentees>palierTEST){
-				palierTEST+=1e7;
-				System.out.println();
-				System.out.println("mutationsTentees : "+mutationsTentees);
-				System.out.println("J : "+J.calcul(p.getT(),nombreEtat));
-				System.out.println("G : "+p.getGamma().getGamma());
-				//TODO
-				for (int i1=0;i1<nombreEtat;i1++){
-					GrapheColorie g = (GrapheColorie) p.getEtat().get(i1);
-					System.out.print("{"+g.nombreNoeudsEnConflit()+","+g.getNombreConflitsAretes()+"} ");
-				}
-				System.out.println();
-			}
-			*/
 		}
 		// nb mutations 
 		System.out.println("Mutations tentées : " + mutationsTentees);

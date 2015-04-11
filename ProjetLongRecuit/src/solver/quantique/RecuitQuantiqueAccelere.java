@@ -74,10 +74,6 @@ public class RecuitQuantiqueAccelere extends RecuitQuantique{
 			Collections.shuffle(indiceEtats, probleme.gen);	// melanger l'ordre de parcours des indices
 			Jr = -this.temperature/2*Math.log(Math.tanh(this.Gamma.t/nombreRepliques/this.temperature));	// calcul de Jr pour ce palier
 			
-			//TODO
-			int testEc = 0;
-			int A = 0;
-			
 			for (Integer p : indiceEtats){	
 				
 				etat = probleme.etats[p];
@@ -100,9 +96,6 @@ public class RecuitQuantiqueAccelere extends RecuitQuantique{
 					MutationElementaire mutation = probleme.getMutationElementaire(etat);	// trouver une mutation possible
 					mutationsTentees++; //permet d'avoir une référence indépendante pour les améliorations de l'algorithme, mais aussi sur son temps
 					
-					//TODO
-					testEc += probleme.calculerDeltaEc(etat, previous, next, mutation);
-					
 					deltaEp = probleme.calculerDeltaEp(etat, mutation);	// calculer deltaEp si la mutation etait acceptee
 					deltaEcUB = probleme.calculerDeltaEcUB(etat, previous, next, mutation);  // calculer deltaIEcUB si la mutation etait acceptee
 					//différences du hamiltonien total
@@ -111,10 +104,7 @@ public class RecuitQuantiqueAccelere extends RecuitQuantique{
 
 					//K.calculerK(deltaE);
 
-					if(deltaEp <= 0){
-						
-						//TODO
-						A++;
+					if(deltaEp < 0){
 						
 						mutationsAcceptees++;
 						probleme.modifElem(etat, mutation);				// faire la mutation
@@ -146,9 +136,6 @@ public class RecuitQuantiqueAccelere extends RecuitQuantique{
 							
 							if( deltaE <= 0){
 								
-								//TODO
-								A++;
-								
 								mutationsAcceptees++;
 								probleme.modifElem(etat, mutation);				// faire la mutation
 								EpActuelle = etat.Ep.calculer(etat);		// energie potentielle temporelle
@@ -158,10 +145,7 @@ public class RecuitQuantiqueAccelere extends RecuitQuantique{
 								proba = Expo.expf(-deltaE / (this.K.k * this.temperature));
 							
 								if (proba >= probleme.gen.nextDouble()) {
-									
-									//TODO
-									A++;
-									
+
 									mutationsAcceptees++;
 									probleme.modifElem(etat, mutation);  		// accepter la mutation 
 								}
@@ -171,9 +155,6 @@ public class RecuitQuantiqueAccelere extends RecuitQuantique{
 					}
 				}				
 			}
-			//TODO
-			System.out.println(testEc/((double)this.palier*nombreRepliques));
-			System.out.println("A : "+A);
 		}
 		
 		System.out.print(mutationsTentees+" ");

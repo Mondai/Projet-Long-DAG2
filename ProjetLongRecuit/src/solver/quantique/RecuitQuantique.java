@@ -134,12 +134,7 @@ public class RecuitQuantique implements IRecuit {
 			
 			Collections.shuffle(indiceEtats, probleme.gen);	// melanger l'ordre de parcours des indices
 			double Jr = -this.temperature/2*Math.log(Math.tanh(this.Gamma.t/nombreRepliques/this.temperature));	// calcul de Jr pour ce palier
-			
-			//TODO
-			int testEc = 0;
-			int A = 0;
-			double DE = 0;
-			
+
 			for (Integer p : indiceEtats){	
 				
 				etat = probleme.etats[p];	
@@ -170,6 +165,7 @@ public class RecuitQuantique implements IRecuit {
 					//différences du hamiltonien total
 					//multiplier deltaIEc par JGamma
 					double deltaE = deltaEp/nombreRepliques - deltaEc*Jr;
+					
 					/*
 					System.out.println("DEP : " + deltaEp);
 					System.out.println("DEC : " + deltaEc);
@@ -177,18 +173,11 @@ public class RecuitQuantique implements IRecuit {
 					System.out.println("EP : " + probleme.calculerEnergiePotentielle());
 					*/
 					
-					//TODO
-					testEc += probleme.calculerDeltaEc(etat, previous, next, mutation);
-					DE+=deltaE;
-					
 					//System.out.println("DeltaEc "+deltaEc*Jr);
 					
 					//K.calculerK(deltaE);
-								
-					if( deltaE <= 0 || deltaEp <= 0){
-						
-						//TODO
-						A++;
+					/*		
+					if( deltaE <= 0 || deltaEp < 0){
 						
 						mutationsAcceptees++;
 						probleme.modifElem(etat, mutation);				// faire la mutation
@@ -207,22 +196,35 @@ public class RecuitQuantique implements IRecuit {
 						proba = Math.exp(-deltaE / (this.K.k * this.temperature));	// calcul de la proba
 						if (proba >= probleme.gen.nextDouble()) {	
 							mutationsAcceptees++;
+							probleme.modifElem(etat, mutation);  		// accepter la mutation
 							
-							//TODO
-							A++;
-							
-							probleme.modifElem(etat, mutation);  		// accepter la mutation 
 						}
 					}
+					*/
+					
+					//TEST TODO voir la difference avec le fonctionnement au dessus (HighQuality ou pas? sauter l'evaluation de proba ou pas?)
+					if( deltaE <= 0 || deltaEp < 0) proba = 1;
+					else	proba = Math.exp(-deltaE / (this.K.k * this.temperature));
+					
+					if (proba >= Math.random()) {
+					mutationsAcceptees++;
+					probleme.modifElem(etat, mutation);				// faire la mutation
+					double EpActuelle = etat.Ep.calculer(etat);		// energie potentielle temporelle
+					if( EpActuelle < this.meilleureEnergie ){		// mettre a jour la meilleur energie
+						this.meilleureEnergie = EpActuelle;
+						System.out.println("meilleureEnergie = "+ this.meilleureEnergie);
+						System.out.println("mutationsTentees = "+ mutationsTentees);
+						if (this.meilleureEnergie == 0){	// fin du programme
+							System.out.println("Mutations tentées : " + mutationsTentees);
+							System.out.println("Mutations acceptées : " + mutationsAcceptees);
+							return;
+						}
+					}
+					}
+					//TEST TODO
 				}
 				
-
 			}
-			
-			//TODO
-			//System.out.println(testEc/((double)this.palier*nombreRepliques));
-			//System.out.println("A : "+A);
-			//System.out.println("DE : "+DE/((double)this.palier*nombreRepliques));
 		}
 		
 		

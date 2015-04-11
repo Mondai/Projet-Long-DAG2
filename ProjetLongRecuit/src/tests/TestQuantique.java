@@ -35,13 +35,13 @@ public class TestQuantique {
 		int P = 10;
 		double T = 0.35/P;
 		int maxSteps = (int) Math.pow(10,4);
-		int seed = 1000;
+		int seed = 25;
 		GrapheColorieParticule coloriage = new GrapheColorieParticule(Ep, mutation, Ec, nbCouleurs , P, graphe, seed);
 		coloriage.initialiser();
 		FonctionLineaire Tparam = new FonctionLineaire(G0,0,maxSteps);
 		ConstanteKConstant Kparam = new ConstanteKConstant(k);
-		RecuitQuantique recuit = new RecuitQuantique(Tparam,Kparam, M, T);
-		//RecuitQuantiqueAccelere recuit = new RecuitQuantiqueAccelere(Tparam,Kparam, M, T);
+		//RecuitQuantique recuit = new RecuitQuantique(Tparam,Kparam, M, T);
+		RecuitQuantiqueAccelere recuit = new RecuitQuantiqueAccelere(Tparam,Kparam, M, T);
 		//RecuitQuantiqueAccelereVC recuit = new RecuitQuantiqueAccelereVC(Tparam,Kparam, M, T);
 		
 		long startTime = System.nanoTime();
