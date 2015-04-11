@@ -1,0 +1,21 @@
+NombreIterationNecessairePourAtteindre0 et fréquence de réussite
+
+
+%---------------------------------------------------------------------
+taille du set : 10
+seed : 22
+
+paramètres vertex Coloring
+	nom du graphe : data/dsjc250.5.col
+	M : 28000
+	G0 : 0.75
+	maxSteps: 10
+	k : 1
+	P : 10
+
+
+
+VectNombreIterations =[2800000, 2800000, 2800000, 2800000, 2800000, 2800000, 2800000, 2800000, 2800000, 2800000, ];
+
+temps = [3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0]
+frequence réussite = 0

@@ -36,15 +36,17 @@ public class TestQuantiqueRaphDistribution {
 		launcher.setM(4*launcher.getNbNoeuds()*launcher.getNbCouleurs());
 		launcher.setG0(0.75);
 		launcher.setP(10);
-		launcher.setMaxSteps((int) Math.pow(10,2));
+		launcher.setMaxSteps((int) Math.pow(10,1));
 		launcher.setT(new Temperature(0.35/launcher.getP()));
 		
 		//Paramètres graphiques
 		launcher.setTailleDuSet(10);
 		launcher.setEchantillonage(5000);
+		launcher.setNomFichier("SortiesGraphiques/Comparaisons/DAG3EnergieFinalePourNombreIterationDonne");
 		
 		// Lancement
-		launcher.lancerEnergieFinalePourNombreIterationDonne();
+		launcher.lancerNombreIterationNecessairePourAtteindre0();
+		//launcher.lancerEnergieFinalePourNombreIterationDonne();
 		
 		
 	}

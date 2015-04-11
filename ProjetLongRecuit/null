@@ -1,0 +1,18 @@
+EnergieFinalePourNombreIterationDonne
+
+
+%---------------------------------------------------------------------
+taille du set : 10
+seed : 22
+
+paramètres vertex Coloring
+	nom du graphe : data/dsjc250.5.col
+	M : 28000
+	G0 : 0.75
+	maxSteps: 100
+	k : 1
+	P : 10
+
+
+
+u =[

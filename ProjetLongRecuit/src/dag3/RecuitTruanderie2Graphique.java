@@ -24,6 +24,7 @@ public class RecuitTruanderie2Graphique extends JFrame
 	static int nbTours = 1;
 	static ParametreK K = new ParametreK(1);
 	double meilleureEnergie;
+	int mutationtentees=0;
 
 
 	/**
@@ -188,6 +189,7 @@ public class RecuitTruanderie2Graphique extends JFrame
 								System.out.println("Mutations tentées : " + mutationsTentees);
 								System.out.println("Mutations acceptées : " + mutationsAcceptees);
 								System.out.println("Gfin : "+p.getGamma().getGamma());
+								this.mutationtentees=mutationsTentees;
 								return energieBest;
 							}
 							/*
@@ -239,7 +241,7 @@ public class RecuitTruanderie2Graphique extends JFrame
 		// nb mutations 
 		System.out.println("Mutations tentées : " + mutationsTentees);
 		System.out.println("Mutations acceptées : " + mutationsAcceptees);
-		
+		this.mutationtentees=mutationsTentees;
 		return energieBest;
 
 	}
@@ -252,6 +254,11 @@ public class RecuitTruanderie2Graphique extends JFrame
 
 	public void setMeilleureEnergie(double meilleureEnergie) {
 		this.meilleureEnergie = meilleureEnergie;
+	}
+
+
+	public int getMutationtentees() {
+		return mutationtentees;
 	}
 	
 	

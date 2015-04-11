@@ -2,7 +2,11 @@ package Lanceurs;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import dag3.GrapheColorie;
 import modele.*;
@@ -50,6 +54,7 @@ public class LanceurDAG3Graphique {
 	//parametres graphiques
 	int echantillonage;
 	int tailleDuSet;
+	String nomFichier;
 
 
 	// Tout sera initialisé dans la classe de test
@@ -83,6 +88,31 @@ public class LanceurDAG3Graphique {
 
 	public void lancerEnergieFinalePourNombreIterationDonne() throws IOException {
 		
+		
+		ArrayList<Double> liste = new ArrayList<Double>();
+		
+		File f = new File (""+nomFichier);
+		PrintWriter pw = new PrintWriter (new BufferedWriter (new FileWriter (f)));
+		
+		pw.println("EnergieFinalePourNombreIterationDonne");
+		pw.println();
+		pw.println();
+		pw.println("%---------------------------------------------------------------------");
+		pw.println("taille du set : "+tailleDuSet);
+		pw.println("seed : "+seed);
+		pw.println("");
+		pw.println("paramètres vertex Coloring");
+		pw.println("	nom du graphe : "+nomGraphe);
+		pw.println("	M : "+M);
+		pw.println("	G0 : "+G0);
+		pw.println("	maxSteps: "+maxSteps);
+		pw.println("	k : "+k);
+		pw.println("	P : "+P);
+		pw.println();
+		pw.println();
+		pw.println();
+		pw.print("u =[");
+		pw.close();
 	
 		
 		for (int i=0;i<tailleDuSet;i++) {
@@ -100,14 +130,110 @@ public class LanceurDAG3Graphique {
 			e.printStackTrace();
 		}
 		long endTime = System.nanoTime();
+		liste.add((double) ((endTime-startTime)/1000000000));
+		System.out.println("duree = "+(endTime-startTime)/1000000000+" s");
+		System.out.println("============================================================");
+		System.out.println("EnergieFinale :"+recuit.getMeilleureEnergie());
+		System.out.println("============================================================");
+		System.out.println("============================================================");
+		
+		
+		pw = new PrintWriter(new BufferedWriter(new FileWriter(f, true)));
+		pw.print(recuit.getMeilleureEnergie()+", ");
+		pw.close();
+		
+		
+		}
+		pw = new PrintWriter(new BufferedWriter(new FileWriter(f, true)));
+		pw.println("];");
+		pw.println("");
+		pw.println("temps = "+liste.toString());
+		pw.close();
+	}
+	
+public void lancerNombreIterationNecessairePourAtteindre0() throws IOException {
+		
+		
+		ArrayList<Double> liste = new ArrayList<Double>();
+		ArrayList<Integer> listeSucces = new ArrayList<Integer>();
+		
+		File f = new File (""+nomFichier);
+		PrintWriter pw = new PrintWriter (new BufferedWriter (new FileWriter (f)));
+		
+		pw.println("NombreIterationNecessairePourAtteindre0 et fréquence de réussite");
+		pw.println();
+		pw.println();
+		pw.println("%---------------------------------------------------------------------");
+		pw.println("taille du set : "+tailleDuSet);
+		pw.println("seed : "+seed);
+		pw.println("");
+		pw.println("paramètres vertex Coloring");
+		pw.println("	nom du graphe : "+nomGraphe);
+		pw.println("	M : "+M);
+		pw.println("	G0 : "+G0);
+		pw.println("	maxSteps: "+maxSteps);
+		pw.println("	k : "+k);
+		pw.println("	P : "+P);
+		pw.println();
+		pw.println();
+		pw.println();
+		pw.print("VectNombreIterations =[");
+		pw.close();
+	
+		
+		for (int i=0;i<tailleDuSet;i++) {
+		
+		// Initialisation problème et recuit
+		this.initialiserColoriage();
+		this.setRecuit(new RecuitTruanderie2Graphique());
+
+
+		long startTime = System.nanoTime();
+		try {
+			recuit.solution(coloriage, mutation, maxSteps, gen.nextInt(), M);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		long endTime = System.nanoTime();
+		liste.add((double) ((endTime-startTime)/1000000000));
+
+		if (recuit.getMeilleureEnergie()==0) {
+			listeSucces.add(0);
+		} else {
+			listeSucces.add(1);
+		}
+		
 		
 		System.out.println("duree = "+(endTime-startTime)/1000000000+" s");
 		System.out.println("============================================================");
 		System.out.println("EnergieFinale :"+recuit.getMeilleureEnergie());
 		System.out.println("============================================================");
 		System.out.println("============================================================");
+		
+		
+		pw = new PrintWriter(new BufferedWriter(new FileWriter(f, true)));
+		pw.print(recuit.getMutationtentees()+", ");
+		pw.close();
+		
+		
 		}
+		pw = new PrintWriter(new BufferedWriter(new FileWriter(f, true)));
+		pw.println("];");
+		pw.println("");
+		pw.println("temps = "+liste.toString());
+		
+		int sum=0;
+		for (int i=0;i<listeSucces.size();i++) {
+			sum=+listeSucces.get(i);
+		}
+		
+		pw.println("frequence réussite = "+sum/listeSucces.size());
+		pw.close();
 	}
+	
+	
+	
 	
 public void lancer() throws IOException {
 		
@@ -267,8 +393,12 @@ public void lancer() throws IOException {
 		this.tailleDuSet = tailleDuSet;
 	}
 
-	
+	public void setNomFichier(String nomFichier) {
+		this.nomFichier = nomFichier;
+	}
 
+	
+	
 
 
 
