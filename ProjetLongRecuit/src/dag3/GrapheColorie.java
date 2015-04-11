@@ -224,7 +224,6 @@ public class GrapheColorie extends Etat{
 	 * @param prevColor
 	 */
 	public void updateLocal(int noeud, int prevColor){
-		int temp = this.nombreConflitsAretes;
 		
 		// Met à jour l'appartenance du noeud en question par rapport aux classes de couleur
 		this.colorClasses[prevColor].remove(noeud);

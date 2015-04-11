@@ -21,6 +21,9 @@ public class TestQuantiqueDag3_Lou {
 
 	public static void main(String[] args) throws IOException {
 		
+		int[] seeds = {1,10,100,1000,10000,100000,20,200,2000,20000,200000,30,300};
+		
+		for(int s=0; s<seeds.length ; s++){
 		Conflits Ep = new Conflits();
 		ConflitsCinetiques Ec = new ConflitsCinetiques();
 		
@@ -35,7 +38,7 @@ public class TestQuantiqueDag3_Lou {
 		double G0 = 0.75;
 		int P = 10;
 		int maxSteps = (int) Math.pow(10,4);
-		int seed = 1;//22;
+		int seed = seeds[s]; //250;//22;
 		
 		Temperature T = new Temperature(0.35/P);
 		// construire liste d'etats
@@ -61,6 +64,9 @@ public class TestQuantiqueDag3_Lou {
 		RecuitTruanderie2 recuit = new RecuitTruanderie2();
 		//Recuit recuit = new Recuit();
 		
+		//TODO
+		System.out.println();
+		System.out.println("seed "+seed);
 		
 		long startTime = System.nanoTime();
 		try {
@@ -72,22 +78,24 @@ public class TestQuantiqueDag3_Lou {
 		long endTime = System.nanoTime();
 		
 		// affichage du resultat
-		
+		/*
 		for (Etat etat : coloriage.getEtat()){
 			GrapheColorie g = (GrapheColorie) etat;
-			/*
+			
 			for (int i = 0; i < graphe.getNombreNoeuds(); i++) {
 				System.out.println(i + " -> couleur "
 				+ g.getMeilleuresCouleurs()[i]);
 				if (g.getNoeudsConflitList().contains(i)) System.out.println("Dessus En conflit");
-			}*/
+			}
 			
 			System.out.println("Energie de l'état : " + Conflits.calculer(g));
 			System.out.println("Nombre de noeuds en conflits : " + g.nombreNoeudsEnConflit());
 			System.out.println("Nombre d'arêtes en conflits : " + g.getNombreConflitsAretes());
 		}
+		*/
 		//System.out.println("Nombre de conflits : "+recuit.getMeilleureEnergie());
 		System.out.println("duree = "+(endTime-startTime)/1000000000+" s");
+	}
 	}
 
 }

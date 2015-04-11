@@ -77,17 +77,17 @@ public class RecuitTruanderie2 extends JFrame
 		double palierTEST = 1e7;
 		
 		ArrayList<Etat> e = p.getEtat();
-		System.out.println(e);
+		//System.out.println(e);
 		Ponderation J = new Ponderation(p.getGamma());
 		double Epot = p.calculerEnergiePotentielle();
-		System.out.println("Epot " + Epot);
+		//System.out.println("Epot " + Epot);
 		double compteurSpinique = p.calculerEnergieCinetique();
-		System.out.println("CompteurSpin " + compteurSpinique);
+		//System.out.println("CompteurSpin " + compteurSpinique);
 		double E = Epot-J.calcul(p.getT(), nombreEtat)*compteurSpinique;
-		System.out.println("E " + E);
+		//System.out.println("E " + E);
 		double deltapot  = 0;
 		double energie = (e.get(0)).getEnergie();
-		System.out.println("En : " + energie);
+		//System.out.println("En : " + energie);
 		double energieBest = energie;
 		
 		int i = 0;
@@ -100,7 +100,12 @@ public class RecuitTruanderie2 extends JFrame
 			 E = Epot-J.calcul(p.getT(), nombreEtat)*compteurSpinique;
 			 
 			 double jG = J.calcul(p.getT(),nombreEtat);
-
+			 
+			 //TODO
+			 int testEc = 0;
+			 int A=0;
+			 double DE = 0;
+			 
 			//System.out.println("Iter");
 			 
 			for(int j=0;j<nombreEtat;j++){// on effectue M  fois la mutation sur chaque réplique avant de descendre gamma
@@ -119,7 +124,10 @@ public class RecuitTruanderie2 extends JFrame
 					//System.out.println("deltapot : " + deltapot);
 					
 					double delta = deltapot/nombreEtat  - jG*p.differenceSpins(r,m);
-					
+
+					//TODO
+					testEc += p.differenceSpins(r,m);
+					DE+=delta;
 					
 					//test deltaE < 0
 					/*
@@ -145,11 +153,13 @@ public class RecuitTruanderie2 extends JFrame
 						//VA REGARDER SI L'ON APPLIQUE LA MUTATION OU NON
 						double pr=probaAcceptation(delta,deltapot,p.getT());
 						if(pr>Math.random()){
-							
 							mutationsAcceptees++;
 							//System.out.println("PA " + r2);
 							//System.out.println("avant "+r.getEnergie());
 							m.faire(p,r); //redonne comportement du recuit DAG3 --> très bizarre
+							
+							//TODO
+							A++;
 							
 							//TODO à supprimer
 							//e.set(j, r);
@@ -170,12 +180,15 @@ public class RecuitTruanderie2 extends JFrame
 							//pBest.setEtat(e); //TODO
 							energieBest = energie;
 							System.out.println("meilleureEnergie = "+energieBest);
+							System.out.println("mutationsTentees = "+ mutationsTentees);
 							if(energieBest==0){	// condition de fin
 								// nb mutations 
 								System.out.println("Mutations tentées : " + mutationsTentees);
 								System.out.println("Mutations acceptées : " + mutationsAcceptees);
+								System.out.println("Gfin : "+p.getGamma().getGamma());
 								return energieBest;
 							}
+							/*
 							//TODO
 							System.out.println();
 							for (Etat etat : p.getEtat()){
@@ -185,6 +198,7 @@ public class RecuitTruanderie2 extends JFrame
 								System.out.println("Nombre d'arêtes en conflits : " + g.getNombreConflitsAretes());
 							}
 							System.out.println();
+							*/
 						}
 				}
 			}
@@ -194,6 +208,12 @@ public class RecuitTruanderie2 extends JFrame
 			Collections.shuffle(p.getEtat());
 			
 			i++;
+			
+			//TODO
+			//System.out.println(testEc/((double)M*nombreEtat));
+			//System.out.println("A : "+A);
+			//System.out.println("DE : "+DE/((double)M*nombreEtat));
+			
 			//TEST TODO
 			/*
 			if(mutationsTentees>palierTEST){

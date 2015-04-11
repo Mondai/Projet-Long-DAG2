@@ -131,9 +131,14 @@ public class RecuitQuantique implements IRecuit {
 		}
 		
 		while(Gamma.modifierT() && this.meilleureEnergie!=0){
-
+			
 			Collections.shuffle(indiceEtats, probleme.gen);	// melanger l'ordre de parcours des indices
 			double Jr = -this.temperature/2*Math.log(Math.tanh(this.Gamma.t/nombreRepliques/this.temperature));	// calcul de Jr pour ce palier
+			
+			//TODO
+			int testEc = 0;
+			int A = 0;
+			double DE = 0;
 			
 			for (Integer p : indiceEtats){	
 				
@@ -154,7 +159,7 @@ public class RecuitQuantique implements IRecuit {
 				}
 				
 				for (int j = 0; j < this.palier; j++){
-					
+
 					MutationElementaire mutation = probleme.getMutationElementaire(etat);	// trouver une mutation possible
 					mutationsTentees++; //permet d'avoir une référence indépendante pour les améliorations de l'algorithme, mais aussi sur son temps
 					
@@ -171,6 +176,9 @@ public class RecuitQuantique implements IRecuit {
 					System.out.println("EP : " + probleme.calculerEnergiePotentielle());
 					*/
 					
+					//TODO
+					testEc += probleme.calculerDeltaEc(etat, previous, next, mutation);
+					DE+=deltaE;
 					
 					//System.out.println("DeltaEc "+deltaEc*Jr);
 					
@@ -178,12 +186,16 @@ public class RecuitQuantique implements IRecuit {
 								
 					if( deltaE <= 0 || deltaEp <= 0){
 						
+						//TODO
+						A++;
+						
 						mutationsAcceptees++;
 						probleme.modifElem(etat, mutation);				// faire la mutation
 						double EpActuelle = etat.Ep.calculer(etat);		// energie potentielle temporelle
 						if( EpActuelle < this.meilleureEnergie ){		// mettre a jour la meilleur energie
 							this.meilleureEnergie = EpActuelle;
 							System.out.println("meilleureEnergie = "+ this.meilleureEnergie);
+							System.out.println("mutationsTentees = "+ mutationsTentees);
 							if (this.meilleureEnergie == 0){	// fin du programme
 								System.out.println("Mutations tentées : " + mutationsTentees);
 								System.out.println("Mutations acceptées : " + mutationsAcceptees);
@@ -194,6 +206,10 @@ public class RecuitQuantique implements IRecuit {
 						proba = Math.exp(-deltaE / (this.K.k * this.temperature));	// calcul de la proba
 						if (proba >= probleme.gen.nextDouble()) {	
 							mutationsAcceptees++;
+							
+							//TODO
+							A++;
+							
 							probleme.modifElem(etat, mutation);  		// accepter la mutation 
 						}
 					}
@@ -201,6 +217,11 @@ public class RecuitQuantique implements IRecuit {
 				
 
 			}
+			
+			//TODO
+			//System.out.println(testEc/((double)this.palier*nombreRepliques));
+			//System.out.println("A : "+A);
+			//System.out.println("DE : "+DE/((double)this.palier*nombreRepliques));
 		}
 		
 		
