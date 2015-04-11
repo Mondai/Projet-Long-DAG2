@@ -1,6 +1,7 @@
 package dag3;
 import modele.*;
 import parametrage.*;
+import solver.graphique.ListEnergie;
 import mutation.*;
 
 import java.io.IOException;
@@ -25,6 +26,16 @@ public class RecuitTruanderie2Graphique extends JFrame
 	static ParametreK K = new ParametreK(1);
 	double meilleureEnergie;
 	int mutationtentees=0;
+	
+	// Graphique
+	
+	ListEnergie listeMeilleureEnergie;
+	ListEnergie listeValeursJr;
+	ListEnergie listeRapport;
+	ListEnergie listeGamma;
+	ListEnergie listeprobaMoyenne;
+	double rapportMoyen=0;
+	double probaMoyenne;
 
 
 	/**
@@ -71,6 +82,198 @@ public class RecuitTruanderie2Graphique extends JFrame
 	 */
 	public  double solution(Probleme p,IMutation m,int nombreIterations, int seed, int M) throws IOException, InterruptedException
 	{	
+		int nombreEtat=p.nombreEtat();
+		//TODO
+		//Probleme pBest = p.clone();
+		//TODO
+		double palierTEST = 1e7;
+		
+		ArrayList<Etat> e = p.getEtat();
+		//System.out.println(e);
+		Ponderation J = new Ponderation(p.getGamma());
+		double Epot = p.calculerEnergiePotentielle();
+		//System.out.println("Epot " + Epot);
+		double compteurSpinique = p.calculerEnergieCinetique();
+		//System.out.println("CompteurSpin " + compteurSpinique);
+		double E = Epot-J.calcul(p.getT(), nombreEtat)*compteurSpinique;
+		//System.out.println("E " + E);
+		double deltapot  = 0;
+		double energie = (e.get(0)).getEnergie();
+		//System.out.println("En : " + energie);
+		double energieBest = energie;
+		
+		int i = 0;
+		int mutationsAcceptees = 0;
+		int mutationsTentees = 0;
+		
+		while(i<nombreIterations && energieBest!=0){
+			
+			
+			 E = Epot-J.calcul(p.getT(), nombreEtat)*compteurSpinique;
+			 
+			 double jG = J.calcul(p.getT(),nombreEtat);
+			 
+			 //TODO
+			 int testEc = 0;
+			 int A=0;
+			 double DE = 0;
+			 
+			//System.out.println("Iter");
+			 
+			for(int j=0;j<nombreEtat;j++){// on effectue M  fois la mutation sur chaque réplique avant de descendre gamma
+				
+				Etat r = e.get(j);
+				
+				for(int k=0; k<M; k++){
+					//System.out.println(energieBest);
+					mutationsTentees++;
+				
+					
+					//System.out.println("E");
+					
+					m.maj(p, r);
+					
+					deltapot =  m.calculer(p,r);
+					//System.out.println("deltapot : " + deltapot);
+					
+					double delta = deltapot/nombreEtat  - jG*p.differenceSpins(r,m);
+
+					//TODO
+					testEc += p.differenceSpins(r,m);
+					DE+=delta;
+					
+					//test deltaE < 0
+					/*
+					if (deltapot < 0){
+						mutationsAcceptees++;
+						System.out.println("DE < 0 : " + r2);
+						m.faire(p2,r2);
+						compteurSpinique += p.differenceSpins(r2,m);
+						
+						e.set(j, r2);
+						p.setEtat(e);
+						
+						Epot += deltapot/nombreEtat;
+						//System.out.println("Epot "+Epot);
+						E += delta;// L'energie courante est modifiée
+						//System.out.println("delta "+delta);
+						energie += deltapot;
+						//System.out.println("deltapot "+deltapot);
+						//System.out.println("energie "+energie);
+					}*/
+			//		else{
+						
+						//VA REGARDER SI L'ON APPLIQUE LA MUTATION OU NON
+						double pr=probaAcceptation(delta,deltapot,p.getT());
+						if(pr>Math.random()){
+							mutationsAcceptees++;
+							//System.out.println("PA " + r2);
+							//System.out.println("avant "+r.getEnergie());
+
+							m.faire(p,r); //redonne comportement du recuit DAG3 --> très bizarre
+							
+							//TODO
+							A++;
+							
+							//TODO à supprimer
+							//e.set(j, r);
+							//p.setEtat(e);
+							
+							Epot += deltapot/nombreEtat;
+							//System.out.println("Epot "+Epot);
+							E += delta;// L'energie courante est modifiée
+							//System.out.println("delta "+delta);
+							energie = r.getEnergie();
+							//System.out.println("Dpot "+deltapot);
+							//System.out.println("apres "+r.getEnergie());
+							//System.out.println("deltapot "+deltapot);
+							//System.out.println("energie "+energie);
+							
+						}
+						if (energie < energieBest){
+							this.setMeilleureEnergie(energieBest);
+							//pBest.setEtat(e); //TODO
+							energieBest = energie;
+							System.out.println("meilleureEnergie = "+energieBest);
+							System.out.println("mutationsTentees = "+ mutationsTentees);
+							if(energieBest==0){	// condition de fin
+								// nb mutations 
+								System.out.println("Mutations tentées : " + mutationsTentees);
+								System.out.println("Mutations acceptées : " + mutationsAcceptees);
+								System.out.println("Gfin : "+p.getGamma().getGamma());
+								this.mutationtentees=mutationsTentees;
+								return energieBest;
+							}
+							/*
+							//TODO
+							/*
+							System.out.println();
+							for (Etat etat : p.getEtat()){
+								GrapheColorie g = (GrapheColorie) etat;
+								System.out.println("Energie de l'état : " + Conflits.calculer(g));
+								System.out.println("Nombre de noeuds en conflits : " + g.nombreNoeudsEnConflit());
+								System.out.println("Nombre d'arêtes en conflits : " + g.getNombreConflitsAretes());
+							}
+
+							System.out.println();
+							*/
+
+						}
+				}
+			}
+			
+			
+			
+			
+			
+			//UNE FOIS EFFECTUEE SUR tout les etat de la particule on descend gamma
+			p.majgamma();
+			J.setGamma(p.getGamma());
+			Collections.shuffle(p.getEtat());
+			
+			i++;
+			
+			//TODO
+			//System.out.println(testEc/((double)M*nombreEtat));
+			//System.out.println("A : "+A);
+			//System.out.println("DE : "+DE/((double)M*nombreEtat));
+			
+			//TEST TODO
+			/*
+			if(mutationsTentees>palierTEST){
+				palierTEST+=1e7;
+				System.out.println();
+				System.out.println("mutationsTentees : "+mutationsTentees);
+				System.out.println("J : "+J.calcul(p.getT(),nombreEtat));
+				System.out.println("G : "+p.getGamma().getGamma());
+				//TODO
+				for (int i1=0;i1<nombreEtat;i1++){
+					GrapheColorie g = (GrapheColorie) p.getEtat().get(i1);
+					System.out.print("{"+g.nombreNoeudsEnConflit()+","+g.getNombreConflitsAretes()+"} ");
+				}
+				System.out.println();
+			}
+			*/
+			
+			
+			
+			
+			
+			
+			
+		}
+		// nb mutations 
+		System.out.println("Mutations tentées : " + mutationsTentees);
+		System.out.println("Mutations acceptées : " + mutationsAcceptees);
+		this.mutationtentees=mutationsTentees;
+		return energieBest;
+
+	}
+	
+	
+	public  double solutionGraphique(Probleme p,IMutation m,int nombreIterations, int seed, int M) throws IOException, InterruptedException
+	{	
+		this.probaMoyenne=0;
 		int nombreEtat=p.nombreEtat();
 		//TODO
 		//Probleme pBest = p.clone();
@@ -207,6 +410,24 @@ public class RecuitTruanderie2Graphique extends JFrame
 							*/
 
 						}
+						
+						if (j==0) {
+						listeMeilleureEnergie.add(energieBest);
+						listeValeursJr.add(jG);
+						listeGamma.add(p.getGamma().getGamma());
+						
+						double rapport = ((jG*p.differenceSpins(r,m)/deltapot/nombreEtat));
+						listeRapport.addTotal(rapport);
+						calculerRapportMoyen(rapport, listeRapport);
+						listeRapport.add(rapportMoyen);
+						
+						listeprobaMoyenne.addTotal(pr);
+						calculerRapportMoyen(pr, listeprobaMoyenne);
+						listeprobaMoyenne.add(probaMoyenne);
+						
+						
+						}
+						
 				}
 			}
 			//UNE FOIS EFFECTUEE SUR tout les etat de la particule on descend gamma
@@ -215,6 +436,8 @@ public class RecuitTruanderie2Graphique extends JFrame
 			Collections.shuffle(p.getEtat());
 			
 			i++;
+			
+			
 			
 			//TODO
 			//System.out.println(testEc/((double)M*nombreEtat));
@@ -247,6 +470,27 @@ public class RecuitTruanderie2Graphique extends JFrame
 	}
 
 
+	public void calculerRapportMoyen(double proba, ListEnergie listProba){
+		int taille = listProba.getTaille();
+		ArrayList<Double> list = listProba.getlistEnergieTotale();
+		int tailleL = list.size();
+		int fenetreK = listProba.getFenetreK();
+		//System.out.println(list);
+		
+		
+		if (taille == 1){
+			this.rapportMoyen = proba;
+		} else if (taille <= fenetreK ){
+			this.rapportMoyen = (this.rapportMoyen*(tailleL-1)+ proba) /tailleL;  // moyenne des probas
+		} else{
+			// Moyenne des probas
+			this.rapportMoyen = (this.rapportMoyen*fenetreK - list.get(0) + proba )/ fenetreK;
+		}
+		// System.out.println("Proba Moyenne : " + this.probaMoyenne); TEST
+	}
+	
+	
+
 	public double getMeilleureEnergie() {
 		return meilleureEnergie;
 	}
@@ -259,6 +503,56 @@ public class RecuitTruanderie2Graphique extends JFrame
 
 	public int getMutationtentees() {
 		return mutationtentees;
+	}
+
+
+	public ListEnergie getListeMeilleureEnergie() {
+		return listeMeilleureEnergie;
+	}
+
+
+	public ListEnergie getListeValeursJr() {
+		return listeValeursJr;
+	}
+
+
+	public ListEnergie getListeRapport() {
+		return listeRapport;
+	}
+
+
+	public ListEnergie getListeGamma() {
+		return listeGamma;
+	}
+
+
+	public ListEnergie getListeprobaMoyenne() {
+		return listeprobaMoyenne;
+	}
+
+
+	public void setListeMeilleureEnergie(ListEnergie listeMeilleureEnergie) {
+		this.listeMeilleureEnergie = listeMeilleureEnergie;
+	}
+
+
+	public void setListeValeursJr(ListEnergie listeValeursJr) {
+		this.listeValeursJr = listeValeursJr;
+	}
+
+
+	public void setListeRapport(ListEnergie listeRapport) {
+		this.listeRapport = listeRapport;
+	}
+
+
+	public void setListeGamma(ListEnergie listeGamma) {
+		this.listeGamma = listeGamma;
+	}
+
+
+	public void setListeprobaMoyenne(ListEnergie listeprobaMoyenne) {
+		this.listeprobaMoyenne = listeprobaMoyenne;
 	}
 	
 	

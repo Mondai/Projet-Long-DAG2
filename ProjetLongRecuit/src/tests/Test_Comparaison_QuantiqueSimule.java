@@ -144,6 +144,7 @@ public class Test_Comparaison_QuantiqueSimule {
 				//RecuitSimuleLineaire recuitSimule = new RecuitSimuleLineaire( k, Tdebut, Tfin, pas, N);
 				ListEnergie listeMeilleureEnergie = new ListEnergie(echantillonage,1);
 				ListEnergie listeProba = new ListEnergie(echantillonage,1);
+				
 
 				//Initialisation coloriage
 				int seed = (int) (10000*Math.random());

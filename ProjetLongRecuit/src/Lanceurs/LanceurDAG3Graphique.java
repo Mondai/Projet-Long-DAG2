@@ -12,6 +12,7 @@ import dag3.GrapheColorie;
 import modele.*;
 import parametrage.*;
 import solver.commun.HighQualityRandom;
+import solver.graphique.ListEnergie;
 import mutation.*;
 import dag3.Conflits;
 import dag3.ConflitsCinetiques;
@@ -151,7 +152,7 @@ public class LanceurDAG3Graphique {
 		pw.close();
 	}
 	
-public void lancerNombreIterationNecessairePourAtteindre0() throws IOException {
+	public void lancerNombreIterationNecessairePourAtteindre0() throws IOException {
 		
 		
 		ArrayList<Double> liste = new ArrayList<Double>();
@@ -232,10 +233,89 @@ public void lancerNombreIterationNecessairePourAtteindre0() throws IOException {
 		pw.close();
 	}
 	
+	public void lancerOneShot() throws IOException {
+	
+		
+		File f = new File (""+nomFichier);
+		PrintWriter pw = new PrintWriter (new BufferedWriter (new FileWriter (f)));
+		
+		pw.println("Test One shot");
+		pw.println();
+		pw.println();
+		pw.println("%---------------------------------------------------------------------");
+		pw.println("taille du set : "+tailleDuSet);
+		pw.println("seed : "+seed);
+		pw.println("");
+		pw.println("paramètres vertex Coloring");
+		pw.println("	nom du graphe : "+nomGraphe);
+		pw.println("	M : "+M);
+		pw.println("	G0 : "+G0);
+		pw.println("	maxSteps: "+maxSteps);
+		pw.println("	k : "+k);
+		pw.println("	P : "+P);
+		pw.println();
+		pw.println();
+		pw.println();
+	
+		
+		// Initialisation problème et recuit
+		this.initialiserColoriage();
+		this.setRecuit(new RecuitTruanderie2Graphique());
+		
+		// Initialisation des listes
+		ListEnergie listeMeilleureEnergie = new ListEnergie(echantillonage,1);
+		ListEnergie listeProbaMoyenne = new ListEnergie(echantillonage,1000);
+		ListEnergie listeValeursJr = new ListEnergie(echantillonage,1);
+		ListEnergie listeRapport = new ListEnergie(echantillonage,1000);
+		ListEnergie listeGamma = new ListEnergie(echantillonage,1);
+		
+		this.recuit.setListeMeilleureEnergie(listeMeilleureEnergie);
+		this.recuit.setListeprobaMoyenne(listeProbaMoyenne);
+		this.recuit.setListeValeursJr(listeValeursJr);
+		this.recuit.setListeRapport(listeRapport);
+		this.recuit.setListeGamma(listeGamma);
+		
+
+
+		long startTime = System.nanoTime();
+		try {
+			recuit.solutionGraphique(coloriage, mutation, maxSteps, gen.nextInt(), M);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		long endTime = System.nanoTime();
+
+		
+		
+		
+		System.out.println("duree = "+(endTime-startTime)/1000000000+" s");
+		System.out.println("============================================================");
+		System.out.println("EnergieFinale :"+recuit.getMeilleureEnergie());
+		System.out.println("============================================================");
+		System.out.println("============================================================");
+		
+		
+
+		
+		pw.println("temps = "+(endTime-startTime)/1000000000);
+		
+		pw.println("ListeMeilleureEnergie = "+this.recuit.getListeMeilleureEnergie().getlistEnergie().toString());
+		pw.println("ListeProbaMoyenne = "+this.recuit.getListeprobaMoyenne().getlistEnergie().toString());
+		pw.println("ListevaleursJr = "+this.recuit.getListeValeursJr().getlistEnergie().toString());
+		pw.println("ListeRapport = "+this.recuit.getListeRapport().getlistEnergie().toString());
+		pw.println("ListeGamma = "+this.recuit.getListeGamma().getlistEnergie().toString());
+		
+		
+		
+		
+		
+
+		pw.close();
+	}
 	
 	
-	
-public void lancer() throws IOException {
+	public void lancer() throws IOException {
 		
 		
 		this.initialiserColoriage();
