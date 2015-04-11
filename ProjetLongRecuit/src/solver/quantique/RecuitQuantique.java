@@ -51,6 +51,8 @@ public class RecuitQuantique implements IRecuit {
 	 * Nombre d'itérations consécutives sur un seul état.
 	 */
 	public int palier;
+	
+	public int mutationTentess;
 
 
 	/**
@@ -200,6 +202,7 @@ public class RecuitQuantique implements IRecuit {
 							if (this.meilleureEnergie == 0){	// fin du programme
 								System.out.println("Mutations tentées : " + mutationsTentees);
 								System.out.println("Mutations acceptées : " + mutationsAcceptees);
+								this.mutationTentess=mutationsTentees;
 								return;
 							}
 						}
@@ -228,6 +231,20 @@ public class RecuitQuantique implements IRecuit {
 		
 		System.out.println("Mutations tentées : " + mutationsTentees);
 		System.out.println("Mutations acceptées : " + mutationsAcceptees);
+		this.mutationTentess=mutationsTentees;
 		return;
 	}
+
+	public double getMeilleureEnergie() {
+		return meilleureEnergie;
+	}
+
+	public int getMutationTentess() {
+		return mutationTentess;
+	}
+	
+	
+	
+	
+	
 }

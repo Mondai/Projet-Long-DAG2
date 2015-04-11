@@ -35,7 +35,7 @@ public class TestQuantique {
 		int P = 10;
 		double T = 0.35/P;
 		int maxSteps = (int) Math.pow(10,4);
-		int seed = 1000;
+		int seed = 1187;
 		GrapheColorieParticule coloriage = new GrapheColorieParticule(Ep, mutation, Ec, nbCouleurs , P, graphe, seed);
 		coloriage.initialiser();
 		FonctionLineaire Tparam = new FonctionLineaire(G0,0,maxSteps);
