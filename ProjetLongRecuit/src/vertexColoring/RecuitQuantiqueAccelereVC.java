@@ -129,6 +129,8 @@ public class RecuitQuantiqueAccelereVC extends RecuitQuantiqueAccelere {
 						
 						if( EpActuelle < this.meilleureEnergie ){		// mettre a jour la meilleur energie
 							this.meilleureEnergie = EpActuelle;
+							System.out.println("meilleureEnergie = "+ this.meilleureEnergie);
+							System.out.println("mutationsTentees = "+ mutationsTentees);
 							//System.out.println("ME = "+this.meilleureEnergie);
 							if (this.meilleureEnergie == 0){	// fin du programme
 								//System.out.println("Mutations tentées : " + mutationsTentees);
