@@ -209,7 +209,7 @@ public class RecuitQuantique implements IRecuit {
 					if( deltaE <= 0 || deltaEp < 0) proba = 1;
 					else	proba = Math.exp(-deltaE / (this.K.k * this.temperature));
 					
-					if (proba >= Math.random()) {
+					if (proba >= probleme.gen.nextDouble()) {
 					mutationsAcceptees++;
 					probleme.modifElem(etat, mutation);				// faire la mutation
 					double EpActuelle = etat.Ep.calculer(etat);		// energie potentielle temporelle
