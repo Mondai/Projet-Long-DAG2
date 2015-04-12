@@ -44,43 +44,12 @@ public class GrapheColorieParticule extends Probleme {
 	}
 		
 	public Etat creeEtatAleatoire() {
-		//System.out.println("CEA");
 		GrapheColorie etat =  new GrapheColorie(this.getEpot(), this.k, this.graphe, this.gen.nextInt());
 		etat.initialiser();
 		etat.setnext(this.getEtat().get(0));
 		etat.setprevious(this.getEtat().get(this.getEtat().size()-1));
 		return etat;
 	}
-	/*
-	public GrapheColorieParticule clone() {
-		System.out.println("Clone GCP");
-		
-		int n = this.getEtat().size();
-		ArrayList<Etat> r = new ArrayList<Etat>(n);
-		for(int i=0; i<n; i++){
-			r.add( ( (GrapheColorie) this.getEtat().get(i)).clone());
-		}*/
-		
-		/* inutile d'après l'exemple TSP
-		int P = n;
-		ArrayList<Etat> etats = this.getEtat();
-	
-		
-		etats.get(0).setprevious(etats.get(P-1));
-		etats.get(0).setnext(etats.get(1));
-		for(int i =1; i<P-1;i++){
-			etats.get(i).setprevious(etats.get(i-1));
-			etats.get(i).setnext(etats.get(i+1));
-		}
-		etats.get(P-1).setprevious(etats.get(P-2));
-		etats.get(P-1).setnext(etats.get(0));*/
-		
-		/*
-		GrapheColorieParticule p = new GrapheColorieParticule(r,this.getT(),this.getSeed(),this.getEcin(),this.getEpot(),this.getGamma(), this.graphe, this.k);
-		p.setT(this.getT()); //utilisé dans TSP exemple, je ne sais pas si c'est nécessaire....
-		p.setK(k);
-		return p;
-	}*/
 
 	public int getK() {
 		return k;
@@ -89,13 +58,6 @@ public class GrapheColorieParticule extends Probleme {
 	public void setK(int k) {
 		this.k = k;
 	}
-	
-	
-	// ajout pour essayer d'avoir un comportement normal
-	/*
-	 * 
-	 * 
-	 */
 	
 	public Graphe getGraphe() {
 		return this.graphe;

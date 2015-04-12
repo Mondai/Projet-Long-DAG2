@@ -74,103 +74,57 @@ public class RecuitTruanderie2 extends JFrame
 		
 		ArrayList<Etat> e = p.getEtat();
 		
-		//System.out.println(e);
 		Ponderation J = new Ponderation(p.getGamma());
-		double Epot = p.calculerEnergiePotentielle();
-		//System.out.println("Epot " + Epot);
-		double compteurSpinique = p.calculerEnergieCinetique();
-		//System.out.println("CompteurSpin " + compteurSpinique);
-		double E = Epot-J.calcul(p.getT(), nombreEtat)*compteurSpinique;
-		//System.out.println("E " + E);
 		double deltapot  = 0;
 		double energie = (e.get(0)).getEnergie();
-		//System.out.println("En : " + energie);
 		double energieBest = energie;
 		
 		int i = 0;
 		int mutationsAcceptees = 0;
 		int mutationsTentees = 0;
 		
+		double delta = 0;
+		double pr = 0;
+		
 		while(i<nombreIterations && energieBest!=0){
-			
-			
-			 E = Epot-J.calcul(p.getT(), nombreEtat)*compteurSpinique;
 			 
-			 double jG = J.calcul(p.getT(),nombreEtat);
+			double jG = J.calcul(p.getT(),nombreEtat);
 			 
-			//System.out.println("Iter");
-			 
-			for(int j=0;j<nombreEtat;j++){// on effectue M  fois la mutation sur chaque réplique avant de descendre gamma
+			for (int j = 0 ; j < nombreEtat ; j++){
+				// on effectue M  fois la mutation sur chaque réplique avant de descendre gamma
 				
 				Etat r = e.get(j);
 				
 				for(int k=0; k<M; k++){
-					//System.out.println(energieBest);
 					mutationsTentees++;
-					
-					//System.out.println("E");
 					
 					m.maj(p, r);
 					
 					deltapot =  m.calculer(p,r);
-					//System.out.println("deltapot : " + deltapot);
 					
-					double delta = deltapot/nombreEtat  - jG*p.differenceSpins(r,m);
+					delta = deltapot/nombreEtat  - jG*p.differenceSpins(r,m);
+						
+					//VA REGARDER SI L'ON APPLIQUE LA MUTATION OU NON
+					pr=probaAcceptation(delta,deltapot,p.getT());
 					
-					//test deltaE < 0
-					/*
-					if (deltapot < 0){
+					if(pr>Math.random()){
 						mutationsAcceptees++;
-						System.out.println("DE < 0 : " + r2);
-						m.faire(p2,r2);
-						compteurSpinique += p.differenceSpins(r2,m);
-						
-						e.set(j, r2);
-						p.setEtat(e);
-						
-						Epot += deltapot/nombreEtat;
-						//System.out.println("Epot "+Epot);
-						E += delta;// L'energie courante est modifiée
-						//System.out.println("delta "+delta);
-						energie += deltapot;
-						//System.out.println("deltapot "+deltapot);
-						//System.out.println("energie "+energie);
-					}*/
-			//		else{
-						
-						//VA REGARDER SI L'ON APPLIQUE LA MUTATION OU NON
-						double pr=probaAcceptation(delta,deltapot,p.getT());
-						if(pr>Math.random()){
-							mutationsAcceptees++;
-							//System.out.println("PA " + r2);
-							//System.out.println("avant "+r.getEnergie());
 
-							m.faire(p,r); //redonne comportement du recuit DAG3 --> très bizarre
+						m.faire(p,r);
 
-							Epot += deltapot/nombreEtat;
-							//System.out.println("Epot "+Epot);
-							E += delta;// L'energie courante est modifiée
-							//System.out.println("delta "+delta);
-							energie = r.getEnergie();
-							//System.out.println("Dpot "+deltapot);
-							//System.out.println("apres "+r.getEnergie());
-							//System.out.println("deltapot "+deltapot);
-							//System.out.println("energie "+energie);
-							
+						energie = r.getEnergie();
+						
+					}
+					if (energie < energieBest){
+						energieBest = energie;
+						if(energieBest==0){	// condition de fin
+							System.out.println("Mutations tentées : " + mutationsTentees);
+							System.out.println("Mutations acceptées : " + mutationsAcceptees);
+							System.out.println("Gfin : "+p.getGamma().getGamma());
+							return energieBest;
 						}
-						if (energie < energieBest){
-							energieBest = energie;
-							//System.out.println("meilleureEnergie = "+energieBest);
-							//System.out.println("mutationsTentees = "+ mutationsTentees);
-							if(energieBest==0){	// condition de fin
-								// nb mutations 
-								System.out.println("Mutations tentées : " + mutationsTentees);
-								System.out.println("Mutations acceptées : " + mutationsAcceptees);
-								System.out.println("Gfin : "+p.getGamma().getGamma());
-								return energieBest;
-							}
 
-						}
+					}
 				}
 			}
 			//UNE FOIS EFFECTUEE SUR tout les etat de la particule on descend gamma
@@ -181,7 +135,6 @@ public class RecuitTruanderie2 extends JFrame
 			i++;
 			
 		}
-		// nb mutations 
 		System.out.println("Mutations tentées : " + mutationsTentees);
 		System.out.println("Mutations acceptées : " + mutationsAcceptees);
 		

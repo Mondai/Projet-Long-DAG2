@@ -71,8 +71,6 @@ public class GrapheColorie extends Etat{
 	public GrapheColorie(EnergiePotentielle Ep, int k, Graphe graphe, int seed) {
 		super(Ep);
 		
-		//System.out.println("k " + k);
-		
 		this.k = k; 
 		this.couleurs = new int[graphe.getNombreNoeuds()];
 		this.meilleuresCouleurs = new int[graphe.getNombreNoeuds()];
@@ -108,12 +106,8 @@ public class GrapheColorie extends Etat{
 		// Mettre à jour tous les conflits initiaux 
 		// et rajouter tous les noeuds à la liste des noeuds en conflit
 		
-		//System.out.println("Noeuds : " + this.graphe.getNombreNoeuds());
-		//System.out.println("NCC : " + this.colorClasses[0]);
 		for (int j = 0; j < this.graphe.getNombreNoeuds(); j++) {			
 			this.couleurs[j]=(int)(this.gen.nextDouble()*this.k);  // affectation couleurs aleatoires
-			//System.out.println("C" + j + " : " + this.couleurs[j]);
-			//System.out.println("CC" + j + " : " + this.colorClasses[this.couleurs[j]]);
 			this.colorClasses[this.couleurs[j]].add(j); //partie qui initialise les classes couleurs
 		}
 		
@@ -122,9 +116,6 @@ public class GrapheColorie extends Etat{
 		for (int noeudActuel = 0; noeudActuel < this.graphe.getNombreNoeuds(); noeudActuel++) {
 			for (int noeudAdjacent : graphe.connexions[noeudActuel]){
 				if(this.couleurs[noeudAdjacent]==this.couleurs[noeudActuel]){
-					//this.conflitsConnexions[noeudActuel][noeudAdjacent] = true;
-					
-					//this.noeudsConflit[noeudActuel] = true;
 					if (!this.noeudsConflitList.contains(noeudActuel)) this.noeudsConflitList.add(noeudActuel);
 					conflits++;
 				}
@@ -133,7 +124,6 @@ public class GrapheColorie extends Etat{
 		}
 		
 		this.nombreConflitsAretes = (conflits/2); // chaque conflit est compte deux fois
-		//System.out.println("this.nombreConflitsAretes : " + this.nombreConflitsAretes);
 	}
 	
 	/**
@@ -185,8 +175,6 @@ public class GrapheColorie extends Etat{
 		}
 		
 		E /= 2; // Tous les spins sont comptés deux fois dans les calculs
-		
-		//System.out.println(E);
 		
 		return E;
 	}
@@ -249,7 +237,6 @@ public class GrapheColorie extends Etat{
 		if (!enConflit(noeud)){
 			this.noeudsConflitList.removeFirstOccurrence(noeud);
 		}
-		//System.out.println("UL : " + temp + " , " + this.nombreConflitsAretes);
 	}
 	
 	public double getEnergie(){
@@ -386,8 +373,6 @@ public class GrapheColorie extends Etat{
 		
 		GrapheColorie e = new GrapheColorie(this.getE(),this.k,this.graphe,this.getSeed());
 		
-		//System.out.println("Clone GC");
-		
 		// Reclonage
 		
 		e.setGen(gen);
@@ -406,8 +391,6 @@ public class GrapheColorie extends Etat{
 		int nb = nombreConflitsAretes;
 		e.setNombreConflitsAretes(nb);
 		
-		@SuppressWarnings("unchecked")
-		//LinkedList<Integer> listeConflitsNoeuds = (LinkedList<Integer>) noeudsConflitList.clone();
 		LinkedList<Integer> listeConflitsNoeuds = new LinkedList<Integer>(noeudsConflitList);
 		Collections.copy(listeConflitsNoeuds, (LinkedList<Integer>) noeudsConflitList);
 		e.setNoeudsConflitList(listeConflitsNoeuds);

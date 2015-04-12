@@ -33,12 +33,10 @@ public class MutationConflitsAleatoire implements IMutation {
 		int couleurNoeud = coloriage.couleurs[this.noeud];
 
 		// Propriete: DelatE = F[v][couleurSuiv] - F[v][couleurPrec]
-		int Epot = coloriage.F[this.noeud][this.couleur] - coloriage.F[this.noeud][couleurNoeud];	
-		//System.out.println("Calcul Mutation de couleur " + couleurNoeud + " , " + this.couleur + " est " + Epot);
+		int Epot = coloriage.F[this.noeud][this.couleur] - coloriage.F[this.noeud][couleurNoeud];
 		// différence d'énergie potentielle
 		
 		return Epot;
-		//renvoie energie potentielle
 	}
 
 	@Override
@@ -48,7 +46,6 @@ public class MutationConflitsAleatoire implements IMutation {
 		int couleurNoeud = coloriage.couleurs[this.noeud];
 		coloriage.couleurs[this.noeud] = this.couleur;
 		coloriage.updateLocal(this.noeud, couleurNoeud);
-		//System.out.println("Mutation du noeud " + this.noeud + " de couleur " + couleurNoeud + " , " + coloriage.couleurs[this.noeud] );
 	}
 
 	@Override
@@ -58,14 +55,12 @@ public class MutationConflitsAleatoire implements IMutation {
 		
 		// Determination aleatoire d'une mutation a effectuer parmi les noeuds en conflit.
 		int noeudsEnConflits = coloriage.nombreNoeudsEnConflit();
-		//System.out.println("nombre noeuds en conflits "+noeudsEnConflits);
 		
 		int compteur = (int) (coloriage.gen.nextInt(noeudsEnConflits));
 
 		int noeud = 0;
 
 		try {
-			//System.out.println(coloriage.getNoeudsConflitList().size());
 			noeud=coloriage.getNoeudsConflitList().get(compteur);
 		}
 		catch (IndexOutOfBoundsException e){
@@ -80,14 +75,12 @@ public class MutationConflitsAleatoire implements IMutation {
 		
 		this.noeud = noeud;
 		this.couleur = couleurSuiv;
-		//System.out.println("Noeud : " + this.noeud + " et couleur : " + this.couleur);
 		
 	}
 
 	@Override
 	public void faire(Probleme arg0) {
-		// TODO Auto-generated method stub
-		
+		//inutile : non implémenté
 	}
 
 }

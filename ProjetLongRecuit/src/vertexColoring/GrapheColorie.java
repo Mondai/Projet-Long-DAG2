@@ -65,15 +65,8 @@ public class GrapheColorie extends Etat{
 	 */
 	int[][] F; 
 	
-	
-	/**
-	 * Sauvegarde de la dernière modification effectuée.
-	 */
-	public Modification derniereModif;
-	
 	public GrapheColorie(EnergiePotentielle Ep, int k, Graphe graphe, int seed) {
 		
-		this.derniereModif = null;
 		this.Ep = Ep;
 		
 		this.k = k; 
@@ -161,24 +154,17 @@ public class GrapheColorie extends Etat{
 			
 			// Mise a jour des conflits
 			if (this.couleurs[j] == prevColor){
-				//this.conflitsConnexions[noeud][j] = false;
-				//this.conflitsConnexions[j][noeud] = false;
 				this.nombreConflitsAretes --;
 				if(!enConflit(j)) {
-					//this.noeudsConflit[j] = false;
 					this.noeudsConflitList.removeFirstOccurrence(j);
 				}
 			}
 			else if (this.couleurs[j] == this.couleurs[noeud]){
-				//this.conflitsConnexions[noeud][j] = true;
-				//this.conflitsConnexions[j][noeud] = true;
 				this.nombreConflitsAretes ++;
-				//this.noeudsConflit[j] = true;
 				if (! this.noeudsConflitList.contains(j)) this.noeudsConflitList.add(j);
 			}
 		}
 		if (!enConflit(noeud)){
-			//this.noeudsConflit[noeud] = false;
 			this.noeudsConflitList.removeFirstOccurrence(noeud);
 		}
 	}

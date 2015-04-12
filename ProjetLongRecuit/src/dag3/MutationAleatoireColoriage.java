@@ -34,27 +34,7 @@ public class MutationAleatoireColoriage implements IMutation {
 		int Epot = coloriage.F[this.noeud][this.couleur] - coloriage.F[this.noeud][couleurNoeud];	
 		// différence d'énergie potentielle
 		
-		GrapheColorie coloriageNext = (GrapheColorie)	coloriage.getNext();
-		GrapheColorie coloriagePrev = (GrapheColorie)	coloriage.getPrevious();
-		int deltaE = 0;
-
-		HashSet<Integer> Valpha = coloriage.getClassesCouleurs()[this.couleur];
-		HashSet<Integer> Vbeta = coloriage.getClassesCouleurs()[couleurNoeud];
-
-		Valpha.remove(this.noeud);	// le calcul suivant requiert d'exclure v de Valpha 
-
-		for (int u : Valpha){
-			deltaE += 2*(coloriageNext.spinConflit(u, this.noeud) + coloriagePrev.spinConflit(u, this.noeud));
-		}
-		
-		for (int u : Vbeta){
-			deltaE -= 2*(coloriageNext.spinConflit(u, this.noeud) + coloriagePrev.spinConflit(u, this.noeud));
-		}
-		
-		Valpha.add(this.noeud);	// rajouter v dans le classe de couleur (vu qu'on l'a enleve avant)
-		
-		return deltaE + Epot;
-		//renvoie "energieCin" + energie potentielle
+		return Epot;
 	}
 
 	@Override
@@ -86,7 +66,7 @@ public class MutationAleatoireColoriage implements IMutation {
 
 	@Override
 	public void faire(Probleme arg0) {
-		// TODO Auto-generated method stub
+		// inutile : non implémenté
 		
 	}
 	

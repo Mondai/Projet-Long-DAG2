@@ -57,7 +57,6 @@ public class ConflitsCinetiques extends EnergieCinetique {
 	}
 	
 	public static double calculer(GrapheColorieParticule p, Ponderation J){
-		System.out.println("W-W");
 		int n = p.getEtat().size();
 		return J.calcul(p.getT(), n)*calculerCompteurSpinique(p);
 	}

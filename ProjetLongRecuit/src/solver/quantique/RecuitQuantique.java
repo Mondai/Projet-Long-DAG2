@@ -118,11 +118,8 @@ public class RecuitQuantique implements IRecuit {
 			if (energie < this.meilleureEnergie){
 				this.meilleureEnergie = energie ;
 			}
-			//System.out.println(energie);
 
-		}
-		
-		//System.out.println("EC : " + probleme.Ec.calculer(probleme));
+		}	
 
 		double proba = 1;
 		double deltaEp = 0;
@@ -159,7 +156,6 @@ public class RecuitQuantique implements IRecuit {
 				else{
 					next = probleme.etats[p+1];
 				}
-				//System.out.println("palier : " + this.palier);
 				
 				for (int j = 0; j < this.palier; j++){
 
@@ -173,44 +169,8 @@ public class RecuitQuantique implements IRecuit {
 					//multiplier deltaIEc par JGamma
 					deltaE = deltaEp/nombreRepliques - deltaEc*Jr;
 					
-					/*
-					System.out.println("DEP : " + deltaEp);
-					System.out.println("DEC : " + deltaEc);
-					System.out.println("DE : " + deltaE);
-					System.out.println("EP : " + probleme.calculerEnergiePotentielle());
-					*/
-					
-					//System.out.println("DeltaEc "+deltaEc*Jr);
-					
 					//K.calculerK(deltaE);
-					/*		
-					if( deltaE <= 0 || deltaEp < 0){
-						
-						mutationsAcceptees++;
-						probleme.modifElem(etat, mutation);				// faire la mutation
-						double EpActuelle = etat.Ep.calculer(etat);		// energie potentielle temporelle
-						if( EpActuelle < this.meilleureEnergie ){		// mettre a jour la meilleur energie
-							this.meilleureEnergie = EpActuelle;
-							System.out.println("meilleureEnergie = "+ this.meilleureEnergie);
-							System.out.println("mutationsTentees = "+ mutationsTentees);
-							if (this.meilleureEnergie == 0){	// fin du programme
-								System.out.println("Mutations tentées : " + mutationsTentees);
-								System.out.println("Mutations acceptées : " + mutationsAcceptees);
-								this.mutationTentess=mutationsTentees;
-								return;
-							}
-						}
-					} else {
-						proba = Math.exp(-deltaE / (this.K.k * this.temperature));	// calcul de la proba
-						if (proba >= probleme.gen.nextDouble()) {	
-							mutationsAcceptees++;
-							probleme.modifElem(etat, mutation);  		// accepter la mutation
-							
-						}
-					}
-					*/
 					
-					//TEST TODO voir la difference avec le fonctionnement au dessus (sauter l'evaluation de proba ou pas?)
 					if( deltaE <= 0 || deltaEp < 0) proba = 1;
 					else	proba = Math.exp(-deltaE / (this.K.k * this.temperature));
 					
@@ -231,7 +191,6 @@ public class RecuitQuantique implements IRecuit {
 							}
 						}
 					}
-					//TEST TODO
 				}
 				
 			}
