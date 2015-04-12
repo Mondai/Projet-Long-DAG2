@@ -16,7 +16,7 @@ public abstract class ConstanteK {
   *
   * NB : il faut toujours eviter que k soit proche de 0.
   * Dans ce cas, la proba explose independament de T, on ne sort plus des minimums locaux.
-  * Il faut essayer de garder toujours k>1.
+  * Il faut essayer de garder toujours k strictement supérieur à 1.
   */
  public ConstanteK() {} ; 
  

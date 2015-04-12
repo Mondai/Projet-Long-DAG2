@@ -16,7 +16,7 @@ public class Traducteur {
 	 * @param lien
 	 * Lien faisant référence au fichier texte dans le projet java.
 	 * @return Le graphe décrit par le fichier texte envoyé.
-	 * @throws IOException
+	 * @throws IOException si le lien au fichier n'est pas bon
 	 */
 	public static Graphe traduire(String lien) throws IOException {
 

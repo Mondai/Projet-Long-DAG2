@@ -20,7 +20,9 @@ import solver.parametres.Fonction;
  * On va parler d'une particule, qui disposera de plusieurs états. Ces états influenceront chacun deux autres états dans une chaîne
  * liée invariante. On modifiera les états dans un ordre aléatoire, chaque état subiera le même nombre d'essais de mutations.
  * 
- * @see RecuitSimule, Particule, Etat
+ * @see solver.simule.RecuitSimule
+ * @see solver.commun.Particule
+ * @see Etat
  */
 public class RecuitQuantique implements IRecuit { 				
 

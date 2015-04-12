@@ -13,23 +13,16 @@ public class Graphe {
 	private int nombreNoeuds;
 
 	public Graphe(int nbNoeuds, LinkedList<Integer>[] connexions) {
-		this.setNombreNoeuds(nbNoeuds);
+		this.nombreNoeuds = nbNoeuds;
 		this.connexions = connexions;
 	}
 
 	/**
 	 * Renvoie le nombre de noeuds du graphe
+	 * @return nombre de noeuds du graphe
 	 */
 	public int getNombreNoeuds() {
 		return nombreNoeuds;
-	}
-
-	/**
-	 * Fixe le nombre de noeuds du graphe
-	 */
-	//Vraiment utile?? Fonction cohérente??
-	public void setNombreNoeuds(int nombreNoeuds) {
-		this.nombreNoeuds = nombreNoeuds;
 	}
 	
 	/**

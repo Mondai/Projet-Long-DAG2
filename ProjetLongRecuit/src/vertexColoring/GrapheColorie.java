@@ -13,7 +13,8 @@ import solver.commun.HighQualityRandom;
  * Elle contient son propre seed et generateur aléatoire, ainsi que les couleurs 
  * actuelles, les meilleures couleurs trouvées dans le passé, un lien vers le graphe,
  * les classes de couleurs et le nombre d'arêtes en conflits pour un calcul plus rapide de l'énergie potentielle.
- * @see Graphe,HighQualityRandom
+ * @see Graphe
+ * @see HighQualityRandom
  */
 public class GrapheColorie extends Etat{
 	
@@ -139,7 +140,9 @@ public class GrapheColorie extends Etat{
 	 * Mise à jour des classes de couleurs et de F à appeller à chaque fois qu'un noeud change de couleur.
 	 * Les changements sont locaux, centrés sur le noeud en question.
 	 * @param noeud
+	 * Noeud sur lequel on a effectué une mutation
 	 * @param prevColor
+	 * Couleur précédente du noeud, nécessaire pour calculer les changements pour GrapheColorie
 	 */
 	public void updateLocal(int noeud, int prevColor){
 		
@@ -172,6 +175,7 @@ public class GrapheColorie extends Etat{
 	/**
 	 * Vérifie si le noeud est en conflit ou pas.
 	 * @param noeud
+	 * Noeud dont on veut savoir s'il est en conflit ou pas
 	 * @return True si le noeud est en conflit, false sinon.
 	 */
 	public boolean enConflit(int noeud){
@@ -190,7 +194,9 @@ public class GrapheColorie extends Etat{
 	/**
 	 * Donne le spin de l'arête entre deux noeuds.
 	 * @param noeud
+	 * Premier noeud de l'arête
 	 * @param noeud2
+	 * Deuxième noeud de l'arête
 	 * @return 1 si les deux noeuds n'ont pas la même couleur, -1 sinon.
 	 */
 	public int spinConflit(int noeud, int noeud2){

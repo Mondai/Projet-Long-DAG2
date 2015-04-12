@@ -12,7 +12,9 @@ package solver.commun;
  * <p>
  * Pour utiliser un recuit, il faut implémenter un Probleme spécifique à notre problème,
  * et implémenter la fonction initialiser(), qui initialise le problème ainsi que les états.
- * @see IMutation,HighQualityRandom,Particule
+ * @see IMutation
+ * @see HighQualityRandom
+ * @see Particule
  */
 public abstract class Probleme extends Particule{
 	

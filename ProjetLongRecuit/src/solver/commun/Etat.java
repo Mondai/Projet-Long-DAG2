@@ -8,7 +8,8 @@ package solver.commun;
  * Il doit aussi y avoir moyen de l'initialiser, pour que ce soit utiliser par la fonction initialiser() du problème.
  * Il y a aussi moyen de décomposer les fonctionnalités de faire() de l'implémentation de IMutation pour qu'elle appelle
  * une fonction dans Etat qui effectue la mutation sur les variables internes.
- * @see EnergiePotentielle, Particule
+ * @see EnergiePotentielle
+ * @see Particule
  *
  */
 public abstract class Etat {

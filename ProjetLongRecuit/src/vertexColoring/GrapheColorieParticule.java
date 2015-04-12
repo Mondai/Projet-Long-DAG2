@@ -10,7 +10,9 @@ import solver.commun.Probleme;
 /**
  * Particule Quantique représentée par un certains nombres de répliques, c'est-à-dire des GrapheColorie.
  * Elle hérite de Probleme.
- *@see GrapheColorie,Graphe,HighQualityRandom
+ *@see GrapheColorie 
+ *@see Graphe 
+ *@see HighQualityRandom
  */
 public class GrapheColorieParticule extends Probleme {
 	/**

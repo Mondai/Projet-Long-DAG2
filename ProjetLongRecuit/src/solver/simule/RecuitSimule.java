@@ -24,7 +24,7 @@ public class RecuitSimule implements IRecuit {
 	public Fonction T;
 	/**
 	 * Constante k modulable.
-	 * @see Constante
+	 * @see ConstanteK
 	 */
 	public ConstanteK K;
 	/**
@@ -66,7 +66,7 @@ public class RecuitSimule implements IRecuit {
 	 * Pour ce qui est de l'utilisation de ce recuit, il faut créer une Fonction température, une Constante k et un Problème 
 	 * au préalable. On initialise le recuit avec les deux premiers et on lance ensuite le recuit en lui envoyant le problème.
 	 * A la fin de lancer, on peut obtenir les résultats sur la variable problème modifiée.
-	 * @param problem
+	 * @param probleme
 	 * Le problème sur lequel on veut effectuer le recuit.
 	 */
 	public void lancer(Probleme probleme) {
@@ -83,7 +83,7 @@ public class RecuitSimule implements IRecuit {
 	 * Pour ce qui est de l'utilisation de ce recuit, il faut créer une Fonction température, une Constante k et un Problème 
 	 * au préalable. On initialise le recuit avec les deux premiers et on lance ensuite le recuit en lui envoyant le problème.
 	 * A la fin de lancer, on peut obtenir les résultats sur la variable problème modifiée.
-	 * @param problem
+	 * @param probleme
 	 * Le problème sur lequel on veut effectuer le recuit.
 	 * @param i
 	 * L'état du problème que l'on veut améliorer par recuit simulé. Si cet état n'existe pas, on effectue le recuit sur le 
@@ -97,12 +97,13 @@ public class RecuitSimule implements IRecuit {
 		this.energiePrec = probleme.calculerEnergie() ;
 		this.meilleureEnergie = this.energiePrec ;
 		double proba = 1;
+		double deltaE = 0;
 		
 		while(T.modifierT() && this.meilleureEnergie!=0){
 			
 			MutationElementaire mutation = probleme.getMutationElementaire(etat);	// trouver une mutation possible
 			
-			double deltaE = probleme.calculerDeltaEp(etat, mutation);	// calculer deltaE si la mutation etait acceptee
+			deltaE = probleme.calculerDeltaEp(etat, mutation);	// calculer deltaE si la mutation etait acceptee
 			
 			K.calculerK(deltaE);
 			
