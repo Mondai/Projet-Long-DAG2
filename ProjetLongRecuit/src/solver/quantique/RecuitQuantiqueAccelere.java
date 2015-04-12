@@ -62,6 +62,7 @@ public class RecuitQuantiqueAccelere extends RecuitQuantique{
 
 
 		double proba = 1;
+		double probaAcceptation = 0;
 
 		// tableau des indices des etats a parcourir dans un certain ordre
 		ArrayList<Integer> indiceEtats = new ArrayList<Integer>(); 
@@ -117,9 +118,6 @@ public class RecuitQuantiqueAccelere extends RecuitQuantique{
 							if (this.meilleureEnergie == 0){	// fin du programme
 								System.out.println("mutationsTentees "+mutationsTentees);
 								System.out.println("Gfin "+this.Gamma.getT());
-								//System.out.println("Mutations tentées : " + mutationsTentees);
-								//System.out.println("Mutations acceptées UB : " + mutationsAccepteesUB);
-								//System.out.println("Mutations acceptées : " + mutationsAcceptees);
 								return;
 							}
 						}
@@ -129,7 +127,7 @@ public class RecuitQuantiqueAccelere extends RecuitQuantique{
 						if (deltaE <= 0) proba = 1;
 						else proba = Expo.expf(-deltaE / (this.K.k * this.temperature));
 						
-						double probaAcceptation = probleme.gen.nextDouble();
+						probaAcceptation = probleme.gen.nextDouble();
 						
 						if (proba >= probaAcceptation) {	
 							mutationsAccepteesUB++;
@@ -161,9 +159,6 @@ public class RecuitQuantiqueAccelere extends RecuitQuantique{
 		}
 		
 		System.out.print(mutationsTentees+" ");
-		//System.out.println("Mutations tentées : " + mutationsTentees);
-		//System.out.println("Mutations acceptées UB : " + mutationsAccepteesUB);
-		//System.out.println("Mutations acceptées : " + mutationsAcceptees);
 		return;
 	}
 	
