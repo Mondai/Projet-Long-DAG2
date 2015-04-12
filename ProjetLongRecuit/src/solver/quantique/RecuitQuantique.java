@@ -125,6 +125,11 @@ public class RecuitQuantique implements IRecuit {
 		//System.out.println("EC : " + probleme.Ec.calculer(probleme));
 
 		double proba = 1;
+		double deltaEp = 0;
+		double deltaEc = 0;
+		double deltaE = 0;
+		double EpActuelle = 0;
+		double Jr = 0;
 
 		// tableau des indices des etats a parcourir dans un certain ordre
 		ArrayList<Integer> indiceEtats = new ArrayList<Integer>(); 
@@ -135,7 +140,7 @@ public class RecuitQuantique implements IRecuit {
 		while(Gamma.modifierT() && this.meilleureEnergie!=0){
 			
 			Collections.shuffle(indiceEtats, probleme.gen);	// melanger l'ordre de parcours des indices
-			double Jr = -this.temperature/2*Math.log(Math.tanh(this.Gamma.t/nombreRepliques/this.temperature));	// calcul de Jr pour ce palier
+			Jr = -this.temperature/2*Math.log(Math.tanh(this.Gamma.t/nombreRepliques/this.temperature));	// calcul de Jr pour ce palier
 
 			for (Integer p : indiceEtats){	
 				
@@ -161,12 +166,12 @@ public class RecuitQuantique implements IRecuit {
 					MutationElementaire mutation = probleme.getMutationElementaire(etat);	// trouver une mutation possible
 					mutationsTentees++; //permet d'avoir une référence indépendante pour les améliorations de l'algorithme, mais aussi sur son temps
 					
-					double deltaEp = probleme.calculerDeltaEp(etat, mutation);	// calculer deltaEp si la mutation etait acceptee
-					double deltaEc = probleme.calculerDeltaEc(etat, previous, next, mutation);  // calculer deltaIEc si la mutation etait acceptee
+					deltaEp = probleme.calculerDeltaEp(etat, mutation);	// calculer deltaEp si la mutation etait acceptee
+					deltaEc = probleme.calculerDeltaEc(etat, previous, next, mutation);  // calculer deltaIEc si la mutation etait acceptee
 					
 					//différences du hamiltonien total
 					//multiplier deltaIEc par JGamma
-					double deltaE = deltaEp/nombreRepliques - deltaEc*Jr;
+					deltaE = deltaEp/nombreRepliques - deltaEc*Jr;
 					
 					/*
 					System.out.println("DEP : " + deltaEp);
@@ -205,24 +210,26 @@ public class RecuitQuantique implements IRecuit {
 					}
 					*/
 					
-					//TEST TODO voir la difference avec le fonctionnement au dessus (HighQuality ou pas? sauter l'evaluation de proba ou pas?)
+					//TEST TODO voir la difference avec le fonctionnement au dessus (sauter l'evaluation de proba ou pas?)
 					if( deltaE <= 0 || deltaEp < 0) proba = 1;
 					else	proba = Math.exp(-deltaE / (this.K.k * this.temperature));
 					
-					if (proba >= probleme.gen.nextDouble()) {
-					mutationsAcceptees++;
-					probleme.modifElem(etat, mutation);				// faire la mutation
-					double EpActuelle = etat.Ep.calculer(etat);		// energie potentielle temporelle
-					if( EpActuelle < this.meilleureEnergie ){		// mettre a jour la meilleur energie
-						this.meilleureEnergie = EpActuelle;
-						System.out.println("meilleureEnergie = "+ this.meilleureEnergie);
-						System.out.println("mutationsTentees = "+ mutationsTentees);
-						if (this.meilleureEnergie == 0){	// fin du programme
-							System.out.println("Mutations tentées : " + mutationsTentees);
-							System.out.println("Mutations acceptées : " + mutationsAcceptees);
-							return;
+					if (proba == 1 || proba >= probleme.gen.nextDouble()) {
+						mutationsAcceptees++;
+						probleme.modifElem(etat, mutation);				// faire la mutation
+						if (deltaEp < 0){
+							EpActuelle = etat.Ep.calculer(etat);		// energie potentielle temporelle
+							if( EpActuelle < this.meilleureEnergie ){		// mettre a jour la meilleur energie
+								this.meilleureEnergie = EpActuelle;
+								System.out.println("meilleureEnergie = "+ this.meilleureEnergie);
+								System.out.println("mutationsTentees = "+ mutationsTentees);
+								if (this.meilleureEnergie == 0){	// fin du programme
+									System.out.println("Mutations tentées : " + mutationsTentees);
+									System.out.println("Mutations acceptées : " + mutationsAcceptees);
+									return;
+								}
+							}
 						}
-					}
 					}
 					//TEST TODO
 				}
