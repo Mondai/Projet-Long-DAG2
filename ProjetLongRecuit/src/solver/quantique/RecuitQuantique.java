@@ -188,6 +188,7 @@ public class RecuitQuantique implements IRecuit {
 								if (this.meilleureEnergie == 0){	// fin du programme
 									System.out.println("Mutations tentées : " + mutationsTentees);
 									System.out.println("Mutations acceptées : " + mutationsAcceptees);
+									this.mutationTentess=mutationsTentees;
 									return;
 								}
 							}

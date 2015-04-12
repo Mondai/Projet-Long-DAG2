@@ -200,9 +200,9 @@ public class LanceurDAG3Graphique {
 		liste.add((double) ((endTime-startTime)/1000000000));
 
 		if (recuit.getMeilleureEnergie()==0) {
-			listeSucces.add(0);
-		} else {
 			listeSucces.add(1);
+		} else {
+			listeSucces.add(0);
 		}
 		
 		
