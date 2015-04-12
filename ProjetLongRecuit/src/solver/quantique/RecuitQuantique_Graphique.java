@@ -116,7 +116,7 @@ public class RecuitQuantique_Graphique implements IRecuit {
 
 
 					// On descend en énergie
-					if( deltaE <= 0 || deltaEp <= 0){
+					if( deltaE <= 0 || deltaEp < 0){
 						probleme.modifElem(etat, mutation);				// faire la mutation
 						proba = 1;
 

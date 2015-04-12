@@ -4,14 +4,14 @@
 
 
 	import java.util.ArrayList;
-	import java.util.Collections;
+import java.util.Collections;
 
 	import solver.commun.Etat;
-	import solver.commun.IRecuit;
-	import solver.commun.MutationElementaire;
-	import solver.commun.Probleme;
-	import solver.parametres.ConstanteK;
-	import solver.parametres.Fonction;
+import solver.commun.IRecuit;
+import solver.commun.MutationElementaire;
+import solver.commun.Probleme;
+import solver.parametres.ConstanteK;
+import solver.parametres.Fonction;
 
 	/**
 	 * Dérivé du recuitQuantique utilisant expf au lieu de Mathexp pour accélérer
@@ -116,6 +116,7 @@
 			}
 
 			double proba = 1;
+			double EpActuelle = 0;
 
 			// tableau des indices des etats a parcourir dans un certain ordre
 			ArrayList<Integer> indiceEtats = new ArrayList<Integer>(); 
@@ -160,24 +161,24 @@
 						
 						//K.calculerK(deltaE);
 									
-						if( deltaE <= 0 || deltaEp <= 0){
-							
+						if( deltaE <= 0 || deltaEp < 0) proba = 1;
+						else	proba = expf(-deltaE / (this.K.k * this.temperature));
+						
+						if (proba == 1 || proba >= probleme.gen.nextDouble()) {
 							mutationsAcceptees++;
 							probleme.modifElem(etat, mutation);				// faire la mutation
-							double EpActuelle = etat.Ep.calculer(etat);		// energie potentielle temporelle
-							if( EpActuelle < this.meilleureEnergie ){		// mettre a jour la meilleur energie
-								this.meilleureEnergie = EpActuelle;
-								if (this.meilleureEnergie == 0){	// fin du programme
-									System.out.println("Mutations tentées : " + mutationsTentees);
-									System.out.println("Mutations acceptées : " + mutationsAcceptees);
-									return;
+							if (deltaEp < 0){
+								EpActuelle = etat.Ep.calculer(etat);		// energie potentielle temporelle
+								if( EpActuelle < this.meilleureEnergie ){		// mettre a jour la meilleur energie
+									this.meilleureEnergie = EpActuelle;
+									System.out.println("meilleureEnergie = "+ this.meilleureEnergie);
+									System.out.println("mutationsTentees = "+ mutationsTentees);
+									if (this.meilleureEnergie == 0){	// fin du programme
+										System.out.println("Mutations tentées : " + mutationsTentees);
+										System.out.println("Mutations acceptées : " + mutationsAcceptees);
+										return;
+									}
 								}
-							}
-						} else {
-							proba = expf(-deltaE / (this.K.k * this.temperature));	// calcul de la proba
-							if (proba >= probleme.gen.nextDouble()) {	
-								mutationsAcceptees++;
-								probleme.modifElem(etat, mutation);  		// accepter la mutation 
 							}
 						}
 					}
