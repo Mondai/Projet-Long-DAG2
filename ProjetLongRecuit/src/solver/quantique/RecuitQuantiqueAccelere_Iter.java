@@ -66,6 +66,7 @@ public class RecuitQuantiqueAccelere_Iter extends RecuitQuantique{
 
 
 		double proba = 1;
+		double probaAcceptation = 0;
 
 		// tableau des indices des etats a parcourir dans un certain ordre
 		ArrayList<Integer> indiceEtats = new ArrayList<Integer>(); 
@@ -127,7 +128,7 @@ public class RecuitQuantiqueAccelere_Iter extends RecuitQuantique{
 						if (deltaE < 0) proba = 1;
 						else proba = Expo.expf(-deltaE / (this.K.k * this.temperature));
 						
-						double probaAcceptation = probleme.gen.nextDouble();
+						probaAcceptation = probleme.gen.nextDouble();
 						
 						if (proba >= probaAcceptation) {	
 							mutationsAccepteesUB++;
