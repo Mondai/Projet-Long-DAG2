@@ -7,6 +7,7 @@ import solver.parametres.ConstanteKConstant;
 import solver.parametres.FonctionLineaire;
 import solver.quantique.RecuitQuantique;
 import solver.quantique.RecuitQuantiqueAccelere;
+import solver.quantique.RecuitQuantiqueAccelere_Iter;
 import solver.quantique.RecuitQuantiqueExpf;
 import vertexColoring.Conflits;
 import vertexColoring.ConflitsCinetiques;
@@ -41,9 +42,10 @@ public class TestQuantique {
 		coloriage.initialiser();
 		FonctionLineaire Tparam = new FonctionLineaire(G0,0,maxSteps);
 		ConstanteKConstant Kparam = new ConstanteKConstant(k);
-		RecuitQuantique recuit = new RecuitQuantique(Tparam,Kparam, M, T);
+		//RecuitQuantique recuit = new RecuitQuantique(Tparam,Kparam, M, T);
 		//RecuitQuantiqueExpf recuit = new RecuitQuantiqueExpf(Tparam,Kparam, M, T);
-		//RecuitQuantiqueAccelere recuit = new RecuitQuantiqueAccelere(Tparam,Kparam, M, T);
+		RecuitQuantiqueAccelere recuit = new RecuitQuantiqueAccelere(Tparam,Kparam, M, T);
+		//RecuitQuantiqueAccelere_Iter recuit = new RecuitQuantiqueAccelere_Iter(Tparam,Kparam, M, T);
 		//RecuitQuantiqueAccelereVC recuit = new RecuitQuantiqueAccelereVC(Tparam,Kparam, M, T);
 		
 		long startTime = System.nanoTime();

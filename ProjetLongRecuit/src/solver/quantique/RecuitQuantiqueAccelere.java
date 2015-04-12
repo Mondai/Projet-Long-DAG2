@@ -113,6 +113,7 @@ public class RecuitQuantiqueAccelere extends RecuitQuantique{
 						if( EpActuelle < this.meilleureEnergie ){		// mettre a jour la meilleur energie
 							this.meilleureEnergie = EpActuelle;
 							System.out.println("meilleureEnergie = "+ this.meilleureEnergie);
+							System.out.println("mutationsTentees = "+ mutationsTentees);
 							if (this.meilleureEnergie == 0){	// fin du programme
 								System.out.println("mutationsTentees "+mutationsTentees);
 								System.out.println("Gfin "+this.Gamma.getT());
@@ -128,7 +129,9 @@ public class RecuitQuantiqueAccelere extends RecuitQuantique{
 						if (deltaE <= 0) proba = 1;
 						else proba = Expo.expf(-deltaE / (this.K.k * this.temperature));
 						
-						if (proba >= probleme.gen.nextDouble()) {	
+						double probaAcceptation = probleme.gen.nextDouble();
+						
+						if (proba >= probaAcceptation) {	
 							mutationsAccepteesUB++;
 
 							deltaEc = probleme.calculerDeltaEc(etat, previous, next, mutation);
@@ -144,7 +147,7 @@ public class RecuitQuantiqueAccelere extends RecuitQuantique{
 							else{
 								proba = Expo.expf(-deltaE / (this.K.k * this.temperature));
 							
-								if (proba >= probleme.gen.nextDouble()) {
+								if (proba >= probaAcceptation) {
 
 									mutationsAcceptees++;
 									probleme.modifElem(etat, mutation);  		// accepter la mutation 

@@ -108,8 +108,7 @@ public class RecuitQuantiqueAccelere_Iter extends RecuitQuantique{
 					deltaE = deltaEp/nombreRepliques - deltaEcUB*Jr;
 					//K.calculerK(deltaE);
 
-					if(deltaEp <= 0){
-						//deltaE ici n'est pas le bon, il dépend de EcUB
+					if(deltaEp < 0){
 						mutationsAcceptees++;
 						probleme.modifElem(etat, mutation);				// faire la mutation
 						EpActuelle = etat.Ep.calculer(etat);		// energie potentielle temporelle
@@ -128,7 +127,9 @@ public class RecuitQuantiqueAccelere_Iter extends RecuitQuantique{
 						if (deltaE < 0) proba = 1;
 						else proba = Expo.expf(-deltaE / (this.K.k * this.temperature));
 						
-						if (proba >= probleme.gen.nextDouble()) {	
+						double probaAcceptation = probleme.gen.nextDouble();
+						
+						if (proba >= probaAcceptation) {	
 							mutationsAccepteesUB++;
 
 							deltaEc = probleme.calculerDeltaEc(etat, previous, next, mutation);
@@ -144,7 +145,7 @@ public class RecuitQuantiqueAccelere_Iter extends RecuitQuantique{
 							else{
 								proba = Expo.expf(-deltaE / (this.K.k * this.temperature));
 							
-								if (proba >= probleme.gen.nextDouble()) {
+								if (proba >= probaAcceptation) {
 									mutationsAcceptees++;
 									probleme.modifElem(etat, mutation);  		// accepter la mutation 
 								}

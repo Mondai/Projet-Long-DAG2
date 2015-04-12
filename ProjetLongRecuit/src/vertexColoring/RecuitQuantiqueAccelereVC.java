@@ -122,8 +122,7 @@ public class RecuitQuantiqueAccelereVC extends RecuitQuantiqueAccelere {
 					System.out.println("Tableau " + termeExpPotentiel[deltaEp+adjacenceMax]);*/
 	
 					
-					if(deltaEp <= 0){
-						//deltaE ici n'est pas le bon, il dépend de EcUB
+					if(deltaEp < 0){
 						mutationsAcceptees++;
 						probleme.modifElem(etat, mutation);				// faire la mutation
 						double EpActuelle = etat.Ep.calculer(etat);		// energie potentielle temporelle
@@ -148,7 +147,9 @@ public class RecuitQuantiqueAccelereVC extends RecuitQuantiqueAccelere {
 						System.out.println("duree = "+(endTime-startTime)+" ns");
 						System.out.println("deltaE " + deltaE);*/
 						
-						if (proba >= probleme.gen.nextDouble()) {	
+						double probaAcceptation = probleme.gen.nextDouble();
+						
+						if (proba >= probaAcceptation) {	
 							mutationsAccepteesUB++;
 
 							double deltaEc = probleme.calculerDeltaEc(etat, previous, next, mutation);
@@ -177,7 +178,7 @@ public class RecuitQuantiqueAccelereVC extends RecuitQuantiqueAccelere {
 								//proba = Math.exp(deltaEc*Jr / (this.K.k * this.temperature))/termeExpPotentiel[(int) (deltaEp+adjacenceMax)];	// calcul de la proba
 							
 							
-								if (proba >= probleme.gen.nextDouble()) {
+								if (proba >= probaAcceptation) {
 									mutationsAcceptees++;
 									probleme.modifElem(etat, mutation);  		// accepter la mutation 
 								}
