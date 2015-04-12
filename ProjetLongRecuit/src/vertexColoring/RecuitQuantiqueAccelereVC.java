@@ -19,6 +19,7 @@ import solver.quantique.RecuitQuantiqueAccelere;
  * On utilise ici de plus certaines propriétés propres au coloriage de graphe, pour créer des tableaux pour garder
  * les exponentielles calculées en mémoire. Cependant, après amélioration du calcul de l'exponentiel, l'amélioration donnée par cette classe
  * est devenu moindre si ce n'est négatif.
+ * @deprecated
  */
 public class RecuitQuantiqueAccelereVC extends RecuitQuantiqueAccelere { 				
 

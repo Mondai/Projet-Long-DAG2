@@ -145,7 +145,7 @@ public class RecuitQuantiqueAccelere extends RecuitQuantique{
 							else{
 								proba = Expo.expf(-deltaE / (this.K.k * this.temperature));
 							
-								if (proba >= probaAcceptation) {
+								if (proba >= probaAcceptation) { //proba < 1 ici
 
 									mutationsAcceptees++;
 									probleme.modifElem(etat, mutation);  		// accepter la mutation 
