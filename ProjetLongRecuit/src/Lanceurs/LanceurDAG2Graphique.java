@@ -110,16 +110,17 @@ public class LanceurDAG2Graphique {
 		pw.print("VectNombreIterations =[");
 		pw.close();
 
-
+		HighQualityRandom HQR = new HighQualityRandom(seed);
+		
 		for (int i=0;i<tailleDuSet;i++) {
 
 			// Initialisation problème et recuit
-			GrapheColorieParticule coloriage = new GrapheColorieParticule(Ep, mutation, Ec, nbCouleurs , P, graphe, seed);
+			GrapheColorieParticule coloriage = new GrapheColorieParticule(Ep, mutation, Ec, nbCouleurs , P, graphe, HQR.nextInt());
 			coloriage.initialiser();
 			FonctionLineaire Tparam = new FonctionLineaire(G0,0,maxSteps);
 			ConstanteKConstant Kparam = new ConstanteKConstant(k);
-			RecuitQuantique recuit = new RecuitQuantique(Tparam,Kparam, M, T);
-
+			//RecuitQuantique recuit = new RecuitQuantique(Tparam,Kparam, M, T);
+			RecuitQuantiqueAccelere recuit = new RecuitQuantiqueAccelere(Tparam,Kparam, M, T);
 
 
 			long startTime = System.nanoTime();

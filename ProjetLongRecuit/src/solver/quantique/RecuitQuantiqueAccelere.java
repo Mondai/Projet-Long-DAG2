@@ -113,11 +113,12 @@ public class RecuitQuantiqueAccelere extends RecuitQuantique{
 						
 						if( EpActuelle < this.meilleureEnergie ){		// mettre a jour la meilleur energie
 							this.meilleureEnergie = EpActuelle;
-							System.out.println("meilleureEnergie = "+ this.meilleureEnergie);
-							System.out.println("mutationsTentees = "+ mutationsTentees);
+							//System.out.println("meilleureEnergie = "+ this.meilleureEnergie);
+							//System.out.println("mutationsTentees = "+ mutationsTentees);
 							if (this.meilleureEnergie == 0){	// fin du programme
+								this.mutationTentess=(int) mutationsTentees;
 								System.out.println("mutationsTentees "+mutationsTentees);
-								System.out.println("Gfin "+this.Gamma.getT());
+								//System.out.println("Gfin "+this.Gamma.getT());
 								return;
 							}
 						}
@@ -157,8 +158,8 @@ public class RecuitQuantiqueAccelere extends RecuitQuantique{
 				}				
 			}
 		}
-		
-		System.out.print(mutationsTentees+" ");
+		this.mutationTentess=(int) mutationsTentees;
+		System.out.println("mutationsTentees "+mutationsTentees);
 		return;
 	}
 	
