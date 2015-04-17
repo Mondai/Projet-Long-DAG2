@@ -83,7 +83,7 @@ public class LanceurDAG2Graphique {
 
 	public void lancerNombreIterationNecessairePourAtteindre0() throws IOException {
 
-
+		HighQualityRandom gen = new HighQualityRandom(seed);
 		ArrayList<Double> liste = new ArrayList<Double>();
 		ArrayList<Integer> listeSucces = new ArrayList<Integer>();
 
@@ -109,13 +109,11 @@ public class LanceurDAG2Graphique {
 		pw.println();
 		pw.print("VectNombreIterations =[");
 		pw.close();
-
-		HighQualityRandom HQR = new HighQualityRandom(seed);
 		
 		for (int i=0;i<tailleDuSet;i++) {
 
 			// Initialisation problème et recuit
-			GrapheColorieParticule coloriage = new GrapheColorieParticule(Ep, mutation, Ec, nbCouleurs , P, graphe, HQR.nextInt());
+			GrapheColorieParticule coloriage = new GrapheColorieParticule(Ep, mutation, Ec, nbCouleurs , P, graphe, gen.nextInt());
 			coloriage.initialiser();
 			FonctionLineaire Tparam = new FonctionLineaire(G0,0,maxSteps);
 			ConstanteKConstant Kparam = new ConstanteKConstant(k);

@@ -36,13 +36,14 @@ public class TestQuantiqueRaphDistributionDAG2 {
 		launcher.setM(4*launcher.getNbNoeuds()*launcher.getNbCouleurs());
 		launcher.setG0(1.8);
 		launcher.setP(10);
+
 		launcher.setMaxSteps((int) Math.pow(10,5));
 		launcher.setT(0.06);
 		
 		//Paramètres graphiques
 		launcher.setTailleDuSet(100);
 		launcher.setEchantillonage(5000);
-		launcher.setNomFichier("SortiesGraphiques/Comparaisons/DAG2EnergieFinalePourNombreIterationDonne");
+		launcher.setNomFichier("SortiesGraphiques/Comparaisons/DAG2EnergieFinalePourNombreIterationDonneDonneLe450_15d");
 		
 		// Lancement
 		launcher.lancerNombreIterationNecessairePourAtteindre0();

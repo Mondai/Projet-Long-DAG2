@@ -27,22 +27,22 @@ public class TestQuantiqueRaphDistributionDAG3 {
 		launcher.setMutation(new MutationConflitsAleatoire());
 		
 		// Paramètres vertex coloring
-		launcher.setNbNoeuds(250);
-		launcher.setNbCouleurs(28);
-		launcher.setNomGraphe("data/dsjc250.5.col");
+		launcher.setNbNoeuds(450);
+		launcher.setNbCouleurs(15);
+		launcher.setNomGraphe("data/le450_15d.col");
 		
 		// Paramètres du recuit
 		launcher.setK(1);
 		launcher.setM(4*launcher.getNbNoeuds()*launcher.getNbCouleurs());
 		launcher.setG0(0.75);
 		launcher.setP(10);
-		launcher.setMaxSteps((int) Math.pow(10,1));
+		launcher.setMaxSteps((int) Math.pow(10,4));
 		launcher.setT(new Temperature(0.35/launcher.getP()));
 		
 		//Paramètres graphiques
-		launcher.setTailleDuSet(10);
+		launcher.setTailleDuSet(100);
 		launcher.setEchantillonage(5000);
-		launcher.setNomFichier("SortiesGraphiques/Comparaisons/DAG3EnergieFinalePourNombreIterationDonne");
+		launcher.setNomFichier("SortiesGraphiques/Comparaisons/DAG3EnergieFinalePourNombreIterationDonneLe450_15d");
 		
 		// Lancement
 		launcher.lancerNombreIterationNecessairePourAtteindre0();
