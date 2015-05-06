@@ -8,5 +8,5 @@ public class kCenterProblem extends Probleme{
 	int k;
 	Graphe graphe;
 	
-
+	public kCenterProblem ()
 }
