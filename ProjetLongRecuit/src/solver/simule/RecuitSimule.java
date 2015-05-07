@@ -94,7 +94,7 @@ public class RecuitSimule implements IRecuit {
 		// init();
 		if (i >= probleme.etats.length) i = 0;
 		Etat etat = probleme.etats[i];
-		this.energiePrec = probleme.calculerEnergie() ;
+		this.energiePrec = probleme.calculerEnergiePotentielle() ;
 		this.meilleureEnergie = this.energiePrec ;
 		double proba = 1;
 		double deltaE = 0;
